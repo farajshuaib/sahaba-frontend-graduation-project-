@@ -49,3 +49,4 @@ export const validateImage = (file: any) => {
   }
   return true;
 };
+

@@ -11,3 +11,17 @@ export const toHex = (num: string) => {
   const val = Number(num);
   return "0x" + val.toString(16);
 };
+
+export const getRecaptchaToken = async (): Promise<string> => {
+  let token = "";
+
+  try {
+    token = window.grecaptcha.execute(process.env.CAPATCHA_SITE_KEY, {
+      action: "submit",
+    });
+  } catch {
+    throw new Error("Failed to get recaptcha token");
+  }
+
+  return token;
+};

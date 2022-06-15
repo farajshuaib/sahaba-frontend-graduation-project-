@@ -1,11 +1,10 @@
 import axios, { AxiosInstance } from "axios";
-import { baseURL } from "../constant";
 
 let api: AxiosInstance;
 
 export function createApi() {
   api = axios.create({
-    baseURL,
+    baseURL: process.env.BASE_URL || "",
     // withCredentials: true,
     headers: {
       "Content-Type": "application/json",

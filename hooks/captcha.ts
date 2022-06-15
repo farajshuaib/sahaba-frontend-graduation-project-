@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { CAPATCHA_SITE_KEY, CAPATCHA_SECRET_KEY } from "../constant";
 
 export const useCaptcha = () => {
   const [captcha, setCaptcha] = useState(false);
@@ -24,8 +23,8 @@ export const useCaptcha = () => {
 
     // load the script by passing the URL
     loadScriptByURL(
-      CAPATCHA_SECRET_KEY,
-      `https://www.google.com/recaptcha/api.js?render=${CAPATCHA_SITE_KEY}`,
+      process.env.CAPATCHA_SECRET_KEY || "",
+      `https://www.google.com/recaptcha/api.js?render=${process.env.CAPATCHA_SITE_KEY}`,
       function () {
         setCaptcha(true);
       }
