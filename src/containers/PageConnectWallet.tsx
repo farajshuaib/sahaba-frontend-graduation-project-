@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { Helmet } from "react-helmet";
 import NcModal from "shared/NcModal/NcModal";
@@ -11,9 +11,10 @@ import walletlinkImg from "images/walletlink.webp";
 import fortmaticImg from "images/fortmatic.webp";
 import { toast } from "react-toastify";
 import { connectors } from "services/connectors";
-import { switchNetwork } from "../utils/functions";
 import { useWeb3React } from "@web3-react/core";
 import { networkParams } from "services/networks";
+import { useAppDispatch } from "app/hooks";
+import { connectToWallet } from "app/account/actions";
 
 export interface PageConnectWalletProps {
   className?: string;
@@ -42,6 +43,7 @@ const plans = [
   // },
 ];
 const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
+  const dispatch = useAppDispatch();
   const [showModal, setShowModal] = useState(false);
 
   const web3React = useWeb3React();
@@ -49,16 +51,9 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
   const handleSignIn = async (wallet_item: any) => {
     try {
       web3React.activate(wallet_item.connector);
-      // if (
-      //   !Object.keys(networkParams).includes(JSON.stringify(web3React?.chainId))
-      // ) {
-      //   const result = await switchNetwork();
-      //   if (!result) return;
-      // }
       window.localStorage.setItem("provider", wallet_item.provider);
       if (!web3React.error) {
         toast.success("Connecting to wallet has been done successfully!");
-        close();
         return;
       }
       toast.error(
@@ -69,6 +64,10 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
       toast.error(e || "Connecting to wallet has been failed!");
     }
   };
+
+  useEffect(() => {
+    if (web3React.account) dispatch(connectToWallet(web3React.account));
+  }, [web3React.account]);
 
   const renderContent = () => {
     return (

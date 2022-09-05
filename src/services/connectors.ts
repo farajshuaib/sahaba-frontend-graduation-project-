@@ -7,13 +7,13 @@ const injected = new InjectedConnector({
 });
 
 const walletconnect = new WalletConnectConnector({
-  rpc: "https://polygon-rpc.com/",
+  rpc: `https://polygon-rpc.com/${import.meta.env.VITE_INFURA_KEY || ""}`,
   bridge: "https://bridge.walletconnect.org",
   qrcode: true,
 });
 
 const walletlink = new WalletLinkConnector({
-  url: "https://polygon-rpc.com/",
+  url: `https://polygon-rpc.com/${import.meta.env.VITE_INFURA_KEY || ""}`,
   appName: "Spectrum",
 });
 

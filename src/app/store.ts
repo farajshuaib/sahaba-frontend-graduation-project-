@@ -28,7 +28,6 @@ const middlewareLogger: any = !!isDev ? logger : [];
 
 export const store = configureStore({
   reducer: persistedReducer,
-
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
