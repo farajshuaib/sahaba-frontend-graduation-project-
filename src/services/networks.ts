@@ -1,22 +1,24 @@
 export const networkParams = {
-  "56": {
-    chainId: "56",
-    rpcUrls: ["https://bsc-dataseed.binance.org/"],
-    chainName: "Smart Chain",
-    nativeCurrency: { name: "BNB", decimals: 56, symbol: "BNB" },
-    blockExplorerUrls: ["https://bscscan.com"],
+  "137": {
+    chainId: "137",
+    rpcUrls: ["https://polygon-rpc.com/"],
+    chainName: "polygon Chain",
+    networkName: "Polygon",
+    nativeCurrency: { name: "MATIC", decimals: 18, symbol: "MATIC" },
+    blockExplorerUrls: ["https://polygonscan.com/"],
     iconUrls: [],
   },
-  "97": {
-    chainId: "97",
-    rpcUrls: ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
-    chainName: "Smart Chain - Testnet",
+  "80001": {
+    chainId: "80001",
+    rpcUrls: ["https://rpc-mumbai.matic.today"],
+    chainName: "polygon - Testnet",
+    networkName: "Mumbai",
     nativeCurrency: {
-      name: "BNB",
-      symbol: "BNB",
-      decimals: 97,
+      name: "MATIC",
+      symbol: "MATIC",
+      decimals: 18,
     },
-    blockExplorerUrls: ["https://testnet.bscscan.com"],
+    blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
     iconUrls: [],
   },
 };

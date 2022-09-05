@@ -3,22 +3,22 @@ import { WalletConnectConnector } from "@web3-react/walletconnect-connector"; //
 import { WalletLinkConnector } from "@web3-react/walletlink-connector"; // Coinbase Wallet
 
 const injected = new InjectedConnector({
-  supportedChainIds: [97, 56],
+  supportedChainIds: [137, 80001],
 });
 
 const walletconnect = new WalletConnectConnector({
-  rpc: `https://data-seed-prebsc-1-s1.binance.org:8545/`,
+  rpc: "https://polygon-rpc.com/",
   bridge: "https://bridge.walletconnect.org",
   qrcode: true,
 });
 
 const walletlink = new WalletLinkConnector({
-  url: `https://data-seed-prebsc-1-s1.binance.org:8545/`,
+  url: "https://polygon-rpc.com/",
   appName: "Spectrum",
 });
 
 export const connectors = {
   injected: injected,
   walletConnect: walletconnect,
-  // coinbaseWallet: walletlink,
+  coinbaseWallet: walletlink,
 };

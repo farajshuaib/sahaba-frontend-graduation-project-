@@ -9,6 +9,11 @@ import metamaskImg from "images/metamask.webp";
 import walletconnectImg from "images/walletconnect.webp";
 import walletlinkImg from "images/walletlink.webp";
 import fortmaticImg from "images/fortmatic.webp";
+import { toast } from "react-toastify";
+import { connectors } from "services/connectors";
+import { switchNetwork } from "../utils/functions";
+import { useWeb3React } from "@web3-react/core";
+import { networkParams } from "services/networks";
 
 export interface PageConnectWalletProps {
   className?: string;
@@ -18,22 +23,52 @@ const plans = [
   {
     name: "Metamask",
     img: metamaskImg,
+    connector: connectors.injected,
+    provider: "injected",
   },
   {
     name: "Walletconnect",
+    connector: connectors.walletConnect,
+    provider: "walletConnect",
     img: walletconnectImg,
   },
-  {
-    name: "Walletlink",
-    img: walletlinkImg,
-  },
-  {
-    name: "Fortmatic",
-    img: fortmaticImg,
-  },
+  // {
+  //   name: "Walletlink",
+  //   img: walletlinkImg,
+  // },
+  // {
+  //   name: "Fortmatic",
+  //   img: fortmaticImg,
+  // },
 ];
 const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
   const [showModal, setShowModal] = useState(false);
+
+  const web3React = useWeb3React();
+
+  const handleSignIn = async (wallet_item: any) => {
+    try {
+      web3React.activate(wallet_item.connector);
+      // if (
+      //   !Object.keys(networkParams).includes(JSON.stringify(web3React?.chainId))
+      // ) {
+      //   const result = await switchNetwork();
+      //   if (!result) return;
+      // }
+      window.localStorage.setItem("provider", wallet_item.provider);
+      if (!web3React.error) {
+        toast.success("Connecting to wallet has been done successfully!");
+        close();
+        return;
+      }
+      toast.error(
+        web3React.error?.message ||
+          "Connecting to wallet has been failed!, you're connecting to unsupported network! please switch to BSC"
+      );
+    } catch (e: any) {
+      toast.error(e || "Connecting to wallet has been failed!");
+    }
+  };
 
   const renderContent = () => {
     return (
@@ -83,7 +118,7 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
               {plans.map((plan) => (
                 <div
                   key={plan.name}
-                  onClick={() => setShowModal(true)}
+                  onClick={() => handleSignIn(plan)}
                   typeof="button"
                   tabIndex={0}
                   className="relative flex px-3 py-4 border cursor-pointer rounded-xl hover:shadow-lg hover:bg-neutral-50 border-neutral-200 dark:border-neutral-700 sm:px-5 focus:outline-none focus:shadow-outline-blue focus:border-blue-500 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-900 dark:hover:text-neutral-200"
