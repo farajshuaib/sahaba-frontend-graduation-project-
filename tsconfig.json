@@ -1,27 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es2018",
-    "outDir": "dist",
-    "declaration": true,
+    "baseUrl": "./src",
+    "target": "ESNext",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
+    "types": ["vite/client", "vite-plugin-svgr/client"],
     "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
+    "noFallthroughCasesInSwitch": true,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "allowJs": false
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "./test",
-  ],
-  "exclude": ["node_modules"]
+  "include": ["src"]
 }
