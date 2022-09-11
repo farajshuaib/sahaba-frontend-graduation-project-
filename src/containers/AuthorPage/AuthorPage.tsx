@@ -5,7 +5,7 @@ import NcImage from "shared/NcImage/NcImage";
 import CardNFT from "components/CardNFT";
 import Pagination from "shared/Pagination/Pagination";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
-import authorBanner from "images/nfts/authorBanner.png";
+import authorBanner from "assets/images/nfts/authorBanner.png";
 import { nftsImgs } from "contains/fakeData";
 import NftMoreDropdown from "components/NftMoreDropdown";
 import ButtonDropDownShare from "components/ButtonDropDownShare";
@@ -34,7 +34,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
   return (
     <div className={`nc-AuthorPage  ${className}`} data-nc-id="AuthorPage">
       <Helmet>
-        <title>Creator || Ciscryp NFT Template</title>
+        <title>Creator || Sahaba NFT Template</title>
       </Helmet>
 
       {/* HEADER */}
@@ -48,15 +48,15 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
         </div>
         <div className="container -mt-10 lg:-mt-16">
           <div className="relative bg-white dark:bg-neutral-900 dark:border dark:border-neutral-700 p-5 lg:p-8 rounded-3xl md:rounded-[40px] shadow-xl flex flex-col md:flex-row">
-            <div className="w-32 lg:w-44 flex-shrink-0 mt-12 sm:mt-0">
+            <div className="flex-shrink-0 w-32 mt-12 lg:w-44 sm:mt-0">
               <NcImage
                 src={nftsImgs[2]}
                 containerClassName="aspect-w-1 aspect-h-1 rounded-3xl overflow-hidden"
               />
             </div>
-            <div className="pt-5 md:pt-1 md:ml-6 xl:ml-14 flex-grow">
+            <div className="flex-grow pt-5 md:pt-1 md:ml-6 xl:ml-14">
               <div className="max-w-screen-sm ">
-                <h2 className="inline-flex items-center text-2xl sm:text-3xl lg:text-4xl font-semibold">
+                <h2 className="inline-flex items-center text-2xl font-semibold sm:text-3xl lg:text-4xl">
                   <span>Dony Herrera</span>
                   <VerifyIcon
                     className="ml-2"
@@ -94,7 +94,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
                 <SocialsList itemClass="block w-7 h-7" />
               </div>
             </div>
-            <div className="absolute md:static left-5 top-4 sm:left-auto sm:top-5 sm:right-5 flex flex-row-reverse justify-end">
+            <div className="absolute flex flex-row-reverse justify-end md:static left-5 top-4 sm:left-auto sm:top-5 sm:right-5">
               <NftMoreDropdown
                 actions={[
                   {
@@ -106,7 +106,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
                 containerClassName="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800 cursor-pointer"
               />
               <ButtonDropDownShare
-                className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800 cursor-pointer mx-2"
+                className="flex items-center justify-center w-8 h-8 mx-2 rounded-full cursor-pointer md:w-10 md:h-10 bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800"
                 panelMenusClass="origin-top-right !-right-5 !w-40 sm:!w-52"
               />
 
@@ -121,11 +121,11 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
       </div>
       {/* ====================== END HEADER ====================== */}
 
-      <div className="container py-16 lg:pb-28 lg:pt-20 space-y-16 lg:space-y-28">
+      <div className="container py-16 space-y-16 lg:pb-28 lg:pt-20 lg:space-y-28">
         <main>
           <Tab.Group>
-            <div className="flex flex-col lg:flex-row justify-between ">
-              <Tab.List className="flex space-x-0 sm:space-x-2 overflow-x-auto ">
+            <div className="flex flex-col justify-between lg:flex-row ">
+              <Tab.List className="flex space-x-0 overflow-x-auto sm:space-x-2 ">
                 {categories.map((item) => (
                   <Tab key={item} as={Fragment}>
                     {({ selected }) => (
@@ -142,77 +142,77 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
                   </Tab>
                 ))}
               </Tab.List>
-              <div className="mt-5 lg:mt-0 flex items-end justify-end">
+              <div className="flex items-end justify-end mt-5 lg:mt-0">
                 <ArchiveFilterListBox />
               </div>
             </div>
             <Tab.Panels>
               <Tab.Panel className="">
                 {/* LOOP ITEMS */}
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
+                <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
                   {Array.from("11111111").map((_, index) => (
                     <CardNFT key={index} />
                   ))}
                 </div>
 
                 {/* PAGINATION */}
-                <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
+                <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
                   <Pagination />
                   <ButtonPrimary loading>Show me more</ButtonPrimary>
                 </div>
               </Tab.Panel>
               <Tab.Panel className="">
                 {/* LOOP ITEMS */}
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
+                <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
                   {Array.from("11111111").map((_, index) => (
                     <CardNFT key={index} />
                   ))}
                 </div>
 
                 {/* PAGINATION */}
-                <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
+                <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
                   <Pagination />
                   <ButtonPrimary loading>Show me more</ButtonPrimary>
                 </div>
               </Tab.Panel>
               <Tab.Panel className="">
                 {/* LOOP ITEMS */}
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
+                <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
                   {Array.from("11111111").map((_, index) => (
                     <CardNFT isLiked key={index} />
                   ))}
                 </div>
 
                 {/* PAGINATION */}
-                <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
+                <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
                   <Pagination />
                   <ButtonPrimary loading>Show me more</ButtonPrimary>
                 </div>
               </Tab.Panel>
               <Tab.Panel className="">
                 {/* LOOP ITEMS */}
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-8 lg:mt-10">
+                <div className="grid gap-8 mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:mt-10">
                   {Array.from("11111111").map((_, index) => (
                     <CardAuthorBox3 following key={index} />
                   ))}
                 </div>
 
                 {/* PAGINATION */}
-                <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
+                <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
                   <Pagination />
                   <ButtonPrimary loading>Show me more</ButtonPrimary>
                 </div>
               </Tab.Panel>
               <Tab.Panel className="">
                 {/* LOOP ITEMS */}
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mt-8 lg:mt-10">
+                <div className="grid gap-6 mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-8 lg:mt-10">
                   {Array.from("11111111").map((_, index) => (
                     <CardAuthorBox3 following={false} key={index} />
                   ))}
                 </div>
 
                 {/* PAGINATION */}
-                <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
+                <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
                   <Pagination />
                   <ButtonPrimary loading>Show me more</ButtonPrimary>
                 </div>

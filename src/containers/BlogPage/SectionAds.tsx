@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import NcImage from "shared/NcImage/NcImage";
-import imgAds from "images/ads.png";
+import imgAds from "assets/images/ads.png";
 
 export interface SectionAdsProps {
   className?: string;

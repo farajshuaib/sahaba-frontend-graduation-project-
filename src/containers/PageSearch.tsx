@@ -18,7 +18,7 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
   return (
     <div className={`nc-PageSearch  ${className}`} data-nc-id="PageSearch">
       <Helmet>
-        <title>Search || Ciscryp NFT Template</title>
+        <title>Search || Sahaba NFT Template</title>
       </Helmet>
 
       <div

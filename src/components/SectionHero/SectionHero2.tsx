@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import imagePng from "images/hero-right-3.png";
+import imagePng from "assets/images/hero-right-3.png";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import HeroSearchForm from "components/HeroSearchForm/HeroSearchForm";
 
@@ -14,7 +14,7 @@ const SectionHero2: FC<SectionHero2Props> = ({ className = "", children }) => {
       className={`nc-SectionHero2 flex flex-col-reverse lg:flex-col relative ${className}`}
     >
       <div className="flex flex-col lg:flex-row lg:items-center">
-        <div className="flex-shrink-0 lg:w-1/2 flex flex-col items-start space-y-8 sm:space-y-10 pb-14 lg:pb-36 xl:pb-60 xl:pr-14 lg:mr-10 xl:mr-0">
+        <div className="flex flex-col items-start flex-shrink-0 space-y-8 lg:w-1/2 sm:space-y-10 pb-14 lg:pb-36 xl:pb-60 xl:pr-14 lg:mr-10 xl:mr-0">
           <h2 className="font-semibold text-4xl md:text-5xl xl:text-6xl !leading-[114%] ">
             Discover, collect, and sell NFTs 🖼
           </h2>
@@ -49,7 +49,7 @@ const SectionHero2: FC<SectionHero2Props> = ({ className = "", children }) => {
         </div>
       </div>
 
-      <div className="z-10 mb-12 lg:mb-0 lg:-mt-20 xl:-mt-48 w-full">
+      <div className="z-10 w-full mb-12 lg:mb-0 lg:-mt-20 xl:-mt-48">
         <HeroSearchForm />
       </div>
     </div>

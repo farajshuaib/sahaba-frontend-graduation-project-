@@ -5,17 +5,7 @@ const otherPageChildMenus: NavItemType[] = [
   {
     id: ncNanoId(),
     href: "/",
-    name: "Home Demo 1",
-  },
-  {
-    id: ncNanoId(),
-    href: "/home2",
-    name: "Home Demo 2",
-  },
-  {
-    id: ncNanoId(),
-    href: "/home3",
-    name: "Home Demo 3",
+    name: "Home",
   },
   {
     id: ncNanoId(),
@@ -109,14 +99,12 @@ const otherPageChildMenus: NavItemType[] = [
 export const NAVIGATION_DEMO_2: NavItemType[] = [
   {
     id: ncNanoId(),
-    href: "#",
-    name: "Discover",
-    type: "dropdown",
-    children: otherPageChildMenus,
+    href: "/",
+    name: "Home",
   },
   {
     id: ncNanoId(),
-    href: "/#",
-    name: "Help center",
+    href: "/page-search",
+    name: "explore",
   },
 ];

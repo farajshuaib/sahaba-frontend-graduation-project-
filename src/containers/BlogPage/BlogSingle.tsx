@@ -301,7 +301,7 @@ const BlogSingle = () => {
   return (
     <div className="nc-PageSingle pt-8 lg:pt-16 ">
       <Helmet>
-        <title>Single Blog || Ciscryp React Template</title>
+        <title>Single Blog || Sahaba React Template</title>
       </Helmet>
       {renderHeader()}
       <NcImage

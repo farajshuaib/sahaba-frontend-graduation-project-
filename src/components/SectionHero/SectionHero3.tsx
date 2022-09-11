@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
-import imagePng from "images/hero3.png";
+import imagePng from "assets/images/hero3.png";
 import HeroSearchForm from "components/HeroSearchForm/HeroSearchForm";
 
 export interface SectionHero3Props {
@@ -15,7 +15,7 @@ const SectionHero3: FC<SectionHero3Props> = ({ className = "" }) => {
     >
       <div className="mt-10 lg:mt-0 lg:absolute lg:container z-10 inset-x-0 top-[10%] sm:top-[20%]">
         <div className="flex flex-col items-start max-w-2xl space-y-5 xl:space-y-8 ">
-          <span className="sm:text-lg md:text-xl font-semibold text-neutral-900">
+          <span className="font-semibold sm:text-lg md:text-xl text-neutral-900">
             Create, Explore, & Collect Digital Art NFTs.
           </span>
           <h2 className="font-bold text-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl !leading-[115%] ">

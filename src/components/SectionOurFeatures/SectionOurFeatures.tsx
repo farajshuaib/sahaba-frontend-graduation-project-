@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import rightImg from "images/our-features.png";
+import rightImg from "assets/images/our-features.png";
 import NcImage from "shared/NcImage/NcImage";
 import Badge from "shared/Badge/Badge";
 
@@ -18,13 +18,13 @@ const SectionOurFeatures: FC<SectionOurFeaturesProps> = ({
       <div className="flex-grow">
         <NcImage src={rightImg} />
       </div>
-      <div className="max-w-2xl flex-shrink-0 mb-10 lg:mb-0 lg:pl-16 lg:w-2/5">
-        <span className="uppercase text-sm text-gray-400 tracking-widest">
+      <div className="flex-shrink-0 max-w-2xl mb-10 lg:mb-0 lg:pl-16 lg:w-2/5">
+        <span className="text-sm tracking-widest text-gray-400 uppercase">
           BENnefits
         </span>
-        <h2 className="font-semibold text-4xl mt-5">Happening cities </h2>
+        <h2 className="mt-5 text-4xl font-semibold">Happening cities </h2>
 
-        <ul className="space-y-10 mt-16">
+        <ul className="mt-16 space-y-10">
           <li className="space-y-4">
             <Badge name="Advertising" />
             <span className="block text-xl font-semibold">

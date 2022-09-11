@@ -9,7 +9,7 @@ import LikeButton from "components/LikeButton";
 import ItemTypeVideoIcon from "components/ItemTypeVideoIcon";
 import { nftsLargeImgs } from "contains/fakeData";
 import TimeCountDown from "./TimeCountDown";
-import collectionPng from "images/nfts/collection.png";
+import collectionPng from "assets/images/nfts/collection.png";
 import VerifyIcon from "components/VerifyIcon";
 
 export interface CardLarge1Props {
@@ -38,31 +38,31 @@ const CardLarge1: FC<CardLarge1Props> = ({
     <div
       className={`nc-CardLarge1 nc-CardLarge1--hasAnimation relative flex flex-col-reverse lg:flex-row justify-end ${className}`}
     >
-      <div className="lg:absolute z-10 lg:left-0 lg:top-1/2 lg:transform lg:-translate-y-1/2 -mt-2 lg:mt-0 sm:px-5 lg:px-0 w-full lg:max-w-lg ">
-        <div className="nc-CardLarge1__left p-4 sm:p-8 xl:py-14 md:px-10 bg-white dark:bg-neutral-900 shadow-lg rounded-3xl space-y-3 sm:space-y-8 ">
+      <div className="z-10 w-full -mt-2 lg:absolute lg:left-0 lg:top-1/2 lg:transform lg:-translate-y-1/2 lg:mt-0 sm:px-5 lg:px-0 lg:max-w-lg ">
+        <div className="p-4 space-y-3 bg-white shadow-lg nc-CardLarge1__left sm:p-8 xl:py-14 md:px-10 dark:bg-neutral-900 rounded-3xl sm:space-y-8 ">
           {/* TITLE */}
-          <h2 className="text-2xl lg:text-3xl 2xl:text-5xl font-semibold ">
+          <h2 className="text-2xl font-semibold lg:text-3xl 2xl:text-5xl ">
             <Link to={"/nft-detailt"} title="Walking On Air">
               {randomTitle[Math.floor(Math.random() * randomTitle.length)]}
             </Link>
           </h2>
 
           {/* AUTHOR AND COLLECTION */}
-          <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-12">
+          <div className="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-12">
             <div className="flex items-center">
-              <div className="flex-shrink-0 h-10 w-10">
+              <div className="flex-shrink-0 w-10 h-10">
                 <Avatar sizeClass="w-10 h-10" />
               </div>
               <div className="ml-3">
                 <div className="text-xs dark:text-neutral-400">Creator</div>
-                <div className="text-sm font-semibold flex items-center">
+                <div className="flex items-center text-sm font-semibold">
                   <span>Jane Cooper</span>
                   <VerifyIcon />
                 </div>
               </div>
             </div>
             <div className="flex items-center">
-              <div className="flex-shrink-0 h-10 w-10">
+              <div className="flex-shrink-0 w-10 h-10">
                 <Avatar sizeClass="w-10 h-10" imgUrl={collectionPng} />
               </div>
               <div className="ml-3">
@@ -74,11 +74,11 @@ const CardLarge1: FC<CardLarge1Props> = ({
 
           {/* PRICE */}
           <div className="pt-6">
-            <div className="flex flex-col sm:flex-row items-baseline p-6 border-2 border-green-500 rounded-xl relative">
+            <div className="relative flex flex-col items-baseline p-6 border-2 border-green-500 sm:flex-row rounded-xl">
               <span className="block absolute bottom-full translate-y-1.5 py-1 px-1.5 bg-white dark:bg-neutral-900 text-sm text-neutral-500 dark:text-neutral-400 ring ring-offset-0 ring-white dark:ring-neutral-900">
                 Current Bid
               </span>
-              <span className="text-3xl xl:text-4xl font-semibold text-green-500">
+              <span className="text-3xl font-semibold text-green-500 xl:text-4xl">
                 1.000 ETH
               </span>
               <span className="text-lg text-neutral-400 sm:ml-3.5">
@@ -93,7 +93,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
           <div className="w h-[1px] bg-neutral-100 dark:bg-neutral-700"></div>
 
           {/* DESCRIPTION */}
-          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
+          <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-3">
             <ButtonPrimary href={"/nft-detailt"} className="flex-1">
               Place a bid
             </ButtonPrimary>

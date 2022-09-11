@@ -5,7 +5,7 @@ import NcImage from "shared/NcImage/NcImage";
 import { nftsAbstracts } from "contains/fakeData";
 import LikeButton from "./LikeButton";
 import Prices from "./Prices";
-import musicWave from "images/musicWave.png";
+import musicWave from "assets/images/musicWave.png";
 import ButtonPlayMusicRunningContainer from "containers/ButtonPlayMusicRunningContainer";
 import { nanoid } from "@reduxjs/toolkit";
 import AudioForNft from "./AudioForNft";
@@ -133,7 +133,7 @@ const CardNFTMusic: FC<CardNFTMusicProps> = ({
 
         <Link
           to={"/nft-detailt"}
-          className="block p-5 mt-5 bg-white dark:bg-neutral-800 shadow-xl dark:shadow-2xl rounded-3xl rounded-tl-none"
+          className="block p-5 mt-5 bg-white rounded-tl-none shadow-xl dark:bg-neutral-800 dark:shadow-2xl rounded-3xl"
         >
           <div className="flex items-center justify-between">
             <h2 className={`text-lg font-semibold`}>NFT music #1132</h2>
@@ -145,7 +145,7 @@ const CardNFTMusic: FC<CardNFTMusicProps> = ({
               labelText="Price"
               labelTextClassName="bg-white dark:bg-neutral-800 "
             />
-            <span className="block text-neutral-500 dark:text-neutral-400 text-xs">
+            <span className="block text-xs text-neutral-500 dark:text-neutral-400">
               {Math.floor(Math.random() * 90) + 10} in stock
             </span>
           </div>

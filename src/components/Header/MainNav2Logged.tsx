@@ -7,26 +7,28 @@ import AvatarDropdown from "./AvatarDropdown";
 import Input from "shared/Input/Input";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Navigation from "shared/Navigation/Navigation";
+import { useWeb3React } from "@web3-react/core";
 
 export interface MainNav2LoggedProps {}
 
 const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
+  const { active } = useWeb3React();
   return (
     <div className={`nc-MainNav2Logged relative z-10 ${"onTop "}`}>
-      <div className="container py-5 relative flex justify-between items-center space-x-4 xl:space-x-8">
-        <div className="flex justify-start flex-grow items-center space-x-3 sm:space-x-8 lg:space-x-10">
+      <div className="container relative flex items-center justify-between py-5 space-x-4 xl:space-x-8">
+        <div className="flex items-center justify-start flex-grow space-x-3 sm:space-x-8 lg:space-x-10">
           <Logo />
-          <div className="hidden sm:block flex-grow max-w-xs">
+          <div className="flex-grow hidden max-w-xs sm:block">
             <form action="" method="POST" className="relative">
               <Input
                 type="search"
                 placeholder="Search items"
-                className="pr-10 w-full"
+                className="w-full pr-10"
                 sizeClass="h-[42px] pl-4 py-3"
               />
-              <span className="absolute top-1/2 -translate-y-1/2 right-3 text-neutral-500">
+              <span className="absolute -translate-y-1/2 top-1/2 right-3 text-neutral-500">
                 <svg
-                  className="h-5 w-5"
+                  className="w-5 h-5"
                   viewBox="0 0 24 24"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -51,23 +53,38 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
             </form>
           </div>
         </div>
-        <div className="flex-shrink-0 flex items-center justify-end text-neutral-700 dark:text-neutral-100 space-x-1">
-          <div className="hidden items-center xl:flex space-x-2">
+        <div className="flex items-center justify-end flex-shrink-0 space-x-1 text-neutral-700 dark:text-neutral-100">
+          <div className="items-center hidden space-x-2 xl:flex">
             <Navigation />
-            <div className="hidden sm:block h-6 border-l border-neutral-300 dark:border-neutral-6000"></div>
+            <div className="hidden h-6 border-l sm:block border-neutral-300 dark:border-neutral-6000"></div>
             <div className="flex">
               <SwitchDarkMode />
               <NotifyDropdown />
             </div>
             <div></div>
-            <ButtonPrimary sizeClass="px-4 py-2 sm:px-5">Create</ButtonPrimary>
+            {active && (
+              <ButtonPrimary
+                href={"/page-upload-item"}
+                sizeClass="px-4 py-2 sm:px-5"
+              >
+                Create
+              </ButtonPrimary>
+            )}
+            {!active && (
+              <ButtonPrimary
+                href={"/connect-wallet"}
+                sizeClass="px-4 py-2 sm:px-5"
+              >
+                Connect Wallet
+              </ButtonPrimary>
+            )}
             <div></div>
-            <AvatarDropdown />
+            {active && <AvatarDropdown />}
           </div>
           <div className="flex items-center space-x-3 xl:hidden">
             <NotifyDropdown />
-            <AvatarDropdown />
-            <MenuBar />
+            {active && <AvatarDropdown />}
+            {active && <MenuBar />}
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import NcImage from "shared/NcImage/NcImage";
 import { Link } from "react-router-dom";
-import images1 from "images/nfts/cat1.webp";
+import images1 from "assets/images/nfts/cat1.webp";
 
 export interface CardCategory5Props {
   className?: string;
@@ -42,9 +42,9 @@ const CardCategory5: FC<CardCategory5Props> = ({
           src={featuredImage}
           className="object-cover w-full h-full rounded-2xl"
         />
-        <span className="opacity-0 group-hover:opacity-100 absolute inset-0 bg-black bg-opacity-10 transition-opacity"></span>
+        <span className="absolute inset-0 transition-opacity bg-black opacity-0 group-hover:opacity-100 bg-opacity-10"></span>
       </div>
-      <div className="mt-4 flex items-center">
+      <div className="flex items-center mt-4">
         <div className={`w-10 h-10 rounded-full ${COLORS[index]}`}></div>
         <div className="ml-3">
           <h2

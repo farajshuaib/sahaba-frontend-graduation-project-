@@ -14,22 +14,16 @@ import PageLogin from "containers/PageLogin/PageLogin";
 import PageSubcription from "containers/PageSubcription/PageSubcription";
 import BlogPage from "containers/BlogPage/BlogPage";
 import BlogSingle from "containers/BlogPage/BlogSingle";
-import SiteHeader from "containers/SiteHeader";
 import NftDetailPage from "containers/NftDetailPage/NftDetailPage";
 import PageCollection from "containers/PageCollection";
 import PageSearch from "containers/PageSearch";
 import PageUploadItem from "containers/PageUploadItem";
 import PageConnectWallet from "containers/PageConnectWallet";
-import PageHome2 from "containers/PageHome/PageHome2";
-import PageHome3 from "containers/PageHome/PageHome3";
+import HeaderLogged from "components/Header/HeaderLogged";
 
 export const pages: Page[] = [
-  { path: "/", exact: true, component: PageHome2 },
-  { path: "/#", exact: true, component: PageHome2 },
-  { path: "/home2", exact: true, component: PageHome },
-  { path: "/home3", exact: true, component: PageHome3 },
-  //
-  { path: "/home-header-2", exact: true, component: PageHome },
+  { path: "/", exact: true, component: PageHome },
+  { path: "/#", exact: true, component: PageHome },
   { path: "/nft-detailt", component: NftDetailPage },
   { path: "/page-collection", component: PageCollection },
   { path: "/page-search", component: PageSearch },
@@ -50,9 +44,9 @@ export const pages: Page[] = [
 
 const Routes = () => {
   return (
-    <BrowserRouter basename="/ciscryp">
+    <BrowserRouter basename="/">
       <ScrollToTop />
-      <SiteHeader />
+      <HeaderLogged />
       <Switch>
         {pages.map(({ component, path, exact }) => {
           return (

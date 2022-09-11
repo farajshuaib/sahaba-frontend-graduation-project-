@@ -1,10 +1,13 @@
 import { Popover, Transition } from "@headlessui/react";
+import { useWeb3React } from "@web3-react/core";
 import { avatarImgs } from "contains/fakeData";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "shared/Avatar/Avatar";
 
 export default function AvatarDropdown() {
+  const { account } = useWeb3React();
+
   return (
     <div className="AvatarDropdown">
       <Popover className="relative">
@@ -14,7 +17,7 @@ export default function AvatarDropdown() {
               className={`inline-flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
             >
               <Avatar
-                imgUrl={avatarImgs[7]}
+                imgUrl={avatarImgs[10]}
                 sizeClass="w-8 h-8 sm:w-9 sm:h-9"
               />
             </Popover.Button>
@@ -28,14 +31,18 @@ export default function AvatarDropdown() {
               leaveTo="opacity-0 translate-y-1"
             >
               <Popover.Panel className="absolute z-10 w-screen max-w-[260px] px-4 mt-3 -right-10 sm:right-0 sm:px-0">
-                <div className="overflow-hidden rounded-3xl shadow-lg ring-1 ring-black ring-opacity-5">
-                  <div className="relative grid grid-cols-1 gap-6 bg-white dark:bg-neutral-800 py-7 px-6">
+                <div className="overflow-hidden shadow-lg rounded-3xl ring-1 ring-black ring-opacity-5">
+                  <div className="relative grid grid-cols-1 gap-6 px-6 bg-white dark:bg-neutral-800 py-7">
                     <div className="flex items-center space-x-3">
-                      <Avatar imgUrl={avatarImgs[7]} sizeClass="w-12 h-12" />
+                      <Avatar imgUrl={avatarImgs[10]} sizeClass="w-12 h-12" />
 
                       <div className="flex-grow">
                         <h4 className="font-semibold">Eden Tuan</h4>
-                        <p className="text-xs mt-0.5">0xc4c16ab5ac7d...b21a</p>
+                        <p className="text-xs mt-0.5">
+                          {account?.slice(0, 10) +
+                            "..." +
+                            account?.slice(10, 15)}
+                        </p>
                       </div>
                     </div>
 

@@ -1,4 +1,4 @@
-import rightImg from "images/about-hero-right.png";
+import rightImg from "assets/images/about-hero-right.png";
 import React, { FC } from "react";
 import SectionFounder from "./SectionFounder";
 import SectionStatistic from "./SectionStatistic";
@@ -20,13 +20,13 @@ const PageAbout: FC<PageAboutProps> = ({ className = "" }) => {
       data-nc-id="PageAbout"
     >
       <Helmet>
-        <title>About || Ciscryp React Template</title>
+        <title>About || Sahaba React Template</title>
       </Helmet>
 
       {/* ======== BG GLASS ======== */}
       <BgGlassmorphism />
 
-      <div className="container py-16 lg:py-28 space-y-16 lg:space-y-28">
+      <div className="container py-16 space-y-16 lg:py-28 lg:space-y-28">
         <SectionHero
           rightImg={rightImg}
           heading="👋 About Us."

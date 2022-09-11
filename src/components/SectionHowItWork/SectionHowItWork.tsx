@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 import NcImage from "shared/NcImage/NcImage";
-import HIW1img from "images/HIW1img.png";
-import HIW2img from "images/HIW2img.png";
-import HIW3img from "images/HIW3img.png";
-import HIW4img from "images/HIW4img.png";
-import VectorImg from "images/VectorHIW.svg";
+import HIW1img from "assets/images/HIW1img.png";
+import HIW2img from "assets/images/HIW2img.png";
+import HIW3img from "assets/images/HIW3img.png";
+import HIW4img from "assets/images/HIW4img.png";
+import VectorImg from "assets/images/VectorHIW.svg";
 import Badge from "shared/Badge/Badge";
 
 export interface SectionHowItWorkProps {
@@ -52,9 +52,9 @@ const SectionHowItWork: FC<SectionHowItWorkProps> = ({
       className={`nc-SectionHowItWork  ${className}`}
       data-nc-id="SectionHowItWork"
     >
-      <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-16 xl:gap-20">
+      <div className="relative grid gap-10 sm:grid-cols-2 lg:grid-cols-4 sm:gap-16 xl:gap-20">
         <img
-          className="hidden md:block absolute inset-x-0 -top-1"
+          className="absolute inset-x-0 hidden md:block -top-1"
           src={VectorImg}
           alt="vector"
         />
@@ -67,7 +67,7 @@ const SectionHowItWork: FC<SectionHowItWorkProps> = ({
               containerClassName="mb-5 sm:mb-10 lg:mb-20 max-w-[200px] mx-auto"
               src={item.img}
             />
-            <div className="text-center mt-auto space-y-5">
+            <div className="mt-auto space-y-5 text-center">
               <Badge
                 name={`Step ${index + 1}`}
                 color={

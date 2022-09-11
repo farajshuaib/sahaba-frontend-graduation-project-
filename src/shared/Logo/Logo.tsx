@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logoImg from "images/logo.svg";
-import logoLightImg from "images/logo-light.svg";
+import logoImg from "assets/images/logo.svg";
+import logoLightImg from "assets/images/logo-light.svg";
 
 export interface LogoProps {
   img?: string;

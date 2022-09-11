@@ -1,7 +1,7 @@
 import React, { FC } from "react";
-import facebookSvg from "images/Facebook.svg";
-import twitterSvg from "images/Twitter.svg";
-import googleSvg from "images/Google.svg";
+import facebookSvg from "assets/images/Facebook.svg";
+import twitterSvg from "assets/images/Twitter.svg";
+import googleSvg from "assets/images/Google.svg";
 import { Helmet } from "react-helmet";
 import Input from "shared/Input/Input";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
@@ -33,7 +33,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
   return (
     <div className={`nc-PageSignUp  ${className}`} data-nc-id="PageSignUp">
       <Helmet>
-        <title>Sign up || Ciscryp React Template</title>
+        <title>Sign up || Sahaba React Template</title>
       </Helmet>
       <div className="container mb-24 lg:mb-32">
         <h2 className="my-20 flex items-center text-3xl leading-[115%] md:text-5xl md:leading-[115%] font-semibold text-neutral-900 dark:text-neutral-100 justify-center">
@@ -52,7 +52,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                   src={item.icon}
                   alt={item.name}
                 />
-                <h3 className="flex-grow text-center text-sm font-medium text-neutral-700 dark:text-neutral-300 sm:text-sm">
+                <h3 className="flex-grow text-sm font-medium text-center text-neutral-700 dark:text-neutral-300 sm:text-sm">
                   {item.name}
                 </h3>
               </a>
@@ -60,10 +60,10 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
           </div>
           {/* OR */}
           <div className="relative text-center">
-            <span className="relative z-10 inline-block px-4 font-medium text-sm bg-white dark:text-neutral-400 dark:bg-neutral-900">
+            <span className="relative z-10 inline-block px-4 text-sm font-medium bg-white dark:text-neutral-400 dark:bg-neutral-900">
               OR
             </span>
-            <div className="absolute left-0 w-full top-1/2 transform -translate-y-1/2 border border-neutral-100 dark:border-neutral-800"></div>
+            <div className="absolute left-0 w-full transform -translate-y-1/2 border top-1/2 border-neutral-100 dark:border-neutral-800"></div>
           </div>
           {/* FORM */}
           <form className="grid grid-cols-1 gap-6" action="#" method="post">
@@ -78,7 +78,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
               />
             </label>
             <label className="block">
-              <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
+              <span className="flex items-center justify-between text-neutral-800 dark:text-neutral-200">
                 Password
               </span>
               <Input type="password" className="mt-1" />

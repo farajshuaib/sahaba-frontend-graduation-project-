@@ -11,7 +11,7 @@ import VerifyIcon from "components/VerifyIcon";
 import { nftsLargeImgs, personNames } from "contains/fakeData";
 import TimeCountDown from "./TimeCountDown";
 import TabDetail from "./TabDetail";
-import collectionPng from "images/nfts/collection.png";
+import collectionPng from "assets/images/nfts/collection.png";
 import ItemTypeVideoIcon from "components/ItemTypeVideoIcon";
 import LikeButton from "components/LikeButton";
 import AccordionInfo from "./AccordionInfo";
@@ -30,28 +30,28 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     return (
       <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
         {/* ---------- 1 ----------  */}
-        <div className="pb-9 space-y-5">
-          <div className="flex justify-between items-center">
+        <div className="space-y-5 pb-9">
+          <div className="flex items-center justify-between">
             <Badge name="Virtual Worlds" color="green" />
             <LikeSaveBtns />
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold">
+          <h2 className="text-2xl font-semibold sm:text-3xl lg:text-4xl">
             BearX #3636
           </h2>
 
           {/* ---------- 4 ----------  */}
-          <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-8 text-sm">
+          <div className="flex flex-col space-y-4 text-sm sm:flex-row sm:items-center sm:space-y-0 sm:space-x-8">
             <div className="flex items-center ">
               <Avatar sizeClass="h-9 w-9" radius="rounded-full" />
               <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
                 <span className="text-sm">Creator</span>
-                <span className="text-neutral-900 dark:text-neutral-200 font-medium flex items-center">
+                <span className="flex items-center font-medium text-neutral-900 dark:text-neutral-200">
                   <span>{personNames[1]}</span>
                   <VerifyIcon iconClass="w-4 h-4" />
                 </span>
               </span>
             </div>
-            <div className="hidden sm:block h-6 border-l border-neutral-200 dark:border-neutral-700"></div>
+            <div className="hidden h-6 border-l sm:block border-neutral-200 dark:border-neutral-700"></div>
             <div className="flex items-center">
               <Avatar
                 imgUrl={collectionPng}
@@ -60,7 +60,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
               />
               <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
                 <span className="text-sm">Collection</span>
-                <span className="text-neutral-900 dark:text-neutral-200 font-medium flex items-center">
+                <span className="flex items-center font-medium text-neutral-900 dark:text-neutral-200">
                   <span>{"The Moon Ape"}</span>
                   <VerifyIcon iconClass="w-4 h-4" />
                 </span>
@@ -78,11 +78,11 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
         {/* PRICE */}
         <div className="pb-9 pt-14">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between">
-            <div className="flex-1 flex flex-col sm:flex-row items-baseline p-6 border-2 border-green-500 rounded-xl relative">
+            <div className="relative flex flex-col items-baseline flex-1 p-6 border-2 border-green-500 sm:flex-row rounded-xl">
               <span className="absolute bottom-full translate-y-1 py-1 px-1.5 bg-white dark:bg-neutral-900 text-sm text-neutral-500 dark:text-neutral-400">
                 Current Bid
               </span>
-              <span className="text-3xl xl:text-4xl font-semibold text-green-500">
+              <span className="text-3xl font-semibold text-green-500 xl:text-4xl">
                 1.000 ETH
               </span>
               <span className="text-lg text-neutral-400 sm:ml-5">
@@ -90,12 +90,12 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
               </span>
             </div>
 
-            <span className="text-sm text-neutral-500 dark:text-neutral-400 ml-5 mt-2 sm:mt-0 sm:ml-10">
+            <span className="mt-2 ml-5 text-sm text-neutral-500 dark:text-neutral-400 sm:mt-0 sm:ml-10">
               [96 in stock]
             </span>
           </div>
 
-          <div className="mt-8 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
+          <div className="flex flex-col mt-8 space-y-2 sm:flex-row sm:space-y-0 sm:space-x-3">
             <ButtonPrimary href={"/connect-wallet"} className="flex-1">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path
@@ -181,8 +181,8 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       data-nc-id="NftDetailPage"
     >
       {/* MAIn */}
-      <main className="container mt-11 flex ">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-14">
+      <main className="container flex mt-11 ">
+        <div className="grid w-full grid-cols-1 gap-10 lg:grid-cols-2 md:gap-14">
           {/* CONTENT */}
           <div className="space-y-8 lg:space-y-10">
             {/* HEADING */}
@@ -192,7 +192,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
                 containerClassName="aspect-w-11 aspect-h-12 rounded-3xl overflow-hidden"
               />
               {/* META TYPE */}
-              <ItemTypeVideoIcon className="absolute left-3 top-3  w-8 h-8 md:w-10 md:h-10" />
+              <ItemTypeVideoIcon className="absolute w-8 h-8 left-3 top-3 md:w-10 md:h-10" />
 
               {/* META FAVORITES */}
               <LikeButton className="absolute right-3 top-3 " />
@@ -202,7 +202,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
           </div>
 
           {/* SIDEBAR */}
-          <div className="pt-10 lg:pt-0 xl:pl-10 border-t-2 border-neutral-200 dark:border-neutral-700 lg:border-t-0">
+          <div className="pt-10 border-t-2 lg:pt-0 xl:pl-10 border-neutral-200 dark:border-neutral-700 lg:border-t-0">
             {renderSection1()}
           </div>
         </div>

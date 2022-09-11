@@ -2,15 +2,15 @@ import Glide from "@glidejs/glide";
 import Heading from "components/Heading/Heading";
 import React, { FC, useId } from "react";
 import { useEffect } from "react";
-import clientSayMain from "images/clientSayMain.png";
-import clientSay1 from "images/clientSay1.png";
-import clientSay2 from "images/clientSay2.png";
-import clientSay3 from "images/clientSay3.png";
-import clientSay4 from "images/clientSay4.png";
-import clientSay5 from "images/clientSay5.png";
-import clientSay6 from "images/clientSay6.png";
-import quotationImg from "images/quotation.png";
-import quotationImg2 from "images/quotation2.png";
+import clientSayMain from "assets/images/clientSayMain.png";
+import clientSay1 from "assets/images/clientSay1.png";
+import clientSay2 from "assets/images/clientSay2.png";
+import clientSay3 from "assets/images/clientSay3.png";
+import clientSay4 from "assets/images/clientSay4.png";
+import clientSay5 from "assets/images/clientSay5.png";
+import clientSay6 from "assets/images/clientSay6.png";
+import quotationImg from "assets/images/quotation.png";
+import quotationImg2 from "assets/images/quotation2.png";
 
 export interface SectionClientSayProps {
   className?: string;
@@ -29,14 +29,14 @@ const DEMO_DATA = [
     clientName: "Lennie Swiffan",
     clientAddress: "London",
     content:
-      "This place is exactly like the picture posted on Ciscrypt. Great service, we had a great stay!",
+      "This place is exactly like the picture posted on Sahabat. Great service, we had a great stay!",
   },
   {
     id: 3,
     clientName: "Berta Emili",
     clientAddress: "Tokyo",
     content:
-      "This place is exactly like the picture posted on Ciscrypt. Great service, we had a great stay!",
+      "This place is exactly like the picture posted on Sahabat. Great service, we had a great stay!",
   },
 ];
 
@@ -92,17 +92,17 @@ const SectionClientSay: FC<SectionClientSayProps> = ({ className = "" }) => {
       <Heading desc="Let's see what people think of Chisfis" isCenter>
         Good news from far away
       </Heading>
-      <div className="relative md:mb-16 max-w-2xl mx-auto">
+      <div className="relative max-w-2xl mx-auto md:mb-16">
         {renderBg()}
         <img className="mx-auto" src={clientSayMain} alt="" />
         <div className={`mt-12 lg:mt-16 relative ${UNIQUE_CLASS}`}>
           <img
-            className="opacity-50 md:opacity-100 absolute -mr-16 lg:mr-3 right-full top-1"
+            className="absolute -mr-16 opacity-50 md:opacity-100 lg:mr-3 right-full top-1"
             src={quotationImg}
             alt=""
           />
           <img
-            className="opacity-50 md:opacity-100 absolute -ml-16 lg:ml-3 left-full top-1"
+            className="absolute -ml-16 opacity-50 md:opacity-100 lg:ml-3 left-full top-1"
             src={quotationImg2}
             alt=""
           />
@@ -111,16 +111,16 @@ const SectionClientSay: FC<SectionClientSayProps> = ({ className = "" }) => {
               {DEMO_DATA.map((item) => (
                 <li
                   key={item.id}
-                  className="glide__slide flex flex-col items-center text-center"
+                  className="flex flex-col items-center text-center glide__slide"
                 >
                   <span className="block text-2xl">{item.content}</span>
                   <span className="block mt-8 text-2xl font-semibold">
                     {item.clientName}
                   </span>
-                  <div className="flex items-center space-x-2 text-lg mt-2 text-neutral-400">
+                  <div className="flex items-center mt-2 space-x-2 text-lg text-neutral-400">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
+                      className="w-6 h-6"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -145,13 +145,13 @@ const SectionClientSay: FC<SectionClientSayProps> = ({ className = "" }) => {
             </ul>
           </div>
           <div
-            className="mt-10 glide__bullets flex items-center justify-center"
+            className="flex items-center justify-center mt-10 glide__bullets"
             data-glide-el="controls[nav]"
           >
             {DEMO_DATA.map((item, index) => (
               <button
                 key={item.id}
-                className="glide__bullet w-2 h-2 rounded-full bg-neutral-300 mx-1 focus:outline-none"
+                className="w-2 h-2 mx-1 rounded-full glide__bullet bg-neutral-300 focus:outline-none"
                 data-glide-dir={`=${index}`}
               ></button>
             ))}

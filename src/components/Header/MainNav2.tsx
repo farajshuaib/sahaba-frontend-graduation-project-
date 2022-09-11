@@ -6,10 +6,13 @@ import Input from "shared/Input/Input";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 import Navigation from "shared/Navigation/Navigation";
+import { useWeb3React } from "@web3-react/core";
 
 export interface MainNav2Props {}
 
 const MainNav2: FC<MainNav2Props> = () => {
+  const { active } = useWeb3React();
+
   return (
     <div className={`nc-MainNav2 relative z-10 ${"onTop "}`}>
       <div className="container relative flex items-center justify-between py-5 space-x-4 xl:space-x-8">
@@ -55,27 +58,41 @@ const MainNav2: FC<MainNav2Props> = () => {
             <Navigation />
             <div className="hidden h-10 border-l sm:block border-neutral-300 dark:border-neutral-6000"></div>
             <SwitchDarkMode />
-            <ButtonPrimary
-              href={"/page-upload-item"}
-              sizeClass="px-4 py-2 sm:px-5"
-            >
-              Create
-            </ButtonPrimary>
-            <ButtonSecondary
-              href={"/connect-wallet"}
-              sizeClass="px-4 py-2 sm:px-5"
-            >
-              Connect Wallet
-            </ButtonSecondary>
+            {active && (
+              <ButtonPrimary
+                href={"/page-upload-item"}
+                sizeClass="px-4 py-2 sm:px-5"
+              >
+                Create
+              </ButtonPrimary>
+            )}
+            {!active && (
+              <ButtonSecondary
+                href={"/connect-wallet"}
+                sizeClass="px-4 py-2 sm:px-5"
+              >
+                Connect Wallet
+              </ButtonSecondary>
+            )}
           </div>
           <div className="flex items-center space-x-1.5 xl:hidden">
-            <ButtonPrimary
-              href={"/page-upload-item"}
-              sizeClass="px-4 py-2 sm:px-5"
-            >
-              Create
-            </ButtonPrimary>
-            <MenuBar />
+            {active && (
+              <ButtonPrimary
+                href={"/page-upload-item"}
+                sizeClass="px-4 py-2 sm:px-5"
+              >
+                Create
+              </ButtonPrimary>
+            )}
+            {!active && (
+              <ButtonSecondary
+                href={"/connect-wallet"}
+                sizeClass="px-4 py-2 sm:px-5"
+              >
+                Connect Wallet
+              </ButtonSecondary>
+            )}
+            {active && <MenuBar />}
           </div>
         </div>
       </div>

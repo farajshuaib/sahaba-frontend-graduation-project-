@@ -5,7 +5,7 @@ export interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
   return (
-    <div id="nc-chifis-header" className="nc-Header w-full z-40">
+    <div id="nc-chifis-header" className="z-40 w-full nc-Header">
       {/* NAV */}
       <MainNav1 isTop />
     </div>

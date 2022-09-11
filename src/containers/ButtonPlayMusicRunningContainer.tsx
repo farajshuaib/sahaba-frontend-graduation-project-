@@ -7,7 +7,7 @@ import {
   addNewIdListAudio,
   selectCurrentMediaRunning,
 } from "app/mediaRunning/mediaRunning";
-import iconPlaying from "images/icon-playing.gif";
+import iconPlaying from "assets/images/icon-playing.gif";
 import isSafariBrowser from "utils/isSafariBrowser";
 
 export interface ButtonPlayMusicRunningContainerProps {
@@ -119,7 +119,7 @@ const ButtonPlayMusicRunningContainer: FC<
     }
 
     return (
-      <span className="z-10 bg-neutral-900 bg-opacity-60 rounded-full flex  items-center justify-center text-xl text-white border border-white w-11 h-11 cursor-pointer">
+      <span className="z-10 flex items-center justify-center text-xl text-white border border-white rounded-full cursor-pointer bg-neutral-900 bg-opacity-60 w-11 h-11">
         <img className="w-5" src={iconPlaying} alt="paused" />
       </span>
     );
