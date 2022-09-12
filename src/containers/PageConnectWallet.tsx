@@ -15,6 +15,9 @@ import { useWeb3React } from "@web3-react/core";
 import { networkParams } from "services/networks";
 import { useAppDispatch } from "app/hooks";
 import { connectToWallet } from "app/account/actions";
+import { switchNetwork } from "utils/functions";
+import { currentNetwork } from "./../constant/index";
+import { useHistory } from "react-router-dom";
 
 export interface PageConnectWalletProps {
   className?: string;
@@ -43,17 +46,21 @@ const plans = [
   // },
 ];
 const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
-  const dispatch = useAppDispatch();
+  const history = useHistory();
+  const web3React = useWeb3React();
   const [showModal, setShowModal] = useState(false);
 
-  const web3React = useWeb3React();
 
   const handleSignIn = async (wallet_item: any) => {
     try {
+      const result = await switchNetwork();
+      if (!result) return;
+      await setTimeout(() => {}, 1000);
       web3React.activate(wallet_item.connector);
       window.localStorage.setItem("provider", wallet_item.provider);
       if (!web3React.error) {
         toast.success("Connecting to wallet has been done successfully!");
+        history.push("/");
         return;
       }
       toast.error(
@@ -66,7 +73,9 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
   };
 
   useEffect(() => {
-    if (web3React.account) dispatch(connectToWallet(web3React.account));
+    if (web3React.account) {
+      history.push("/");
+    }
   }, [web3React.account]);
 
   const renderContent = () => {

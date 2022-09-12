@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
-import { connectToWallet } from "./actions";
+import { connectToWallet, logout } from "./actions";
 
 export interface AccountState {
   userData?: any;
@@ -16,11 +16,11 @@ export const accountSlice = createSlice({
     builder.addCase(connectToWallet.fulfilled, (state, action) => {
       state.userData = action.payload.user;
     });
+    builder.addCase(logout.fulfilled, (state, action) => {
+      state.userData = null;
+    });
   },
 });
-
-// Action creators are generated for each case reducer function
-export const {} = accountSlice.actions;
 
 export const accountData = (state: RootState) => state.account;
 

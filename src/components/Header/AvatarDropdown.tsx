@@ -1,12 +1,23 @@
 import { Popover, Transition } from "@headlessui/react";
 import { useWeb3React } from "@web3-react/core";
+import { logout } from "app/account/actions";
+import { useAppDispatch, useAppSelector,  } from "app/hooks";
 import { avatarImgs } from "contains/fakeData";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "shared/Avatar/Avatar";
 
 export default function AvatarDropdown() {
-  const { account } = useWeb3React();
+  const { account, deactivate } = useWeb3React();
+  const userData:UserData = useAppSelector(state => state.account.userData)
+  const dispatch = useAppDispatch()
+  
+
+
+  const disconnect = async () => {
+    await deactivate()
+    await dispatch(logout())
+  }
 
   return (
     <div className="AvatarDropdown">
@@ -17,7 +28,7 @@ export default function AvatarDropdown() {
               className={`inline-flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
             >
               <Avatar
-                imgUrl={avatarImgs[10]}
+                imgUrl={userData?.profile_photo || avatarImgs[10]}
                 sizeClass="w-8 h-8 sm:w-9 sm:h-9"
               />
             </Popover.Button>
@@ -34,10 +45,10 @@ export default function AvatarDropdown() {
                 <div className="overflow-hidden shadow-lg rounded-3xl ring-1 ring-black ring-opacity-5">
                   <div className="relative grid grid-cols-1 gap-6 px-6 bg-white dark:bg-neutral-800 py-7">
                     <div className="flex items-center space-x-3">
-                      <Avatar imgUrl={avatarImgs[10]} sizeClass="w-12 h-12" />
+                      <Avatar imgUrl={userData?.profile_photo || avatarImgs[10]} sizeClass="w-12 h-12" />
 
                       <div className="flex-grow">
-                        <h4 className="font-semibold">Eden Tuan</h4>
+                        <h4 className="font-semibold">{userData?.username || 'user'}</h4>
                         <p className="text-xs mt-0.5">
                           {account?.slice(0, 10) +
                             "..." +
@@ -237,8 +248,8 @@ export default function AvatarDropdown() {
                     </Link>
 
                     {/* ------------------ 2 --------------------- */}
-                    <Link
-                      to={"/"}
+                    <button
+                      onClick={disconnect}
                       className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                     >
                       <div className="flex items-center justify-center flex-shrink-0 text-neutral-500 dark:text-neutral-300">
@@ -275,7 +286,7 @@ export default function AvatarDropdown() {
                       <div className="ml-4">
                         <p className="text-sm font-medium ">{"Disconnect"}</p>
                       </div>
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </Popover.Panel>

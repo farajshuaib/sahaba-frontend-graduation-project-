@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { meta } from "../types";
 import { useApi } from "./useApi";
-import qs from "qs";
-import { downloadFile } from "../utils";
 // import assert from "assert";
 
 interface Options {
@@ -29,7 +26,7 @@ export function useCrud(url: string, options?: Options) {
     errors: null,
     data: [] as any[],
     item: null as any | null,
-    meta: null as meta | null,
+    meta: null as Meta | null,
   });
 
   const setLoading = (val: boolean) => {
@@ -38,7 +35,7 @@ export function useCrud(url: string, options?: Options) {
 
   const deafultParams: any = {};
 
-  const fetch: any = async (params = deafultParams, query: string) => {
+  const fetch: any = async (params = deafultParams) => {
     setState((prevState) => ({
       ...prevState,
       data: [],
@@ -46,11 +43,9 @@ export function useCrud(url: string, options?: Options) {
       errors: null,
     }));
 
-    let queryParams = query ? qs.parse(query, { plainObjects: true }) : {};
-
     try {
       const { data } = await api.get(url, {
-        params: { ...params, ...queryParams },
+        params: { ...params },
       });
       if (data?.meta) {
         setState((prevState) => ({
@@ -197,62 +192,6 @@ export function useCrud(url: string, options?: Options) {
     }));
   };
 
-  const Export = async ({
-    id,
-    invoice_number,
-    hasExportInUrl,
-  }: {
-    id: string | number;
-    invoice_number?: string;
-    hasExportInUrl?: boolean;
-  }) => {
-    try {
-      if (!id) return;
-      await downloadFile(
-        `${url}${hasExportInUrl ? "" : "/export"}/${id}`,
-        `-${invoice_number || "unknown"}-invoice-${new Date().toLocaleString()}`
-      );
-    } catch (error: any) {
-      if (error.response.status === 404) {
-        toast.error("404 log not found");
-      }
-      if (error.response.data.error) {
-        toast.error(error.response.data.error);
-      } else toast.error(error_message);
-      throw error;
-    }
-  };
-  const exportAll = async (hasExportInUrl?: boolean, query?: string) => {
-    try {
-      await downloadFile(
-        `${url}${hasExportInUrl ? "" : "/export"}`,
-        `invoices-${new Date().toLocaleString()}`,
-        query
-      );
-    } catch (error: any) {
-      throw error;
-    }
-  };
-
-
-  const archive = async (id: string, data?: method_type) => {
-    try {
-      const response = await api.post(`${url}/archive/${id}`, data);
-      if (response.status === 200 || response.status === 201) {
-        toast.success("تمت إضافة البيانات الى الارشيف بنجاح.");
-      }
-      return response;
-    } catch (error: any) {
-      if (error.response.status === 404) {
-        toast.error("404 log not found");
-      }
-      if (error.response.data.error) {
-        toast.error(error.response.data.error);
-      } else toast.error(error_message);
-      return error;
-    }
-  };
-
   return {
     ...state,
     fetch,
@@ -261,8 +200,5 @@ export function useCrud(url: string, options?: Options) {
     update,
     remove,
     setLoading,
-    exportAll,
-    Export,
-    archive,
   };
 }

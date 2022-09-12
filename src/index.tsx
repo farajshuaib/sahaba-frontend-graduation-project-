@@ -7,7 +7,9 @@ import { PersistGate } from "redux-persist/integration/react";
 import { Web3ReactProvider } from "@web3-react/core";
 import { ethers } from "ethers";
 import { ToastContainer } from "react-toastify";
+import { Buffer } from "buffer";
 
+globalThis.Buffer = Buffer;
 //
 import "./styles/index.scss";
 import "./index.css";
@@ -28,23 +30,21 @@ const getLibrary = (provider: any) => {
 };
 
 root.render(
-  <React.StrictMode>
-    <Web3ReactProvider getLibrary={getLibrary}>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <App />
-          <ToastContainer
-            position="top-center"
-            autoClose={5000}
-            hideProgressBar={true}
-            newestOnTop={false}
-            closeOnClick
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
-        </PersistGate>
-      </Provider>
-    </Web3ReactProvider>
-  </React.StrictMode>
+  <Web3ReactProvider getLibrary={getLibrary}>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+      </PersistGate>
+    </Provider>
+  </Web3ReactProvider>
 );
