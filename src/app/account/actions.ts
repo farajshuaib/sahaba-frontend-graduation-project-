@@ -7,8 +7,9 @@ export const connectToWallet = createAsyncThunk(
   "users/connectToWallet",
   async (wallet_address: string, thunkAPI) => {
     const response = await api.post("/connect-wallet", { wallet_address });
-    console.log("response",response)
-    setToken(response.data.token);
+    if (response.data.token) {
+      setToken(response.data.token);
+    }
     return response.data;
   }
 );
