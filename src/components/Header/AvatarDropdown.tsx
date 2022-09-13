@@ -2,7 +2,7 @@ import { Popover, Transition } from "@headlessui/react";
 import { useWeb3React } from "@web3-react/core";
 import { logout } from "app/account/actions";
 import { useAppDispatch, useAppSelector,  } from "app/hooks";
-import { avatarImgs } from "contains/fakeData";
+import { avatarImgs, cloudAvatar } from "contains/fakeData";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "shared/Avatar/Avatar";
@@ -15,8 +15,9 @@ export default function AvatarDropdown() {
 
 
   const disconnect = async () => {
-    await deactivate()
     await dispatch(logout())
+    await deactivate()
+    
   }
 
   return (
@@ -28,7 +29,7 @@ export default function AvatarDropdown() {
               className={`inline-flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
             >
               <Avatar
-                imgUrl={userData?.profile_photo || avatarImgs[10]}
+                imgUrl={userData?.profile_photo || cloudAvatar}
                 sizeClass="w-8 h-8 sm:w-9 sm:h-9"
               />
             </Popover.Button>
@@ -45,7 +46,7 @@ export default function AvatarDropdown() {
                 <div className="overflow-hidden shadow-lg rounded-3xl ring-1 ring-black ring-opacity-5">
                   <div className="relative grid grid-cols-1 gap-6 px-6 bg-white dark:bg-neutral-800 py-7">
                     <div className="flex items-center space-x-3">
-                      <Avatar imgUrl={userData?.profile_photo || avatarImgs[10]} sizeClass="w-12 h-12" />
+                      <Avatar imgUrl={userData?.profile_photo || cloudAvatar} sizeClass="w-12 h-12" />
 
                       <div className="flex-grow">
                         <h4 className="font-semibold">{userData?.username || 'user'}</h4>

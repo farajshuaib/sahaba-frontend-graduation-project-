@@ -17,7 +17,6 @@ export interface AccountPageProps {
 }
 
 const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
-  const { account } = useWeb3React();
   const ipfs = useIpfs();
   const userData = useAppSelector((state) => state.account.userData);
 
@@ -27,12 +26,12 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
 
   useEffect(() => {
     setInitFormState(userData);
-  }, []);
+  }, [userData]);
 
   return (
     <div className={`nc-AccountPage ${className}`} data-nc-id="AccountPage">
       <Helmet>
-        <title>my account</title>
+        <title>My Account</title>
       </Helmet>
       <div className="container">
         <div className="max-w-4xl mx-auto my-12 space-y-8 sm:lg:my-16 lg:my-24 sm:space-y-10">
@@ -99,10 +98,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                           onChange={async (e) => {
                             const file = e.target.files && e.target.files[0];
                             if (!file) return;
-                            const added = await ipfs.add(file, {
-                              progress: (prog) =>
-                                console.log(`received: ${prog}`),
-                            });
+                            const added = await ipfs.add(file);
                             setFieldValue(
                               "profile_photo",
                               `${IPFS_BASE_URL + added.path}`

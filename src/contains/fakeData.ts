@@ -9,6 +9,7 @@ import avatar8 from "assets/images/avatars/Image-8.png";
 import avatar9 from "assets/images/avatars/Image-9.png";
 import avatar10 from "assets/images/avatars/Image-10.png";
 import avatar11 from "assets/images/avatars/avatar.png";
+import cloud from "assets/images/cloud.png";
 //
 import nfts1 from "assets/images/nfts/1.png";
 import nfts2 from "assets/images/nfts/2.png";
@@ -217,6 +218,8 @@ function _getAvatarRd() {
   return avatarImgs[Math.floor(Math.random() * avatarImgs.length)];
 }
 
+const cloudAvatar = cloud
+
 export {
   _getImgRd,
   _getTagNameRd,
@@ -224,4 +227,5 @@ export {
   _getImgHightQualityRd,
   _getTitleRd,
   _getPersonNameRd,
+  cloudAvatar
 };
