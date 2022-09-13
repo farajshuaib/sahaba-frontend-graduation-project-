@@ -49,15 +49,14 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
   const history = useHistory();
   const web3React = useWeb3React();
   const [showModal, setShowModal] = useState(false);
-
+  
 
   const handleSignIn = async (wallet_item: any) => {
     try {
       const result = await switchNetwork();
       if (!result) return;
-      await setTimeout(() => {}, 1000);
       web3React.activate(wallet_item.connector);
-      window.localStorage.setItem("provider", wallet_item.provider);
+      localStorage.setItem("provider", wallet_item.provider);
       if (!web3React.error) {
         toast.success("Connecting to wallet has been done successfully!");
         history.push("/");

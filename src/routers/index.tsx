@@ -20,6 +20,7 @@ import PageSearch from "containers/PageSearch";
 import PageUploadItem from "containers/PageUploadItem";
 import PageConnectWallet from "containers/PageConnectWallet";
 import HeaderLogged from "components/Header/HeaderLogged";
+import { useWeb3React } from "@web3-react/core";
 
 export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
@@ -43,6 +44,8 @@ export const pages: Page[] = [
 ];
 
 const Routes = () => {
+  const { active } = useWeb3React();
+
   return (
     <BrowserRouter basename="/">
       <ScrollToTop />

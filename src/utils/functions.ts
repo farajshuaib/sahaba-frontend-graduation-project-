@@ -1,9 +1,7 @@
-import { currentNetwork } from './../constant/index';
+import { currentNetwork } from "./../constant/index";
 import { toast } from "react-toastify";
 import { ethers, Contract, utils, BigNumber } from "ethers";
 import { networkParams } from "services/networks";
-
-
 
 export const getBalance = async (address: string) => {
   if (!window?.ethereum) {
@@ -34,37 +32,43 @@ export const addTokenAsset = async () => {
   }
 };
 
-export const switchNetwork = async () => {
-  try {
-    await window.ethereum.request({
-      method: "wallet_switchEthereumChain",
-      params: [
-        {
-          chainId: "0x" + (+networkParams[currentNetwork].chainId).toString(16),
-        },
-      ],
-    });
-  } catch (err: any) {
-    // This error code indicates that the chain has not been added to MetaMask
-    if (err.code === 4902) {
+export const switchNetwork = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
       await window.ethereum.request({
-        method: "wallet_addEthereumChain",
+        method: "wallet_switchEthereumChain",
         params: [
           {
-            chainName: networkParams[currentNetwork].networkName,
             chainId:
               "0x" + (+networkParams[currentNetwork].chainId).toString(16),
-            nativeCurrency: networkParams[currentNetwork].nativeCurrency,
-            rpcUrls: networkParams[currentNetwork].rpcUrls,
           },
         ],
       });
-    } else {
-      toast.error(
-        "Please switch to " + networkParams[currentNetwork].networkName
-      );
-      return false;
+      await setTimeout(() => {},100)
+      resolve(true);
+    } catch (err: any) {
+      // This error code indicates that the chain has not been added to MetaMask
+      if (err.code === 4902) {
+        await window.ethereum.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainName: networkParams[currentNetwork].networkName,
+              chainId:
+                "0x" + (+networkParams[currentNetwork].chainId).toString(16),
+              nativeCurrency: networkParams[currentNetwork].nativeCurrency,
+              rpcUrls: networkParams[currentNetwork].rpcUrls,
+            },
+          ],
+        });
+        await setTimeout(() => {},100)
+        resolve(true);
+      } else {
+        toast.error(
+          "Please switch to " + networkParams[currentNetwork].networkName
+        );
+        reject(err);
+      }
     }
-  }
-  return true;
+  });
 };

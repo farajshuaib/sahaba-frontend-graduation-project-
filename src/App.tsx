@@ -3,12 +3,32 @@ import { connectToWallet } from "app/account/actions";
 import { useAppDispatch } from "app/hooks";
 import React, { useEffect } from "react";
 import MyRouter from "routers/index";
+import { injected } from "services/connectors";
+import { networkParams } from "services/networks";
+import { switchNetwork } from "utils/functions";
+
 function App() {
-  const { account } = useWeb3React();
+  const { account, activate, active, error, chainId } = useWeb3React();
   const dispatch = useAppDispatch();
 
+
   useEffect(() => {
-    console.log("account",account)
+    injected.isAuthorized().then(async (isAuthorized) => {
+      if (isAuthorized && !active && !error) {
+        activate(injected);
+      }
+    });
+  }, [activate, active, error]);
+
+  useEffect(() => {
+    injected.isAuthorized().then(async (isAuthorized) => {
+      if (isAuthorized && !chainId) {
+        switchNetwork();
+      }
+    });
+  }, [chainId]);
+
+  useEffect(() => {
     if (account) dispatch(connectToWallet(account));
   }, [account]);
 

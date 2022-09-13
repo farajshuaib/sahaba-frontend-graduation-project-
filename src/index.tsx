@@ -8,6 +8,7 @@ import { Web3ReactProvider } from "@web3-react/core";
 import { ethers } from "ethers";
 import { ToastContainer } from "react-toastify";
 import { Buffer } from "buffer";
+import { Web3Provider } from '@ethersproject/providers'
 
 globalThis.Buffer = Buffer;
 //
@@ -23,7 +24,7 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-const getLibrary = (provider: any) => {
+const getLibrary = (provider: any): Web3Provider => {
   const library = new ethers.providers.Web3Provider(provider);
   library.pollingInterval = 8000; // frequency provider is polling
   return library;
