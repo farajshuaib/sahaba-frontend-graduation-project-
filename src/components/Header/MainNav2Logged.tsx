@@ -13,6 +13,7 @@ export interface MainNav2LoggedProps {}
 
 const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
   const { active } = useWeb3React();
+  
   return (
     <div className={`nc-MainNav2Logged relative z-10 ${"onTop "}`}>
       <div className="container relative flex items-center justify-between py-5 space-x-4 xl:space-x-8">

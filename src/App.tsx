@@ -18,7 +18,7 @@ function App() {
         activate(injected);
       }
     });
-  }, [activate, active, error]);
+  }, []);
 
   useEffect(() => {
     injected.isAuthorized().then(async (isAuthorized) => {

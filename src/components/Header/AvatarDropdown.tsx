@@ -17,7 +17,6 @@ export default function AvatarDropdown() {
   const disconnect = async () => {
     await dispatch(logout())
     await deactivate()
-    
   }
 
   return (
