@@ -7,7 +7,6 @@ import Textarea from "shared/Textarea/Textarea";
 import { Helmet } from "react-helmet";
 import { useAppSelector } from "app/hooks";
 import { Formik } from "formik";
-import { useWeb3React } from "@web3-react/core";
 import useIpfs from "hooks/useIpfs";
 import { IPFS_BASE_URL } from "constant";
 import { useCrud } from "hooks/useCrud";
@@ -22,7 +21,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
 
   const [initFormState, setInitFormState] = useState<UserData>();
 
-  const { update } = useCrud("/profile");
+  const { update } = useCrud("/my-profile");
 
   useEffect(() => {
     setInitFormState(userData);
