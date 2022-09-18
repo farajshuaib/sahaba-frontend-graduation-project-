@@ -65,7 +65,7 @@ const CardAuthorBox3: FC<CardAuthorBox3Props> = ({
         </div>
       </div>
 
-      <Link to={"/page-author"} className="absolute inset-0"></Link>
+      <Link to={"/author"} className="absolute inset-0"></Link>
     </div>
   );
 };

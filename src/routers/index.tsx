@@ -3,22 +3,22 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Page } from "./types";
 import ScrollToTop from "./ScrollToTop";
 import Footer from "shared/Footer/Footer";
-import PageHome from "containers/PageHome/PageHome";
-import Page404 from "containers/Page404/Page404";
-import AuthorPage from "containers/AuthorPage/AuthorPage";
-import AccountPage from "containers/AccountPage/AccountPage";
-import PageContact from "containers/PageContact/PageContact";
-import PageAbout from "containers/PageAbout/PageAbout";
-import PageSignUp from "containers/PageSignUp/PageSignUp";
-import PageLogin from "containers/PageLogin/PageLogin";
-import PageSubcription from "containers/PageSubcription/PageSubcription";
-import BlogPage from "containers/BlogPage/BlogPage";
-import BlogSingle from "containers/BlogPage/BlogSingle";
-import NftDetailPage from "containers/NftDetailPage/NftDetailPage";
-import PageCollection from "containers/PageCollection";
-import PageSearch from "containers/PageSearch";
-import PageUploadItem from "containers/PageUploadItem";
-import PageConnectWallet from "containers/PageConnectWallet";
+import PageHome from "pages/PageHome/PageHome";
+import Page404 from "pages/Page404";
+import AuthorPage from "pages/AuthorPage";
+import AccountPage from "pages/AccountPage";
+import PageContact from "pages/PageContact";
+import PageAbout from "pages/PageAbout/PageAbout";
+import PageSignUp from "pages/PageSignUp";
+import PageLogin from "pages/PageLogin";
+import PageSubcription from "pages/PageSubcription";
+import BlogPage from "pages/BlogPage/BlogPage";
+import BlogSingle from "pages/BlogPage/BlogSingle";
+import NftDetailPage from "pages/NftDetailPage/NftDetailPage";
+import PageCollection from "pages/PageCollection";
+import PageSearch from "pages/PageSearch";
+import PageUploadItem from "pages/PageUploadItem";
+import PageConnectWallet from "pages/PageConnectWallet";
 import HeaderLogged from "components/Header/HeaderLogged";
 import { useWeb3React } from "@web3-react/core";
 
@@ -26,11 +26,11 @@ export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
   { path: "/#", exact: true, component: PageHome },
   { path: "/nft-detailt", component: NftDetailPage },
-  { path: "/page-collection", component: PageCollection },
-  { path: "/page-search", component: PageSearch },
-  { path: "/page-author", component: AuthorPage },
+  { path: "/collection", component: PageCollection },
+  { path: "/search", component: PageSearch },
+  { path: "/author", component: AuthorPage },
   { path: "/account", component: AccountPage },
-  { path: "/page-upload-item", component: PageUploadItem },
+  { path: "/create-nft", component: PageUploadItem },
   { path: "/connect-wallet", component: PageConnectWallet },
   //
   { path: "/blog", component: BlogPage },

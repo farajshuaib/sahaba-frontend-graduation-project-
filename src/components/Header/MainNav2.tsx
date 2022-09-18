@@ -60,7 +60,7 @@ const MainNav2: FC<MainNav2Props> = () => {
             <SwitchDarkMode />
             {active && (
               <ButtonPrimary
-                href={"/page-upload-item"}
+                href={"/create-nft"}
                 sizeClass="px-4 py-2 sm:px-5"
               >
                 Create
@@ -78,7 +78,7 @@ const MainNav2: FC<MainNav2Props> = () => {
           <div className="flex items-center space-x-1.5 xl:hidden">
             {active && (
               <ButtonPrimary
-                href={"/page-upload-item"}
+                href={"/create-nft"}
                 sizeClass="px-4 py-2 sm:px-5"
               >
                 Create

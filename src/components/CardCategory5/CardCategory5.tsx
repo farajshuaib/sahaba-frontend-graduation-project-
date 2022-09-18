@@ -31,7 +31,7 @@ const CardCategory5: FC<CardCategory5Props> = ({
 }) => {
   return (
     <Link
-      to={"/page-collection"}
+      to={"/collection"}
       className={`nc-CardCategory5 flex flex-col ${className}`}
       data-nc-id="CardCategory5"
     >

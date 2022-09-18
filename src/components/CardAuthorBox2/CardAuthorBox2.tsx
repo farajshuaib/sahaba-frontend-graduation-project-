@@ -13,7 +13,7 @@ export interface CardAuthorBox2Props {
 const CardAuthorBox2: FC<CardAuthorBox2Props> = ({ className = "" }) => {
   return (
     <NavLink
-      to={"/page-author"}
+      to={"/author"}
       className={`nc-CardAuthorBox2 flex flex-col overflow-hidden [ nc-box-has-hover ] [ nc-dark-box-bg-has-hover ] ${className}`}
       data-nc-id="CardAuthorBox2"
     >

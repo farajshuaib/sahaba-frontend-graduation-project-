@@ -9,17 +9,17 @@ const otherPageChildMenus: NavItemType[] = [
   },
   {
     id: ncNanoId(),
-    href: "/page-collection",
+    href: "/collection",
     name: "Collection page",
   },
   {
     id: ncNanoId(),
-    href: "/page-search",
+    href: "/search",
     name: "Search page",
   },
   {
     id: ncNanoId(),
-    href: "/page-author",
+    href: "/author",
     name: "Author Profile",
   },
   {
@@ -34,7 +34,7 @@ const otherPageChildMenus: NavItemType[] = [
   },
   {
     id: ncNanoId(),
-    href: "/page-upload-item",
+    href: "/create-nft",
     name: "Upload Item",
   },
   {
@@ -104,7 +104,7 @@ export const NAVIGATION_DEMO_2: NavItemType[] = [
   },
   {
     id: ncNanoId(),
-    href: "/page-search",
+    href: "/search",
     name: "explore",
   },
 ];

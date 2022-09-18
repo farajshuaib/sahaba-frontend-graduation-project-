@@ -4,10 +4,10 @@ export interface LocationStates {
   "/"?: {};
   "/#"?: {};
   "/nft-detailt"?: {};
-  "/page-collection"?: {};
-  "/page-search"?: {};
-  "/page-author"?: {};
-  "/page-upload-item"?: {};
+  "/collection"?: {};
+  "/search"?: {};
+  "/author"?: {};
+  "/create-nft"?: {};
   "/connect-wallet"?: {};
   "/account"?: {};
   "/blog"?: {};

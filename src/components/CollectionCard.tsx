@@ -52,7 +52,7 @@ const CollectionCard: FC<CollectionCardProps> = ({
           />
         </div>
       </div>
-      <Link to={"/page-collection"} className="absolute inset-0"></Link>
+      <Link to={"/collection"} className="absolute inset-0"></Link>
     </div>
   );
 };

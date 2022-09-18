@@ -4,10 +4,10 @@ import twitterSvg from "assets/images/Twitter.svg";
 import googleSvg from "assets/images/Google.svg";
 import { Helmet } from "react-helmet";
 import Input from "shared/Input/Input";
-import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { Link } from "react-router-dom";
+import ButtonPrimary from "shared/Button/ButtonPrimary";
 
-export interface PageSignUpProps {
+export interface PageLoginProps {
   className?: string;
 }
 
@@ -29,23 +29,23 @@ const loginSocials = [
   },
 ];
 
-const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
+const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
   return (
-    <div className={`nc-PageSignUp  ${className}`} data-nc-id="PageSignUp">
+    <div className={`nc-PageLogin ${className}`} data-nc-id="PageLogin">
       <Helmet>
-        <title>Sign up || Sahaba React Template</title>
+        <title>Login || Booking </title>
       </Helmet>
       <div className="container mb-24 lg:mb-32">
         <h2 className="my-20 flex items-center text-3xl leading-[115%] md:text-5xl md:leading-[115%] font-semibold text-neutral-900 dark:text-neutral-100 justify-center">
-          Signup
+          Login
         </h2>
-        <div className="max-w-md mx-auto space-y-6 ">
+        <div className="max-w-md mx-auto space-y-6">
           <div className="grid gap-3">
             {loginSocials.map((item, index) => (
               <a
                 key={index}
                 href={item.href}
-                className=" flex w-full rounded-lg bg-primary-50 dark:bg-neutral-800 px-4 py-3 transform transition-transform sm:px-6 hover:translate-y-[-2px]"
+                className="flex w-full rounded-lg bg-primary-50 dark:bg-neutral-800 px-4 py-3 transform transition-transform sm:px-6 hover:translate-y-[-2px]"
               >
                 <img
                   className="flex-shrink-0"
@@ -80,6 +80,9 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
             <label className="block">
               <span className="flex items-center justify-between text-neutral-800 dark:text-neutral-200">
                 Password
+                <Link to="/forgot-pass" className="text-sm text-green-600">
+                  Forgot password?
+                </Link>
               </span>
               <Input type="password" className="mt-1" />
             </label>
@@ -88,9 +91,9 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
 
           {/* ==== */}
           <span className="block text-center text-neutral-700 dark:text-neutral-300">
-            Already have an account? {` `}
-            <Link className="text-green-600" to="/login">
-              Sign in
+            New user? {` `}
+            <Link className="text-green-600" to="/signup">
+              Create an account
             </Link>
           </span>
         </div>
@@ -99,4 +102,4 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
   );
 };
 
-export default PageSignUp;
+export default PageLogin;

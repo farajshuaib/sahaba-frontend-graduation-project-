@@ -27,10 +27,10 @@ const SectionBecomeAnAuthor: FC<SectionBecomeAnAuthorProps> = ({
           A creative agency that lead and inspire.
         </span>
         <div className="flex mt-6 space-x-2 sm:space-x-5 sm:mt-12">
-          <ButtonPrimary href="/page-upload-item" className="">
+          <ButtonPrimary href="/create-nft" className="">
             Create item
           </ButtonPrimary>
-          <ButtonSecondary href="/page-search" className="">
+          <ButtonSecondary href="/search" className="">
             Discover more
           </ButtonSecondary>
         </div>
