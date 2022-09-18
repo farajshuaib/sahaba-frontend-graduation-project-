@@ -1,5 +1,6 @@
 import { useWeb3React } from "@web3-react/core";
 import { connectToWallet } from "app/account/actions";
+import { getCategories } from "app/general/actions";
 import { useAppDispatch } from "app/hooks";
 import React, { useEffect } from "react";
 import MyRouter from "routers/index";
@@ -18,7 +19,9 @@ function App() {
         activate(injected);
       }
     });
+    dispatch(getCategories());
   }, []);
+
 
   useEffect(() => {
     injected.isAuthorized().then(async (isAuthorized) => {

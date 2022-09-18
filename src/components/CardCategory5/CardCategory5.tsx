@@ -8,6 +8,7 @@ export interface CardCategory5Props {
   featuredImage?: string;
   name: string;
   index: number;
+  nft_count: number
 }
 
 const COLORS = [
@@ -27,6 +28,7 @@ const CardCategory5: FC<CardCategory5Props> = ({
   className = "",
   featuredImage = images1,
   name,
+  nft_count,
   index,
 }) => {
   return (
@@ -55,7 +57,7 @@ const CardCategory5: FC<CardCategory5Props> = ({
           <span
             className={`block mt-1 text-sm text-neutral-6000 dark:text-neutral-400`}
           >
-            {Math.floor(Math.random() * 1000 + 1000)} NFTs
+            {nft_count} NFTs
           </span>
         </div>
       </div>

@@ -3,10 +3,11 @@ import { ComponentType } from "react";
 export interface LocationStates {
   "/"?: {};
   "/#"?: {};
-  "/nft-detailt"?: {};
-  "/collection"?: {};
+  "/nft-detailt/:id"?: {};
+  "/create-collection"?:{};
+  "/collection/:id"?: {};
   "/search"?: {};
-  "/author"?: {};
+  "/author/:id"?: {};
   "/create-nft"?: {};
   "/connect-wallet"?: {};
   "/account"?: {};

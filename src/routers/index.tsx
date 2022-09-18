@@ -20,15 +20,16 @@ import PageSearch from "pages/PageSearch";
 import PageUploadItem from "pages/PageUploadItem";
 import PageConnectWallet from "pages/PageConnectWallet";
 import HeaderLogged from "components/Header/HeaderLogged";
-import { useWeb3React } from "@web3-react/core";
+import PageCreateCollection from "pages/PageCreateCollection";
 
 export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
   { path: "/#", exact: true, component: PageHome },
-  { path: "/nft-detailt", component: NftDetailPage },
-  { path: "/collection", component: PageCollection },
+  { path: "/nft-detailt/:id", component: NftDetailPage },
+  { path: "/collection/:id", component: PageCollection },
+  { path: "/create-collection", component: PageCreateCollection },
   { path: "/search", component: PageSearch },
-  { path: "/author", component: AuthorPage },
+  { path: "/author/:id", component: AuthorPage },
   { path: "/account", component: AccountPage },
   { path: "/create-nft", component: PageUploadItem },
   { path: "/connect-wallet", component: PageConnectWallet },
@@ -44,7 +45,6 @@ export const pages: Page[] = [
 ];
 
 const Routes = () => {
-  const { active } = useWeb3React();
 
   return (
     <BrowserRouter basename="/">

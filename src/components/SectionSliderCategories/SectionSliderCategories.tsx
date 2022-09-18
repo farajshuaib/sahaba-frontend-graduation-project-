@@ -3,6 +3,7 @@ import Heading from "components/Heading/Heading";
 import Glide from "@glidejs/glide";
 import CardCategory5 from "components/CardCategory5/CardCategory5";
 import { nftsCatImgs } from "contains/fakeData";
+import {  useAppSelector } from "app/hooks";
 
 export interface SectionSliderCategoriesProps {
   className?: string;
@@ -11,15 +12,7 @@ export interface SectionSliderCategoriesProps {
   subHeading?: string;
 }
 
-const ntfsCatNames = [
-  "Arts",
-  "Entertainment",
-  "Music",
-  "News",
-  "Science",
-  "Sports",
-  "Technology",
-];
+
 
 const SectionSliderCategories: FC<SectionSliderCategoriesProps> = ({
   heading = "Browse by category",
@@ -30,6 +23,11 @@ const SectionSliderCategories: FC<SectionSliderCategoriesProps> = ({
   const sliderRef = useRef(null);
   const id = useId();
   const UNIQUE_CLASS = "glidejs" + id.replace(/:/g, "_");
+  const categories = useAppSelector((state) => state.general.categories)
+
+
+
+ 
 
   useEffect(() => {
     if (!sliderRef.current) {
@@ -77,12 +75,13 @@ const SectionSliderCategories: FC<SectionSliderCategoriesProps> = ({
         </Heading>
         <div className="glide__track" data-glide-el="track">
           <ul className="glide__slides">
-            {[1, 1, 1, 1, 1, 1].map((item, index) => (
+            {categories && categories.map((item: Category, index: number) => (
               <li key={index} className={`glide__slide ${itemClassName}`}>
                 <CardCategory5
                   index={index}
-                  featuredImage={nftsCatImgs[index]}
-                  name={`${ntfsCatNames[index]}`}
+                  featuredImage={item.icon}
+                  nft_count={item.nfts_count}
+                  name={item.name}
                 />
               </li>
             ))}

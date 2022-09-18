@@ -42,7 +42,7 @@ interface Contract_methods {
   deployed: () => void;
   collectionName: string;
   collectionNameSymbol: string;
-  createAndListToken: (tokenURI:string, price : number) => number; // tokenID
+  createAndListToken: (tokenURI:string, price : number, collection_id: number) => number; // tokenID
   buyToken: (tokenId: number) => void;
   changeTokenPrice: (tokenId: number, newPrice:number) => void; // you must be the owner of the token
   getListingPrice: () => number;
@@ -50,5 +50,14 @@ interface Contract_methods {
   getTokenOwner: (tokenId: number) => string;
   getTokenURI: (tokenId: number) => string;
   getTotalNumberOfTokensOwnedByAnAddress: (owner: string) => number;
-  getTokenExists: (tokenId: number) => boolean
+  getTokenExists: (tokenId: number) => boolean;
+  createCollection: (name: string) => number
+}
+
+
+interface Category {
+  name:string,
+  icon: string,
+  collections_count: number,
+  nfts_count:number
 }
