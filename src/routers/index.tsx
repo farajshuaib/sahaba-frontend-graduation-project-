@@ -17,6 +17,7 @@ import PageUploadItem from "pages/PageUploadItem";
 import PageConnectWallet from "pages/PageConnectWallet";
 import HeaderLogged from "components/Header/HeaderLogged";
 import PageCreateCollection from "pages/PageCreateCollection";
+import MyProfile from "pages/MyProfile";
 
 export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
@@ -29,6 +30,7 @@ export const pages: Page[] = [
   { path: "/account", component: AccountPage },
   { path: "/create-nft", component: PageUploadItem },
   { path: "/connect-wallet", component: PageConnectWallet },
+  { path: "/my-profile", component: MyProfile },
   //
   //
   { path: "/contact", component: PageContact },

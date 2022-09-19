@@ -1,24 +1,37 @@
 export const networkParams = {
-  "137": {
-    chainId: "137",
-    rpcUrls: ["https://polygon-rpc.com/"],
-    chainName: "polygon Chain",
-    networkName: "Polygon",
-    nativeCurrency: { name: "MATIC", decimals: 18, symbol: "MATIC" },
-    blockExplorerUrls: ["https://polygonscan.com/"],
+  "1": {
+    chainId: "1",
+    networkName: "Ethereum Mainnet",
+    rpcUrls: ["https://mainnet.infura.io/v3/"],
+    chainName: "ETH",
+    nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },
+    blockExplorerUrls: ["https://etherscan.io"],
     iconUrls: [],
   },
-  "80001": {
-    chainId: "80001",
-    rpcUrls: ["https://rpc-mumbai.matic.today"],
-    chainName: "polygon - Testnet",
-    networkName: "Mumbai",
+  "5": {
+    chainId: "5",
+    networkName: "Goerli Test Network",
+    rpcUrls: ["https://goerli.infura.io/v3"],
+    chainName: "ETH",
     nativeCurrency: {
-      name: "MATIC",
-      symbol: "MATIC",
+      name: "ETH",
+      symbol: "ETH",
       decimals: 18,
     },
-    blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+    blockExplorerUrls: ["https://goerli.etherscan.io"],
+    iconUrls: [],
+  },
+  "3": {
+    chainId: "3",
+    networkName: "Ropsten Test Network",
+    rpcUrls: ["https://ropsten.infura.io/v3/"],
+    chainName: "RopstenETH",
+    nativeCurrency: {
+      name: "ETH",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    blockExplorerUrls: ["https://ropsten.etherscan.io"],
     iconUrls: [],
   },
 };

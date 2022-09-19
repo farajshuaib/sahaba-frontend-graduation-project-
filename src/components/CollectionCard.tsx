@@ -8,10 +8,12 @@ import VerifyIcon from "./VerifyIcon";
 export interface CollectionCardProps {
   className?: string;
   imgs?: string[];
+  collection: Collection;
 }
 
 const CollectionCard: FC<CollectionCardProps> = ({
   className,
+  collection,
   imgs = [nftsImgs[9], nftsImgs[10], nftsImgs[11], nftsImgs[8]],
 }) => {
   return (
@@ -34,25 +36,41 @@ const CollectionCard: FC<CollectionCardProps> = ({
         </div>
         {/* TITLE */}
         <h2 className="font-semibold text-3xl mt-1.5 text-white">
-          Awesome collection
+          {collection.name} 
         </h2>
         {/* LISTS */}
         <div className="grid grid-cols-3 gap-4 mt-5">
-          <NcImage
-            containerClassName="w-full h-20 rounded-xl overflow-hidden"
-            src={imgs[1]}
-          />
-          <NcImage
-            containerClassName="w-full h-20 rounded-xl overflow-hidden"
-            src={imgs[2]}
-          />
-          <NcImage
-            containerClassName="w-full h-20 rounded-xl overflow-hidden"
-            src={imgs[3]}
-          />
+          {collection.nfts.length > 0 ? (
+            <>
+              {collection.nfts.map((nft) => (
+                <NcImage
+                  containerClassName="w-full h-20 rounded-xl overflow-hidden"
+                  src={nft.file_url}
+                />
+              ))}
+            </>
+          ) : (
+            <>
+              <NcImage
+                containerClassName="w-full h-20 rounded-xl overflow-hidden"
+                src={imgs[1]}
+              />
+              <NcImage
+                containerClassName="w-full h-20 rounded-xl overflow-hidden"
+                src={imgs[2]}
+              />
+              <NcImage
+                containerClassName="w-full h-20 rounded-xl overflow-hidden"
+                src={imgs[3]}
+              />{" "}
+            </>
+          )}
         </div>
       </div>
-      <Link to={"/collection"} className="absolute inset-0"></Link>
+      <Link
+        to={`/collection/${collection.id}`}
+        className="absolute inset-0"
+      ></Link>
     </div>
   );
 };

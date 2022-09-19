@@ -1,19 +1,5 @@
-
-// contract url: https://mumbai.polygonscan.com/address/0x47c0e6E237f15301d26726eF82bB86cAAD40B22a#code
-// contract address : 0x47c0e6E237f15301d26726eF82bB86cAAD40B22a
-
-
-interface UserData {
-  wallet_address: string;
-  username: string;
-  email: string;
-  bio: string;
-  facebook_url: string;
-  website_url: string;
-  twitter_url: string;
-  telegram_url: string;
-  profile_photo: string;
-}
+// contract url: https://ropsten.etherscan.io/address/0xDf1268Cc9472305cDD2fb700B6A91CDdB43751DE#code
+// contract address : 0xDf1268Cc9472305cDD2fb700B6A91CDdB43751DE
 
 interface Meta {
   count: number;
@@ -25,7 +11,6 @@ interface Meta {
   total: number;
   current_page?: number;
 }
-
 
 interface Contract_NFT {
   tokenId: number;
@@ -42,23 +27,62 @@ interface Contract_methods {
   deployed: () => void;
   collectionName: string;
   collectionNameSymbol: string;
-  createAndListToken: (tokenURI:string, price : number, collection_id: number) => number; // tokenID
+  createAndListToken: (
+    tokenURI: string,
+    price: number,
+    collection_id: number
+  ) => number; // tokenID
   buyToken: (tokenId: number) => void;
-  changeTokenPrice: (tokenId: number, newPrice:number) => void; // you must be the owner of the token
+  changeTokenPrice: (tokenId: number, newPrice: number) => void; // you must be the owner of the token
   getListingPrice: () => number;
   setListingPrice: (newPrice: number) => number;
   getTokenOwner: (tokenId: number) => string;
   getTokenURI: (tokenId: number) => string;
   getTotalNumberOfTokensOwnedByAnAddress: (owner: string) => number;
   getTokenExists: (tokenId: number) => boolean;
-  createCollection: (name: string) => number
+  createCollection: (name: string) => number;
 }
 
-
 interface Category {
-  id: number,
-  name:string,
-  icon: string,
-  collections_count: number,
-  nfts_count:number
+  id: number;
+  name: string;
+  icon: string;
+  collections_count: number;
+  nfts_count: number;
+}
+
+interface Collection {
+  id: number;
+  banner_image: string;
+  collection_token_id: number;
+  description: string;
+  facebook_url: string | null;
+  instagram_url: string | null;
+  is_sensitive_content: boolean | 0 | 1;
+  logo_image: string;
+  name: string;
+  telegram_url: string | null;
+  twitter_url: string | null;
+  website_url: string | null;
+  nfts: []
+}
+
+interface UserData {
+  id: number;
+  wallet_address: string;
+  username: string;
+  email: string;
+  bio: string;
+  facebook_url: string;
+  website_url: string;
+  twitter_url: string;
+  telegram_url: string;
+  profile_photo: string;
+  is_verified: boolean | 0 | 1;
+  status: "enabled";
+  collections?: Collection[];
+  followers?: [];
+  following?: [];
+  liked_nfts?: [];
+  nfts?: [];
 }

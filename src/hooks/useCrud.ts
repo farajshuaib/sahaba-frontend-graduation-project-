@@ -61,14 +61,14 @@ export function useCrud(url: string, options?: Options) {
           data: data.data ? data.data : data,
         }));
       }
-      return (state.data as any[]) ?? [];
+      return state.data ?? [];
     } catch (error: any) {
       if (error.response.status === 404) {
         toast.error("404 log not found");
       }
       if (error.response.data.error) {
         toast.error(error.response.data.error);
-      } else toast.error(error_message);
+      }
       setState((prevState) => ({
         ...prevState,
         loading: false,

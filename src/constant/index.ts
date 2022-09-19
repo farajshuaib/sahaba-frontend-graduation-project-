@@ -1,6 +1,6 @@
 import abi from "../contracts/abi.json"
 
-export const currentNetwork:number = 80001;
+export const currentNetwork:number = 3;
 export const IPFS_BASE_URL:string = "https://ipfs.io/ipfs/";
-export const CONTRACT_ADDRESS:string = "0x47c0e6e237f15301d26726ef82bb86caad40b22a";
+export const CONTRACT_ADDRESS:string = "0xDf1268Cc9472305cDD2fb700B6A91CDdB43751DE";
 export const CONTRACT_ABI = abi
