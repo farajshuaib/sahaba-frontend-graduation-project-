@@ -11,12 +11,8 @@ export interface LocationStates {
   "/create-nft"?: {};
   "/connect-wallet"?: {};
   "/account"?: {};
-  "/blog"?: {};
-  "/blog-single"?: {};
   "/about"?: {};
   "/contact"?: {};
-  "/login"?: {};
-  "/signup"?: {};
   "/forgot-pass"?: {};
   "/page404"?: {};
   "/subscription"?: {};

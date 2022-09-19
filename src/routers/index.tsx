@@ -9,11 +9,7 @@ import AuthorPage from "pages/AuthorPage";
 import AccountPage from "pages/AccountPage";
 import PageContact from "pages/PageContact";
 import PageAbout from "pages/PageAbout/PageAbout";
-import PageSignUp from "pages/PageSignUp";
-import PageLogin from "pages/PageLogin";
 import PageSubcription from "pages/PageSubcription";
-import BlogPage from "pages/BlogPage/BlogPage";
-import BlogSingle from "pages/BlogPage/BlogSingle";
 import NftDetailPage from "pages/NftDetailPage/NftDetailPage";
 import PageCollection from "pages/PageCollection";
 import PageSearch from "pages/PageSearch";
@@ -34,13 +30,9 @@ export const pages: Page[] = [
   { path: "/create-nft", component: PageUploadItem },
   { path: "/connect-wallet", component: PageConnectWallet },
   //
-  { path: "/blog", component: BlogPage },
-  { path: "/blog-single", component: BlogSingle },
   //
   { path: "/contact", component: PageContact },
   { path: "/about", component: PageAbout },
-  { path: "/signup", component: PageSignUp },
-  { path: "/login", component: PageLogin },
   { path: "/subscription", component: PageSubcription },
 ];
 

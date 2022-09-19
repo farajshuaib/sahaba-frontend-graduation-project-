@@ -56,6 +56,7 @@ interface Contract_methods {
 
 
 interface Category {
+  id: number,
   name:string,
   icon: string,
   collections_count: number,

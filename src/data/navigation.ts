@@ -9,7 +9,7 @@ const otherPageChildMenus: NavItemType[] = [
   },
   {
     id: ncNanoId(),
-    href: "/collection",
+    href: "/collection/:id",
     name: "Collection page",
   },
   {
@@ -19,12 +19,12 @@ const otherPageChildMenus: NavItemType[] = [
   },
   {
     id: ncNanoId(),
-    href: "/author",
+    href: "/author/:id",
     name: "Author Profile",
   },
   {
     id: ncNanoId(),
-    href: "/nft-detailt",
+    href: "/nft-detailt/:id",
     name: "NFT detailt",
   },
   {
@@ -59,16 +59,7 @@ const otherPageChildMenus: NavItemType[] = [
         href: "/contact",
         name: "Contact us",
       },
-      {
-        id: ncNanoId(),
-        href: "/login",
-        name: "Login",
-      },
-      {
-        id: ncNanoId(),
-        href: "/signup",
-        name: "Signup",
-      },
+      
       {
         id: ncNanoId(),
         href: "/subscription",
@@ -76,24 +67,7 @@ const otherPageChildMenus: NavItemType[] = [
       },
     ],
   },
-  {
-    id: ncNanoId(),
-    href: "/blog",
-    name: "Blog Page",
-    type: "dropdown",
-    children: [
-      {
-        id: ncNanoId(),
-        href: "/blog",
-        name: "Blog Page",
-      },
-      {
-        id: ncNanoId(),
-        href: "/blog-single",
-        name: "Blog Single",
-      },
-    ],
-  },
+ 
 ];
 
 export const NAVIGATION_DEMO_2: NavItemType[] = [

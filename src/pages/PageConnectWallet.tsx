@@ -64,7 +64,7 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
       }
       toast.error(
         web3React.error?.message ||
-          "Connecting to wallet has been failed!, you're connecting to unsupported network! please switch to BSC"
+          "Connecting to wallet has been failed!, you're connecting to unsupported network! please switch to polygon network"
       );
     } catch (e: any) {
       toast.error(e || "Connecting to wallet has been failed!");

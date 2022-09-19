@@ -110,7 +110,7 @@ export function useCrud(url: string, options?: Options) {
   const create = async (payload: any) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const { data } = await api.post(`${url}/store`, payload);
+        const { data } = await api.post(`${url}`, payload);
         toast.success("تمت إضافة البيانات بنجاح.");
 
         resolve(data);

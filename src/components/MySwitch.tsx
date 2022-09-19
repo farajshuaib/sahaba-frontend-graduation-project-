@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Switch } from "@headlessui/react";
 import Label from "./Label/Label";
 
@@ -7,6 +7,7 @@ export interface MySwitchProps {
   label?: string;
   desc?: string;
   className?: string;
+  onChange?: (val: boolean) => void;
 }
 
 const MySwitch: FC<MySwitchProps> = ({
@@ -14,8 +15,13 @@ const MySwitch: FC<MySwitchProps> = ({
   label = "Put on sale",
   desc = "You’ll receive bids on this item",
   className = "",
+  onChange,
 }) => {
-  const [enabledState, setEnabledState] = useState(enabled);
+  const [enabledState, setEnabledState] = useState<boolean>(enabled);
+
+  useEffect(() => {
+    if (onChange) onChange(enabledState);
+  }, [enabledState]);
 
   return (
     <div
@@ -23,7 +29,7 @@ const MySwitch: FC<MySwitchProps> = ({
     >
       <div>
         <Label>{label}</Label>
-        <p className="text-neutral-500 dark:text-neutral-400  text-xs">
+        <p className="text-xs text-neutral-500 dark:text-neutral-400">
           {desc}
         </p>
       </div>

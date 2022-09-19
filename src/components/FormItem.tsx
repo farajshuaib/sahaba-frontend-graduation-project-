@@ -7,6 +7,7 @@ export interface FormItemProps {
   label?: string;
   desc?: ReactNode | string;
   children?: React.ReactNode;
+  htmlFor?: string
 }
 
 const FormItem: FC<FormItemProps> = ({
@@ -14,10 +15,11 @@ const FormItem: FC<FormItemProps> = ({
   className = "",
   label,
   desc,
+  htmlFor
 }) => {
   return (
     <div className={className}>
-      {label && <Label>{label}</Label>}
+      {label && <Label htmlFor={htmlFor}>{label}</Label>}
       <div className="mt-1.5">{children}</div>
       {desc && (
         <div className="block mt-3 text-xs text-neutral-500 dark:text-neutral-400 ">
