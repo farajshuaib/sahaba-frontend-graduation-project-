@@ -111,17 +111,15 @@ export function useCrud(url: string, options?: Options) {
     return new Promise(async (resolve, reject) => {
       try {
         const { data } = await api.post(`${url}`, payload);
-        toast.success("تمت إضافة البيانات بنجاح.");
-
+        toast.success("Success!");
         resolve(data);
       } catch (error: any) {
         if (error.response.status === 404) {
-          toast.error("404 log not found");
+          toast.error("404 not found");
         }
-        if (error.response.data.error) {
-          toast.error(error.response.data.error);
-        } else toast.error(error_message);
-
+        if (error.response.data.errors) {
+          toast.error(error.response.data.message || error.response.data.errors.toString());
+        }
         reject(error);
       }
     });
@@ -141,7 +139,7 @@ export function useCrud(url: string, options?: Options) {
     return new Promise(async (resolve, reject) => {
       try {
         const { data } = await api.put(`${url}/${id}`, payload);
-        toast.success("تم تعديل البيانات بنجاح.");
+        toast.success("Success");
         resolve(data);
       } catch (error: any) {
         if (error.response.status === 404) {

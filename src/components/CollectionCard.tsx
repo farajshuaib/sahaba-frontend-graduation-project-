@@ -45,7 +45,7 @@ const CollectionCard: FC<CollectionCardProps> = ({
               {collection.nfts.map((nft) => (
                 <NcImage
                   containerClassName="w-full h-20 rounded-xl overflow-hidden"
-                  src={nft.file_url}
+                  src={nft.file_path}
                 />
               ))}
             </>

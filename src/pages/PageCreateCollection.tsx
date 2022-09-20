@@ -17,7 +17,7 @@ import { CONTRACT_ABI, CONTRACT_ADDRESS, IPFS_BASE_URL } from "constant";
 import { Contract } from "ethers";
 import { useAppSelector } from "app/hooks";
 import Avatar from "shared/Avatar/Avatar";
-import { createCollectionSchema } from "services/validations";
+import { createCollectionSchema, validateImage } from "services/validations";
 
 export interface PageCreateCollectionProps {
   className?: string;
@@ -42,7 +42,6 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
     is_sensitive_content: false,
     category_id: null,
   });
-  const [selected, setSelected] = useState<Category>();
 
   return (
     <div
@@ -118,10 +117,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                     >
                       <div className="space-y-1 text-center">
                         {values.banner_image ? (
-                          <img
-                            src={values.banner_image}
-                            className="object-cover w-24 h-12"
-                          />
+                          <Avatar imgUrl={values.banner_image} />
                         ) : (
                           <svg
                             className="w-12 h-12 mx-auto text-neutral-400"
@@ -151,18 +147,11 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                               accept="image/*"
                               className="sr-only"
                               onChange={async (e) => {
-                                const file =
-                                  e.target.files && e.target.files[0];
-                                if (!file) return;
+                                if (!e.target.files) return;
+                                const file = e.target.files[0];
+                                if (!validateImage(file)) return;
                                 const added = await ipfs.add(file);
-                                console.log(
-                                  "IPFS_BASE_URL + added.path",
-                                  IPFS_BASE_URL + added.path
-                                );
-                                setFieldValue(
-                                  "banner_image",
-                                  `${IPFS_BASE_URL + added.path}`
-                                );
+                                setFieldValue("banner_image", added.path);
                               }}
                             />
                           </label>
@@ -213,13 +202,11 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                       accept="image/*"
                       className="absolute inset-0 opacity-0 cursor-pointer"
                       onChange={async (e) => {
-                        const file = e.target.files && e.target.files[0];
-                        if (!file) return;
+                        if (!e.target.files) return;
+                        const file = e.target.files[0];
+                        if (!validateImage(file)) return;
                         const added = await ipfs.add(file);
-                        setFieldValue(
-                          "logo_image",
-                          `${IPFS_BASE_URL + added.path}`
-                        );
+                        setFieldValue("logo_image", added.path);
                       }}
                     />
                   </div>

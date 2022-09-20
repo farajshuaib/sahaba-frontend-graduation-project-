@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { clearGeneralState, getCollections } from "app/general/actions";
 import { deleteToken, setToken, useApi } from "hooks/useApi";
 
 const api = useApi();
@@ -10,12 +11,14 @@ export const connectToWallet = createAsyncThunk(
     if (response.data.token) {
       setToken(response.data.token);
     }
+    thunkAPI.dispatch(getCollections())
     return response.data;
   }
 );
 
-export const logout = createAsyncThunk("users/logout", async () => {
+export const logout = createAsyncThunk("users/logout", async (_, thunkAPI) => {
   const response = await api.post("/logout");
   deleteToken();
+  thunkAPI.dispatch(clearGeneralState())
   return response.data;
 });

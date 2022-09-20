@@ -1,4 +1,4 @@
-// contract url: https://ropsten.etherscan.io/address/0xDf1268Cc9472305cDD2fb700B6A91CDdB43751DE#code
+// https://goerli.etherscan.io/address/0xDf1268Cc9472305cDD2fb700B6A91CDdB43751DE#code
 // contract address : 0xDf1268Cc9472305cDD2fb700B6A91CDdB43751DE
 
 interface Meta {
@@ -56,7 +56,7 @@ interface Nft {
   title: string;
   creator_address: string;
   description: string;
-  file_url: string;
+  file_path: string;
   file_type: 'image' | 'audio' | 'video';
   collection: Collection;
   user: UserData;

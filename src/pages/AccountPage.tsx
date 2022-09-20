@@ -10,6 +10,7 @@ import { Formik } from "formik";
 import useIpfs from "hooks/useIpfs";
 import { IPFS_BASE_URL } from "constant";
 import { useCrud } from "hooks/useCrud";
+import { validateImage } from "services/validations";
 
 export interface AccountPageProps {
   className?: string;
@@ -50,7 +51,6 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
               <Formik
                 initialValues={initFormState}
                 onSubmit={async (values) => {
-                  console.log("values", values);
                   await update({ id: userData.id, payload: values });
                 }}
               >
@@ -95,13 +95,11 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                           accept="image/*"
                           className="absolute inset-0 opacity-0 cursor-pointer"
                           onChange={async (e) => {
-                            const file = e.target.files && e.target.files[0];
-                            if (!file) return;
+                            if (!e.target.files) return;
+                            const file = e.target.files[0];
+                            if (!validateImage(file)) return;
                             const added = await ipfs.add(file);
-                            setFieldValue(
-                              "profile_photo",
-                              `${IPFS_BASE_URL + added.path}`
-                            );
+                            setFieldValue("profile_photo", added.path);
                           }}
                         />
                       </div>

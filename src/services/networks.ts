@@ -21,17 +21,4 @@ export const networkParams = {
     blockExplorerUrls: ["https://goerli.etherscan.io"],
     iconUrls: [],
   },
-  "3": {
-    chainId: "3",
-    networkName: "Ropsten Test Network",
-    rpcUrls: ["https://ropsten.infura.io/v3/"],
-    chainName: "RopstenETH",
-    nativeCurrency: {
-      name: "ETH",
-      symbol: "ETH",
-      decimals: 18,
-    },
-    blockExplorerUrls: ["https://ropsten.etherscan.io"],
-    iconUrls: [],
-  },
 };
