@@ -218,7 +218,6 @@ function _getAvatarRd() {
   return avatarImgs[Math.floor(Math.random() * avatarImgs.length)];
 }
 
-const cloudAvatar = cloud
 
 export {
   _getImgRd,
@@ -227,5 +226,4 @@ export {
   _getImgHightQualityRd,
   _getTitleRd,
   _getPersonNameRd,
-  cloudAvatar
 };

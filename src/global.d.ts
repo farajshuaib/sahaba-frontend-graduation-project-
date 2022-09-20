@@ -51,6 +51,21 @@ interface Category {
   nfts_count: number;
 }
 
+interface Nft {
+  id: number;
+  title: string;
+  creator_address: string;
+  description: string;
+  file_url: string;
+  file_type: 'image' | 'audio' | 'video';
+  collection: Collection;
+  user: UserData;
+  price: number;
+  like_count: number;
+  is_for_sale: boolean;
+  nft_token_id: number;
+}
+
 interface Collection {
   id: number;
   banner_image: string;
@@ -58,13 +73,13 @@ interface Collection {
   description: string;
   facebook_url: string | null;
   instagram_url: string | null;
-  is_sensitive_content: boolean | 0 | 1;
+  is_sensitive_content: boolean;
   logo_image: string;
   name: string;
   telegram_url: string | null;
   twitter_url: string | null;
   website_url: string | null;
-  nfts: []
+  nfts: Nft[];
 }
 
 interface UserData {
@@ -78,11 +93,11 @@ interface UserData {
   twitter_url: string;
   telegram_url: string;
   profile_photo: string;
-  is_verified: boolean | 0 | 1;
-  status: "enabled";
+  is_verified: boolean;
+  status: "enabled" | "pending";
   collections?: Collection[];
-  followers?: [];
-  following?: [];
-  liked_nfts?: [];
-  nfts?: [];
+  followers?: Nft[];
+  following?: Nft[];
+  liked_nfts?: Nft[];
+  nfts?: Nft[];
 }

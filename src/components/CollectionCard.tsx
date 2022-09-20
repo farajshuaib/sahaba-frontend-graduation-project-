@@ -36,11 +36,11 @@ const CollectionCard: FC<CollectionCardProps> = ({
         </div>
         {/* TITLE */}
         <h2 className="font-semibold text-3xl mt-1.5 text-white">
-          {collection.name} 
+          {collection?.name} 
         </h2>
         {/* LISTS */}
         <div className="grid grid-cols-3 gap-4 mt-5">
-          {collection.nfts.length > 0 ? (
+          {collection && collection.nfts.length > 0 ? (
             <>
               {collection.nfts.map((nft) => (
                 <NcImage
@@ -68,7 +68,7 @@ const CollectionCard: FC<CollectionCardProps> = ({
         </div>
       </div>
       <Link
-        to={`/collection/${collection.id}`}
+        to={`/collection/${collection?.id}`}
         className="absolute inset-0"
       ></Link>
     </div>

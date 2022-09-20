@@ -2,7 +2,6 @@ import { Popover, Transition } from "@headlessui/react";
 import { useWeb3React } from "@web3-react/core";
 import { logout } from "app/account/actions";
 import { useAppDispatch, useAppSelector,  } from "app/hooks";
-import { avatarImgs, cloudAvatar } from "contains/fakeData";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "shared/Avatar/Avatar";
