@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useState } from "react";
+import React, { FC, Fragment, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import NcImage from "shared/NcImage/NcImage";
@@ -14,27 +14,34 @@ import SocialsList from "shared/SocialsList/SocialsList";
 import FollowButton from "components/FollowButton";
 import VerifyIcon from "components/VerifyIcon";
 import { Tab } from "@headlessui/react";
-import CardAuthorBox3 from "components/CardAuthorBox3/CardAuthorBox3";
-import ArchiveFilterListBox from "components/ArchiveFilterListBox";
 import SectionGridAuthorBox from "components/SectionGridAuthorBox/SectionGridAuthorBox";
+import ProfileTabs from "components/ProfileTabs";
+import { useCrud } from "hooks/useCrud";
+import { useParams } from "react-router-dom";
+import { useAppSelector } from "app/hooks";
+import VerifyAccount from "components/VerifyAccount";
 
 export interface AuthorPageProps {
   className?: string;
 }
 
 const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
-  let [categories] = useState([
-    "Collectibles",
-    "Created",
-    "Liked",
-    "Following",
-    "Followers",
-  ]);
+  const userData: UserData = useAppSelector((state) => state.account.userData);
+  const params: any = useParams();
+  const { fetchById, loading, item } = useCrud("/users");
+
+  useEffect(() => {
+    if (params.id) fetchById(params?.id);
+  }, [params.id]);
+
+  if (loading) {
+    return <></>;
+  }
 
   return (
     <div className={`nc-AuthorPage  ${className}`} data-nc-id="AuthorPage">
       <Helmet>
-        <title>Creator || Sahaba NFT Template</title>
+        <title>{item?.username || "profile"}</title>
       </Helmet>
 
       {/* HEADER */}
@@ -50,22 +57,24 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
           <div className="relative bg-white dark:bg-neutral-900 dark:border dark:border-neutral-700 p-5 lg:p-8 rounded-3xl md:rounded-[40px] shadow-xl flex flex-col md:flex-row">
             <div className="flex-shrink-0 w-32 mt-12 lg:w-44 sm:mt-0">
               <NcImage
-                src={nftsImgs[2]}
+                src={item?.profile_image}
                 containerClassName="aspect-w-1 aspect-h-1 rounded-3xl overflow-hidden"
               />
             </div>
             <div className="flex-grow pt-5 md:pt-1 md:ml-6 xl:ml-14">
               <div className="max-w-screen-sm ">
                 <h2 className="inline-flex items-center text-2xl font-semibold sm:text-3xl lg:text-4xl">
-                  <span>Dony Herrera</span>
-                  <VerifyIcon
-                    className="ml-2"
-                    iconClass="w-6 h-6 sm:w-7 sm:h-7 xl:w-8 xl:h-8"
-                  />
+                  <span>{item?.username || "user"}</span>
+                  {item?.is_verified && (
+                    <VerifyIcon
+                      className="ml-2"
+                      iconClass="w-6 h-6 sm:w-7 sm:h-7 xl:w-8 xl:h-8"
+                    />
+                  )}
                 </h2>
                 <div className="flex items-center text-sm font-medium space-x-2.5 mt-2.5 text-green-600 cursor-pointer">
                   <span className="text-neutral-700 dark:text-neutral-300">
-                    4.0xc4c16ac453sa645a...b21a{" "}
+                    {item?.wallet_address}
                   </span>
                   <svg width="20" height="21" viewBox="0 0 20 21" fill="none">
                     <path
@@ -86,8 +95,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
                 </div>
 
                 <span className="block mt-4 text-sm text-neutral-500 dark:text-neutral-400">
-                  Punk #4786 / An OG Cryptopunk Collector, hoarder of NFTs.
-                  Contributing to @ether_cards, an NFT Monetization Platform.
+                  {item?.bio}
                 </span>
               </div>
               <div className="mt-4 ">
@@ -110,11 +118,19 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
                 panelMenusClass="origin-top-right !-right-5 !w-40 sm:!w-52"
               />
 
-              <FollowButton
-                isFollowing={false}
-                fontSize="text-sm md:text-base font-medium"
-                sizeClass="px-4 py-1 md:py-2.5 h-8 md:!h-10 sm:px-6 lg:px-8"
-              />
+              {userData?.id == item?.id ? (
+                <VerifyAccount
+                  isVerified={userData?.is_verified}
+                  fontSize="text-sm md:text-base font-medium"
+                  sizeClass="px-4 py-1 md:py-2.5 h-8 md:!h-10 sm:px-6 lg:px-8"
+                />
+              ) : (
+                <FollowButton
+                  isFollowing={false}
+                  fontSize="text-sm md:text-base font-medium"
+                  sizeClass="px-4 py-1 md:py-2.5 h-8 md:!h-10 sm:px-6 lg:px-8"
+                />
+              )}
             </div>
           </div>
         </div>
@@ -122,104 +138,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
       {/* ====================== END HEADER ====================== */}
 
       <div className="container py-16 space-y-16 lg:pb-28 lg:pt-20 lg:space-y-28">
-        <main>
-          <Tab.Group>
-            <div className="flex flex-col justify-between lg:flex-row ">
-              <Tab.List className="flex space-x-0 overflow-x-auto sm:space-x-2 ">
-                {categories.map((item) => (
-                  <Tab key={item} as={Fragment}>
-                    {({ selected }) => (
-                      <button
-                        className={`flex-shrink-0 block font-medium px-4 py-2 text-sm sm:px-6 sm:py-2.5 capitalize rounded-full focus:outline-none ${
-                          selected
-                            ? "bg-neutral-900 dark:bg-neutral-100 text-neutral-50 dark:text-neutral-900"
-                            : "text-neutral-500 dark:text-neutral-400 dark:hover:text-neutral-100 hover:text-neutral-900 hover:bg-neutral-100/70 dark:hover:bg-neutral-800"
-                        } `}
-                      >
-                        {item}
-                      </button>
-                    )}
-                  </Tab>
-                ))}
-              </Tab.List>
-              <div className="flex items-end justify-end mt-5 lg:mt-0">
-                <ArchiveFilterListBox />
-              </div>
-            </div>
-            <Tab.Panels>
-              <Tab.Panel className="">
-                {/* LOOP ITEMS */}
-                <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
-                  {Array.from("11111111").map((_, index) => (
-                    <CardNFT key={index} />
-                  ))}
-                </div>
-
-                {/* PAGINATION */}
-                <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-                  <Pagination />
-                  <ButtonPrimary loading>Show me more</ButtonPrimary>
-                </div>
-              </Tab.Panel>
-              <Tab.Panel className="">
-                {/* LOOP ITEMS */}
-                <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
-                  {Array.from("11111111").map((_, index) => (
-                    <CardNFT key={index} />
-                  ))}
-                </div>
-
-                {/* PAGINATION */}
-                <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-                  <Pagination />
-                  <ButtonPrimary loading>Show me more</ButtonPrimary>
-                </div>
-              </Tab.Panel>
-              <Tab.Panel className="">
-                {/* LOOP ITEMS */}
-                <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
-                  {Array.from("11111111").map((_, index) => (
-                    <CardNFT isLiked key={index} />
-                  ))}
-                </div>
-
-                {/* PAGINATION */}
-                <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-                  <Pagination />
-                  <ButtonPrimary loading>Show me more</ButtonPrimary>
-                </div>
-              </Tab.Panel>
-              <Tab.Panel className="">
-                {/* LOOP ITEMS */}
-                <div className="grid gap-8 mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:mt-10">
-                  {Array.from("11111111").map((_, index) => (
-                    <CardAuthorBox3 following key={index} />
-                  ))}
-                </div>
-
-                {/* PAGINATION */}
-                <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-                  <Pagination />
-                  <ButtonPrimary loading>Show me more</ButtonPrimary>
-                </div>
-              </Tab.Panel>
-              <Tab.Panel className="">
-                {/* LOOP ITEMS */}
-                <div className="grid gap-6 mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-8 lg:mt-10">
-                  {Array.from("11111111").map((_, index) => (
-                    <CardAuthorBox3 following={false} key={index} />
-                  ))}
-                </div>
-
-                {/* PAGINATION */}
-                <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-                  <Pagination />
-                  <ButtonPrimary loading>Show me more</ButtonPrimary>
-                </div>
-              </Tab.Panel>
-            </Tab.Panels>
-          </Tab.Group>
-        </main>
+        <ProfileTabs user_id={item?.id} />
 
         {/* === SECTION 5 === */}
         <div className="relative py-16 lg:py-28">

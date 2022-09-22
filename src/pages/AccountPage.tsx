@@ -5,27 +5,31 @@ import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Input from "shared/Input/Input";
 import Textarea from "shared/Textarea/Textarea";
 import { Helmet } from "react-helmet";
-import { useAppSelector } from "app/hooks";
-import { Formik } from "formik";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { Formik, ErrorMessage } from "formik";
 import useIpfs from "hooks/useIpfs";
 import { IPFS_BASE_URL } from "constant";
 import { useCrud } from "hooks/useCrud";
 import { validateImage } from "services/validations";
+import { useApi } from "hooks/useApi";
+import { connectToWallet } from "app/account/actions";
 
 export interface AccountPageProps {
   className?: string;
 }
 
 const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
-  const ipfs = useIpfs();
-  const userData = useAppSelector((state) => state.account.userData);
+  const dispatch = useAppDispatch();
+  const userData: UserData = useAppSelector((state) => state.account.userData);
+  const [profileImage, setProfileImage] = useState<string>("");
 
   const [initFormState, setInitFormState] = useState<UserData>();
 
-  const { update } = useCrud("/my-profile");
+  const { create } = useCrud("/my-profile");
 
   useEffect(() => {
     setInitFormState(userData);
+    setProfileImage(userData?.profile_photo);
   }, [userData]);
 
   return (
@@ -51,7 +55,18 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
               <Formik
                 initialValues={initFormState}
                 onSubmit={async (values) => {
-                  await update({ id: userData.id, payload: values });
+                  const form = new FormData();
+                  for (const [key, value] of Object.entries(values)) {
+                    form.append(key, value);
+                  }
+
+                  form.append("_method", "put");
+
+                  await create(form, {
+                    "Content-Type": "multipart/form-data",
+                  });
+
+                  dispatch(connectToWallet(values.wallet_address));
                 }}
               >
                 {({
@@ -67,7 +82,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                     <div className="flex items-start flex-shrink-0">
                       <div className="relative flex overflow-hidden rounded-full">
                         <Avatar
-                          imgUrl={values.profile_photo || ""}
+                          imgUrl={profileImage || ""}
                           sizeClass="w-32 h-32"
                         />
                         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black cursor-pointer bg-opacity-40 text-neutral-50">
@@ -98,8 +113,8 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                             if (!e.target.files) return;
                             const file = e.target.files[0];
                             if (!validateImage(file)) return;
-                            const added = await ipfs.add(file);
-                            setFieldValue("profile_photo", added.path);
+                            setProfileImage(URL.createObjectURL(file));
+                            setFieldValue("profile_photo", file);
                           }}
                         />
                       </div>
@@ -117,6 +132,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                           onBlur={handleBlur("username")}
                           onChange={handleChange("username")}
                         />
+                        <ErrorMessage name="username" />
                       </div>
 
                       {/* ---- */}

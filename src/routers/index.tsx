@@ -17,20 +17,20 @@ import PageUploadItem from "pages/PageUploadItem";
 import PageConnectWallet from "pages/PageConnectWallet";
 import HeaderLogged from "components/Header/HeaderLogged";
 import PageCreateCollection from "pages/PageCreateCollection";
-import MyProfile from "pages/MyProfile";
+import PageCollections from "pages/PageCollections";
 
 export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
   { path: "/#", exact: true, component: PageHome },
-  { path: "/nft-detailt/:id", component: NftDetailPage },
+  { path: "/collections", component: PageCollections },
   { path: "/collection/:id", component: PageCollection },
   { path: "/create-collection", component: PageCreateCollection },
   { path: "/search", component: PageSearch },
-  { path: "/author/:id", component: AuthorPage },
-  { path: "/account", component: AccountPage },
+  { path: "/nft-details/:id", component: NftDetailPage },
   { path: "/create-nft", component: PageUploadItem },
+  { path: "/author/:id", component: AuthorPage },
   { path: "/connect-wallet", component: PageConnectWallet },
-  { path: "/my-profile", component: MyProfile },
+  { path: "/account", component: AccountPage },
   //
   //
   { path: "/contact", component: PageContact },

@@ -18,6 +18,7 @@ import { Contract } from "ethers";
 import { useAppSelector } from "app/hooks";
 import Avatar from "shared/Avatar/Avatar";
 import { createCollectionSchema, validateImage } from "services/validations";
+import { useHistory } from "react-router-dom";
 
 export interface PageCreateCollectionProps {
   className?: string;
@@ -26,10 +27,14 @@ export interface PageCreateCollectionProps {
 const PageCreateCollection: FC<PageCreateCollectionProps> = ({
   className = "",
 }) => {
-  const { library, account } = useWeb3React();
+  const userData: UserData = useAppSelector((state) => state.account.userData)
+  const history = useHistory();
+  const { library } = useWeb3React();
   const categories = useAppSelector((state) => state.general.categories);
-  const ipfs = useIpfs();
   const { create } = useCrud("/collections");
+  const [bannerImage, setBannerImage] = useState<string>("");
+  const [logoImage, setLogoImage] = useState<string>("");
+
   const [initFormState, setInitFormState] = useState({
     logo_image: null,
     banner_image: null,
@@ -77,10 +82,19 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                 );
                 const res = await contract.createCollection(values.name);
                 let collection_token_id = res.value.toString();
-                await create({
-                  ...values,
-                  collection_token_id: +collection_token_id,
+
+                const form = new FormData();
+                for (const [key, value] of Object.entries(values)) {
+                  form.append(key, value);
+                }
+
+                form.append("collection_token_id", collection_token_id);
+
+                await create(form, {
+                  "Content-Type": "multipart/form-data",
                 });
+
+                history.push(`/author/${userData?.id}`);
               } catch (error) {
                 console.log(error);
               }
@@ -109,31 +123,31 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   </span>
                   <div className="mt-5 ">
                     <div
-                      className={`flex justify-center px-6 pt-5 pb-6 mt-1 border-2 border-dashed ${
+                      className={`flex relative overflow-hidden justify-center mt-1 border-2 border-dashed ${
                         touched.banner_image && errors.banner_image
                           ? "border-red-600"
                           : "border-neutral-300 dark:border-neutral-6000"
                       } rounded-xl`}
                     >
-                      <div className="space-y-1 text-center">
-                        {values.banner_image ? (
-                          <Avatar imgUrl={values.banner_image} />
-                        ) : (
-                          <svg
-                            className="w-12 h-12 mx-auto text-neutral-400"
-                            stroke="currentColor"
-                            fill="none"
-                            viewBox="0 0 48 48"
-                            aria-hidden="true"
-                          >
-                            <path
-                              d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            ></path>
-                          </svg>
-                        )}
+                      <div
+                        className={`relative inset-0 z-20 flex flex-col items-center justify-center w-full h-full px-6 pt-5 pb-6 space-y-1 text-center  cursor-pointer text-neutral-50 ${
+                          bannerImage && "bg-black  bg-opacity-60"
+                        }`}
+                      >
+                        <svg
+                          className="w-12 h-12 mx-auto text-neutral-400"
+                          stroke="currentColor"
+                          fill="none"
+                          viewBox="0 0 48 48"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          ></path>
+                        </svg>
                         <div className="flex text-sm text-neutral-6000 dark:text-neutral-300">
                           <label
                             htmlFor="file-upload"
@@ -150,8 +164,8 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                                 if (!e.target.files) return;
                                 const file = e.target.files[0];
                                 if (!validateImage(file)) return;
-                                const added = await ipfs.add(file);
-                                setFieldValue("banner_image", added.path);
+                                setBannerImage(URL.createObjectURL(file));
+                                setFieldValue("banner_image", file);
                               }}
                             />
                           </label>
@@ -161,6 +175,13 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                           PNG, JPG, GIF up to 10MB
                         </p>
                       </div>
+                      {bannerImage && (
+                        <img
+                          className={`absolute z-10 inset-0 w-full h-full object-cover `}
+                          src={bannerImage}
+                          alt={"collection banner image"}
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
@@ -169,7 +190,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                 <div className="flex items-start flex-shrink-0">
                   <div className="relative flex mx-auto overflow-hidden rounded-full">
                     <Avatar
-                      imgUrl={values.logo_image || ""}
+                      imgUrl={logoImage || ""}
                       containerClassName={`${
                         touched.logo_image &&
                         errors.logo_image &&
@@ -205,8 +226,8 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                         if (!e.target.files) return;
                         const file = e.target.files[0];
                         if (!validateImage(file)) return;
-                        const added = await ipfs.add(file);
-                        setFieldValue("logo_image", added.path);
+                        setLogoImage(URL.createObjectURL(file));
+                        setFieldValue("logo_image", file);
                       }}
                     />
                   </div>

@@ -132,7 +132,7 @@ const CardNFTMusic: FC<CardNFTMusicProps> = ({
         </div>
 
         <Link
-          to={"/nft-detailt"}
+          to={"/nft-details"}
           className="block p-5 mt-5 bg-white rounded-tl-none shadow-xl dark:bg-neutral-800 dark:shadow-2xl rounded-3xl"
         >
           <div className="flex items-center justify-between">
@@ -152,7 +152,7 @@ const CardNFTMusic: FC<CardNFTMusicProps> = ({
         </Link>
       </div>
 
-      <Link to={"/nft-detailt"} className="absolute inset-0 "></Link>
+      <Link to={"/nft-details"} className="absolute inset-0 "></Link>
     </div>
   );
 };

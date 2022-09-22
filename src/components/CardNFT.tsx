@@ -88,7 +88,7 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", isLiked, nft }) => {
         </div>
       </div>
 
-      <Link to={`/nft-detailt/${nft?.id}`} className="absolute inset-0"></Link>
+      <Link to={`/nft-details/${nft?.id}`} className="absolute inset-0"></Link>
     </div>
   );
 };

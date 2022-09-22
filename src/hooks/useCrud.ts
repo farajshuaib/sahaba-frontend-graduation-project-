@@ -47,20 +47,13 @@ export function useCrud(url: string, options?: Options) {
       const { data } = await api.get(url, {
         params: { ...params },
       });
-      if (data?.meta) {
-        setState((prevState) => ({
-          ...prevState,
-          data: data.data ? data.data : data,
-          loading: false,
-          meta: data.meta,
-        }));
-      } else {
-        setState((prevState) => ({
-          ...prevState,
-          loading: false,
-          data: data.data ? data.data : data,
-        }));
-      }
+      setState((prevState) => ({
+        ...prevState,
+        data: data.data ? data.data : data,
+        loading: false,
+        meta: data.meta,
+      }));
+
       return state.data ?? [];
     } catch (error: any) {
       if (error.response.status === 404) {
@@ -85,10 +78,14 @@ export function useCrud(url: string, options?: Options) {
     return new Promise(async (resolve, reject) => {
       try {
         const { data } = await api.get(`${url}/${id}`);
+        console.log("xfn ofdno =>", data);
+
         setState((prevState) => ({
           ...prevState,
+          data: data.data ? data.data : [],
           loading: false,
           item: data,
+          meta: data.meta || null,
         }));
         resolve(data);
       } catch (error: any) {
@@ -107,10 +104,14 @@ export function useCrud(url: string, options?: Options) {
     });
   };
 
-  const create = async (payload: any) => {
+  const create = async (payload: any, headers?: any) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const { data } = await api.post(`${url}`, payload);
+        const { data } = await api.post(
+          `${url}`,
+          payload,
+          headers && { headers }
+        );
         toast.success("Success!");
         resolve(data);
       } catch (error: any) {
@@ -118,7 +119,9 @@ export function useCrud(url: string, options?: Options) {
           toast.error("404 not found");
         }
         if (error.response.data.errors) {
-          toast.error(error.response.data.message || error.response.data.errors.toString());
+          toast.error(
+            error.response.data.message || error.response.data.errors.toString()
+          );
         }
         reject(error);
       }
@@ -128,9 +131,11 @@ export function useCrud(url: string, options?: Options) {
   const update = async ({
     id,
     payload,
+    headers,
   }: {
     id: string | number;
     payload: any;
+    headers?: any;
   }) => {
     setState((prevState) => ({
       ...prevState,
@@ -138,7 +143,11 @@ export function useCrud(url: string, options?: Options) {
     }));
     return new Promise(async (resolve, reject) => {
       try {
-        const { data } = await api.put(`${url}/${id}`, payload);
+        const { data } = await api.put(
+          `${url}/${id}`,
+          payload,
+          headers && { headers }
+        );
         toast.success("Success");
         resolve(data);
       } catch (error: any) {

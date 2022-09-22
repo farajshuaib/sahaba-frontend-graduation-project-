@@ -80,6 +80,7 @@ interface Collection {
   twitter_url: string | null;
   website_url: string | null;
   nfts: Nft[];
+  created_by: UserData
 }
 
 interface UserData {

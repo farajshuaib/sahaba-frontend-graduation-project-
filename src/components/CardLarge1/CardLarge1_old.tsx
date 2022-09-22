@@ -44,7 +44,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
           <div className="p-4 space-y-3 bg-white shadow-lg sm:p-8 xl:py-14 md:px-10 dark:bg-neutral-900 rounded-3xl sm:space-y-8 ">
             {/* TITLE */}
             <h2 className="text-2xl font-semibold lg:text-3xl 2xl:text-5xl ">
-              <Link to={"/nft-detailt"} title="Walking On Air">
+              <Link to={"/nft-details"} title="Walking On Air">
                 Walking On Air
               </Link>
             </h2>
@@ -98,10 +98,10 @@ const CardLarge1: FC<CardLarge1Props> = ({
 
             {/* DESCRIPTION */}
             <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-3">
-              <ButtonPrimary href={"/nft-detailt"} className="flex-1">
+              <ButtonPrimary href={"/nft-details"} className="flex-1">
                 Place a bid
               </ButtonPrimary>
-              <ButtonSecondary href={"/nft-detailt"} className="flex-1">
+              <ButtonSecondary href={"/nft-details"} className="flex-1">
                 View item
               </ButtonSecondary>
             </div>
@@ -129,7 +129,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
         enterTo="translate-y-0 scale-100 opacity-100"
       >
         <div>
-          <Link to={"/nft-detailt"}>
+          <Link to={"/nft-details"}>
             <NcImage
               containerClassName="aspect-w-1 aspect-h-1 relative"
               className="absolute inset-0 object-cover rounded-3xl sm:rounded-[40px] border-4 sm:border-[14px] border-white dark:border-neutral-800"

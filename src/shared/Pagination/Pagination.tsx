@@ -24,10 +24,28 @@ const DEMO_PAGINATION: CustomLink[] = [
 
 export interface PaginationProps {
   className?: string;
+  meta: Meta;
+  setPage: (val: number) => void;
 }
 
-const Pagination: FC<PaginationProps> = ({ className = "" }) => {
-  const renderItem = (pag: CustomLink, index: number) => {
+const Pagination: FC<PaginationProps> = ({ className = "", meta, setPage }) => {
+  function pagination(currentPage: number, pageCount: number) {
+    let delta = 2,
+      left = currentPage - delta,
+      right = currentPage + delta + 1,
+      result = [];
+
+    result = Array.from(
+      {
+        length: pageCount,
+      },
+      (v, k) => k + 1
+    ).filter((i) => i && i >= left && i < right);
+
+    return result;
+  }
+
+  const renderItem = (page: number, index: number) => {
     if (index === 0) {
       // RETURN ACTIVE PAGINATION
       return (
@@ -35,19 +53,19 @@ const Pagination: FC<PaginationProps> = ({ className = "" }) => {
           key={index}
           className={`inline-flex w-11 h-11 items-center justify-center rounded-full bg-primary-6000 text-white ${twFocusClass()}`}
         >
-          {pag.label}
+          {page}
         </span>
       );
     }
     // RETURN UNACTIVE PAGINATION
     return (
-      <Link
+      <button
         key={index}
         className={`inline-flex w-11 h-11 items-center justify-center rounded-full bg-white hover:bg-neutral-100 border border-neutral-200 text-neutral-6000 dark:text-neutral-400 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:border-neutral-700 ${twFocusClass()}`}
-        to={pag.href}
+        onClick={() => setPage(page)}
       >
-        {pag.label}
-      </Link>
+        {page}
+      </button>
     );
   };
 
@@ -55,7 +73,7 @@ const Pagination: FC<PaginationProps> = ({ className = "" }) => {
     <nav
       className={`nc-Pagination inline-flex space-x-1 text-base font-medium ${className}`}
     >
-      {DEMO_PAGINATION.map(renderItem)}
+      {pagination(meta.current, meta.last_page).map(renderItem)}
     </nav>
   );
 };

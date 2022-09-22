@@ -94,7 +94,7 @@ const CardNFT2: FC<CardNFT2Props> = ({ className = "", isLiked }) => {
         </div>
       </div>
 
-      <Link to={"/nft-detailt"} className="absolute inset-0"></Link>
+      <Link to={"/nft-details"} className="absolute inset-0"></Link>
     </div>
   );
 };

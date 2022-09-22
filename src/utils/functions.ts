@@ -1,7 +1,9 @@
-import { currentNetwork } from "./../constant/index";
+import { currentNetwork } from "./../constant";
 import { toast } from "react-toastify";
 import { ethers, Contract, utils, BigNumber } from "ethers";
 import { networkParams } from "services/networks";
+
+
 
 export const getBalance = async (address: string) => {
   if (!window?.ethereum) {
@@ -31,6 +33,7 @@ export const addTokenAsset = async () => {
     toast.error("Token import failed");
   }
 };
+
 
 export const switchNetwork = () => {
   return new Promise(async (resolve, reject) => {

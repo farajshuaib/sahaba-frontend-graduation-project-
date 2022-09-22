@@ -149,7 +149,7 @@ const CardNFTVideo: FC<CardNFTVideoProps> = ({
         </div>
       </div>
 
-      <Link to={"/nft-detailt"} className="absolute inset-0"></Link>
+      <Link to={"/nft-details"} className="absolute inset-0"></Link>
     </div>
   );
 };

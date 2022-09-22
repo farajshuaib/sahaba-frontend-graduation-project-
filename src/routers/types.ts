@@ -3,7 +3,8 @@ import { ComponentType } from "react";
 export interface LocationStates {
   "/"?: {};
   "/#"?: {};
-  "/nft-detailt/:id"?: {};
+  "/nft-details/:id"?: {};
+  "/collections"?: {};
   "/create-collection"?:{};
   "/collection/:id"?: {};
   "/search"?: {};
@@ -16,7 +17,6 @@ export interface LocationStates {
   "/forgot-pass"?: {};
   "/page404"?: {};
   "/subscription"?: {};
-  "/my-profile"?: {}
 }
 
 export type PathName = keyof LocationStates;
