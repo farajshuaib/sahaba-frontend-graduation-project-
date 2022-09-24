@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Page } from "./types";
 import ScrollToTop from "./ScrollToTop";
@@ -18,6 +18,8 @@ import PageConnectWallet from "pages/PageConnectWallet";
 import HeaderLogged from "components/Header/HeaderLogged";
 import PageCreateCollection from "pages/PageCreateCollection";
 import PageCollections from "pages/PageCollections";
+import { useAppSelector } from "app/hooks";
+
 
 export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
@@ -39,7 +41,6 @@ export const pages: Page[] = [
 ];
 
 const Routes = () => {
-
   return (
     <BrowserRouter basename="/">
       <ScrollToTop />

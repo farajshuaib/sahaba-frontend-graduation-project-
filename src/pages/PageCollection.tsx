@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import NcImage from "shared/NcImage/NcImage";
@@ -12,19 +12,71 @@ import ButtonDropDownShare from "components/ButtonDropDownShare";
 import TabFilters from "components/TabFilters";
 import SectionSliderCollections from "components/SectionSliderCollections";
 import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
+import { useCrud } from "hooks/useCrud";
+import { useParams } from "react-router-dom";
+import LoadingScreen from "components/LoadingScreen";
+
+interface CollectionNftsProps {
+  collection_id: number | string;
+}
+const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection_id }) => {
+  const [page, setPage] = useState<number>(1);
+  const { fetch, meta, loading, data } = useCrud("/nfts");
+
+  useEffect(() => {
+    fetch({ collection_id, page });
+  }, [page]);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  return (
+    <main>
+      {/* TABS FILTER */}
+      <TabFilters />
+
+      {/* LOOP ITEMS */}
+      <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
+        {data.map((item: Nft, index) => (
+          <CardNFT nft={item} key={index} />
+        ))}
+      </div>
+
+      {/* PAGINATION */}
+      <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
+        {meta && <Pagination meta={meta} setPage={(page) => setPage(page)} />}
+      </div>
+    </main>
+  );
+};
 
 export interface PageCollectionProps {
   className?: string;
 }
 
 const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
+  const params: any = useParams();
+  const { fetchById, item, loading } = useCrud("/collections");
+  ``;
+
+  useEffect(() => {
+    if (params.id) fetchById(params.id);
+  }, []);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  console.log(item);
+
   return (
     <div
       className={`nc-PageCollection  ${className}`}
       data-nc-id="PageCollection"
     >
       <Helmet>
-        <title>Collection || Sahaba NFT Template</title>
+        <title>{item?.name || "Collection"}</title>
       </Helmet>
 
       {/* HEADER */}
@@ -32,7 +84,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
         <div className="relative w-full h-40 md:h-60 2xl:h-72">
           <NcImage
             containerClassName="absolute inset-0"
-            src={collectionBanner}
+            src={item?.banner_image}
             className="object-cover w-full h-full"
           />
         </div>
@@ -41,7 +93,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
             <div className="flex flex-col sm:flex-row md:block sm:items-start sm:justify-between">
               <div className="w-40 sm:w-48 md:w-56 xl:w-60">
                 <NcImage
-                  src={nftsImgs[2]}
+                  src={item?.logo_image}
                   containerClassName="aspect-w-1 aspect-h-1 rounded-3xl overflow-hidden"
                 />
               </div>
@@ -87,12 +139,10 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
             <div className="flex-grow mt-5 md:mt-0 md:ml-8 xl:ml-14">
               <div className="max-w-screen-sm ">
                 <h2 className="inline-block text-2xl font-semibold sm:text-3xl lg:text-4xl">
-                  {"Awesome NFTs collection "}
+                  {item?.name}
                 </h2>
                 <span className="block mt-4 text-sm text-neutral-500 dark:text-neutral-400">
-                  Karafuru is home to 5,555 generative arts where colors reign
-                  supreme. Leave the drab reality and enter the world of
-                  Karafuru by Museum of Toys.
+                  {item?.description}
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-2 mt-6 xl:mt-8 lg:grid-cols-4 sm:gap-4 xl:gap-6">
@@ -136,7 +186,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                     Items
                   </span>
                   <span className="mt-4 text-base font-medium sm:text-xl sm:mt-6">
-                    2235
+                    {item?.nfts_count}
                   </span>
                   <span className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
                     total
@@ -150,24 +200,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
       {/* ====================== END HEADER ====================== */}
 
       <div className="container py-16 space-y-20 lg:pb-28 lg:pt-20 lg:space-y-28">
-        <main>
-          {/* TABS FILTER */}
-          <TabFilters />
-
-          {/* LOOP ITEMS */}
-          <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
-            {Array.from("11111111").map((_, index) => (
-              <CardNFT key={index} />
-            ))}
-          </div>
-
-          {/* PAGINATION */}
-          <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-            <Pagination />
-            <ButtonPrimary loading>Show me more</ButtonPrimary>
-          </div>
-        </main>
-
+        <CollectionNfts collection_id={item.id} />
         {/* === SECTION 5 === */}
         <div className="relative py-20 lg:py-28">
           <BackgroundSection />

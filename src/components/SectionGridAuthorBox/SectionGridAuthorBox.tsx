@@ -3,8 +3,10 @@ import CardAuthorBox2 from "components/CardAuthorBox2/CardAuthorBox2";
 import CardAuthorBox3 from "components/CardAuthorBox3/CardAuthorBox3";
 import CardAuthorBox4 from "components/CardAuthorBox4/CardAuthorBox4";
 import Heading from "components/Heading/Heading";
+import LoadingScreen from "components/LoadingScreen";
 import NavItem2 from "components/NavItem2";
-import React, { FC } from "react";
+import { useCrud } from "hooks/useCrud";
+import React, { FC, useEffect } from "react";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 import Nav from "shared/Nav/Nav";
@@ -20,42 +22,21 @@ export interface SectionGridAuthorBoxProps {
 
 const SectionGridAuthorBox: FC<SectionGridAuthorBoxProps> = ({
   className = "",
-  boxCard = "box1",
   sectionStyle = "style1",
   gridClassName = "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",
-  data = Array.from("11111111"),
+  // data = Array.from("11111111"),
 }) => {
+  const { fetch, data, loading } = useCrud("/users");
+
+  useEffect(() => {
+    fetch();
+  }, []);
+
   const [tabActive, setTabActive] = React.useState("Popular");
-
-  const renderCard = (index: number) => {
-    switch (boxCard) {
-      case "box1":
-        return (
-          <CardAuthorBox
-            index={index < 3 ? index + 1 : undefined}
-            key={index}
-          />
-        );
-      case "box2":
-        return <CardAuthorBox2 key={index} />;
-      case "box3":
-        return <CardAuthorBox3 key={index} />;
-      case "box4":
-        return (
-          <CardAuthorBox4
-            authorIndex={index < 3 ? index + 1 : undefined}
-            key={index}
-          />
-        );
-
-      default:
-        return null;
-    }
-  };
 
   const renderHeading1 = () => {
     return (
-      <div className="mb-12 lg:mb-16  flex justify-between flex-col sm:flex-row">
+      <div className="flex flex-col justify-between mb-12 lg:mb-16 sm:flex-row">
         <Heading
           rightPopoverText="Creators"
           rightPopoverOptions={[
@@ -91,7 +72,7 @@ const SectionGridAuthorBox: FC<SectionGridAuthorBoxProps> = ({
           Top List Creators.
         </Heading>
         <Nav
-          className="p-1 bg-white dark:bg-neutral-800 rounded-full shadow-lg"
+          className="p-1 bg-white rounded-full shadow-lg dark:bg-neutral-800"
           containerClassName="mb-12 lg:mb-14 relative flex justify-center w-full text-sm md:text-base"
         >
           {[
@@ -144,6 +125,10 @@ const SectionGridAuthorBox: FC<SectionGridAuthorBoxProps> = ({
     );
   };
 
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
   return (
     <div
       className={`nc-SectionGridAuthorBox relative ${className}`}
@@ -151,9 +136,15 @@ const SectionGridAuthorBox: FC<SectionGridAuthorBoxProps> = ({
     >
       {sectionStyle === "style1" ? renderHeading1() : renderHeading2()}
       <div className={`grid gap-4 md:gap-7 ${gridClassName}`}>
-        {data.map((_, index) => renderCard(index))}
+        {data.map((user: UserData, index) => (
+          <CardAuthorBox4
+            user={user}
+            authorIndex={index < 3 ? index + 1 : undefined}
+            key={index}
+          />
+        ))}
       </div>
-      <div className="mt-16 flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-5">
+      <div className="flex flex-col items-center justify-center mt-16 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-5">
         <ButtonSecondary>Show me more </ButtonSecondary>
         <ButtonPrimary>Become a author</ButtonPrimary>
       </div>

@@ -2,12 +2,16 @@ import React, { useState } from "react";
 
 export interface LikeButtonProps {
   className?: string;
-  liked?: boolean;
+  liked: boolean;
+  like_count: number;
+  nft_id: number
 }
 
 const LikeButton: React.FC<LikeButtonProps> = ({
   className,
-  liked = Math.random() > 0.6,
+  liked,
+  like_count,
+  nft_id
 }) => {
   const [isLiked, setIsLiked] = useState(liked);
 
@@ -26,7 +30,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
           strokeLinejoin="round"
         />
       </svg>
-      <span className="ml-2 text-sm">{isLiked ? 23 : 22}</span>
+      <span className="ml-2 text-sm">{isLiked ? like_count + 1 : like_count}</span>
     </button>
   );
 };

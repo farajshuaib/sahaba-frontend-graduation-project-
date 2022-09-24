@@ -1,22 +1,32 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import HeaderFilterSection from "components/HeaderFilterSection";
 import CardNFT2 from "components/CardNFT2";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
+import { useCrud } from "hooks/useCrud";
+import LoadingScreen from "components/LoadingScreen";
 
 //
 export interface SectionGridFeatureNFT2Props {}
 
 const SectionGridFeatureNFT2: FC<SectionGridFeatureNFT2Props> = () => {
+  const { data, loading, fetch } = useCrud("/nfts");
+
+  useEffect(() => {
+    fetch();
+  }, []);
+
   return (
-    <div className="nc-SectionGridFeatureNFT2 relative">
+    <div className="relative nc-SectionGridFeatureNFT2">
       <HeaderFilterSection />
       <div className={`grid gap-6 lg:gap-8 sm:grid-cols-2 xl:grid-cols-3`}>
-        {Array.from("111111111").map((_, index) => (
-          <CardNFT2 key={index} />
-        ))}
+        {loading ? (
+          <LoadingScreen />
+        ) : (
+          data.map((item: Nft, index) => <CardNFT2 nft={item} key={index} />)
+        )}
       </div>
-      <div className="flex mt-16 justify-center items-center">
-        <ButtonPrimary loading>Show me more</ButtonPrimary>
+      <div className="flex items-center justify-center mt-16">
+        <ButtonPrimary href={"/search"}>Show me more</ButtonPrimary>
       </div>
     </div>
   );

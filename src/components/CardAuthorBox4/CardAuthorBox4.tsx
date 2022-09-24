@@ -11,12 +11,14 @@ export interface CardAuthorBox4Props {
   className?: string;
   following?: boolean;
   authorIndex?: number;
+  user: UserData;
 }
 
 const CardAuthorBox4: FC<CardAuthorBox4Props> = ({
   className = "",
   following,
   authorIndex,
+  user,
 }) => {
   return (
     <div
@@ -43,7 +45,7 @@ const CardAuthorBox4: FC<CardAuthorBox4Props> = ({
       </div>
 
       <div className="pb-5 px-4 pt-1.5">
-        <div className="text-center relative flex items-center justify-center ">
+        <div className="relative flex items-center justify-center text-center ">
           <div className="relative">
             <svg
               className="mx-auto h-14 -mt-[38px] text-white dark:text-neutral-800 dark:group-hover:text-neutral-800"
@@ -59,8 +61,9 @@ const CardAuthorBox4: FC<CardAuthorBox4Props> = ({
               />
             </svg>
 
-            <div className="absolute -top-7 left-1/2 -translate-x-1/2">
+            <div className="absolute -translate-x-1/2 -top-7 left-1/2">
               <Avatar
+                imgUrl={user.profile_photo}
                 containerClassName=""
                 sizeClass="w-12 h-12 text-2xl"
                 radius="rounded-full"
@@ -68,13 +71,13 @@ const CardAuthorBox4: FC<CardAuthorBox4Props> = ({
             </div>
           </div>
         </div>
-        <div className="mt-2.5 flex items-start items-center justify-between">
+        <div className="mt-2.5 flex  items-center justify-between">
           <div>
             <h2 className={`text-base font-medium flex items-center`}>
               <span className="">
-                {personNames[Math.floor(Math.random() * personNames.length)]}
+                {user.username}
               </span>
-              <VerifyIcon />
+              {user.is_verified && <VerifyIcon />}
             </h2>
             <span className={`block mt-0.5 text-sm `}>
               <span className="font-medium">12.321</span>
@@ -90,7 +93,7 @@ const CardAuthorBox4: FC<CardAuthorBox4Props> = ({
         </div>
       </div>
 
-      <Link to={"/author"} className="absolute inset-0"></Link>
+      <Link to={`/author/${user.id}`} className="absolute inset-0"></Link>
     </div>
   );
 };

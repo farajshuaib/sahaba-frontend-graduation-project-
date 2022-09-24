@@ -5,6 +5,7 @@ import CollectionCard from "./CollectionCard";
 import CollectionCard2 from "./CollectionCard2";
 import { Link } from "react-router-dom";
 import { useCrud } from "hooks/useCrud";
+import LoadingScreen from "./LoadingScreen";
 
 interface CollectionsSliderProp {
   collections: Collection[];
@@ -70,16 +71,8 @@ const CollectionsSlider: React.FC<CollectionsSliderProp> = ({
       <div className="glide__track" data-glide-el="track">
         <ul className="glide__slides">
           {collections.map((collection, index: number) => (
-            <li className={`glide__slide`}>
-              <MyCollectionCard
-                collection={collection}
-                imgs={[
-                  "https://images.unsplash.com/photo-1557672172-298e090bd0f1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                  "https://images.unsplash.com/photo-1599054802207-91d346adc120?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-                  "https://images.unsplash.com/photo-1581985673473-0784a7a44e39?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-                  "https://images.unsplash.com/photo-1557264305-7e2764da873b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE3fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
-                ]}
-              />
+            <li key={index} className={`glide__slide`}>
+              <MyCollectionCard collection={collection}  />
             </li>
           ))}
 
@@ -141,7 +134,7 @@ const SectionSliderCollections: FC<SectionSliderCollectionsProps> = ({
   }, []);
 
   if (loading) {
-    return <></>;
+    return <LoadingScreen />;
   }
 
   return (

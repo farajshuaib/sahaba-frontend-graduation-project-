@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import Avatar from "shared/Avatar/Avatar";
 import Badge from "shared/Badge/Badge";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
@@ -16,6 +16,9 @@ import ItemTypeVideoIcon from "components/ItemTypeVideoIcon";
 import LikeButton from "components/LikeButton";
 import AccordionInfo from "./AccordionInfo";
 import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
+import { useCrud } from "hooks/useCrud";
+import { useParams } from "react-router-dom";
+import LoadingScreen from "components/LoadingScreen";
 
 export interface NftDetailPageProps {
   className?: string;
@@ -26,6 +29,17 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
   className = "",
   isPreviewMode,
 }) => {
+  const params: any = useParams();
+  const { item, loading, fetchById } = useCrud("/nfts");
+
+  useEffect(() => {
+    if (params.id) fetchById(params.id);
+  }, [params.id]);
+
+  if(loading){
+    return <LoadingScreen />
+  }
+
   const renderSection1 = () => {
     return (
       <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
@@ -36,33 +50,32 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
             <LikeSaveBtns />
           </div>
           <h2 className="text-2xl font-semibold sm:text-3xl lg:text-4xl">
-            BearX #3636
+            {item.title}
           </h2>
 
           {/* ---------- 4 ----------  */}
           <div className="flex flex-col space-y-4 text-sm sm:flex-row sm:items-center sm:space-y-0 sm:space-x-8">
             <div className="flex items-center ">
-              <Avatar sizeClass="h-9 w-9" radius="rounded-full" />
+              <Avatar imgUrl={item?.user?.profile_photo} sizeClass="h-9 w-9" radius="rounded-full" />
               <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
                 <span className="text-sm">Creator</span>
                 <span className="flex items-center font-medium text-neutral-900 dark:text-neutral-200">
-                  <span>{personNames[1]}</span>
-                  <VerifyIcon iconClass="w-4 h-4" />
+                  <span>{item.user.username}</span>
+                  {item.user.is_verified && <VerifyIcon iconClass="w-4 h-4" />}
                 </span>
               </span>
             </div>
             <div className="hidden h-6 border-l sm:block border-neutral-200 dark:border-neutral-700"></div>
             <div className="flex items-center">
               <Avatar
-                imgUrl={collectionPng}
+                imgUrl={item.collection.logo_image}
                 sizeClass="h-9 w-9"
                 radius="rounded-full"
               />
               <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
                 <span className="text-sm">Collection</span>
                 <span className="flex items-center font-medium text-neutral-900 dark:text-neutral-200">
-                  <span>{"The Moon Ape"}</span>
-                  <VerifyIcon iconClass="w-4 h-4" />
+                  <span>{item.collection?.name}</span>
                 </span>
               </span>
             </div>
@@ -80,10 +93,10 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between">
             <div className="relative flex flex-col items-baseline flex-1 p-6 border-2 border-green-500 sm:flex-row rounded-xl">
               <span className="absolute bottom-full translate-y-1 py-1 px-1.5 bg-white dark:bg-neutral-900 text-sm text-neutral-500 dark:text-neutral-400">
-                Current Bid
+                price
               </span>
               <span className="text-3xl font-semibold text-green-500 xl:text-4xl">
-                1.000 ETH
+                {item.price} ETH
               </span>
               <span className="text-lg text-neutral-400 sm:ml-5">
                 ( ≈ $3,221.22)
@@ -91,7 +104,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
             </div>
 
             <span className="mt-2 ml-5 text-sm text-neutral-500 dark:text-neutral-400 sm:mt-0 sm:ml-10">
-              [96 in stock]
+              {/* [96 in stock] */}
             </span>
           </div>
 
@@ -188,17 +201,17 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
             {/* HEADING */}
             <div className="relative">
               <NcImage
-                src={nftsLargeImgs[0]}
+                src={item.file_path}
                 containerClassName="aspect-w-11 aspect-h-12 rounded-3xl overflow-hidden"
               />
               {/* META TYPE */}
               <ItemTypeVideoIcon className="absolute w-8 h-8 left-3 top-3 md:w-10 md:h-10" />
 
               {/* META FAVORITES */}
-              <LikeButton className="absolute right-3 top-3 " />
+              <LikeButton nft_id={item.id} liked={item.is_liked} like_count={item.like_count} className="absolute right-3 top-3 " />
             </div>
 
-            <AccordionInfo />
+            <AccordionInfo nft={item} />
           </div>
 
           {/* SIDEBAR */}

@@ -20,6 +20,7 @@ import { useCrud } from "hooks/useCrud";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "app/hooks";
 import VerifyAccount from "components/VerifyAccount";
+import LoadingScreen from "components/LoadingScreen";
 
 export interface AuthorPageProps {
   className?: string;
@@ -35,7 +36,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
   }, [params.id]);
 
   if (loading) {
-    return <></>;
+    return <LoadingScreen />;
   }
 
   return (
@@ -104,13 +105,17 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
             </div>
             <div className="absolute flex flex-row-reverse justify-end md:static left-5 top-4 sm:left-auto sm:top-5 sm:right-5">
               <NftMoreDropdown
-                actions={[
-                  {
-                    id: "report",
-                    name: "Report abuse",
-                    icon: "las la-flag",
-                  },
-                ]}
+                actions={
+                  userData.id != item?.id
+                    ? [
+                        {
+                          id: "report",
+                          name: "Report abuse",
+                          icon: "las la-flag",
+                        },
+                      ]
+                    : []
+                }
                 containerClassName="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800 cursor-pointer"
               />
               <ButtonDropDownShare
@@ -143,7 +148,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
         {/* === SECTION 5 === */}
         <div className="relative py-16 lg:py-28">
           <BackgroundSection />
-          <SectionGridAuthorBox data={Array.from("11111111")} boxCard="box4" />
+          <SectionGridAuthorBox boxCard="box4" />
         </div>
 
         {/* SUBCRIBES */}

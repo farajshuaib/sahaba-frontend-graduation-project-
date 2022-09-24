@@ -15,6 +15,9 @@ interface ProfileTabsProps {
 }
 
 const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
+  const [nftsPage, setNftPage] = useState(1);
+  const [collectionsPage, setCollectionsPage] = useState(1);
+  const [likedNftsPage, setLikedNftPage] = useState(1);
   const userData = useAppSelector((state) => state.account.userData);
 
   let [categories] = useState([
@@ -45,9 +48,18 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
 
   useEffect(() => {
     if (user_id) {
-      getCollection();
-      getNfts();
-      getLiked();
+      getLiked({ page: likedNftsPage });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user_id) {
+      getCollection({ page: collectionsPage });
+    }
+  }, []);
+  useEffect(() => {
+    if (user_id) {
+      getNfts({ page: nftsPage });
     }
   }, []);
 
@@ -82,16 +94,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
             <div className="grid gap-6 mt-8 sm:grid-cols-2 lg:grid-cols-3 md:gap-8 lg:mt-10">
               {collections && collections.length > 0 ? (
                 collections.map((collection: Collection, index) => (
-                  <CollectionCard
-                    key={index}
-                    collection={collection}
-                    imgs={[
-                      "https://images.unsplash.com/photo-1622547748225-3fc4abd2cca0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80",
-                      "https://images.unsplash.com/photo-1617791160588-241658c0f566?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDV8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
-                      "https://images.unsplash.com/photo-1626544827763-d516dce335e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEzfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
-                      "https://images.unsplash.com/photo-1627037558426-c2d07beda3af?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE4fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
-                    ]}
-                  />
+                  <CollectionCard key={index} collection={collection} />
                 ))
               ) : (
                 <div className="flex flex-col items-center justify-start col-span-3 mx-auto">
@@ -108,7 +111,10 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
             {collections && collections.length > 0 && (
               <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
                 {collections_meta && (
-                  <Pagination setPage={() => {}} meta={collections_meta} />
+                  <Pagination
+                    setPage={(page) => setCollectionsPage(page)}
+                    meta={collections_meta}
+                  />
                 )}
                 <ButtonPrimary href={"/create-collection"}>
                   Create collection
@@ -120,7 +126,9 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
           <Tab.Panel className="">
             <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
               {nfts && nfts.length > 0 ? (
-                nfts.map((nft: Nft, index) => <CardNFT nft={nft} key={index} />)
+                nfts.map((nft: Nft, index: number) => (
+                  <CardNFT nft={nft} key={index} />
+                ))
               ) : (
                 <div className="flex flex-col items-center justify-start col-span-2 mx-auto lg:col-span-3 xl:col-span-4">
                   <h3 className="mb-5 text-3xl font-medium">
@@ -132,7 +140,12 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
             </div>
             {nfts && nfts.length > 0 && (
               <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-                {nft_meta && <Pagination setPage={() => {}} meta={nft_meta} />}
+                {nft_meta && (
+                  <Pagination
+                    setPage={(page) => setNftPage(page)}
+                    meta={nft_meta}
+                  />
+                )}
                 <ButtonPrimary href={"/create-nft"}>Create NFT</ButtonPrimary>
               </div>
             )}
@@ -142,13 +155,16 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
             <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
               {liked_nfts &&
                 liked_nfts.map((nft: Nft, index: number) => (
-                  <CardNFT nft={nft} isLiked key={index} />
+                  <CardNFT nft={nft} key={index} />
                 ))}
             </div>
             {liked_nfts && nfts.length > 0 && (
               <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
                 {liked_nft_meta && (
-                  <Pagination setPage={() => {}} meta={liked_nft_meta} />
+                  <Pagination
+                    setPage={(page) => setLikedNftPage(page)}
+                    meta={liked_nft_meta}
+                  />
                 )}
               </div>
             )}

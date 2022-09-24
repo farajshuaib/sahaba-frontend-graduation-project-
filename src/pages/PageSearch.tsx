@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import Pagination from "shared/Pagination/Pagination";
@@ -9,16 +9,30 @@ import HeaderFilterSearchPage from "components/HeaderFilterSearchPage";
 import Input from "shared/Input/Input";
 import ButtonCircle from "shared/Button/ButtonCircle";
 import CardNFT from "components/CardNFT";
+import { useCrud } from "hooks/useCrud";
+import LoadingScreen from "components/LoadingScreen";
 
 export interface PageSearchProps {
   className?: string;
 }
 
 const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
+  const [page, setPage] = useState<number>(1);
+  const [search, setSearch] = useState<string>("");
+  const { data, loading, fetch, meta } = useCrud("/nfts");
+
+  useEffect(() => {
+    fetch({ page, search });
+  }, [page]);
+
+  const submitSearch = () => {
+    fetch({ page, search });
+  };
+
   return (
     <div className={`nc-PageSearch  ${className}`} data-nc-id="PageSearch">
       <Helmet>
-        <title>Search || Sahaba NFT Template</title>
+        <title>Sahaba NFT</title>
       </Helmet>
 
       <div
@@ -26,7 +40,7 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
         data-nc-id="HeadBackgroundCommon"
       />
       <div className="container">
-        <header className="max-w-2xl mx-auto -mt-10 flex flex-col lg:-mt-7">
+        <header className="flex flex-col max-w-2xl mx-auto -mt-10 lg:-mt-7">
           <form className="relative w-full " method="post">
             <label
               htmlFor="search-input"
@@ -34,9 +48,12 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
             >
               <span className="sr-only">Search all icons</span>
               <Input
-                className="shadow-lg border-0 dark:border"
+                className="border-0 shadow-lg dark:border"
                 id="search-input"
                 type="search"
+                value={search}
+                onChange={(e) => setSearch(e.currentTarget.value)}
+                autoComplete="search"
                 placeholder="Type your keywords"
                 sizeClass="pl-14 py-5 pr-5 md:pl-16"
                 rounded="rounded-full"
@@ -44,13 +61,14 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
               <ButtonCircle
                 className="absolute right-2.5 top-1/2 transform -translate-y-1/2"
                 size=" w-11 h-11"
-                type="submit"
+                type="button"
+                onClick={submitSearch}
               >
-                <i className="las la-arrow-right text-xl"></i>
+                <i className="text-xl las la-arrow-right"></i>
               </ButtonCircle>
-              <span className="absolute left-5 top-1/2 transform -translate-y-1/2 text-2xl md:left-6">
+              <span className="absolute text-2xl transform -translate-y-1/2 left-5 top-1/2 md:left-6">
                 <svg
-                  className="h-5 w-5"
+                  className="w-5 h-5"
                   viewBox="0 0 24 24"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -76,22 +94,30 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
         </header>
       </div>
 
-      <div className="container py-16 lg:pb-28 lg:pt-20 space-y-16 lg:space-y-28">
+      <div className="container py-16 space-y-16 lg:pb-28 lg:pt-20 lg:space-y-28">
         <main>
           {/* FILTER */}
           <HeaderFilterSearchPage />
 
           {/* LOOP ITEMS */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 mt-8 lg:mt-10">
-            {Array.from("11111111").map((_, index) => (
-              <CardNFT key={index} />
-            ))}
+          <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
+            {loading ? (
+              <LoadingScreen />
+            ) : (
+              data.map((nft: Nft, index) => <CardNFT nft={nft} key={index} />)
+            )}
           </div>
 
           {/* PAGINATION */}
-          <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-            <Pagination />
-            <ButtonPrimary loading>Show me more</ButtonPrimary>
+          <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
+            {meta && (
+              <Pagination meta={meta} setPage={(page) => setPage(page)} />
+            )}
+            {meta && page < meta?.last_page && (
+              <ButtonPrimary onClick={() => setPage(page + 1)}>
+                Show me more
+              </ButtonPrimary>
+            )}
           </div>
         </main>
 

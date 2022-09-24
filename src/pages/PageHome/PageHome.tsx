@@ -72,9 +72,6 @@ function PageHome() {
         </div>
 
         {/* SECTION */}
-        <SectionSubscribe2 />
-
-        {/* SECTION */}
         <div className="relative py-20 lg:py-28">
           <BackgroundSection className="bg-neutral-100/70 dark:bg-black/20 " />
           <SectionGridFeatureNFT2 />

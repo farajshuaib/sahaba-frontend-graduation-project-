@@ -64,6 +64,7 @@ interface Nft {
   like_count: number;
   is_for_sale: boolean;
   nft_token_id: number;
+  is_liked: boolean
 }
 
 interface Collection {
