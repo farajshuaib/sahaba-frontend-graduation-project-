@@ -11,8 +11,10 @@ import SectionHero from "components/SectionHero/SectionHero";
 import Vector1 from "assets/images/Vector1.png";
 import SectionLargeSlider from "./SectionLargeSlider";
 import SectionSliderCollections from "components/SectionSliderCollections";
-import SectionGridFeatureNFT from "./SectionGridFeatureNFT";
 import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
+import SectionGridFeatureNFT2 from "./SectionGridFeatureNFT2";
+import SectionSliderCardNftVideo from "components/SectionSliderCardNftVideo";
+import SectionMagazine8 from "components/SectionMagazine8";
 
 function PageHome() {
   return (
@@ -55,17 +57,28 @@ function PageHome() {
       </div>
 
       <div className="container relative my-24 space-y-24 lg:space-y-32 lg:my-32">
+       {/* SECTION 3 */}
+       <SectionMagazine8 />
+
         {/* SECTION */}
         <SectionGridAuthorBox boxCard="box3" />
 
+         {/* SECTION 4 */}
+         <SectionSliderCardNftVideo />
         {/* SECTION */}
         <div className="relative py-20 lg:py-28">
           <BackgroundSection />
-          <SectionSliderCollections />
+          <SectionSliderCollections cardStyle="style2" />
         </div>
 
         {/* SECTION */}
-        <SectionGridFeatureNFT />
+        <SectionSubscribe2 />
+
+        {/* SECTION */}
+        <div className="relative py-20 lg:py-28">
+          <BackgroundSection className="bg-neutral-100/70 dark:bg-black/20 " />
+          <SectionGridFeatureNFT2 />
+        </div>
 
         {/* SECTION */}
         <div className="relative py-20 lg:py-24">

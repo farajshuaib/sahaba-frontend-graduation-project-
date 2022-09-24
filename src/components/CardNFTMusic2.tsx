@@ -1,5 +1,5 @@
 import { nanoid } from "@reduxjs/toolkit";
-import ButtonPlayMusicRunningContainer from "containers/ButtonPlayMusicRunningContainer";
+import ButtonPlayMusicRunningContainer from "pages/ButtonPlayMusicRunningContainer";
 import { nftsAbstracts } from "contains/fakeData";
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
@@ -96,7 +96,7 @@ const CardNFTMusic2: FC<CardNFTMusic2Props> = ({
 
   const renderDefaultBtnListen = (state?: "loading" | "playing") => {
     return (
-      <span className="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-full bg-white dark:bg-neutral-900/50 text-primary-6000 dark:text-primary-200 shadow-lg cursor-pointer">
+      <span className="flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-lg cursor-pointer sm:w-11 sm:h-11 dark:bg-neutral-900/50 text-primary-6000 dark:text-primary-200">
         {renderIcon(state)}
       </span>
     );
@@ -107,7 +107,7 @@ const CardNFTMusic2: FC<CardNFTMusic2Props> = ({
       className={`nc-CardNFTMusic2 relative flex justify-between p-2 space-x-2 rounded-3xl bg-neutral-100 dark:bg-neutral-800 hover:shadow-xl transition-shadow ${className}`}
       data-nc-id="CardNFTMusic2"
     >
-      <Link to={"/nft-details"} className="flex-grow flex space-x-4">
+      <Link to={"/nft-details"} className="flex flex-grow space-x-4">
         <div className="relative w-16 sm:w-24">
           <NcImage
             containerClassName="absolute inset-0 rounded-2xl overflow-hidden shadow-lg "

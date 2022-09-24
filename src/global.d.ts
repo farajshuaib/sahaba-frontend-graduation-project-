@@ -80,7 +80,8 @@ interface Collection {
   twitter_url: string | null;
   website_url: string | null;
   nfts: Nft[];
-  created_by: UserData
+  created_by: UserData,
+  nfts_count: number
 }
 
 interface UserData {

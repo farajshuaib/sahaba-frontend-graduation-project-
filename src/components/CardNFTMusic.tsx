@@ -6,7 +6,7 @@ import { nftsAbstracts } from "contains/fakeData";
 import LikeButton from "./LikeButton";
 import Prices from "./Prices";
 import musicWave from "assets/images/musicWave.png";
-import ButtonPlayMusicRunningContainer from "containers/ButtonPlayMusicRunningContainer";
+import ButtonPlayMusicRunningContainer from "pages/ButtonPlayMusicRunningContainer";
 import { nanoid } from "@reduxjs/toolkit";
 import AudioForNft from "./AudioForNft";
 import RemainingTimeNftCard from "./RemainingTimeNftCard";

@@ -5,7 +5,7 @@ import NcImage from "shared/NcImage/NcImage";
 import { nftsImgs } from "contains/fakeData";
 import LikeButton from "./LikeButton";
 import Prices from "./Prices";
-import ButtonPlayMusicRunningContainer from "containers/ButtonPlayMusicRunningContainer";
+import ButtonPlayMusicRunningContainer from "pages/ButtonPlayMusicRunningContainer";
 import { nanoid } from "@reduxjs/toolkit";
 import VideoForNft from "./VideoForNft";
 
@@ -24,7 +24,7 @@ const CardNFTVideo: FC<CardNFTVideoProps> = ({
 
   const renderAvatars = () => {
     return (
-      <div className="hidden sm:flex -space-x-1 ">
+      <div className="hidden -space-x-1 sm:flex ">
         <Avatar
           containerClassName="ring-2 ring-white dark:ring-neutral-900"
           sizeClass="h-5 w-5 text-sm"
@@ -117,7 +117,7 @@ const CardNFTVideo: FC<CardNFTVideoProps> = ({
         />
 
         <ButtonPlayMusicRunningContainer
-          className="absolute bottom-3 left-3 z-10"
+          className="absolute z-10 bottom-3 left-3"
           nftId={DEMO_NFT_ID}
           renderDefaultBtn={() => renderListenButtonDefault()}
           renderPlayingBtn={() => renderListenButtonDefault("playing")}
@@ -126,13 +126,13 @@ const CardNFTVideo: FC<CardNFTVideoProps> = ({
       </div>
 
       <div className="p-5">
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           <h2 className={`sm:text-lg font-semibold`}>
             NFT Video #{Math.floor(Math.random() * 1000) + 1000}
           </h2>
-          <div className="ml-2 flex items-center space-x-3">
+          <div className="flex items-center ml-2 space-x-3">
             {renderAvatars()}
-            <span className="text-neutral-700 dark:text-neutral-400 text-xs">
+            <span className="text-xs text-neutral-700 dark:text-neutral-400">
               1 of 100
             </span>
           </div>
@@ -141,7 +141,7 @@ const CardNFTVideo: FC<CardNFTVideoProps> = ({
         <div className="flex justify-between items-end mt-3.5">
           <Prices labelTextClassName="bg-white dark:bg-neutral-900 " />
           <div className="text-right">
-            <span className="block text-xs text-neutral-500 dark:text-neutral-400 font-normal tracking-wide">
+            <span className="block text-xs font-normal tracking-wide text-neutral-500 dark:text-neutral-400">
               Remaining time
             </span>
             <span className="block font-semibold mt-0.5">3h : 15m : 20s</span>

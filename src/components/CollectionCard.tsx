@@ -11,14 +11,14 @@ export interface CollectionCardProps {
   collection: Collection;
 }
 
-const CollectionCard: FC<CollectionCardProps> = ({ className, collection }) => {
+const CollectionCard: FC<CollectionCardProps> = ({ className, collection , imgs = [nftsImgs[9], nftsImgs[10], nftsImgs[11], nftsImgs[8]],}) => {
   return (
     <div
       className={`CollectionCard relative p-4 rounded-2xl overflow-hidden h-[410px] flex flex-col group ${className}`}
     >
       <NcImage
-        containerClassName="absolute inset-0"
-        src={collection?.banner_image}
+        containerClassName=""
+        src={collection?.banner_image || imgs[0]}
       />
       <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 group-hover:h-full to-transparent "></div>
 
