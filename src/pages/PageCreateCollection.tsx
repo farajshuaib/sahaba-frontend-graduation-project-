@@ -40,10 +40,8 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
     banner_image: null,
     name: "",
     description: "",
-    website_url: "",
     facebook_url: "",
     twitter_url: "",
-    telegram_url: "",
     is_sensitive_content: false,
     category_id: null,
   });
@@ -276,32 +274,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   />
                 </FormItem>
 
-                {/* ---- */}
-                <FormItem
-                  label="website link"
-                  htmlFor="website_url"
-                  desc="Sahabat will include a link to this URL on this item's detail page, so that users can click to learn more about it. You are welcome to link to your own webpage with more details."
-                >
-                  <div className="flex">
-                    <span className="inline-flex items-center px-3 text-sm border border-r-0 rounded-l-2xl border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">
-                      https://
-                    </span>
-                    <Input
-                      id="website_url"
-                      name="website_url"
-                      value={values.website_url}
-                      onChange={handleChange("website_url")}
-                      onBlur={handleBlur("website_url")}
-                      type="url"
-                      className="!rounded-l-none"
-                      placeholder="abc.com"
-                    />
-                  </div>
-                  <ErrorMessage
-                    name="website_url"
-                    className="text-sm text-red-600"
-                  />
-                </FormItem>
+               
 
                 <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
 
@@ -434,29 +407,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                       className="text-sm text-red-600"
                     />
                   </div>
-                  <div>
-                    <Label>Telegram channel url</Label>
-                    <div className="mt-1.5 flex">
-                      <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
-                        <i className="text-2xl lab la-telegram-plane"></i>
-                      </span>
-                      <Input
-                        className="!rounded-l-none"
-                        placeholder="collection telegram"
-                        value={values.telegram_url}
-                        type="url"
-                        id="telegram_url"
-                        name="telegram_url"
-                        onChange={handleChange("telegram_url")}
-                        onBlur={handleBlur("telegram_url")}
-                        sizeClass="h-11 px-4 pl-2 pr-3"
-                      />
-                    </div>
-                    <ErrorMessage
-                      name="telegram_url"
-                      className="text-sm text-red-600"
-                    />
-                  </div>
+                 
                 </div>
 
                 {/* ---- */}

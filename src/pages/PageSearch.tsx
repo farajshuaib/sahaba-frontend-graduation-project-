@@ -20,13 +20,20 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
   const { data, loading, fetch, meta } = useCrud("/nfts");
+  const [selectedCategory, setSelectedCategory] = useState<Category>({
+    id: 0,
+    name: "All NFTs",
+    icon: "",
+    nfts_count: 0,
+    collections_count: 0,
+  });
 
   useEffect(() => {
-    fetch({ page, search });
-  }, [page]);
+    fetch({ page, search, category: selectedCategory?.id || "" });
+  }, [page, selectedCategory]);
 
   const submitSearch = () => {
-    fetch({ page, search });
+    fetch({ page, search, category: selectedCategory?.id || "" });
   };
 
   return (
@@ -97,7 +104,10 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
       <div className="container py-16 space-y-16 lg:pb-28 lg:pt-20 lg:space-y-28">
         <main>
           {/* FILTER */}
-          <HeaderFilterSearchPage />
+          <HeaderFilterSearchPage
+            selectedCategory={selectedCategory}
+            setSelectedCategory={(id) => setSelectedCategory(id)}
+          />
 
           {/* LOOP ITEMS */}
           <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">

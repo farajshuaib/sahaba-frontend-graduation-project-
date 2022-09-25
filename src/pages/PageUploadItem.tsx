@@ -200,7 +200,10 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                                 );
                                 const added = await ipfs.add(file);
 
-                                setFieldValue("file_path", added.path);
+                                console.log("added",added)
+
+                                console.log("file_path", IPFS_BASE_URL + added.path);
+                                setFieldValue("file_path", IPFS_BASE_URL + added.path);
                               }}
                             />
                           </label>

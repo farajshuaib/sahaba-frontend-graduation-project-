@@ -20,7 +20,7 @@ const HeaderFilterSection: FC<HeaderFilterSectionProps> = ({
   return (
     <div className={`flex flex-col relative ${className}`}>
       <Heading>{"Featured NFTs"}</Heading>
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between space-y-6 lg:space-y-0 lg:space-x-2 ">
+      <div className="flex flex-col justify-between space-y-6 lg:flex-row lg:items-center lg:space-y-0 lg:space-x-2 ">
         <Nav
           className="sm:space-x-2"
           containerClassName="relative flex w-full overflow-x-auto text-sm md:text-base hiddenScrollbar"
@@ -37,7 +37,7 @@ const HeaderFilterSection: FC<HeaderFilterSectionProps> = ({
             )
           )}
         </Nav>
-        <span className="block flex-shrink-0">
+        <span className="flex-shrink-0 block">
           <ButtonPrimary
             className="w-full !pr-16"
             sizeClass="pl-4 py-2.5 sm:pl-6"
@@ -71,7 +71,7 @@ const HeaderFilterSection: FC<HeaderFilterSectionProps> = ({
             </svg>
 
             <span className="block truncate ml-2.5">Filter</span>
-            <span className="absolute top-1/2 -translate-y-1/2 right-5">
+            <span className="absolute -translate-y-1/2 top-1/2 right-5">
               <ChevronDownIcon
                 className={`w-5 h-5 ${isOpen ? "rotate-180" : ""}`}
                 aria-hidden="true"
@@ -90,7 +90,7 @@ const HeaderFilterSection: FC<HeaderFilterSectionProps> = ({
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <div className="w-full border-b border-neutral-200 dark:border-neutral-700 my-8"></div>
+        <div className="w-full my-8 border-b border-neutral-200 dark:border-neutral-700"></div>
         <TabFilters />
       </Transition>
     </div>

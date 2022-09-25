@@ -24,7 +24,7 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection_id }) => {
   const { fetch, meta, loading, data } = useCrud("/nfts");
 
   useEffect(() => {
-    fetch({ collection_id, page });
+    fetch({ collection: collection_id, page });
   }, [page]);
 
   if (loading) {
@@ -57,8 +57,9 @@ export interface PageCollectionProps {
 
 const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
   const params: any = useParams();
-  const { fetchById, item, loading } = useCrud("/collections");
-  ``;
+  const { fetchById, item: collection, loading } = useCrud("/collections");
+
+  collection as Collection;
 
   useEffect(() => {
     if (params.id) fetchById(params.id);
@@ -68,7 +69,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
     return <LoadingScreen />;
   }
 
-  console.log(item);
+  console.log(collection);
 
   return (
     <div
@@ -76,7 +77,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
       data-nc-id="PageCollection"
     >
       <Helmet>
-        <title>{item?.name || "Collection"}</title>
+        <title>{collection?.name || "Collection"}</title>
       </Helmet>
 
       {/* HEADER */}
@@ -84,7 +85,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
         <div className="relative w-full h-40 md:h-60 2xl:h-72">
           <NcImage
             containerClassName="absolute inset-0"
-            src={item?.banner_image}
+            src={collection?.banner_image}
             className="object-cover w-full h-full"
           />
         </div>
@@ -93,20 +94,22 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
             <div className="flex flex-col sm:flex-row md:block sm:items-start sm:justify-between">
               <div className="w-40 sm:w-48 md:w-56 xl:w-60">
                 <NcImage
-                  src={item?.logo_image}
+                  src={collection?.logo_image}
                   containerClassName="aspect-w-1 aspect-h-1 rounded-3xl overflow-hidden"
                 />
               </div>
               <div className="flex items-center mt-4 space-x-3 sm:justify-center">
                 <div className="flex space-x-1.5 text-neutral-700 dark:text-neutral-300">
                   <a
-                    href="##"
+                    href={collection.facebook_url}
+                    target="_blank"
                     className="flex items-center justify-center w-8 h-8 rounded-full cursor-pointer md:w-10 md:h-10 bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800"
                   >
                     <i className="text-base sm:text-xl lab la-facebook-f"></i>
                   </a>
                   <a
-                    href="##"
+                    href={collection.twitter_url}
+                    target="_blank"
                     className="flex items-center justify-center w-8 h-8 rounded-full cursor-pointer md:w-10 md:h-10 bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800"
                   >
                     <i className="text-base sm:text-xl lab la-twitter"></i>
@@ -139,10 +142,10 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
             <div className="flex-grow mt-5 md:mt-0 md:ml-8 xl:ml-14">
               <div className="max-w-screen-sm ">
                 <h2 className="inline-block text-2xl font-semibold sm:text-3xl lg:text-4xl">
-                  {item?.name}
+                  {collection?.name}
                 </h2>
                 <span className="block mt-4 text-sm text-neutral-500 dark:text-neutral-400">
-                  {item?.description}
+                  {collection?.description}
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-2 mt-6 xl:mt-8 lg:grid-cols-4 sm:gap-4 xl:gap-6">
@@ -152,9 +155,9 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                     Floor Price
                   </span>
                   <span className="mt-4 text-base font-medium sm:text-xl sm:mt-6">
-                    $295,481.62
+                    {collection.min_price} ETH
                   </span>
-                  <span className="mt-1 text-xs text-green-500">+2.11%</span>
+                  <span className="mt-1 text-xs text-green-500"> --</span>
                 </div>
 
                 {/* ----- Volume ----- */}
@@ -163,7 +166,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                     Volume
                   </span>
                   <span className="mt-4 text-base font-medium sm:text-xl sm:mt-6">
-                    $295,481.62
+                    {collection.volume} ETH
                   </span>
                   <span className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
                     total
@@ -175,7 +178,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                     Latest Price
                   </span>
                   <span className="mt-4 text-base font-medium sm:text-xl sm:mt-6">
-                    $295,481.62
+                    {collection.max_price} ETH
                   </span>
                   <span className="mt-1 text-xs text-green-500"> --</span>
                 </div>
@@ -186,7 +189,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                     Items
                   </span>
                   <span className="mt-4 text-base font-medium sm:text-xl sm:mt-6">
-                    {item?.nfts_count}
+                    {collection?.nfts_count}
                   </span>
                   <span className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
                     total
@@ -200,7 +203,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
       {/* ====================== END HEADER ====================== */}
 
       <div className="container py-16 space-y-20 lg:pb-28 lg:pt-20 lg:space-y-28">
-        <CollectionNfts collection_id={item.id} />
+        <CollectionNfts collection_id={collection.id} />
         {/* === SECTION 5 === */}
         <div className="relative py-20 lg:py-28">
           <BackgroundSection />
