@@ -1,24 +1,34 @@
-import React, { useState } from "react";
+import { useCrud } from "hooks/useCrud";
+import React, { useEffect, useState } from "react";
 
 export interface LikeButtonProps {
   className?: string;
   liked: boolean;
   like_count: number;
-  nft_id: number
+  nft_id: number;
 }
 
 const LikeButton: React.FC<LikeButtonProps> = ({
   className,
   liked,
   like_count,
-  nft_id
+  nft_id,
 }) => {
+  const { create } = useCrud(`/nfts/toggle-like/${nft_id}`);
   const [isLiked, setIsLiked] = useState(liked);
+  const [likeCount, setLikeCount] = useState<number>(like_count);
+
 
   return (
     <button
       className={`bg-black/50 px-3.5 h-10 flex items-center justify-center rounded-full text-white ${className}`}
-      onClick={() => setIsLiked(!isLiked)}
+      onClick={() => {
+        create();
+        setIsLiked(!isLiked);
+        setLikeCount((prevVariable) =>
+          isLiked ? +prevVariable - 1 : +prevVariable + 1
+        );
+      }}
     >
       <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
         <path
@@ -30,7 +40,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
           strokeLinejoin="round"
         />
       </svg>
-      <span className="ml-2 text-sm">{isLiked ? like_count + 1 : like_count}</span>
+      <span className="ml-2 text-sm">{likeCount}</span>
     </button>
   );
 };
