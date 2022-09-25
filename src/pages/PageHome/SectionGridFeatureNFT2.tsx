@@ -20,8 +20,8 @@ const SectionGridFeatureNFT2: FC<SectionGridFeatureNFT2Props> = () => {
   });
 
   useEffect(() => {
-    fetch({ page:1, category: selectedCategory?.id || "" });
-  }, []);
+    fetch({ page: 1, category: selectedCategory?.id || "" });
+  }, [selectedCategory]);
 
   return (
     <div className="relative nc-SectionGridFeatureNFT2">
@@ -34,7 +34,15 @@ const SectionGridFeatureNFT2: FC<SectionGridFeatureNFT2Props> = () => {
         {loading ? (
           <LoadingScreen />
         ) : (
-          data.map((item: Nft, index) => <CardNFT2 nft={item} key={index} />)
+          <>
+            {data.length == 0 ? (
+              <div className="col-span-3"><h1 className="text-3xl text-center">no result</h1></div>
+            ) : (
+              data.map((item: Nft, index) => (
+                <CardNFT2 nft={item} key={index} />
+              ))
+            )}
+          </>
         )}
       </div>
       <div className="flex items-center justify-center mt-16">

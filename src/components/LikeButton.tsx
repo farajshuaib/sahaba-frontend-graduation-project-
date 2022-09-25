@@ -1,9 +1,10 @@
 import { useCrud } from "hooks/useCrud";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 export interface LikeButtonProps {
   className?: string;
-  liked: boolean;
+  liked: boolean | undefined;
   like_count: number;
   nft_id: number;
 }
@@ -14,6 +15,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   like_count,
   nft_id,
 }) => {
+  const history= useHistory()
   const { create } = useCrud(`/nfts/toggle-like/${nft_id}`);
   const [isLiked, setIsLiked] = useState(liked);
   const [likeCount, setLikeCount] = useState<number>(like_count);
@@ -23,6 +25,10 @@ const LikeButton: React.FC<LikeButtonProps> = ({
     <button
       className={`bg-black/50 px-3.5 h-10 flex items-center justify-center rounded-full text-white ${className}`}
       onClick={() => {
+        if(typeof(liked) == 'undefined'){
+          history.push('/connect-wallet')
+          return
+        }
         create();
         setIsLiked(!isLiked);
         setLikeCount((prevVariable) =>

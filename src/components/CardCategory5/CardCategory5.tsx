@@ -8,7 +8,8 @@ export interface CardCategory5Props {
   featuredImage?: string;
   name: string;
   index: number;
-  nft_count: number
+  nft_count: number;
+  category_id: number 
 }
 
 const COLORS = [
@@ -29,11 +30,12 @@ const CardCategory5: FC<CardCategory5Props> = ({
   featuredImage = images1,
   name,
   nft_count,
+  category_id,
   index,
 }) => {
   return (
     <Link
-      to={"/collection"}
+      to={`/collections/${category_id}`}
       className={`nc-CardCategory5 flex flex-col ${className}`}
       data-nc-id="CardCategory5"
     >

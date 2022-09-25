@@ -64,7 +64,7 @@ interface Nft {
   like_count: number;
   is_for_sale: boolean;
   nft_token_id: number;
-  is_liked: boolean
+  is_liked?: boolean
 }
 
 interface Collection {
@@ -103,4 +103,5 @@ interface UserData {
   following?: Nft[];
   liked_nfts?: Nft[];
   nfts?: Nft[];
+  is_followed?: boolean 
 }

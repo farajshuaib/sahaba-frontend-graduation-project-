@@ -11,14 +11,18 @@ import { useCrud } from "hooks/useCrud";
 import LoadingScreen from "components/LoadingScreen";
 import CollectionCard2 from "components/CollectionCard2";
 import SectionGridFeatureNFT2 from "./PageHome/SectionGridFeatureNFT2";
+import { useParams } from "react-router-dom";
+import { useAppSelector } from "app/hooks";
 
 export interface PageCollectionsProps {
   className?: string;
 }
 
 const PageCollections: FC<PageCollectionsProps> = ({ className = "" }) => {
+  const params:any = useParams()
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
+  const categories = useAppSelector(state => state.general.categories)
   const [selectedCategory, setSelectedCategory] = useState<Category>({
     id: 0,
     name: "All NFTs",
@@ -28,7 +32,12 @@ const PageCollections: FC<PageCollectionsProps> = ({ className = "" }) => {
   });
   const { data, loading, fetch, meta } = useCrud("/collections");
 
-  console.log("selectedCategoryId", selectedCategory);
+  useEffect(() => {
+    if(params?.category_id && categories){
+      setSelectedCategory(categories?.find(category => category.id == params?.category_id) as Category)
+    }
+  },[params])
+
 
   useEffect(() => {
     fetch({ page, search, category: selectedCategory?.id || "" });

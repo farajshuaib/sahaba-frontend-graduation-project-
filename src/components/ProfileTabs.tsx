@@ -4,20 +4,21 @@ import React, { Fragment, useEffect, useState } from "react";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Pagination from "shared/Pagination/Pagination";
 import { Tab } from "@headlessui/react";
-import FollowButton from "components/FollowButton";
-import CardAuthorBox3 from "components/CardAuthorBox3/CardAuthorBox3";
 import ArchiveFilterListBox from "components/ArchiveFilterListBox";
 import CardNFT from "components/CardNFT";
 import CollectionCard from "./CollectionCard";
+import CardAuthorBox4 from "./CardAuthorBox4/CardAuthorBox4";
 
 interface ProfileTabsProps {
   user_id: number;
 }
 
 const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
-  const [nftsPage, setNftPage] = useState(1);
   const [collectionsPage, setCollectionsPage] = useState(1);
+  const [nftsPage, setNftPage] = useState(1);
   const [likedNftsPage, setLikedNftPage] = useState(1);
+  const [followingPage, setFollowingPage] = useState(1);
+  const [followersPage, setFollowersPage] = useState(1);
   const userData = useAppSelector((state) => state.account.userData);
 
   let [categories] = useState([
@@ -45,6 +46,30 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
     data: liked_nfts,
     meta: liked_nft_meta,
   } = useCrud(`/users/liked-nfts/${user_id}`);
+
+  const {
+    fetch: getFollowing,
+    data: following,
+    meta: following_meta,
+  } = useCrud(`/users/following/${user_id}`);
+
+  const {
+    fetch: getFollowers,
+    data: followers,
+    meta: followers_meta,
+  } = useCrud(`/users/followers/${user_id}`);
+
+  useEffect(() => {
+    if (user_id) {
+      getFollowing({ page: followingPage });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user_id) {
+      getFollowers({ page: followersPage });
+    }
+  }, []);
 
   useEffect(() => {
     if (user_id) {
@@ -172,16 +197,16 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
           {/* LOOP following */}
           <Tab.Panel className="">
             <div className="grid gap-8 mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:mt-10">
-              {Array.from("11111111").map((_, index) => (
-                <CardAuthorBox3 following key={index} />
+              {following.map((data: UserData, index) => (
+                <CardAuthorBox4 user={data} key={index} />
               ))}
             </div>
           </Tab.Panel>
           {/* LOOP followers */}
           <Tab.Panel className="">
             <div className="grid gap-6 mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-8 lg:mt-10">
-              {Array.from("11111111").map((_, index) => (
-                <CardAuthorBox3 following={false} key={index} />
+              {followers.map((data: UserData, index) => (
+                <CardAuthorBox4 user={data} key={index} />
               ))}
             </div>
           </Tab.Panel>

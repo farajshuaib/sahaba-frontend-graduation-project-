@@ -5,6 +5,7 @@ export interface LocationStates {
   "/#"?: {};
   "/nft-details/:id"?: {};
   "/collections"?: {};
+  "/collections/:category_id"?:{};
   "/create-collection"?:{};
   "/collection/:id"?: {};
   "/search"?: {};

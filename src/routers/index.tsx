@@ -25,6 +25,7 @@ export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
   { path: "/#", exact: true, component: PageHome },
   { path: "/collections", component: PageCollections },
+  { path: "/collections/:category_id", component: PageCollections },
   { path: "/collection/:id", component: PageCollection },
   { path: "/create-collection", component: PageCreateCollection },
   { path: "/search", component: PageSearch },

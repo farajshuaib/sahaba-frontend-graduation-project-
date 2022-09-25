@@ -9,14 +9,12 @@ import Badge from "shared/Badge/Badge";
 
 export interface CardAuthorBox4Props {
   className?: string;
-  following?: boolean;
   authorIndex?: number;
   user: UserData;
 }
 
 const CardAuthorBox4: FC<CardAuthorBox4Props> = ({
   className = "",
-  following,
   authorIndex,
   user,
 }) => {
@@ -74,9 +72,7 @@ const CardAuthorBox4: FC<CardAuthorBox4Props> = ({
         <div className="mt-2.5 flex  items-center justify-between">
           <div>
             <h2 className={`text-base font-medium flex items-center`}>
-              <span className="">
-                {user.username}
-              </span>
+              <span className="">{user.username}</span>
               {user.is_verified && <VerifyIcon />}
             </h2>
             <span className={`block mt-0.5 text-sm `}>
@@ -88,7 +84,8 @@ const CardAuthorBox4: FC<CardAuthorBox4Props> = ({
           </div>
           <FollowButton
             sizeClass="px-4 py-2 min-w-[84px]"
-            isFollowing={following}
+            user_id={user.id}
+            isFollowing={user.is_followed}
           />
         </div>
       </div>

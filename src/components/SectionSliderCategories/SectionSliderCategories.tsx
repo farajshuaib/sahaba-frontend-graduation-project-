@@ -79,6 +79,7 @@ const SectionSliderCategories: FC<SectionSliderCategoriesProps> = ({
               <li key={index} className={`glide__slide ${itemClassName}`}>
                 <CardCategory5
                   index={index}
+                  category_id={item.id}
                   featuredImage={item.icon}
                   nft_count={item.nfts_count}
                   name={item.name}

@@ -106,7 +106,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
             <div className="absolute flex flex-row-reverse justify-end md:static left-5 top-4 sm:left-auto sm:top-5 sm:right-5">
               <NftMoreDropdown
                 actions={
-                  userData.id != item?.id
+                  userData?.id != item?.id
                     ? [
                         {
                           id: "report",
@@ -131,7 +131,8 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
                 />
               ) : (
                 <FollowButton
-                  isFollowing={false}
+                  isFollowing={item.is_following}
+                  user_id={item.id}
                   fontSize="text-sm md:text-base font-medium"
                   sizeClass="px-4 py-1 md:py-2.5 h-8 md:!h-10 sm:px-6 lg:px-8"
                 />
