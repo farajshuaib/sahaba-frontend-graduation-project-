@@ -58,7 +58,7 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
       web3React.activate(wallet_item.connector);
       localStorage.setItem("provider", wallet_item.provider);
       if (!web3React.error) {
-        history.push("/");
+        history.goBack();
         return;
       }
       toast.error(

@@ -1,5 +1,3 @@
-// https://goerli.etherscan.io/address/0xDf1268Cc9472305cDD2fb700B6A91CDdB43751DE#code
-// contract address : 0xDf1268Cc9472305cDD2fb700B6A91CDdB43751DE
 
 interface Meta {
   count: number;

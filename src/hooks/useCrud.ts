@@ -14,9 +14,6 @@ const defaultOptions = {
   meta: false,
 };
 
-let error_message =
-  "حدث خطأ ما، الرجاء إعادة المحاولة او الاتصال بالدعم بالفني.";
-
 export function useCrud(url: string, options?: Options) {
   options = { ...defaultOptions, ...options };
   const api = useApi();
@@ -94,7 +91,7 @@ export function useCrud(url: string, options?: Options) {
         }
         if (error.response.data.error) {
           toast.error(error.response.data.error);
-        } else toast.error(error_message);
+        }
         setState((prevState) => ({
           ...prevState,
           loading: false,
@@ -155,7 +152,7 @@ export function useCrud(url: string, options?: Options) {
         }
         if (error.response.data.error) {
           toast.error(error.response.data.error);
-        } else toast.error(error_message);
+        }
         reject(error);
       }
     });
@@ -189,7 +186,7 @@ export function useCrud(url: string, options?: Options) {
       }
       if (error.response.data.error) {
         toast.error(error.response.data.error);
-      } else toast.error(error_message);
+      }
       throw error;
     }
     setState((prevState) => ({

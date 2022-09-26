@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Avatar from "shared/Avatar/Avatar";
 import Badge from "shared/Badge/Badge";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
@@ -17,8 +17,16 @@ import LikeButton from "components/LikeButton";
 import AccordionInfo from "./AccordionInfo";
 import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
 import { useCrud } from "hooks/useCrud";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import LoadingScreen from "components/LoadingScreen";
+import { useAppSelector } from "app/hooks";
+import { toast } from "react-toastify";
+import { Contract } from "ethers";
+import { useWeb3React } from "@web3-react/core";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "constant";
+import { useApi } from "hooks/useApi";
+import { parseEther } from "ethers/lib/utils";
+import ServerError from "components/ServerError";
 
 export interface NftDetailPageProps {
   className?: string;
@@ -30,14 +38,92 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
   isPreviewMode,
 }) => {
   const params: any = useParams();
-  const { item, loading, fetchById } = useCrud("/nfts");
+  const history = useHistory();
+  const { library } = useWeb3React();
+  const api = useApi();
+  const userData = useAppSelector((state) => state.account.userData);
+  const { item, loading, fetchById, errors } = useCrud("/nfts");
+  const [loadingButton, setLoadingButton] = useState(false);
+  const [isOnSale, setIsOnSale] = useState(false);
+
+  const contract = new Contract(
+    CONTRACT_ADDRESS,
+    CONTRACT_ABI,
+    library?.getSigner()
+  );
 
   useEffect(() => {
     if (params.id) fetchById(params.id);
   }, [params.id]);
 
-  if(loading){
-    return <LoadingScreen />
+  const makeOffer = () => {
+    if (!userData) {
+      history.push("/connect-wallet");
+      return;
+    }
+  };
+
+  const stopSale = async () => {
+    try {
+      await contract.cancelListing(item.id);
+
+      await api.put(`/stop-sale/${item.id}`);
+
+      setIsOnSale(false);
+      toast.success("Item canceled from the listing successfully");
+    } catch (err: any) {
+      toast.error(
+        err?.response.data.message ||
+          "System error please try again later if the problem persists report an incident by contacting our Support Team."
+      );
+    }
+  };
+
+  const buyNft = async () => {
+    if (!userData) {
+      history.push("/connect-wallet");
+      return;
+    }
+    setLoadingButton(true);
+    try {
+      await approveBuyItem();
+
+      await contract.buyToken(item.id);
+
+      await api.post(`/buy-item`, { item_id: item.id });
+
+      toast.success("You have successfully bought this item");
+    } catch (err: any) {
+      console.log(err);
+      toast.error(
+        err?.response.data.message ||
+          "System error please try again later if the problem persists report an incident by contacting our Support Team."
+      );
+    }
+    setLoadingButton(false);
+  };
+
+  const approveBuyItem = async () => {
+    const allowance = await contract.allowance(
+      userData.wallet_address,
+      CONTRACT_ADDRESS
+    );
+
+    if (!Number(allowance)) {
+      await contract.approve(
+        CONTRACT_ADDRESS,
+        parseEther("9999999999999999999999999999")
+      );
+      // toast.success("Spend approved");
+    }
+  };
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  if (errors) {
+    return <ServerError />;
   }
 
   const renderSection1 = () => {
@@ -47,7 +133,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
         <div className="space-y-5 pb-9">
           <div className="flex items-center justify-between">
             <Badge name="Virtual Worlds" color="green" />
-            <LikeSaveBtns />
+            <LikeSaveBtns nft={item} />
           </div>
           <h2 className="text-2xl font-semibold sm:text-3xl lg:text-4xl">
             {item.title}
@@ -56,7 +142,11 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
           {/* ---------- 4 ----------  */}
           <div className="flex flex-col space-y-4 text-sm sm:flex-row sm:items-center sm:space-y-0 sm:space-x-8">
             <div className="flex items-center ">
-              <Avatar imgUrl={item?.user?.profile_photo} sizeClass="h-9 w-9" radius="rounded-full" />
+              <Avatar
+                imgUrl={item?.user?.profile_photo}
+                sizeClass="h-9 w-9"
+                radius="rounded-full"
+              />
               <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
                 <span className="text-sm">Creator</span>
                 <span className="flex items-center font-medium text-neutral-900 dark:text-neutral-200">
@@ -109,7 +199,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
           </div>
 
           <div className="flex flex-col mt-8 space-y-2 sm:flex-row sm:space-y-0 sm:space-x-3">
-            <ButtonPrimary href={"/connect-wallet"} className="flex-1">
+            <ButtonPrimary onClick={buyNft} className="flex-1">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path
                   d="M18.04 13.55C17.62 13.96 17.38 14.55 17.44 15.18C17.53 16.26 18.52 17.05 19.6 17.05H21.5V18.24C21.5 20.31 19.81 22 17.74 22H6.26C4.19 22 2.5 20.31 2.5 18.24V11.51C2.5 9.44001 4.19 7.75 6.26 7.75H17.74C19.81 7.75 21.5 9.44001 21.5 11.51V12.95H19.48C18.92 12.95 18.41 13.17 18.04 13.55Z"
@@ -141,9 +231,9 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
                 />
               </svg>
 
-              <span className="ml-2.5">Place a bid</span>
+              <span className="ml-2.5">buy</span>
             </ButtonPrimary>
-            <ButtonSecondary href={"/connect-wallet"} className="flex-1">
+            <ButtonSecondary onClick={makeOffer} className="flex-1">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path
                   d="M8.57007 15.27L15.11 8.72998"
@@ -208,7 +298,12 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
               <ItemTypeVideoIcon className="absolute w-8 h-8 left-3 top-3 md:w-10 md:h-10" />
 
               {/* META FAVORITES */}
-              <LikeButton nft_id={item.id} liked={item.is_liked} like_count={item.like_count} className="absolute right-3 top-3 " />
+              <LikeButton
+                nft_id={item.id}
+                liked={item.is_liked}
+                like_count={item.like_count}
+                className="absolute right-3 top-3 "
+              />
             </div>
 
             <AccordionInfo nft={item} />

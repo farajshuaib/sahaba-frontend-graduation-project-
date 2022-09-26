@@ -1,13 +1,43 @@
+import { useAppSelector } from "app/hooks";
 import ButtonDropDownShare from "components/ButtonDropDownShare";
 import NftMoreDropdown from "components/NftMoreDropdown";
 import React from "react";
 
-const LikeSaveBtns = () => {
+interface LikeSaveBtnProps {
+  nft: Nft;
+}
+
+const LikeSaveBtns: React.FC<LikeSaveBtnProps> = ({ nft }) => {
+  const userData = useAppSelector((state) => state.account.userData);
+
   return (
     <div className="flow-root">
       <div className="flex text-neutral-700 dark:text-neutral-300 text-sm -mx-3 -my-1.5">
         <ButtonDropDownShare panelMenusClass="!w-52" />
-        <NftMoreDropdown />
+        <NftMoreDropdown
+          actions={
+            userData?.id != nft?.id
+              ? [
+                  {
+                    id: "report",
+                    name: "Report abuse",
+                    icon: "las la-flag",
+                  },
+                ]
+              : [
+                  {
+                    id: "edit",
+                    name: "Change price",
+                    icon: "las la-dollar-sign",
+                  },
+                  {
+                    id: "delete",
+                    name: "Delete item",
+                    icon: "las la-trash-alt",
+                  },
+                ]
+          }
+        />
       </div>
     </div>
   );

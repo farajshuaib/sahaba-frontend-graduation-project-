@@ -19,6 +19,7 @@ import { useAppSelector } from "app/hooks";
 import Avatar from "shared/Avatar/Avatar";
 import { createCollectionSchema, validateImage } from "services/validations";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export interface PageCreateCollectionProps {
   className?: string;
@@ -92,7 +93,9 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   "Content-Type": "multipart/form-data",
                 });
 
-                history.push(`/author/${userData?.id}`);
+                toast.success("collection created successfully");
+
+                history.goBack();
               } catch (error) {
                 console.log(error);
               }

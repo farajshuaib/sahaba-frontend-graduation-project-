@@ -201,6 +201,16 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
                 <CardAuthorBox4 user={user} key={index} />
               ))}
             </div>
+            {following && following.length > 0 && (
+              <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
+                {following_meta && (
+                  <Pagination
+                    setPage={(page) => setFollowingPage(page)}
+                    meta={following_meta}
+                  />
+                )}
+              </div>
+            )}
           </Tab.Panel>
           {/* LOOP followers */}
           <Tab.Panel className="">
@@ -209,6 +219,16 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
                 <CardAuthorBox4 user={user} key={index} />
               ))}
             </div>
+            {followers && followers.length > 0 && (
+              <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
+                {followers_meta && (
+                  <Pagination
+                    setPage={(page) => setFollowersPage(page)}
+                    meta={followers_meta}
+                  />
+                )}
+              </div>
+            )}
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>

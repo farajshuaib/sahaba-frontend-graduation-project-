@@ -20,7 +20,7 @@ import { BigNumber, Contract } from "ethers";
 import { createNftSchema } from "services/validations";
 import { toast } from "react-toastify";
 import { parseEther } from "ethers/lib/utils";
-
+import { useHistory } from "react-router-dom";
 
 export interface PageUploadItemProps {
   className?: string;
@@ -55,6 +55,7 @@ const plans = [
 
 const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
   const { library } = useWeb3React();
+  const history = useHistory();
   const myCollections = useAppSelector((state) => state.general.myCollections);
   const ipfs = useIpfs();
   const { create } = useCrud("/nfts");
@@ -114,14 +115,18 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
 
                 console.log("res", res);
 
-                let hash = BigNumber.from(res.events[1]?.args?.tokenId).toString();
+                // let hash = res.events[1]?.args?.tokenId.toString();
 
-                console.log("hash",hash)
+                // console.log("hash",hash)
 
                 await create({
                   ...values,
                   nft_token_id: +tx.value.toString(),
                 });
+
+                toast.success("nft created successfully");
+
+                history.goBack();
               } catch (error) {
                 console.log(error);
               }
@@ -201,10 +206,16 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                                 );
                                 const added = await ipfs.add(file);
 
-                                console.log("added",added)
+                                console.log("added", added);
 
-                                console.log("file_path", IPFS_BASE_URL + added.path);
-                                setFieldValue("file_path", IPFS_BASE_URL + added.path);
+                                console.log(
+                                  "file_path",
+                                  IPFS_BASE_URL + added.path
+                                );
+                                setFieldValue(
+                                  "file_path",
+                                  IPFS_BASE_URL + added.path
+                                );
                               }}
                             />
                           </label>
