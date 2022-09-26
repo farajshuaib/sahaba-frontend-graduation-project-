@@ -1,7 +1,6 @@
 import React, { useState, Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import NavMobile from "shared/Navigation/NavMobile";
-import { useWeb3React } from "@web3-react/core";
 
 export interface MenuBarProps {}
 

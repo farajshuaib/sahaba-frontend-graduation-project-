@@ -20,7 +20,8 @@ import { BigNumber, Contract } from "ethers";
 import { createNftSchema } from "services/validations";
 import { toast } from "react-toastify";
 import { parseEther } from "ethers/lib/utils";
-import Avatar from "shared/Avatar/Avatar";
+
+
 export interface PageUploadItemProps {
   className?: string;
 }
@@ -53,7 +54,7 @@ const plans = [
 ];
 
 const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
-  const { library, account } = useWeb3React();
+  const { library } = useWeb3React();
   const myCollections = useAppSelector((state) => state.general.myCollections);
   const ipfs = useIpfs();
   const { create } = useCrud("/nfts");

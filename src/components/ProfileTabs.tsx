@@ -179,7 +179,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
           <Tab.Panel className="">
             <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
               {liked_nfts &&
-                liked_nfts.map((nft: Nft, index: number) => (
+                liked_nfts.map(({ nft }, index: number) => (
                   <CardNFT nft={nft} key={index} />
                 ))}
             </div>
@@ -197,16 +197,16 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
           {/* LOOP following */}
           <Tab.Panel className="">
             <div className="grid gap-8 mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:mt-10">
-              {following.map((data: UserData, index) => (
-                <CardAuthorBox4 user={data} key={index} />
+              {following.map(({ user }, index) => (
+                <CardAuthorBox4 user={user} key={index} />
               ))}
             </div>
           </Tab.Panel>
           {/* LOOP followers */}
           <Tab.Panel className="">
             <div className="grid gap-6 mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-8 lg:mt-10">
-              {followers.map((data: UserData, index) => (
-                <CardAuthorBox4 user={data} key={index} />
+              {followers.map(({ user }, index) => (
+                <CardAuthorBox4 user={user} key={index} />
               ))}
             </div>
           </Tab.Panel>

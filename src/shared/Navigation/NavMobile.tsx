@@ -10,7 +10,7 @@ import SocialsList from "shared/SocialsList/SocialsList";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import SwitchDarkMode from "shared/SwitchDarkMode/SwitchDarkMode";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
-import { useWeb3React } from "@web3-react/core";
+import { useAppSelector } from "app/hooks";
 
 export interface NavMobileProps {
   data?: NavItemType[];
@@ -21,7 +21,7 @@ const NavMobile: React.FC<NavMobileProps> = ({
   data = NAVIGATION_DEMO_2,
   onClickClose,
 }) => {
-  const { account } = useWeb3React();
+  const userData = useAppSelector(state => state.account.userData)
   const _renderMenuChild = (item: NavItemType) => {
     return (
       <ul className="pb-1 pl-6 text-base nav-mobile-sub-menu">
@@ -139,12 +139,12 @@ const NavMobile: React.FC<NavMobileProps> = ({
         {data.map(_renderItem)}
       </ul>
       <div className="flex items-center justify-between px-5 py-6 space-x-2">
-        {account && (
+        {userData && (
           <ButtonPrimary href={"/create-nft"} className="!px-10">
             Create
           </ButtonPrimary>
         )}
-        {!account && (
+        {!userData && (
           <ButtonSecondary href={"/connect-wallet"} className="flex-1">
             Connect Wallet
           </ButtonSecondary>

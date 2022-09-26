@@ -6,12 +6,12 @@ import Input from "shared/Input/Input";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 import Navigation from "shared/Navigation/Navigation";
-import { useWeb3React } from "@web3-react/core";
+import { useAppSelector } from "app/hooks";
 
 export interface MainNav2Props {}
 
 const MainNav2: FC<MainNav2Props> = () => {
-  const { active } = useWeb3React();
+  const userData = useAppSelector((state) => state.account.userData);
 
   return (
     <div className={`nc-MainNav2 relative z-10 ${"onTop "}`}>
@@ -58,15 +58,12 @@ const MainNav2: FC<MainNav2Props> = () => {
             <Navigation />
             <div className="hidden h-10 border-l sm:block border-neutral-300 dark:border-neutral-6000"></div>
             <SwitchDarkMode />
-            {active && (
-              <ButtonPrimary
-                href={"/create-nft"}
-                sizeClass="px-4 py-2 sm:px-5"
-              >
+            {userData && (
+              <ButtonPrimary href={"/create-nft"} sizeClass="px-4 py-2 sm:px-5">
                 Create
               </ButtonPrimary>
             )}
-            {!active && (
+            {!userData && (
               <ButtonSecondary
                 href={"/connect-wallet"}
                 sizeClass="px-4 py-2 sm:px-5"
@@ -76,15 +73,12 @@ const MainNav2: FC<MainNav2Props> = () => {
             )}
           </div>
           <div className="flex items-center space-x-1.5 xl:hidden">
-            {active && (
-              <ButtonPrimary
-                href={"/create-nft"}
-                sizeClass="px-4 py-2 sm:px-5"
-              >
+            {userData && (
+              <ButtonPrimary href={"/create-nft"} sizeClass="px-4 py-2 sm:px-5">
                 Create
               </ButtonPrimary>
             )}
-            {!active && (
+            {!userData && (
               <ButtonSecondary
                 href={"/connect-wallet"}
                 sizeClass="px-4 py-2 sm:px-5"
@@ -92,7 +86,7 @@ const MainNav2: FC<MainNav2Props> = () => {
                 Connect Wallet
               </ButtonSecondary>
             )}
-            {active && <MenuBar />}
+            {userData && <MenuBar />}
           </div>
         </div>
       </div>

@@ -1,22 +1,20 @@
 import { Popover, Transition } from "@headlessui/react";
 import { useWeb3React } from "@web3-react/core";
 import { logout } from "app/account/actions";
-import { useAppDispatch, useAppSelector,  } from "app/hooks";
+import { useAppDispatch, useAppSelector } from "app/hooks";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "shared/Avatar/Avatar";
 
 export default function AvatarDropdown() {
-  const { account, deactivate } = useWeb3React();
-  const userData:UserData = useAppSelector(state => state.account.userData)
-  const dispatch = useAppDispatch()
-  
-
+  const { deactivate } = useWeb3React();
+  const userData: UserData = useAppSelector((state) => state.account.userData);
+  const dispatch = useAppDispatch();
 
   const disconnect = async () => {
-    await dispatch(logout())
-    await deactivate()
-  }
+    await dispatch(logout());
+    await deactivate();
+  };
 
   return (
     <div className="AvatarDropdown">
@@ -44,14 +42,19 @@ export default function AvatarDropdown() {
                 <div className="overflow-hidden shadow-lg rounded-3xl ring-1 ring-black ring-opacity-5">
                   <div className="relative grid grid-cols-1 gap-6 px-6 bg-white dark:bg-neutral-800 py-7">
                     <div className="flex items-center space-x-3">
-                      <Avatar imgUrl={userData?.profile_photo} sizeClass="w-12 h-12" />
+                      <Avatar
+                        imgUrl={userData?.profile_photo}
+                        sizeClass="w-12 h-12"
+                      />
 
                       <div className="flex-grow">
-                        <h4 className="font-semibold">{userData?.username || 'user'}</h4>
+                        <h4 className="font-semibold">
+                          {userData?.username || "user"}
+                        </h4>
                         <p className="text-xs mt-0.5">
-                          {account?.slice(0, 10) +
+                          {userData.wallet_address?.slice(0, 10) +
                             "..." +
-                            account?.slice(10, 15)}
+                            userData.wallet_address?.slice(10, 15)}
                         </p>
                       </div>
                     </div>
@@ -91,8 +94,6 @@ export default function AvatarDropdown() {
                         <p className="text-sm font-medium ">{"My Profile"}</p>
                       </div>
                     </Link>
-
-                    
 
                     {/* ------------------ 2 --------------------- */}
                     <Link
@@ -147,7 +148,7 @@ export default function AvatarDropdown() {
                     <div className="w-full border-b border-neutral-200 dark:border-neutral-700" />
                     {/* ------------------ 2 --------------------- */}
                     <Link
-                      to={"/##"}
+                      to={"/about"}
                       className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                     >
                       <div className="flex items-center justify-center flex-shrink-0 text-neutral-500 dark:text-neutral-300">

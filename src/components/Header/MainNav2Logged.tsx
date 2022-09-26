@@ -7,12 +7,12 @@ import AvatarDropdown from "./AvatarDropdown";
 import Input from "shared/Input/Input";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Navigation from "shared/Navigation/Navigation";
-import { useWeb3React } from "@web3-react/core";
+import { useAppSelector } from "app/hooks";
 
 export interface MainNav2LoggedProps {}
 
 const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
-  const { active } = useWeb3React();
+  const userData = useAppSelector((state) => state.account.userData);
   
   return (
     <div className={`nc-MainNav2Logged relative z-10 ${"onTop "}`}>
@@ -63,7 +63,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
               <NotifyDropdown />
             </div>
             <div></div>
-            {active && (
+            {userData && (
               <ButtonPrimary
                 href={"/create-nft"}
                 sizeClass="px-4 py-2 sm:px-5"
@@ -71,7 +71,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
                 Create
               </ButtonPrimary>
             )}
-            {!active && (
+            {!userData && (
               <ButtonPrimary
                 href={"/connect-wallet"}
                 sizeClass="px-4 py-2 sm:px-5"
@@ -80,11 +80,11 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
               </ButtonPrimary>
             )}
             <div></div>
-            {active && <AvatarDropdown />}
+            {userData && <AvatarDropdown />}
           </div>
           <div className="flex items-center space-x-3 xl:hidden">
             <NotifyDropdown />
-            {active && <AvatarDropdown />}
+            {userData && <AvatarDropdown />}
             <MenuBar />
           </div>
         </div>
