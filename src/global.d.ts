@@ -49,6 +49,12 @@ interface Category {
   nfts_count: number;
 }
 
+interface Transactions {
+  id: number;
+  from: UserData;
+  to: UserData;
+  price: number | string;
+}
 interface Nft {
   id: number;
   title: string;
@@ -57,12 +63,14 @@ interface Nft {
   file_path: string;
   file_type: 'image' | 'audio' | 'video';
   collection: Collection;
-  user: UserData;
+  creator: UserData;
+  owner: UserData;
   price: number;
   like_count: number;
   is_for_sale: boolean;
   nft_token_id: number;
-  is_liked?: boolean
+  is_liked?: boolean;
+  transactions: Transactions
 }
 
 interface Collection {

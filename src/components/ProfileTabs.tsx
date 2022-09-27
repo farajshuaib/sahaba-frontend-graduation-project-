@@ -15,7 +15,8 @@ interface ProfileTabsProps {
 
 const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
   const [collectionsPage, setCollectionsPage] = useState(1);
-  const [nftsPage, setNftPage] = useState(1);
+  const [createdNftsPage, setCreatedNftPage] = useState(1);
+  const [ownedNftsPage, setOwnedNftPage] = useState(1);
   const [likedNftsPage, setLikedNftPage] = useState(1);
   const [followingPage, setFollowingPage] = useState(1);
   const [followersPage, setFollowersPage] = useState(1);
@@ -23,7 +24,8 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
 
   let [categories] = useState([
     "Collections",
-    "tokens",
+    "created tokens",
+    "collated tokens",
     "Liked",
     "Following",
     "Followers",
@@ -36,10 +38,16 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
   } = useCrud(`/users/collections/${user_id}`);
 
   const {
-    fetch: getNfts,
-    data: nfts,
-    meta: nft_meta,
-  } = useCrud(`/users/nfts/${user_id}`);
+    fetch: getCreatedNfts,
+    data: created_nfts,
+    meta: created_nft_meta,
+  } = useCrud(`/users/created-nfts/${user_id}`);
+
+  const {
+    fetch: getOwnedNfts,
+    data: owned_nfts,
+    meta: owned_nft_meta,
+  } = useCrud(`/users/owned-nfts/${user_id}`);
 
   const {
     fetch: getLiked,
@@ -63,30 +71,37 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
     if (user_id) {
       getFollowing({ page: followingPage });
     }
-  }, []);
+  }, [followingPage]);
 
   useEffect(() => {
     if (user_id) {
       getFollowers({ page: followersPage });
     }
-  }, []);
+  }, [followersPage]);
 
   useEffect(() => {
     if (user_id) {
       getLiked({ page: likedNftsPage });
     }
-  }, []);
+  }, [likedNftsPage]);
 
   useEffect(() => {
     if (user_id) {
       getCollection({ page: collectionsPage });
     }
-  }, []);
+  }, [collectionsPage]);
+
   useEffect(() => {
     if (user_id) {
-      getNfts({ page: nftsPage });
+      getCreatedNfts({ page: createdNftsPage });
     }
-  }, []);
+  }, [createdNftsPage]);
+
+  useEffect(() => {
+    if (user_id) {
+      getOwnedNfts({ page: ownedNftsPage });
+    }
+  }, [ownedNftsPage]);
 
   return (
     <main>
@@ -147,11 +162,11 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
               </div>
             )}
           </Tab.Panel>
-          {/* LOOP nfts */}
+          {/* LOOP created nfts */}
           <Tab.Panel className="">
             <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
-              {nfts && nfts.length > 0 ? (
-                nfts.map((nft: Nft, index: number) => (
+              {created_nfts && created_nfts.length > 0 ? (
+                created_nfts.map((nft: Nft, index: number) => (
                   <CardNFT nft={nft} key={index} />
                 ))
               ) : (
@@ -163,18 +178,47 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
                 </div>
               )}
             </div>
-            {nfts && nfts.length > 0 && (
+            {created_nfts && created_nfts.length > 0 && (
               <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-                {nft_meta && (
+                {created_nft_meta && (
                   <Pagination
-                    setPage={(page) => setNftPage(page)}
-                    meta={nft_meta}
+                    setPage={(page) => setCreatedNftPage(page)}
+                    meta={created_nft_meta}
                   />
                 )}
                 <ButtonPrimary href={"/create-nft"}>Create NFT</ButtonPrimary>
               </div>
             )}
           </Tab.Panel>
+          {/* LOOP nfts */}
+          <Tab.Panel className="">
+            <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
+              {owned_nfts && owned_nfts.length > 0 ? (
+                owned_nfts.map((nft: Nft, index: number) => (
+                  <CardNFT nft={nft} key={index} />
+                ))
+              ) : (
+                <div className="flex flex-col items-center justify-start col-span-2 mx-auto lg:col-span-3 xl:col-span-4">
+                  <h3 className="mb-5 text-3xl font-medium">
+                    You didn't buy any NFTs yet
+                  </h3>
+                  <ButtonPrimary href={"/search"}>explore NFT</ButtonPrimary>
+                </div>
+              )}
+            </div>
+            {owned_nfts && owned_nfts.length > 0 && (
+              <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
+                {owned_nft_meta && (
+                  <Pagination
+                    setPage={(page) => setOwnedNftPage(page)}
+                    meta={owned_nft_meta}
+                  />
+                )}
+                <ButtonPrimary href={"/search"}>buy more NFTs</ButtonPrimary>
+              </div>
+            )}
+          </Tab.Panel>
+
           {/* LOOP liked nfts */}
           <Tab.Panel className="">
             <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
@@ -183,7 +227,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
                   <CardNFT nft={nft} key={index} />
                 ))}
             </div>
-            {liked_nfts && nfts.length > 0 && (
+            {liked_nfts && liked_nfts.length > 0 && (
               <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
                 {liked_nft_meta && (
                   <Pagination

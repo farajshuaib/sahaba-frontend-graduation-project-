@@ -52,6 +52,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     library?.getSigner()
   );
 
+
   useEffect(() => {
     if (params.id) fetchById(params.id);
   }, [params.id]);

@@ -47,16 +47,16 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", nft }) => {
       <div className="p-4 py-5 space-y-3">
         <div className="flex items-center">
           <Avatar
-            imgUrl={nft?.user?.profile_photo}
+            imgUrl={nft?.creator?.profile_photo}
             sizeClass="h-6 w-6"
             containerClassName="ring-2 ring-white"
           />
           <div className="ml-2 text-xs text-white">
             <span className="font-normal">by</span>
             {` `}
-            <span className="font-medium">{nft?.user?.username}</span>
+            <span className="font-medium">{nft?.creator?.username}</span>
           </div>
-          {nft?.user?.is_verified && <VerifyIcon iconClass="w-4 h-4" />}
+          {nft?.creator?.is_verified && <VerifyIcon iconClass="w-4 h-4" />}
         </div>
         <h2 className={`text-lg font-medium`}>{nft.title}</h2>
 
