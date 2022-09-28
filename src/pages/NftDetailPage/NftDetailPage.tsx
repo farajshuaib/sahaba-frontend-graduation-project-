@@ -27,6 +27,7 @@ import { CONTRACT_ABI, CONTRACT_ADDRESS } from "constant";
 import { useApi } from "hooks/useApi";
 import { parseEther } from "ethers/lib/utils";
 import ServerError from "components/ServerError";
+import { usdPrice } from "utils/functions";
 
 export interface NftDetailPageProps {
   className?: string;
@@ -45,7 +46,6 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
   const { item, loading, fetchById, errors } = useCrud("/nfts");
   const { create: submitBuyNft } = useCrud(`/nfts/buy/${params.id}`);
   const [loadingButton, setLoadingButton] = useState(false);
-  const [isOnSale, setIsOnSale] = useState(false);
   const [serviceFee, setServiceFee] = useState<number>(0);
 
   const contract = new Contract(
@@ -64,26 +64,41 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     if (params.id) fetchById(params.id);
   }, [params.id]);
 
-  const makeOffer = () => {
+  const setForSell = async () => {
     if (!userData) {
       history.push("/connect-wallet");
       return;
     }
-  };
-
-  const stopSale = async () => {
     try {
-      await contract.cancelListing(item.id);
-
-      await api.put(`/stop-sale/${item.id}`);
-
-      setIsOnSale(false);
+      setLoadingButton(true);
+      await api.put(`/nfts/sale/${item.id}`);
       toast.success("Item canceled from the listing successfully");
+      setLoadingButton(false);
     } catch (err: any) {
       toast.error(
         err?.response.data.message ||
           "System error please try again later if the problem persists report an incident by contacting our Support Team."
       );
+      setLoadingButton(false);
+    }
+  };
+
+  const stopSale = async () => {
+    if (!userData) {
+      history.push("/connect-wallet");
+      return;
+    }
+    try {
+      setLoadingButton(true);
+      await api.put(`/nfts/stop-sale/${item.id}`);
+      toast.success("Item canceled from the listing successfully");
+      setLoadingButton(false);
+    } catch (err: any) {
+      toast.error(
+        err?.response.data.message ||
+          "System error please try again later if the problem persists report an incident by contacting our Support Team."
+      );
+      setLoadingButton(false);
     }
   };
 
@@ -106,8 +121,6 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       const amount = utils.parseEther(
         (parseFloat(serviceFee.toString()) + parseFloat(item.price)).toString()
       );
-
-   
 
       const transaction = await contract.buyToken(item.token_id, {
         value: amount,
@@ -186,6 +199,20 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
                 </span>
               </span>
             </div>
+            <div className="hidden h-6 border-l sm:block border-neutral-200 dark:border-neutral-700"></div>
+            <div className="flex items-center">
+              <Avatar
+                imgUrl={item?.owner?.profile_photo}
+                sizeClass="h-9 w-9"
+                radius="rounded-full"
+              />
+              <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
+                <span className="text-sm">Owner</span>
+                <span className="flex items-center font-medium text-neutral-900 dark:text-neutral-200">
+                  <span>{item.owner?.username}</span>
+                </span>
+              </span>
+            </div>
           </div>
         </div>
 
@@ -205,10 +232,10 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
                 price
               </span>
               <span className="text-3xl font-semibold text-green-500 xl:text-4xl">
-                {item?.price} ETH
+                {item?.price} ETH <span className="text-xs">{`+ ${serviceFee} service fees`}</span>
               </span>
               <span className="text-lg text-neutral-400 sm:ml-5">
-                ( ≈ $3,221.22)
+                ( ≈ ${usdPrice(item?.price + serviceFee)})
               </span>
             </div>
 
@@ -221,7 +248,13 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
             <ButtonPrimary
               loading={loadingButton}
               disabled={loadingButton}
-              onClick={buyNft}
+              onClick={() => {
+                userData?.id != item?.owner?.id
+                  ? buyNft()
+                  : item.is_for_sale
+                  ? stopSale()
+                  : setForSell();
+              }}
               className="flex-1"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -255,43 +288,16 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
                 />
               </svg>
 
-              <span className="ml-2.5">buy</span>
+              <span className="ml-2.5">
+                {userData?.id != item?.owner?.id
+                  ? "buy"
+                  : item.is_for_sale
+                  ? "stop sale"
+                  : "set for sale"}
+              </span>
             </ButtonPrimary>
-            <ButtonSecondary onClick={makeOffer} className="flex-1">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M8.57007 15.27L15.11 8.72998"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M8.98001 10.3699C9.65932 10.3699 10.21 9.81923 10.21 9.13992C10.21 8.46061 9.65932 7.90991 8.98001 7.90991C8.3007 7.90991 7.75 8.46061 7.75 9.13992C7.75 9.81923 8.3007 10.3699 8.98001 10.3699Z"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M15.52 16.0899C16.1993 16.0899 16.75 15.5392 16.75 14.8599C16.75 14.1806 16.1993 13.6299 15.52 13.6299C14.8407 13.6299 14.29 14.1806 14.29 14.8599C14.29 15.5392 14.8407 16.0899 15.52 16.0899Z"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-
-              <span className="ml-2.5"> Make offer</span>
-            </ButtonSecondary>
           </div>
+          
         </div>
 
         {/* ---------- 9 ----------  */}

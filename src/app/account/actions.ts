@@ -1,3 +1,4 @@
+import { getCategories, getEthPriceInUSD } from './../general/actions';
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { clearGeneralState, getCollections } from "app/general/actions";
 import { deleteToken, setToken, useApi } from "hooks/useApi";
@@ -12,6 +13,8 @@ export const connectToWallet = createAsyncThunk(
       setToken(response.data.token);
     }
     thunkAPI.dispatch(getCollections())
+    thunkAPI.dispatch(getCategories())
+    thunkAPI.dispatch(getEthPriceInUSD())
     return response.data;
   }
 );

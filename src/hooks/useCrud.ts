@@ -142,7 +142,6 @@ export function useCrud(url: string, options?: Options) {
           payload,
           headers && { headers }
         );
-        toast.success("Success");
         resolve(data);
       } catch (error: any) {
         if (error.response.status === 404) {

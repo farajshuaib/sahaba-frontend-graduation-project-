@@ -22,7 +22,6 @@ function App() {
   };
 
   useEffect(() => {
-    dispatch(getCategories());
     injected.isAuthorized().then(async (isAuthorized) => {
       if (isAuthorized && !active && !error) {
         activate(injected);

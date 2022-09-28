@@ -1,15 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
-import { clearGeneralState, getCategories, getCollections } from "./actions";
+import { clearGeneralState, getCategories, getCollections, getEthPriceInUSD } from "./actions";
 
 export interface GeneralState {
   categories: Category[] | null;
   myCollections: Collection[] | null;
+  ethPrice: number | null
 }
 
 const initialState: GeneralState = {
   categories: null,
   myCollections: null,
+  ethPrice: null
 };
 
 export const generalSlice = createSlice({
@@ -22,6 +24,9 @@ export const generalSlice = createSlice({
     });
     builder.addCase(getCollections.fulfilled, (state, action) => {
       state.myCollections = action.payload?.data;
+    });
+    builder.addCase(getEthPriceInUSD.fulfilled, (state, action) => {
+      state.ethPrice = action.payload.USD;
     });
     builder.addCase(clearGeneralState.fulfilled, (state, action) => {
       state.myCollections = null;

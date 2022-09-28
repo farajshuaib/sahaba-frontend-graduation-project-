@@ -1,4 +1,10 @@
-import React, { FC, useEffect, useRef } from "react";
+import { useWeb3React } from "@web3-react/core";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "constant";
+import { Contract } from "ethers";
+import { parseEther } from "ethers/lib/utils";
+import { useCrud } from "hooks/useCrud";
+import React, { FC, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 import Input from "shared/Input/Input";
@@ -7,10 +13,38 @@ import NcModal from "shared/NcModal/NcModal";
 export interface ModalEditProps {
   show: boolean;
   onCloseModalEdit: () => void;
+  nft: Nft;
 }
 
-const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit }) => {
+const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, nft }) => {
   const textareaRef = useRef(null);
+  const { library, account } = useWeb3React();
+  const [price, setPrice] = useState<number>(nft.price);
+  const [loading, setLoading] = useState<boolean>(false);
+  const { update } = useCrud(`/nfts/update-price`);
+
+  const contract = new Contract(
+    CONTRACT_ADDRESS,
+    CONTRACT_ABI,
+    library?.getSigner()
+  );
+
+  const submit = async () => {
+    try {
+      setLoading(true);
+      const transaction = await contract.changeTokenPrice(
+        nft.token_id,
+        parseEther(price.toString())
+      );
+      await transaction.wait();
+      await update({ id: nft.id, payload: { price } });
+      toast.success("price updated successfully");
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (show) {
@@ -34,8 +68,18 @@ const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit }) => {
           Change price
         </h3>
         <span className="text-sm">Are you sure you want to change price?</span>
-        <div className="mt-8 relative rounded-md shadow-sm">
-          <Input ref={textareaRef} defaultValue={"1.000"} type={"text"} />
+        <div className="relative mt-8 rounded-md shadow-sm">
+          <Input
+            ref={textareaRef}
+            value={price}
+            name="price"
+            id="price"
+            onChange={(e) => {
+              const val = e.currentTarget?.value;
+              setPrice(+val);
+            }}
+            type={"number"}
+          />
 
           <div className="absolute inset-y-0 right-0 flex items-center">
             <label htmlFor="currency" className="sr-only">
@@ -44,7 +88,8 @@ const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit }) => {
             <select
               id="currency"
               name="currency"
-              className="focus:ring-indigo-500 focus:border-indigo-500 h-full py-0 pl-2 pr-7 border-transparent bg-transparent text-neutral-500 dark:text-neutral-300 sm:text-sm rounded-md"
+              disabled={true}
+              className="h-full py-0 pl-2 bg-transparent border-transparent rounded-md focus:ring-indigo-500 focus:border-indigo-500 pr-7 text-neutral-500 dark:text-neutral-300 sm:text-sm"
             >
               <option>ETH</option>
               <option>BC</option>
@@ -53,8 +98,19 @@ const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit }) => {
           </div>
         </div>
         <div className="mt-4 space-x-3">
-          <ButtonPrimary type="submit">Submit</ButtonPrimary>
-          <ButtonSecondary type="button" onClick={onCloseModalEdit}>
+          <ButtonPrimary
+            loading={loading}
+            disabled={loading}
+            type="button"
+            onClick={submit}
+          >
+            Submit
+          </ButtonPrimary>
+          <ButtonSecondary
+            disabled={loading}
+            type="button"
+            onClick={onCloseModalEdit}
+          >
             Cancel
           </ButtonSecondary>
         </div>

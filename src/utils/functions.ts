@@ -1,9 +1,9 @@
+import { useAppSelector } from "./../app/hooks";
 import { currentNetwork } from "./../constant";
 import { toast } from "react-toastify";
 import { ethers, Contract, utils, BigNumber } from "ethers";
 import { networkParams } from "services/networks";
-
-
+import { store } from "app/store";
 
 export const getBalance = async (address: string) => {
   if (!window?.ethereum) {
@@ -34,7 +34,6 @@ export const addTokenAsset = async () => {
   }
 };
 
-
 export const switchNetwork = () => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -47,7 +46,7 @@ export const switchNetwork = () => {
           },
         ],
       });
-      await setTimeout(() => {},100)
+      await setTimeout(() => {}, 100);
       resolve(true);
     } catch (err: any) {
       // This error code indicates that the chain has not been added to MetaMask
@@ -64,7 +63,7 @@ export const switchNetwork = () => {
             },
           ],
         });
-        await setTimeout(() => {},100)
+        await setTimeout(() => {}, 100);
         resolve(true);
       } else {
         toast.error(
@@ -74,4 +73,12 @@ export const switchNetwork = () => {
       }
     }
   });
+};
+
+export const usdPrice = (nft_price: number): string => {
+  const state = store.getState();
+  const eth_price = state.general.ethPrice;
+
+  if (!eth_price) return "";
+  return `${nft_price * eth_price}`;
 };

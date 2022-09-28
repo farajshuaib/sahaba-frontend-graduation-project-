@@ -1,3 +1,4 @@
+import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { useApi } from "hooks/useApi";
 
@@ -15,6 +16,16 @@ export const getCollections = createAsyncThunk(
   "general/getCollections",
   async () => {
     const response = await api.get("/my-collections");
+    return response.data;
+  }
+);
+
+export const getEthPriceInUSD = createAsyncThunk(
+  "general/getEthPriceInUSD",
+  async () => {
+    const response = await axios.get(
+      "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD"
+    );
     return response.data;
   }
 );
