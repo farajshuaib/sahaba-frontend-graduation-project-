@@ -15,11 +15,12 @@ import useIpfs from "hooks/useIpfs";
 import { useWeb3React } from "@web3-react/core";
 import { CONTRACT_ABI, CONTRACT_ADDRESS, IPFS_BASE_URL } from "constant";
 import { Contract } from "ethers";
-import { useAppSelector } from "app/hooks";
+import { useAppDispatch, useAppSelector } from "app/hooks";
 import Avatar from "shared/Avatar/Avatar";
 import { createCollectionSchema, validateImage } from "services/validations";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import { getCollections } from "app/general/actions";
 
 export interface PageCreateCollectionProps {
   className?: string;
@@ -28,8 +29,9 @@ export interface PageCreateCollectionProps {
 const PageCreateCollection: FC<PageCreateCollectionProps> = ({
   className = "",
 }) => {
-  const userData: UserData = useAppSelector((state) => state.account.userData)
+  const userData: UserData = useAppSelector((state) => state.account.userData);
   const history = useHistory();
+  const dispatch = useAppDispatch();
   const { library } = useWeb3React();
   const categories = useAppSelector((state) => state.general.categories);
   const { create } = useCrud("/collections");
@@ -73,27 +75,18 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
             validationSchema={createCollectionSchema}
             onSubmit={async (values) => {
               try {
-                const signer = library?.getSigner();
-                const contract = new Contract(
-                  CONTRACT_ADDRESS,
-                  CONTRACT_ABI,
-                  signer
-                );
-                const res = await contract.createCollection(values.name);
-                let collection_token_id = res.value.toString();
-
                 const form = new FormData();
                 for (const [key, value] of Object.entries(values)) {
                   form.append(key, value);
                 }
-
-                form.append("collection_token_id", collection_token_id);
 
                 await create(form, {
                   "Content-Type": "multipart/form-data",
                 });
 
                 toast.success("collection created successfully");
+
+                dispatch(getCollections());
 
                 history.goBack();
               } catch (error) {
@@ -277,8 +270,6 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   />
                 </FormItem>
 
-               
-
                 <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
 
                 {/* categories */}
@@ -410,7 +401,6 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                       className="text-sm text-red-600"
                     />
                   </div>
-                 
                 </div>
 
                 {/* ---- */}

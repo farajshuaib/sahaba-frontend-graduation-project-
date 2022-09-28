@@ -16,7 +16,6 @@ interface Contract_NFT {
   currentOwner: string; // address
   previousOwner: string; // address
   price: number;
-  collection_id: number;
   numberOfTransfers: number;
 }
 
@@ -32,13 +31,12 @@ interface Contract_methods {
   ) => number; // tokenID
   buyToken: (tokenId: number) => void;
   changeTokenPrice: (tokenId: number, newPrice: number) => void; // you must be the owner of the token
-  getListingPrice: () => number;
-  setListingPrice: (newPrice: number) => number;
+  getServiceFeesPrice: () => number;
+  setServiceFeesPrice: (newPrice: number) => number;
   getTokenOwner: (tokenId: number) => string;
   getTokenURI: (tokenId: number) => string;
   getTotalNumberOfTokensOwnedByAnAddress: (owner: string) => number;
   getTokenExists: (tokenId: number) => boolean;
-  createCollection: (name: string) => number;
 }
 
 interface Category {
@@ -68,7 +66,7 @@ interface Nft {
   price: number;
   like_count: number;
   is_for_sale: boolean;
-  nft_token_id: number;
+  token_id: string;
   is_liked?: boolean;
   transactions: Transactions
 }

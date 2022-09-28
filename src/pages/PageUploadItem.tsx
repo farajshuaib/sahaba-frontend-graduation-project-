@@ -54,7 +54,7 @@ const plans = [
 ];
 
 const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
-  const { library } = useWeb3React();
+  const { library, account } = useWeb3React();
   const history = useHistory();
   const myCollections = useAppSelector((state) => state.general.myCollections);
   const ipfs = useIpfs();
@@ -66,8 +66,6 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
     file_type: "",
     price: 0,
     collection_id: 0,
-    is_for_sale: false,
-    sale_end_at: null,
   });
 
   return (
@@ -94,8 +92,16 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
           <Formik
             initialValues={initFormState}
             validationSchema={createNftSchema}
-            onSubmit={async (values) => {
+            onSubmit={async (values, { setFieldError }) => {
               try {
+                if (values.collection_id == 0) {
+                  setFieldError("collection_id", "collection id is required");
+                  return;
+                }
+                if (values.price == 0) {
+                  setFieldError("price", "price must be above 0");
+                  return;
+                }
                 const signer = library?.getSigner();
                 const contract = new Contract(
                   CONTRACT_ADDRESS,
@@ -103,10 +109,18 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                   signer
                 );
 
+                const isApprovedForAll = await contract.isApprovedForAll(
+                  account,
+                  CONTRACT_ADDRESS
+                );
+
+                if (!isApprovedForAll) {
+                  await contract.setApprovalForAll(CONTRACT_ADDRESS, true);
+                }
+
                 const tx = await contract.createAndListToken(
                   values.file_path,
-                  parseEther(values.price.toString()),
-                  values.collection_id.toString()
+                  parseEther(values.price.toString())
                 );
 
                 console.log("tx", tx);
@@ -115,13 +129,15 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
 
                 console.log("res", res);
 
-                // let hash = res.events[1]?.args?.tokenId.toString();
+                const token_id = BigNumber.from(
+                  res.events[0].args.tokenId
+                ).toString();
 
-                // console.log("hash",hash)
+                console.log("hash", token_id);
 
                 await create({
                   ...values,
-                  nft_token_id: +tx.value.toString(),
+                  token_id,
                 });
 
                 toast.success("nft created successfully");
@@ -392,13 +408,13 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                   />
                 </div>
 
-                {/* ---- */}
+                {/* ----
                 <MySwitch
                   label="is for sale"
                   enabled={values.is_for_sale}
                   onChange={(val: boolean) => setFieldValue("is_for_sale", val)}
                   desc="does the collection allow sharing sensitive content"
-                />
+                /> */}
 
                 {/* ---- */}
                 <div className="flex flex-col pt-2 space-x-0 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3 ">

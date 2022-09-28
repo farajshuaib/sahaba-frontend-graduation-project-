@@ -21,7 +21,7 @@ import { useHistory, useParams } from "react-router-dom";
 import LoadingScreen from "components/LoadingScreen";
 import { useAppSelector } from "app/hooks";
 import { toast } from "react-toastify";
-import { Contract } from "ethers";
+import { BigNumber, Contract, ethers, utils } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "constant";
 import { useApi } from "hooks/useApi";
@@ -39,12 +39,14 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
 }) => {
   const params: any = useParams();
   const history = useHistory();
-  const { library } = useWeb3React();
+  const { library, account } = useWeb3React();
   const api = useApi();
-  const userData = useAppSelector((state) => state.account.userData);
+  const userData: UserData = useAppSelector((state) => state.account.userData);
   const { item, loading, fetchById, errors } = useCrud("/nfts");
+  const { create: submitBuyNft } = useCrud(`/nfts/buy/${params.id}`);
   const [loadingButton, setLoadingButton] = useState(false);
   const [isOnSale, setIsOnSale] = useState(false);
+  const [serviceFee, setServiceFee] = useState<number>(0);
 
   const contract = new Contract(
     CONTRACT_ADDRESS,
@@ -52,8 +54,13 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     library?.getSigner()
   );
 
+  async function getServiceFeesPrice() {
+    const res = await contract.getServiceFeesPrice();
+    setServiceFee(+utils.formatEther(res).toString());
+  }
 
   useEffect(() => {
+    getServiceFeesPrice();
     if (params.id) fetchById(params.id);
   }, [params.id]);
 
@@ -87,36 +94,43 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     }
     setLoadingButton(true);
     try {
-      await approveBuyItem();
+      const isApprovedForAll = await contract.isApprovedForAll(
+        account,
+        CONTRACT_ADDRESS
+      );
 
-      await contract.buyToken(item.id);
+      if (!isApprovedForAll) {
+        await contract.setApprovalForAll(CONTRACT_ADDRESS, true);
+      }
 
-      await api.post(`/buy-item`, { item_id: item.id });
+      const amount = utils.parseEther(
+        (parseFloat(serviceFee.toString()) + parseFloat(item.price)).toString()
+      );
 
-      toast.success("You have successfully bought this item");
+   
+
+      const transaction = await contract.buyToken(item.token_id, {
+        value: amount,
+        gasLimit: 1 * 10 ** 6,
+      });
+
+      console.log("transaction", transaction);
+
+      const response = await transaction.wait();
+
+      console.log("response", response);
+
+      await submitBuyNft();
+
+      toast.success("You have successfully bought this NFT");
     } catch (err: any) {
-      console.log(err);
+      console.log(err?.error?.message ?? err);
       toast.error(
-        err?.response.data.message ||
+        err?.response?.data?.message ||
           "System error please try again later if the problem persists report an incident by contacting our Support Team."
       );
     }
     setLoadingButton(false);
-  };
-
-  const approveBuyItem = async () => {
-    const allowance = await contract.allowance(
-      userData.wallet_address,
-      CONTRACT_ADDRESS
-    );
-
-    if (!Number(allowance)) {
-      await contract.approve(
-        CONTRACT_ADDRESS,
-        parseEther("9999999999999999999999999999")
-      );
-      // toast.success("Spend approved");
-    }
   };
 
   if (loading) {
@@ -144,22 +158,24 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
           <div className="flex flex-col space-y-4 text-sm sm:flex-row sm:items-center sm:space-y-0 sm:space-x-8">
             <div className="flex items-center ">
               <Avatar
-                imgUrl={item?.user?.profile_photo}
+                imgUrl={item?.creator?.profile_photo}
                 sizeClass="h-9 w-9"
                 radius="rounded-full"
               />
               <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
                 <span className="text-sm">Creator</span>
                 <span className="flex items-center font-medium text-neutral-900 dark:text-neutral-200">
-                  <span>{item.user.username}</span>
-                  {item.user.is_verified && <VerifyIcon iconClass="w-4 h-4" />}
+                  <span>{item?.creator?.username}</span>
+                  {item.creator?.is_verified && (
+                    <VerifyIcon iconClass="w-4 h-4" />
+                  )}
                 </span>
               </span>
             </div>
             <div className="hidden h-6 border-l sm:block border-neutral-200 dark:border-neutral-700"></div>
             <div className="flex items-center">
               <Avatar
-                imgUrl={item.collection.logo_image}
+                imgUrl={item?.collection?.logo_image}
                 sizeClass="h-9 w-9"
                 radius="rounded-full"
               />
@@ -174,9 +190,11 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
         </div>
 
         {/* ---------- 6 ----------  */}
-        <div className="py-9">
-          <TimeCountDown />
-        </div>
+        {item.is_for_sale && (
+          <div className="py-9">
+            <TimeCountDown />
+          </div>
+        )}
 
         {/* ---------- 7 ----------  */}
         {/* PRICE */}
@@ -187,7 +205,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
                 price
               </span>
               <span className="text-3xl font-semibold text-green-500 xl:text-4xl">
-                {item.price} ETH
+                {item?.price} ETH
               </span>
               <span className="text-lg text-neutral-400 sm:ml-5">
                 ( ≈ $3,221.22)
@@ -200,7 +218,12 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
           </div>
 
           <div className="flex flex-col mt-8 space-y-2 sm:flex-row sm:space-y-0 sm:space-x-3">
-            <ButtonPrimary onClick={buyNft} className="flex-1">
+            <ButtonPrimary
+              loading={loadingButton}
+              disabled={loadingButton}
+              onClick={buyNft}
+              className="flex-1"
+            >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path
                   d="M18.04 13.55C17.62 13.96 17.38 14.55 17.44 15.18C17.53 16.26 18.52 17.05 19.6 17.05H21.5V18.24C21.5 20.31 19.81 22 17.74 22H6.26C4.19 22 2.5 20.31 2.5 18.24V11.51C2.5 9.44001 4.19 7.75 6.26 7.75H17.74C19.81 7.75 21.5 9.44001 21.5 11.51V12.95H19.48C18.92 12.95 18.41 13.17 18.04 13.55Z"

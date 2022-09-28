@@ -75,8 +75,6 @@ export function useCrud(url: string, options?: Options) {
     return new Promise(async (resolve, reject) => {
       try {
         const { data } = await api.get(`${url}/${id}`);
-        console.log("xfn ofdno =>", data);
-
         setState((prevState) => ({
           ...prevState,
           data: data.data ? data.data : [],
