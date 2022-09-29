@@ -39,7 +39,7 @@ function App() {
 
   useEffect(() => {
     handleAccountState();
-  }, [account]);
+  }, [account, chainId]);
 
   return (
     <div className="text-base bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">

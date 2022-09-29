@@ -10,7 +10,8 @@ export interface NftMoreDropdownProps {
   iconClass?: string;
   dropdownPositon?: "up" | "down";
   actions?: { id: string; name: string; icon?: string; href?: string }[];
-  nft: Nft
+  nft?: Nft,
+  user?: UserData
 }
 
 const actionsDefault: NftMoreDropdownProps["actions"] = [

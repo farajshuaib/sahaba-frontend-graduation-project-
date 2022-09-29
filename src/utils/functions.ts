@@ -80,5 +80,5 @@ export const usdPrice = (nft_price: number): string => {
   const eth_price = state.general.ethPrice;
 
   if (!eth_price) return "";
-  return `${nft_price * eth_price}`;
+  return `${(nft_price * eth_price).toFixed(2)} USD`;
 };

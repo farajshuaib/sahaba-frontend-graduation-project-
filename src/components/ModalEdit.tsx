@@ -13,13 +13,13 @@ import NcModal from "shared/NcModal/NcModal";
 export interface ModalEditProps {
   show: boolean;
   onCloseModalEdit: () => void;
-  nft: Nft;
+  nft?: Nft;
 }
 
 const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, nft }) => {
   const textareaRef = useRef(null);
   const { library, account } = useWeb3React();
-  const [price, setPrice] = useState<number>(nft.price);
+  const [price, setPrice] = useState<number>(nft?.price || 0);
   const [loading, setLoading] = useState<boolean>(false);
   const { update } = useCrud(`/nfts/update-price`);
 
@@ -30,6 +30,7 @@ const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, nft }) => {
   );
 
   const submit = async () => {
+    if (!nft) return;
     try {
       setLoading(true);
       const transaction = await contract.changeTokenPrice(
@@ -40,6 +41,7 @@ const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, nft }) => {
       await update({ id: nft.id, payload: { price } });
       toast.success("price updated successfully");
       setLoading(false);
+      onCloseModalEdit();
     } catch (error) {
       console.log(error);
       setLoading(false);

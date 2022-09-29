@@ -2,19 +2,44 @@ import { Popover, Transition } from "@headlessui/react";
 import { useWeb3React } from "@web3-react/core";
 import { logout } from "app/account/actions";
 import { useAppDispatch, useAppSelector } from "app/hooks";
-import { Fragment } from "react";
+import Prices from "components/Prices";
+import Prices2 from "components/Prices2";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "constant";
+import { Contract } from "ethers";
+import { formatEther } from "ethers/lib/utils";
+import { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "shared/Avatar/Avatar";
+import { usdPrice } from "utils/functions";
 
 export default function AvatarDropdown() {
-  const { deactivate } = useWeb3React();
+  const { deactivate, library, account } = useWeb3React();
   const userData: UserData = useAppSelector((state) => state.account.userData);
+  const [balance, setBalance] = useState<string>("");
   const dispatch = useAppDispatch();
 
   const disconnect = async () => {
     await dispatch(logout());
     await deactivate();
   };
+
+  const getAccountBalance = async () => {
+    if (!account) return;
+    const balance = await library.getBalance(account);
+    setBalance(formatEther(balance));
+    const tokenContract = new Contract(
+      CONTRACT_ADDRESS,
+      CONTRACT_ABI,
+      library.getSigner()
+    );
+
+    const tokenBalance = await tokenContract.balanceOf(account);
+    console.log(formatEther(tokenBalance));
+  };
+
+  useEffect(() => {
+    getAccountBalance();
+  }, []);
 
   return (
     <div className="AvatarDropdown">
@@ -44,6 +69,7 @@ export default function AvatarDropdown() {
                     <div className="flex items-center space-x-3">
                       <Avatar
                         imgUrl={userData?.profile_photo}
+                        userName={userData?.username}
                         sizeClass="w-12 h-12"
                       />
 
@@ -57,6 +83,17 @@ export default function AvatarDropdown() {
                             userData.wallet_address?.slice(10, 15)}
                         </p>
                       </div>
+                    </div>
+                    <div className="relative flex flex-col items-baseline flex-1 gap-1 p-2 mt-2 border-2 border-green-500 sm:flex-row rounded-xl">
+                      <span className="absolute bottom-full translate-y-2 py-1 px-1.5 bg-white dark:bg-neutral-800 text-sm text-neutral-500 dark:text-neutral-400">
+                        balance
+                      </span>
+                      <span className="font-semibold text-green-500 ">
+                        {parseFloat(balance).toFixed(5)} {" ETH "}
+                      </span>
+                      <span className="text-xs text-neutral-400">
+                        {"≈ " + usdPrice(+balance)}
+                      </span>
                     </div>
 
                     <div className="w-full border-b border-neutral-200 dark:border-neutral-700" />
@@ -141,7 +178,7 @@ export default function AvatarDropdown() {
                         </svg>
                       </div>
                       <div className="ml-4">
-                        <p className="text-sm font-medium ">{"Edit profile"}</p>
+                        <p className="text-sm font-medium ">{"settings"}</p>
                       </div>
                     </Link>
 

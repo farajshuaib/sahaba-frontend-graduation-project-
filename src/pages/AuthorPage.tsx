@@ -104,32 +104,25 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
               </div>
             </div>
             <div className="absolute flex flex-row-reverse justify-end md:static left-5 top-4 sm:left-auto sm:top-5 sm:right-5">
-              <NftMoreDropdown
-                actions={
-                  userData?.id != item?.id
-                    ? [
-                        {
-                          id: "report",
-                          name: "Report abuse",
-                          icon: "las la-flag",
-                        },
-                      ]
-                    : []
-                }
-                containerClassName="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800 cursor-pointer"
-              />
+              {userData?.id != item?.id && (
+                <NftMoreDropdown
+                  user={item}
+                  actions={[
+                    {
+                      id: "report",
+                      name: "Report abuse",
+                      icon: "las la-flag",
+                    },
+                  ]}
+                  containerClassName="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800 cursor-pointer"
+                />
+              )}
               <ButtonDropDownShare
                 className="flex items-center justify-center w-8 h-8 mx-2 rounded-full cursor-pointer md:w-10 md:h-10 bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800"
                 panelMenusClass="origin-top-right !-right-5 !w-40 sm:!w-52"
               />
 
-              {userData?.id == item?.id ? (
-                <VerifyAccount
-                  isVerified={userData?.is_verified}
-                  fontSize="text-sm md:text-base font-medium"
-                  sizeClass="px-4 py-1 md:py-2.5 h-8 md:!h-10 sm:px-6 lg:px-8"
-                />
-              ) : (
+              {userData?.id != item?.id && (
                 <FollowButton
                   isFollowing={item.is_following}
                   user_id={item.id}

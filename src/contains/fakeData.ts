@@ -1,15 +1,3 @@
-import avatar1 from "assets/images/avatars/Image-1.png";
-import avatar2 from "assets/images/avatars/Image-2.png";
-import avatar3 from "assets/images/avatars/Image-3.png";
-import avatar4 from "assets/images/avatars/Image-4.png";
-import avatar5 from "assets/images/avatars/Image-5.png";
-import avatar6 from "assets/images/avatars/Image-6.png";
-import avatar7 from "assets/images/avatars/Image-7.png";
-import avatar8 from "assets/images/avatars/Image-8.png";
-import avatar9 from "assets/images/avatars/Image-9.png";
-import avatar10 from "assets/images/avatars/Image-10.png";
-import avatar11 from "assets/images/avatars/avatar.png";
-import cloud from "assets/images/cloud.png";
 //
 import nfts1 from "assets/images/nfts/1.png";
 import nfts2 from "assets/images/nfts/2.png";
@@ -96,20 +84,6 @@ export const nftsAbstracts = [
   "https://images.unsplash.com/photo-1518640467707-6811f4a6ab73?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDE2fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
   "https://images.unsplash.com/photo-1626282874430-c11ae32d2898?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
   "https://images.unsplash.com/photo-1625527575307-616f0bb84ad2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEyfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60",
-];
-
-export const avatarImgs = [
-  avatar1,
-  avatar2,
-  avatar3,
-  avatar4,
-  avatar5,
-  avatar6,
-  avatar7,
-  avatar8,
-  avatar9,
-  avatar10,
-  avatar11,
 ];
 
 export const personNames = [
@@ -214,15 +188,10 @@ function _getImgHightQualityRd() {
 function _getTagNameRd() {
   return tagNames[Math.floor(Math.random() * tagNames.length)];
 }
-function _getAvatarRd() {
-  return avatarImgs[Math.floor(Math.random() * avatarImgs.length)];
-}
-
 
 export {
   _getImgRd,
   _getTagNameRd,
-  _getAvatarRd,
   _getImgHightQualityRd,
   _getTitleRd,
   _getPersonNameRd,

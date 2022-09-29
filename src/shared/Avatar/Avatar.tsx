@@ -1,7 +1,7 @@
 import { avatarColors } from "contains/contants";
 import React, { FC } from "react";
 
-import { avatarImgs } from "contains/fakeData";
+import {  nftsImgs } from "contains/fakeData";
 import VerifyIcon from "components/VerifyIcon";
 
 export interface AvatarProps {
@@ -18,12 +18,12 @@ const Avatar: FC<AvatarProps> = ({
   containerClassName = "ring-1 ring-white dark:ring-neutral-900",
   sizeClass = "h-6 w-6 text-sm",
   radius = "rounded-full",
-  imgUrl = avatarImgs[Math.floor(Math.random() * avatarImgs.length)],
+  imgUrl,
   userName,
   hasChecked,
   hasCheckedClass = "w-4 h-4 bottom-1 -right-0.5",
 }) => {
-  const url = imgUrl || "";
+  const url = imgUrl || nftsImgs[2];
   const name = userName || "John Doe";
   const _setBgColor = (name: string) => {
     const backgroundIndex = Math.floor(
@@ -39,12 +39,12 @@ const Avatar: FC<AvatarProps> = ({
     >
       {url && (
         <img
-          className={`absolute inset-0 w-full h-full object-cover ${radius}`}
+          className={`absolute inset-0 object-cover w-full h-full text-center mx-auto  ${radius}`}
           src={url}
-          alt={name}
+          alt={userName}
         />
       )}
-      <span className="wil-avatar__name">{name[0]}</span>
+      <span className="wil-avatar__name">{userName}</span>
 
       {hasChecked && (
         <span className={`  text-white  absolute  ${hasCheckedClass}`}>

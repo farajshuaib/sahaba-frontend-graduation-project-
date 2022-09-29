@@ -13,6 +13,7 @@ import { useCrud } from "hooks/useCrud";
 import { validateImage } from "services/validations";
 import { useApi } from "hooks/useApi";
 import { connectToWallet } from "app/account/actions";
+import VerifyAccount from "components/VerifyAccount";
 
 export interface AccountPageProps {
   className?: string;
@@ -48,6 +49,13 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
               You can set preferred display name, create your profile URL and
               manage other personal settings.
             </span>
+          </div>
+          <div className="flex items-center justify-end w-full">
+            <VerifyAccount
+              isVerified={userData?.is_verified}
+              fontSize="text-sm md:text-base font-medium"
+              sizeClass="px-4 py-1 md:py-2.5 h-8 md:!h-10 sm:px-6 lg:px-8"
+            />
           </div>
           <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
           <div className="flex flex-col md:flex-row">
