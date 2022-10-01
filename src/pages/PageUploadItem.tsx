@@ -7,66 +7,144 @@ import { Helmet } from "react-helmet";
 import FormItem from "components/FormItem";
 import { RadioGroup } from "@headlessui/react";
 import { nftsImgs } from "contains/fakeData";
-import MySwitch from "components/MySwitch";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 import NcImage from "shared/NcImage/NcImage";
-import { Formik, ErrorMessage } from "formik";
+import { Formik, ErrorMessage, FormikErrors, FormikTouched } from "formik";
 import { useAppSelector } from "app/hooks";
 import { useWeb3React } from "@web3-react/core";
 import useIpfs from "hooks/useIpfs";
 import { useCrud } from "hooks/useCrud";
-import { CONTRACT_ABI, CONTRACT_ADDRESS, IPFS_BASE_URL } from "constant";
+import {
+  CONTRACT_ABI,
+  CONTRACT_ADDRESS,
+  IPFS_BASE_URL,
+  validNFTsTypes,
+} from "constant";
 import { BigNumber, Contract } from "ethers";
 import { createNftSchema } from "services/validations";
 import { toast } from "react-toastify";
 import { parseEther } from "ethers/lib/utils";
 import { useHistory } from "react-router-dom";
+import { usdPrice } from "utils/functions";
+
+interface UploadFileProps {
+  errors: FormikErrors<any>;
+  touched: FormikTouched<any>;
+  setFieldValue: (key: string, value: any) => any;
+  values: any;
+}
+
+const UploadFile: React.FC<UploadFileProps> = ({
+  errors,
+  touched,
+  setFieldValue,
+  values,
+}) => {
+  const [uploadLoading, setUploadLoading] = useState<boolean>(false);
+  const ipfs = useIpfs();
+
+  return (
+    <div>
+      <h3 className="text-lg font-semibold sm:text-2xl">Image, Video, Audio</h3>
+      <span className="text-sm text-neutral-500 dark:text-neutral-400">
+        File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB,
+        GLTF. Max size: 100 MB
+      </span>
+      <div className="mt-5 ">
+        <div
+          className={`flex justify-center px-6 pt-5 pb-6 mt-1 border-2 border-dashed ${
+            touched.file_path && errors.file_path
+              ? "border-red-600"
+              : "border-neutral-300 dark:border-neutral-6000"
+          }  rounded-xl`}
+        >
+          <div className="space-y-1 text-center">
+            {uploadLoading ? (
+              <i className="text-4xl bx bx-loader-alt bx-spin "></i>
+            ) : (
+              <>
+                {values.file_path ? (
+                  <i className="text-5xl text-green-500 bx bx-check-circle"></i>
+                ) : (
+                  <svg
+                    className="w-12 h-12 mx-auto text-neutral-400"
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 48 48"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    ></path>
+                  </svg>
+                )}
+              </>
+            )}
+
+            <div className="flex text-sm text-neutral-6000 dark:text-neutral-300">
+              <label
+                htmlFor="file-upload"
+                className="relative font-medium rounded-md cursor-pointer text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
+              >
+                <span>{values.file_path ? "replace file" : "Upload a file"}</span>
+                <input
+                  id="file-upload"
+                  name="file-upload"
+                  type="file"
+                  className="sr-only"
+                  accept="image/*, audio/*, video/*"
+                  onChange={async (e) => {
+                    if (!e.target.files) return;
+                    const file = e.target.files[0];
+                    let file_type = file?.type.split("/")[0];
+                    if (file?.size / 1024 / 1024 > 100) {
+                      toast.warn("file size is to large, max size is 100mb");
+                      return;
+                    }
+
+                    if (!validNFTsTypes.includes(file_type)) {
+                      toast.error(
+                        "invalid file type, make sure you are uploading an image or video or audio"
+                      );
+                      return;
+                    }
+
+                    setUploadLoading(true);
+
+                    setFieldValue("file_type", file_type);
+
+                    const added = await ipfs.add(file);
+
+                    setFieldValue("file_path", IPFS_BASE_URL + added.path);
+
+                    setUploadLoading(false);
+                  }}
+                />
+              </label>
+              <p className="pl-1">or drag and drop</p>
+            </div>
+            <p className="text-xs text-neutral-500 dark:text-neutral-400">
+              PNG, JPG, GIF up to 100MB
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export interface PageUploadItemProps {
   className?: string;
 }
 
-const plans = [
-  {
-    name: "Crypto Legend - Professor",
-    featuredImage: nftsImgs[0],
-  },
-  {
-    name: "Crypto Legend - Professor",
-    featuredImage: nftsImgs[1],
-  },
-  {
-    name: "Crypto Legend - Professor",
-    featuredImage: nftsImgs[2],
-  },
-  {
-    name: "Crypto Legend - Professor",
-    featuredImage: nftsImgs[3],
-  },
-  {
-    name: "Crypto Legend - Professor",
-    featuredImage: nftsImgs[4],
-  },
-  {
-    name: "Crypto Legend - Professor",
-    featuredImage: nftsImgs[5],
-  },
-];
-
 const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
   const { library, account } = useWeb3React();
   const history = useHistory();
   const myCollections = useAppSelector((state) => state.general.myCollections);
-  const ipfs = useIpfs();
   const { create } = useCrud("/nfts");
-  const [initFormState, setInitFormState] = useState({
-    title: "",
-    description: "",
-    file_path: "",
-    file_type: "",
-    price: 0,
-    collection_id: 0,
-  });
 
   return (
     <div
@@ -90,7 +168,14 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
           </div>
           <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
           <Formik
-            initialValues={initFormState}
+            initialValues={{
+              title: "",
+              description: "",
+              file_path: "",
+              file_type: "",
+              price: 0,
+              collection_id: 0,
+            }}
             validationSchema={createNftSchema}
             onSubmit={async (values, { setFieldError }) => {
               try {
@@ -163,87 +248,12 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                 onDrop={(e) => console.log(e)}
                 className="mt-10 space-y-5 md:mt-0 sm:space-y-6 md:sm:space-y-8"
               >
-                <div>
-                  <h3 className="text-lg font-semibold sm:text-2xl">
-                    Image, Video, Audio, or 3D Model
-                  </h3>
-                  <span className="text-sm text-neutral-500 dark:text-neutral-400">
-                    File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3,
-                    WAV, OGG, GLB, GLTF. Max size: 100 MB
-                  </span>
-                  <div className="mt-5 ">
-                    <div
-                      className={`flex justify-center px-6 pt-5 pb-6 mt-1 border-2 border-dashed ${
-                        touched.file_path && errors.file_path
-                          ? "border-red-600"
-                          : "border-neutral-300 dark:border-neutral-6000"
-                      }  rounded-xl`}
-                    >
-                      <div className="space-y-1 text-center">
-                        <svg
-                          className="w-12 h-12 mx-auto text-neutral-400"
-                          stroke="currentColor"
-                          fill="none"
-                          viewBox="0 0 48 48"
-                          aria-hidden="true"
-                        >
-                          <path
-                            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          ></path>
-                        </svg>
-
-                        <div className="flex text-sm text-neutral-6000 dark:text-neutral-300">
-                          <label
-                            htmlFor="file-upload"
-                            className="relative font-medium rounded-md cursor-pointer text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
-                          >
-                            <span>Upload a file</span>
-                            <input
-                              id="file-upload"
-                              name="file-upload"
-                              type="file"
-                              className="sr-only"
-                              accept="image/*, audio/*, video/*"
-                              onChange={async (e) => {
-                                if (!e.target.files) return;
-                                const file = e.target.files[0];
-                                if (file.size / 1024 / 1024 > 100) {
-                                  toast.warn(
-                                    "file size is to large, max size is 100mb"
-                                  );
-                                  return;
-                                }
-                                setFieldValue(
-                                  "file_type",
-                                  file?.type.split("/")[0]
-                                );
-                                const added = await ipfs.add(file);
-
-                                console.log("added", added);
-
-                                console.log(
-                                  "file_path",
-                                  IPFS_BASE_URL + added.path
-                                );
-                                setFieldValue(
-                                  "file_path",
-                                  IPFS_BASE_URL + added.path
-                                );
-                              }}
-                            />
-                          </label>
-                          <p className="pl-1">or drag and drop</p>
-                        </div>
-                        <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                          PNG, JPG, GIF up to 10MB
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <UploadFile
+                  setFieldValue={(key, value) => setFieldValue(key, value)}
+                  values={values}
+                  touched={touched}
+                  errors={errors}
+                />
 
                 {/* ---- */}
                 <FormItem htmlFor="title" label="Title">
@@ -299,7 +309,7 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                 >
                   <div className="flex">
                     <span className="inline-flex items-center px-3 text-sm border border-r-0 rounded-l-2xl border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">
-                      $
+                      ETH
                     </span>
                     <Input
                       id="price"
@@ -307,13 +317,17 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                       name="price"
                       value={values.price}
                       onChange={handleChange("price")}
-                      min={0}
-                      max={10}
                       onBlur={handleBlur("price")}
+                      min={0.001}
+                      max={5.0}
                       className="!rounded-l-none"
-                      placeholder="abc.com"
+                      placeholder="0.01"
                     />
+                    <span className="inline-flex items-center px-3 text-sm transform -translate-x-3 border border-l-0 rounded-r-2xl border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">
+                      {usdPrice(+values.price)}
+                    </span>
                   </div>
+
                   <ErrorMessage
                     name="price"
                     component={"span"}
