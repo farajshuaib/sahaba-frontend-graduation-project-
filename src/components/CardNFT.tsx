@@ -42,7 +42,6 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", nft }) => {
           like_count={nft.like_count}
           className="absolute top-3 right-3 z-10 !h-9"
         />
-        <div className="absolute flex top-3 inset-x-3"></div>
       </div>
 
       <div className="p-4 py-5 space-y-3">

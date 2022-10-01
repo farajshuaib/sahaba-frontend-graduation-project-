@@ -3,14 +3,14 @@ import { selectCurrentMediaRunning } from "app/mediaRunning/mediaRunning";
 import React, { FC } from "react";
 
 interface VideoForNftProps {
-  src?: string;
+  src: string;
   className?: string;
   nftId: string;
 }
 
 const VideoForNft: FC<VideoForNftProps> = ({
   nftId,
-  className = "absolute inset-0 z-10 flex items-center justify-center bg-neutral-700 rounded-3xl overflow-hidden",
+  className = "absolute inset-0 z-10 flex items-center justify-center overflow-hidden bg-neutral-700 rounded-3xl",
   src = "./nft.mp4",
 }) => {
   const currentMediaRunning = useAppSelector(selectCurrentMediaRunning);

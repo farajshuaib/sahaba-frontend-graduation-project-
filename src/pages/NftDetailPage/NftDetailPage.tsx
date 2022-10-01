@@ -30,6 +30,9 @@ import { Label, Modal } from "flowbite-react";
 import Select from "shared/Select/Select";
 import moment from "moment";
 import FormItem from "components/FormItem";
+import ItemTypeImageIcon from "components/ItemTypeImageIcon";
+import AudioForNft from "components/AudioForNft";
+import NftItem from "./NftItem";
 export interface NftDetailPageProps {
   className?: string;
   isPreviewMode?: boolean;
@@ -384,26 +387,14 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     >
       {/* MAIn */}
       <main className="container flex mt-11 ">
+
+        {item?.file_type == "audio" && <AudioForNft src={item.file_path} nftId={item.id.toString()} />}
         <div className="grid w-full grid-cols-1 gap-10 lg:grid-cols-2 md:gap-14">
           {/* CONTENT */}
           <div className="space-y-8 lg:space-y-10">
             {/* HEADING */}
-            <div className="relative">
-              <NcImage
-                src={item.file_path}
-                containerClassName="aspect-w-11 aspect-h-12 rounded-3xl overflow-hidden"
-              />
-              {/* META TYPE */}
-              <ItemTypeVideoIcon className="absolute w-8 h-8 left-3 top-3 md:w-10 md:h-10" />
-
-              {/* META FAVORITES */}
-              <LikeButton
-                nft_id={item.id}
-                liked={item.is_liked}
-                like_count={item.like_count}
-                className="absolute right-3 top-3 "
-              />
-            </div>
+            <NftItem nft={item} featuredImage="https://images.unsplash.com/photo-1643101808200-0d159c1331f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"/>
+           
 
             <AccordionInfo nft={item} />
           </div>

@@ -5,7 +5,7 @@ import { useTimeoutFn } from "react-use";
 import isSafariBrowser from "utils/isSafariBrowser";
 
 interface AudioForNftProps {
-  src?: string;
+  src: string;
   className?: string;
   nftId: string;
 }

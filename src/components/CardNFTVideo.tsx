@@ -6,44 +6,22 @@ import { nftsImgs } from "contains/fakeData";
 import LikeButton from "./LikeButton";
 import Prices from "./Prices";
 import ButtonPlayMusicRunningContainer from "pages/ButtonPlayMusicRunningContainer";
-import { nanoid } from "@reduxjs/toolkit";
 import VideoForNft from "./VideoForNft";
+import VerifyIcon from "./VerifyIcon";
+import useCountDownTime from "hooks/useCountDownTime";
 
 export interface CardNFTVideoProps {
   className?: string;
+  nft: Nft;
   featuredImage?: string;
-  isLiked?: boolean;
 }
 
 const CardNFTVideo: FC<CardNFTVideoProps> = ({
   className = "",
-  isLiked,
-  featuredImage = nftsImgs[1],
+  nft,
+  featuredImage = "https://images.unsplash.com/photo-1643101808200-0d159c1331f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
 }) => {
-  const [DEMO_NFT_ID] = React.useState(nanoid());
-
-  const renderAvatars = () => {
-    return (
-      <div className="hidden -space-x-1 sm:flex ">
-        <Avatar
-          containerClassName="ring-2 ring-white dark:ring-neutral-900"
-          sizeClass="h-5 w-5 text-sm"
-        />
-        <Avatar
-          containerClassName="ring-2 ring-white dark:ring-neutral-900"
-          sizeClass="h-5 w-5 text-sm"
-        />
-        <Avatar
-          containerClassName="ring-2 ring-white dark:ring-neutral-900"
-          sizeClass="h-5 w-5 text-sm"
-        />
-        <Avatar
-          containerClassName="ring-2 ring-white dark:ring-neutral-900"
-          sizeClass="h-5 w-5 text-sm"
-        />
-      </div>
-    );
-  };
+  const timeLeft = useCountDownTime(nft?.sale_end_at);
 
   const renderIcon = (state?: "playing" | "loading") => {
     if (!state) {
@@ -101,7 +79,7 @@ const CardNFTVideo: FC<CardNFTVideoProps> = ({
     >
       <div className="relative flex-shrink-0 ">
         {/* AUDIO MEDiA */}
-        <VideoForNft nftId={DEMO_NFT_ID} />
+        <VideoForNft src={nft.file_path} nftId={nft.id.toString()} />
 
         <div className="">
           <NcImage
@@ -112,13 +90,15 @@ const CardNFTVideo: FC<CardNFTVideoProps> = ({
         </div>
 
         <LikeButton
-          liked={isLiked}
+          liked={nft.is_liked}
+          like_count={nft.like_count}
+          nft_id={nft.id}
           className="absolute top-3 right-3 z-10 !h-9"
         />
 
         <ButtonPlayMusicRunningContainer
           className="absolute z-10 bottom-3 left-3"
-          nftId={DEMO_NFT_ID}
+          nftId={nft.id.toString()}
           renderDefaultBtn={() => renderListenButtonDefault()}
           renderPlayingBtn={() => renderListenButtonDefault("playing")}
           renderLoadingBtn={() => renderListenButtonDefault("loading")}
@@ -127,29 +107,40 @@ const CardNFTVideo: FC<CardNFTVideoProps> = ({
 
       <div className="p-5">
         <div className="flex items-center justify-between">
-          <h2 className={`sm:text-lg font-semibold`}>
-            NFT Video #{Math.floor(Math.random() * 1000) + 1000}
-          </h2>
-          <div className="flex items-center ml-2 space-x-3">
-            {renderAvatars()}
-            <span className="text-xs text-neutral-700 dark:text-neutral-400">
-              1 of 100
-            </span>
+          <h2 className={`sm:text-lg font-semibold`}>{nft.title}</h2>
+          <div className="flex items-center">
+            <Avatar
+              imgUrl={nft?.creator?.profile_photo}
+              sizeClass="h-6 w-6"
+              containerClassName="ring-2 ring-white"
+            />
+            <div className="ml-2 text-xs text-white">
+              <span className="font-normal">by</span>
+              {` `}
+              <span className="font-medium">{nft?.creator?.username}</span>
+            </div>
+            {nft?.creator?.is_verified && <VerifyIcon iconClass="w-4 h-4" />}
           </div>
         </div>
 
         <div className="flex justify-between items-end mt-3.5">
-          <Prices labelTextClassName="bg-white dark:bg-neutral-900 " />
+          <Prices
+            price={`${nft.price} ETH`}
+            labelTextClassName="bg-white dark:bg-neutral-900 "
+          />
           <div className="text-right">
             <span className="block text-xs font-normal tracking-wide text-neutral-500 dark:text-neutral-400">
-              Remaining time
+              sale end at
             </span>
-            <span className="block font-semibold mt-0.5">3h : 15m : 20s</span>
+            <span className="block font-semibold mt-0.5">
+              {timeLeft.days}:d {timeLeft.hours}h : {timeLeft.minutes}m :{" "}
+              {timeLeft.seconds}s
+            </span>
           </div>
         </div>
       </div>
 
-      <Link to={"/nft-details"} className="absolute inset-0"></Link>
+      <Link to={`/nft-details/${nft.id}`} className="absolute inset-0"></Link>
     </div>
   );
 };

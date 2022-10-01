@@ -1,4 +1,3 @@
-import { nanoid } from "@reduxjs/toolkit";
 import ButtonPlayMusicRunningContainer from "pages/ButtonPlayMusicRunningContainer";
 import { nftsAbstracts } from "contains/fakeData";
 import React, { FC } from "react";
@@ -7,38 +6,19 @@ import Avatar from "shared/Avatar/Avatar";
 import NcImage from "shared/NcImage/NcImage";
 import AudioForNft from "./AudioForNft";
 import Prices from "./Prices";
+import VerifyIcon from "./VerifyIcon";
 
 export interface CardNFTMusic2Props {
   className?: string;
   featuredImage?: string;
+  nft: Nft;
 }
 
 const CardNFTMusic2: FC<CardNFTMusic2Props> = ({
   className = "",
-
+  nft,
   featuredImage = nftsAbstracts[18],
 }) => {
-  const [DEMO_NFT_ID] = React.useState(nanoid());
-
-  const renderAvatars = () => {
-    return (
-      <div className="hidden sm:flex -space-x-1.5 ">
-        <Avatar
-          containerClassName="ring-2 ring-white dark:ring-neutral-800"
-          sizeClass="h-5 w-5 text-sm"
-        />
-        <Avatar
-          containerClassName="ring-2 ring-white dark:ring-neutral-800"
-          sizeClass="h-5 w-5 text-sm"
-        />
-        <Avatar
-          containerClassName="ring-2 ring-white dark:ring-neutral-800"
-          sizeClass="h-5 w-5 text-sm"
-        />
-      </div>
-    );
-  };
-
   const renderIcon = (state?: "loading" | "playing") => {
     switch (state) {
       case "loading":
@@ -107,7 +87,7 @@ const CardNFTMusic2: FC<CardNFTMusic2Props> = ({
       className={`nc-CardNFTMusic2 relative flex justify-between p-2 space-x-2 rounded-3xl bg-neutral-100 dark:bg-neutral-800 hover:shadow-xl transition-shadow ${className}`}
       data-nc-id="CardNFTMusic2"
     >
-      <Link to={"/nft-details"} className="flex flex-grow space-x-4">
+      <Link to={`/nft-details/${nft.id}`} className="flex flex-grow space-x-4">
         <div className="relative w-16 sm:w-24">
           <NcImage
             containerClassName="absolute inset-0 rounded-2xl overflow-hidden shadow-lg "
@@ -116,25 +96,34 @@ const CardNFTMusic2: FC<CardNFTMusic2Props> = ({
         </div>
 
         <div className="flex flex-col justify-center flex-grow">
-          <h2 className={`block font-medium sm:text-lg`}>NFT music #114</h2>
+          <h2 className={`block font-medium sm:text-lg`}>{nft.title}</h2>
+          <div className="flex items-center">
+            <Avatar
+              imgUrl={nft?.creator?.profile_photo}
+              sizeClass="h-6 w-6"
+              containerClassName="ring-2 ring-white"
+            />
+            <div className="ml-2 text-xs text-white">
+              <span className="font-normal">by</span>
+              {` `}
+              <span className="font-medium">{nft?.creator?.username}</span>
+            </div>
+            {nft?.creator?.is_verified && <VerifyIcon iconClass="w-4 h-4" />}
+          </div>
           <div className=" flex items-center pt-3 mt-1.5">
-            {renderAvatars()}
             <Prices
-              price="1.00 ETH"
+              price={`${nft.price} ETH`}
               labelText="Price"
               className="sm:ml-3.5"
               contentClass="py-1.5 px-2 sm:px-3 text-xs sm:text-sm font-semibold"
               labelTextClassName="bg-neutral-100 dark:bg-neutral-800 "
             />
-            <span className="block ml-3.5 text-neutral-500 dark:text-neutral-400 text-xs">
-              1 of 100
-            </span>
           </div>
         </div>
       </Link>
 
       <ButtonPlayMusicRunningContainer
-        nftId={DEMO_NFT_ID}
+        nftId={nft.id.toString()}
         className="flex items-center"
         renderDefaultBtn={() => renderDefaultBtnListen()}
         renderLoadingBtn={() => renderDefaultBtnListen("loading")}
@@ -142,7 +131,11 @@ const CardNFTMusic2: FC<CardNFTMusic2Props> = ({
       ></ButtonPlayMusicRunningContainer>
 
       {/* AUDIO MEDiA */}
-      <AudioForNft className="absolute opacity-0" nftId={DEMO_NFT_ID} />
+      <AudioForNft
+        src={nft.file_path}
+        className="absolute opacity-0"
+        nftId={nft.id.toString()}
+      />
     </div>
   );
 };

@@ -5,6 +5,7 @@ import CardAuthorBox4 from "components/CardAuthorBox4/CardAuthorBox4";
 import Heading from "components/Heading/Heading";
 import LoadingScreen from "components/LoadingScreen";
 import NavItem2 from "components/NavItem2";
+import ServerError from "components/ServerError";
 import { useCrud } from "hooks/useCrud";
 import React, { FC, useEffect } from "react";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
@@ -26,13 +27,22 @@ const SectionGridAuthorBox: FC<SectionGridAuthorBoxProps> = ({
   gridClassName = "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",
   // data = Array.from("11111111"),
 }) => {
-  const { fetch, data, loading } = useCrud("/users");
+  const { fetch, data, loading, errors } = useCrud("/users");
+  const [tabActive, setTabActive] = React.useState("Popular");
 
   useEffect(() => {
     fetch();
   }, []);
 
-  const [tabActive, setTabActive] = React.useState("Popular");
+  if(loading){
+    return <LoadingScreen />
+  }
+
+  if(errors){
+    return <ServerError />
+  }
+
+  
 
   const renderHeading1 = () => {
     return (

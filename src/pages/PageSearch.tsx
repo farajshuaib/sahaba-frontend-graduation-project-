@@ -11,6 +11,8 @@ import ButtonCircle from "shared/Button/ButtonCircle";
 import CardNFT from "components/CardNFT";
 import { useCrud } from "hooks/useCrud";
 import LoadingScreen from "components/LoadingScreen";
+import CardNFTVideo from "components/CardNFTVideo";
+import CardNFTMusic from "components/CardNFTMusic";
 
 export interface PageSearchProps {
   className?: string;
@@ -19,7 +21,7 @@ export interface PageSearchProps {
 const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
-  const { data, loading, fetch, meta } = useCrud("/nfts");
+  const { data, loading, fetch, meta, errors } = useCrud("/nfts");
   const [selectedCategory, setSelectedCategory] = useState<Category>({
     id: 0,
     name: "All NFTs",
@@ -34,6 +36,30 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
 
   const submitSearch = () => {
     fetch({ page, search, category: selectedCategory?.id || "" });
+  };
+
+  const renderNFTComponent = (nft: Nft, index: number) => {
+    switch (nft.file_type) {
+      case "image":
+        return <CardNFT nft={nft} key={index} />;
+      case "audio":
+        return (
+          <CardNFTMusic
+            key={index}
+            nft={nft}
+            featuredImage="https://images.unsplash.com/photo-1618556450994-a6a128ef0d9d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80"
+          />
+        );
+      case "video":
+        return (
+          <CardNFTVideo
+            nft={nft}
+            featuredImage="https://images.unsplash.com/photo-1643101808200-0d159c1331f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+          />
+        );
+      default:
+        return <></>;
+    }
   };
 
   return (
@@ -114,7 +140,11 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
             {loading ? (
               <LoadingScreen />
             ) : (
-              data.map((nft: Nft, index) => <CardNFT nft={nft} key={index} />)
+              data.map((nft: Nft, index) => (
+                <React.Fragment key={index}>
+                  {renderNFTComponent(nft, index)}
+                </React.Fragment>
+              ))
             )}
           </div>
 

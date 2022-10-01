@@ -13,7 +13,7 @@ const Prices: FC<PricesProps> = ({
   price = "1.000 ETH",
   contentClass = "py-1.5 md:py-2 px-2.5 md:px-3.5 text-sm sm:text-base font-semibold",
   labelTextClassName = "bg-white",
-  labelText = Math.random() > 0.4 ? "Price" : "Current Bid",
+  labelText = "Price",
 }) => {
   return (
     <div className={`${className}`}>

@@ -1,6 +1,8 @@
 import CardLarge1 from "components/CardLarge1/CardLarge1";
-import { nftsLargeImgs } from "contains/fakeData";
-import React, { FC, useState } from "react";
+import LoadingScreen from "components/LoadingScreen";
+import ServerError from "components/ServerError";
+import { useCrud } from "hooks/useCrud";
+import React, { FC, useEffect, useState } from "react";
 
 export interface SectionLargeSliderProps {
   className?: string;
@@ -9,7 +11,20 @@ export interface SectionLargeSliderProps {
 const SectionLargeSlider: FC<SectionLargeSliderProps> = ({
   className = "",
 }) => {
+  const { fetch, data, loading, errors } = useCrud("/latest-nfts?type=image");
   const [indexActive, setIndexActive] = useState(0);
+
+  useEffect(() => {
+    fetch();
+  }, []);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  if (errors) {
+    return <ServerError />;
+  }
 
   const handleClickNext = () => {
     setIndexActive((state) => {
@@ -31,12 +46,13 @@ const SectionLargeSlider: FC<SectionLargeSliderProps> = ({
 
   return (
     <div className={`nc-SectionLargeSlider relative ${className}`}>
-      {[1, 1, 1].map((_, index) =>
+      {data.map((nft: Nft, index: number) =>
         indexActive === index ? (
           <CardLarge1
             key={index}
             isShowing
-            featuredImgUrl={nftsLargeImgs[index]}
+            nft={nft}
+            featuredImgUrl={nft.file_path}
             onClickNext={handleClickNext}
             onClickPrev={handleClickPrev}
           />
