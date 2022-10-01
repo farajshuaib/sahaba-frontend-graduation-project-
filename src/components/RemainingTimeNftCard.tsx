@@ -1,14 +1,18 @@
+import useCountDownTime from "hooks/useCountDownTime";
 import React, { FC } from "react";
 
 interface Props {
   className?: string;
   contentClassName?: string;
+  sale_end_at: Date
 }
 
 const RemainingTimeNftCard: FC<Props> = ({
   className = "absolute top-[-1px] right-[-1px] flex items-center",
   contentClassName = "right-5 top-1/2 -translate-y-1/2",
+  sale_end_at
 }) => {
+  const timeLeft = useCountDownTime(sale_end_at);
   return (
     <div className={className}>
       <svg
@@ -24,10 +28,10 @@ const RemainingTimeNftCard: FC<Props> = ({
       </svg>
 
       <div className={`absolute ${contentClassName}`}>
-        <span className="block text-xs text-neutral-500 dark:text-neutral-400 tracking-wide">
+        <span className="block text-xs tracking-wide text-neutral-500 dark:text-neutral-400">
           Remaining time
         </span>
-        <span className="block md:text-lg font-semibold">3h : 15m : 20s</span>
+        <span className="block font-semibold md:text-lg">{timeLeft.hours}h : {timeLeft.minutes}m : {timeLeft.seconds}s</span>
       </div>
     </div>
   );

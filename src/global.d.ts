@@ -52,6 +52,7 @@ interface Transactions {
   from: UserData;
   to: UserData;
   price: number | string;
+  created_at: Date
 }
 interface Nft {
   id: number;
@@ -68,7 +69,9 @@ interface Nft {
   is_for_sale: boolean;
   token_id: string;
   is_liked?: boolean;
-  transactions: Transactions
+  transactions: Transactions[],
+  sale_end_at: Date,
+
 }
 
 interface Collection {

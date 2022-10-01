@@ -18,8 +18,12 @@ export const createNftSchema = yup.object().shape({
   file_path: yup.string().required(),
   file_type: yup.string().required(),
   collection_id: yup.number().required(),
-  price: yup.number().required().positive().min(0).max(10).moreThan(0),
+  price: yup.number().required().positive().min(0.01).max(5.0),
 });
+
+export const updatePriceSchema = yup.object().shape({
+  price: yup.number().required().positive().min(0.01).max(5.0),
+})
 
 export const validateImage = (file: any) => {
   const fileType = file.type;

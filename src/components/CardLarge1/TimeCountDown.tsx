@@ -1,12 +1,16 @@
 import useCountDownTime from "hooks/useCountDownTime";
 import React from "react";
 
-const TimeCountDown = () => {
-  const timeLeft = useCountDownTime();
+interface props {
+  sale_end_at: Date;
+}
+
+const TimeCountDown: React.FC<props> = ({ sale_end_at }) => {
+  const timeLeft = useCountDownTime(sale_end_at);
 
   return (
     <div className="space-y-5">
-      <div className="text-neutral-500 dark:text-neutral-400 flex items-center space-x-2 ">
+      <div className="flex items-center space-x-2 text-neutral-500 dark:text-neutral-400 ">
         <svg
           width="24"
           height="24"
@@ -37,11 +41,11 @@ const TimeCountDown = () => {
             strokeLinejoin="round"
           />
         </svg>
-        <span className="leading-none mt-1">Auction ending in:</span>
+        <span className="mt-1 leading-none">Sale ending in:</span>
       </div>
       <div className="flex space-x-5 sm:space-x-10">
         <div className="flex flex-col items-center">
-          <span className="text-2xl sm:text-3xl font-semibold">
+          <span className="text-2xl font-semibold sm:text-3xl">
             {timeLeft.days}
           </span>
           <span className="sm:text-lg text-neutral-500 dark:text-neutral-400">
@@ -49,7 +53,7 @@ const TimeCountDown = () => {
           </span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="text-2xl sm:text-3xl font-semibold">
+          <span className="text-2xl font-semibold sm:text-3xl">
             {timeLeft.hours}
           </span>
           <span className="sm:text-lg text-neutral-500 dark:text-neutral-400">
@@ -57,7 +61,7 @@ const TimeCountDown = () => {
           </span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="text-2xl sm:text-3xl font-semibold">
+          <span className="text-2xl font-semibold sm:text-3xl">
             {timeLeft.minutes}
           </span>
           <span className="sm:text-lg text-neutral-500 dark:text-neutral-400">
@@ -65,7 +69,7 @@ const TimeCountDown = () => {
           </span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="text-2xl sm:text-3xl font-semibold">
+          <span className="text-2xl font-semibold sm:text-3xl">
             {timeLeft.seconds}
           </span>
           <span className="sm:text-lg text-neutral-500">secs</span>

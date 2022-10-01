@@ -9,6 +9,7 @@ import Prices from "./Prices";
 import { ClockIcon } from "@heroicons/react/outline";
 import ItemTypeVideoIcon from "./ItemTypeVideoIcon";
 import VerifyIcon from "./VerifyIcon";
+import useCountDownTime from "hooks/useCountDownTime";
 
 export interface CardNFTProps {
   className?: string;
@@ -16,7 +17,7 @@ export interface CardNFTProps {
 }
 
 const CardNFT: FC<CardNFTProps> = ({ className = "", nft }) => {
-
+  const timeLeft = useCountDownTime(nft?.sale_end_at);
   return (
     <div
       className={`nc-CardNFT relative flex flex-col group !border-0 [ nc-box-has-hover nc-dark-box-bg-has-hover ] ${className}`}
@@ -68,12 +69,12 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", nft }) => {
             price={`${nft.price} ETH`}
             labelTextClassName="bg-white dark:bg-neutral-900 dark:group-hover:bg-neutral-800 group-hover:bg-neutral-50"
           />
-          <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400">
-            <ClockIcon className="w-4 h-4" />
-            <span className="ml-1 mt-0.5">
-              {Math.floor(Math.random() * 20) + 1} hours left
-            </span>
-          </div>
+          {nft.is_for_sale && (
+            <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400">
+              <ClockIcon className="w-4 h-4" />
+              <span className="ml-1 mt-0.5">{timeLeft.hours} hours left</span>
+            </div>
+          )}
         </div>
       </div>
 

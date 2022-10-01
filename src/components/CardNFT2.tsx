@@ -8,6 +8,7 @@ import LikeButton from "./LikeButton";
 import ItemTypeVideoIcon from "./ItemTypeVideoIcon";
 import Prices from "./Prices";
 import RemainingTimeNftCard from "./RemainingTimeNftCard";
+import useCountDownTime from "hooks/useCountDownTime";
 
 export interface CardNFT2Props {
   className?: string;
@@ -16,7 +17,7 @@ export interface CardNFT2Props {
 }
 
 const CardNFT2: FC<CardNFT2Props> = ({ className = "", isLiked, nft }) => {
- 
+  
 
   return (
     <div
@@ -45,7 +46,7 @@ const CardNFT2: FC<CardNFT2Props> = ({ className = "", isLiked, nft }) => {
         </div>
 
         {/* ----TIME--- */}
-        <RemainingTimeNftCard contentClassName="right-5 top-1/2 -translate-y-1/2 pb-1" />
+        {nft.is_for_sale && <RemainingTimeNftCard sale_end_at={nft.sale_end_at}  contentClassName="right-5 top-1/2 -translate-y-1/2 pb-1" />}
 
         <div className="absolute left-[-1px] bottom-[-0.4px] ">
           <svg

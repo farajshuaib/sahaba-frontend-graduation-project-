@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 
-const calculateTimeLeft = () => {
-  let year = new Date().getFullYear();
-  let month = new Date().getMonth();
-  let difference = +new Date(`${month + 2}/10/${year}`) - +new Date();
+const calculateTimeLeft = (date: Date) => {
+  let difference = +new Date(date) - +new Date();
 
   let timeLeft = {
     days: 0,
@@ -24,12 +22,14 @@ const calculateTimeLeft = () => {
   return timeLeft;
 };
 
-const useCountDownTime = () => {
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+const useCountDownTime = (sale_end_at: Date) => {
+  const [timeLeft, setTimeLeft] = useState(
+    calculateTimeLeft(new Date(sale_end_at))
+  );
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setTimeLeft(calculateTimeLeft());
+      setTimeLeft(calculateTimeLeft(new Date(sale_end_at)));
     }, 1000);
     return () => clearTimeout(timer);
   });
