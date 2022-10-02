@@ -15,6 +15,7 @@ import { useCrud } from "hooks/useCrud";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "app/hooks";
 import LoadingScreen from "components/LoadingScreen";
+import ServerError from "components/ServerError";
 
 export interface AuthorPageProps {
   className?: string;
@@ -23,7 +24,7 @@ export interface AuthorPageProps {
 const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
   const userData: UserData = useAppSelector((state) => state.account.userData);
   const params: any = useParams();
-  const { fetchById, loading, item } = useCrud("/users");
+  const { fetchById, loading, item, errors } = useCrud("/users");
 
   useEffect(() => {
     if (params.id) fetchById(params?.id);
@@ -31,6 +32,9 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
 
   if (loading) {
     return <LoadingScreen />;
+  }
+  if(errors) {
+    return <ServerError />
   }
 
   return (
