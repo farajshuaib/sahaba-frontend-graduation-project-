@@ -61,6 +61,7 @@ export function useCrud(url: string, options?: Options) {
       }
       setState((prevState) => ({
         ...prevState,
+        errors: error,
         loading: false,
       }));
       throw error;
@@ -92,6 +93,7 @@ export function useCrud(url: string, options?: Options) {
         }
         setState((prevState) => ({
           ...prevState,
+          errors: error,
           loading: false,
         }));
         reject(error);

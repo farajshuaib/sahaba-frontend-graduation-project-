@@ -65,9 +65,14 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     setServiceFee(+utils.formatEther(res).toString());
   }
 
+  async function increaseWatchTime() {
+    api.post("/nfts/watch", { nft_id: params.id });
+  }
+
   useEffect(() => {
     getServiceFeesPrice();
     if (params.id) fetchById(params.id);
+    if (params.id && userData) increaseWatchTime();
   }, [params.id]);
 
   const setForSell = async () => {
@@ -178,7 +183,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
             <LikeSaveBtns nft={item} />
           </div>
           <h2 className="text-2xl font-semibold sm:text-3xl lg:text-4xl">
-            {item.title}
+            {item?.title}
           </h2>
 
           {/* ---------- 4 ----------  */}
@@ -387,14 +392,17 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     >
       {/* MAIn */}
       <main className="container flex mt-11 ">
-
-        {item?.file_type == "audio" && <AudioForNft src={item.file_path} nftId={item.id.toString()} />}
+        {item?.file_type == "audio" && (
+          <AudioForNft src={item.file_path} nftId={item.id.toString()} />
+        )}
         <div className="grid w-full grid-cols-1 gap-10 lg:grid-cols-2 md:gap-14">
           {/* CONTENT */}
           <div className="space-y-8 lg:space-y-10">
             {/* HEADING */}
-            <NftItem nft={item} featuredImage="https://images.unsplash.com/photo-1643101808200-0d159c1331f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"/>
-           
+            <NftItem
+              nft={item}
+              featuredImage="https://images.unsplash.com/photo-1643101808200-0d159c1331f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+            />
 
             <AccordionInfo nft={item} />
           </div>
