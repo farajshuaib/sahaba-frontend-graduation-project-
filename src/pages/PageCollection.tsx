@@ -134,6 +134,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                         icon: "las la-trash-alt",
                       },
                     ]}
+                    collection={collection}
                     containerClassName="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800 cursor-pointer"
                   />
                 </div>

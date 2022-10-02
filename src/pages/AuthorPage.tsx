@@ -123,7 +123,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
 
               {userData?.id != item?.id && (
                 <FollowButton
-                  isFollowing={item.is_following}
+                  isFollowing={item.is_followed}
                   user_id={item.id}
                   fontSize="text-sm md:text-base font-medium"
                   sizeClass="px-4 py-1 md:py-2.5 h-8 md:!h-10 sm:px-6 lg:px-8"

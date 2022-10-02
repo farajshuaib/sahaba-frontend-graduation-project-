@@ -4,6 +4,8 @@ import Textarea from "shared/Textarea/Textarea";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 import NcModal from "shared/NcModal/NcModal";
+import { useApi } from "hooks/useApi";
+import { toast } from "react-toastify";
 
 export interface ProblemPlan {
   name: string;
@@ -15,23 +17,31 @@ export interface ModalReportItemProps {
   show: boolean;
   problemPlans?: ProblemPlan[];
   onCloseModalReportItem: () => void;
+  nft?: Nft;
+  user?: UserData;
+  collection?: Collection;
 }
 
 const problemPlansDemo = [
-  { name: "Violence", id: "Violence", label: "Violence" },
-  { name: "Trouble", id: "Trouble", label: "Trouble" },
-  { name: "Spam", id: "Spam", label: "Spam" },
-  { name: "Other", id: "Other", label: "Other" },
+  { name: "violence", id: "Violence", label: "Violence" },
+  { name: "trouble", id: "Trouble", label: "Trouble" },
+  { name: "spam", id: "Spam", label: "Spam" },
+  { name: "other", id: "Other", label: "Other" },
 ];
 
 const ModalReportItem: FC<ModalReportItemProps> = ({
   problemPlans = problemPlansDemo,
   show,
   onCloseModalReportItem,
+  nft,
+  user,
+  collection,
 }) => {
   const textareaRef = useRef(null);
-
+  const api = useApi();
   const [problemSelected, setProblemSelected] = useState(problemPlans[0]);
+  const [message, setMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (show) {
@@ -44,7 +54,31 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
     }
   }, [show]);
 
-  const handleClickSubmitForm = () => {};
+  const handleClickSubmitForm = async () => {
+    setLoading(true)
+    let api_route = user
+      ? `/users/report/${user.id}`
+      : nft
+      ? `/nfts/report/${nft.id}`
+      : collection
+      ? `/collections/report/${collection.id}`
+      : "";
+    try {
+      const response = await api.post(api_route, {
+        message,
+        type: problemSelected.name,
+      });
+      console.log("response", response);
+      toast.success("Thank you for your report");
+      setLoading(false)
+      onCloseModalReportItem()
+    } catch (error: any) {
+      toast.error(
+        error?.response.data.message || "something went wrong when reporting"
+      );
+      setLoading(false)
+    }
+  };
 
   const renderCheckIcon = () => {
     return (
@@ -67,7 +101,7 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
         {/* RADIO PROBLEM PLANS */}
         <RadioGroup value={problemSelected} onChange={setProblemSelected}>
           <RadioGroup.Label className="sr-only">Problem Plans</RadioGroup.Label>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+          <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
             {problemPlans.map((plan) => (
               <RadioGroup.Option
                 key={plan.name}
@@ -121,13 +155,18 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
             placeholder="..."
             className="mt-3"
             ref={textareaRef}
+            value={message}
+            onChange={(e) => {
+              if (!e.currentTarget.value) return;
+              setMessage(e.currentTarget.value);
+            }}
             required={true}
             rows={4}
             id="report-message"
           />
         </div>
         <div className="mt-4 space-x-3">
-          <ButtonPrimary onClick={handleClickSubmitForm} type="submit">
+          <ButtonPrimary loading={loading} onClick={handleClickSubmitForm} type="button">
             Submit
           </ButtonPrimary>
           <ButtonSecondary type="button" onClick={onCloseModalReportItem}>

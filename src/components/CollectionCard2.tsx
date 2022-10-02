@@ -20,10 +20,10 @@ const CollectionCard2: FC<CollectionCard2Props> = ({
       <div className="relative flex flex-col overflow-hidden rounded-2xl">
         <NcImage
           containerClassName="aspect-w-8 aspect-h-5"
-          src={collection?.banner_image}
+          src={collection?.logo_image}
         />
         <div className="grid grid-cols-3 gap-1.5 mt-1.5">
-          {collection?.nfts.map((nft: Nft, index: number) => (
+          {collection?.nfts.slice(0,3).map((nft: Nft, index: number) => (
             <NcImage
               key={index}
               containerClassName="w-full h-28"

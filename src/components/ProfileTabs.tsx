@@ -6,22 +6,194 @@ import Pagination from "shared/Pagination/Pagination";
 import { Tab } from "@headlessui/react";
 import ArchiveFilterListBox from "components/ArchiveFilterListBox";
 import CardNFT from "components/CardNFT";
-import CollectionCard from "./CollectionCard";
 import CardAuthorBox4 from "./CardAuthorBox4/CardAuthorBox4";
-
+import LoadingScreen from "./LoadingScreen";
+import ServerError from "./ServerError";
+import { LocationStates } from "routers/types";
+import CollectionCard2 from "./CollectionCard2";
 interface ProfileTabsProps {
   user_id: number;
 }
 
-const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
-  const [collectionsPage, setCollectionsPage] = useState(1);
-  const [createdNftsPage, setCreatedNftPage] = useState(1);
-  const [ownedNftsPage, setOwnedNftPage] = useState(1);
-  const [likedNftsPage, setLikedNftPage] = useState(1);
-  const [followingPage, setFollowingPage] = useState(1);
-  const [followersPage, setFollowersPage] = useState(1);
+interface NftsTabs extends ProfileTabsProps {
+  api: string;
+  route_link: keyof LocationStates;
+  empty_data_current_user_message: string;
+  empty_data_message: string;
+  button_label: string;
+}
+
+interface FollowTabsProps extends ProfileTabsProps {
+  api: string;
+  empty_data_current_user_message: string;
+  empty_data_message: string;
+}
+
+const Collections: React.FC<ProfileTabsProps> = ({ user_id }) => {
+  const [page, setPage] = useState(1);
+  const { fetch, data, meta, loading, errors } = useCrud(
+    `/users/collections/${user_id}`
+  );
   const userData = useAppSelector((state) => state.account.userData);
 
+  useEffect(() => {
+    if (user_id) {
+      fetch({ page });
+    }
+  }, [page]);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  if (errors) {
+    return <ServerError />;
+  }
+
+  return (
+    <React.Fragment>
+      <div className="grid gap-6 mt-8 sm:grid-cols-2 lg:grid-cols-3 md:gap-8 lg:mt-10">
+        {data && data.length > 0 ? (
+          data.map((collection: Collection, index) => (
+            <CollectionCard2 key={index} collection={collection} />
+          ))
+        ) : (
+          <div className="flex flex-col items-center justify-start col-span-3 mx-auto">
+            <h3 className="my-12 text-3xl font-medium">
+              {userData?.id == user_id
+                ? "You didn't create any collection yet"
+                : "this user doesn't create any collection yet"}
+            </h3>
+            {userData?.id == user_id && (
+              <ButtonPrimary href={"/create-collection"}>
+                Create collection
+              </ButtonPrimary>
+            )}
+          </div>
+        )}
+      </div>
+
+      {data && data.length > 0 && (
+        <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
+          {meta && <Pagination setPage={(page) => setPage(page)} meta={meta} />}
+          {userData?.id == user_id && (
+            <ButtonPrimary href={"/create-collection"}>
+              Create collection
+            </ButtonPrimary>
+          )}
+        </div>
+      )}
+    </React.Fragment>
+  );
+};
+
+const Nfts: React.FC<NftsTabs> = ({
+  user_id,
+  api,
+  route_link,
+  empty_data_current_user_message,
+  button_label,
+  empty_data_message,
+}) => {
+  const [page, setPage] = useState(1);
+  const { fetch, data, meta, loading, errors } = useCrud(`${api}/${user_id}`);
+  const userData = useAppSelector((state) => state.account.userData);
+
+  useEffect(() => {
+    if (user_id) {
+      fetch({ page });
+    }
+  }, [page]);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  if (errors) {
+    return <ServerError />;
+  }
+
+  return (
+    <React.Fragment>
+      <div className="grid gap-6 mt-8 sm:grid-cols-2 lg:grid-cols-3 md:gap-8 lg:mt-10">
+        {data && data.length > 0 ? (
+          data.map((nft: Nft, index) => <CardNFT nft={nft} key={index} />)
+        ) : (
+          <div className="flex flex-col items-center justify-start col-span-3 mx-auto">
+            <h3 className="my-12 text-3xl font-medium">
+              {userData?.id == user_id
+                ? empty_data_current_user_message
+                : empty_data_message}
+            </h3>
+            {userData?.id == user_id && (
+              <ButtonPrimary href={route_link}>{button_label}</ButtonPrimary>
+            )}
+          </div>
+        )}
+      </div>
+
+      {data && data.length > 0 && (
+        <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
+          {meta && <Pagination setPage={(page) => setPage(page)} meta={meta} />}
+          {userData?.id == user_id && (
+            <ButtonPrimary href={route_link}>{button_label}</ButtonPrimary>
+          )}
+        </div>
+      )}
+    </React.Fragment>
+  );
+};
+
+const FollowTab: React.FC<FollowTabsProps> = ({
+  user_id,
+  api,
+  empty_data_current_user_message,
+  empty_data_message,
+}) => {
+  const [page, setPage] = useState(1);
+  const { fetch, data, meta, loading, errors } = useCrud(`${api}/${user_id}`);
+  const userData = useAppSelector((state) => state.account.userData);
+
+  useEffect(() => {
+    if (user_id) {
+      fetch({ page });
+    }
+  }, [page]);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
+  if (errors) {
+    return <ServerError />;
+  }
+  return (
+    <React.Fragment>
+      <div className="grid gap-8 mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:mt-10">
+        {data && data.length > 0 ? (
+          data.map(({ user }, index) => (
+            <CardAuthorBox4 user={user} key={index} />
+          ))
+        ) : (
+          <div className="flex flex-col items-center justify-start col-span-4 mx-auto">
+            <h3 className="my-12 mb-5 text-3xl font-medium">
+              {userData?.id == user_id
+                ? empty_data_current_user_message
+                : empty_data_message}
+            </h3>
+          </div>
+        )}
+      </div>
+      {data && data.length > 0 && (
+        <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
+          {meta && <Pagination setPage={(page) => setPage(page)} meta={meta} />}
+        </div>
+      )}
+    </React.Fragment>
+  );
+};
+
+const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
   let [categories] = useState([
     "Collections",
     "created tokens",
@@ -30,78 +202,6 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
     "Following",
     "Followers",
   ]);
-
-  const {
-    fetch: getCollection,
-    data: collections,
-    meta: collections_meta,
-  } = useCrud(`/users/collections/${user_id}`);
-
-  const {
-    fetch: getCreatedNfts,
-    data: created_nfts,
-    meta: created_nft_meta,
-  } = useCrud(`/users/created-nfts/${user_id}`);
-
-  const {
-    fetch: getOwnedNfts,
-    data: owned_nfts,
-    meta: owned_nft_meta,
-  } = useCrud(`/users/owned-nfts/${user_id}`);
-
-  const {
-    fetch: getLiked,
-    data: liked_nfts,
-    meta: liked_nft_meta,
-  } = useCrud(`/users/liked-nfts/${user_id}`);
-
-  const {
-    fetch: getFollowing,
-    data: following,
-    meta: following_meta,
-  } = useCrud(`/users/following/${user_id}`);
-
-  const {
-    fetch: getFollowers,
-    data: followers,
-    meta: followers_meta,
-  } = useCrud(`/users/followers/${user_id}`);
-
-  useEffect(() => {
-    if (user_id) {
-      getFollowing({ page: followingPage });
-    }
-  }, [followingPage]);
-
-  useEffect(() => {
-    if (user_id) {
-      getFollowers({ page: followersPage });
-    }
-  }, [followersPage]);
-
-  useEffect(() => {
-    if (user_id) {
-      getLiked({ page: likedNftsPage });
-    }
-  }, [likedNftsPage]);
-
-  useEffect(() => {
-    if (user_id) {
-      getCollection({ page: collectionsPage });
-    }
-  }, [collectionsPage]);
-
-  useEffect(() => {
-    if (user_id) {
-      getCreatedNfts({ page: createdNftsPage });
-    }
-  }, [createdNftsPage]);
-
-  useEffect(() => {
-    if (user_id) {
-      getOwnedNfts({ page: ownedNftsPage });
-    }
-  }, [ownedNftsPage]);
 
   return (
     <main>
@@ -131,148 +231,59 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
         <Tab.Panels>
           {/* LOOP collections */}
           <Tab.Panel className="">
-            <div className="grid gap-6 mt-8 sm:grid-cols-2 lg:grid-cols-3 md:gap-8 lg:mt-10">
-              {collections && collections.length > 0 ? (
-                collections.map((collection: Collection, index) => (
-                  <CollectionCard key={index} collection={collection} />
-                ))
-              ) : (
-                <div className="flex flex-col items-center justify-start col-span-3 mx-auto">
-                  <h3 className="mb-5 text-3xl font-medium">
-                    You didn't create any collection yet
-                  </h3>
-                  <ButtonPrimary href={"/create-collection"}>
-                    Create collection
-                  </ButtonPrimary>
-                </div>
-              )}
-            </div>
-
-            {collections && collections.length > 0 && (
-              <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-                {collections_meta && (
-                  <Pagination
-                    setPage={(page) => setCollectionsPage(page)}
-                    meta={collections_meta}
-                  />
-                )}
-                <ButtonPrimary href={"/create-collection"}>
-                  Create collection
-                </ButtonPrimary>
-              </div>
-            )}
+            <Collections user_id={user_id} />
           </Tab.Panel>
           {/* LOOP created nfts */}
           <Tab.Panel className="">
-            <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
-              {created_nfts && created_nfts.length > 0 ? (
-                created_nfts.map((nft: Nft, index: number) => (
-                  <CardNFT nft={nft} key={index} />
-                ))
-              ) : (
-                <div className="flex flex-col items-center justify-start col-span-2 mx-auto lg:col-span-3 xl:col-span-4">
-                  <h3 className="mb-5 text-3xl font-medium">
-                    You didn't create any NFTs yet
-                  </h3>
-                  <ButtonPrimary href={"/create-nft"}>Create NFT</ButtonPrimary>
-                </div>
-              )}
-            </div>
-            {created_nfts && created_nfts.length > 0 && (
-              <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-                {created_nft_meta && (
-                  <Pagination
-                    setPage={(page) => setCreatedNftPage(page)}
-                    meta={created_nft_meta}
-                  />
-                )}
-                <ButtonPrimary href={"/create-nft"}>Create NFT</ButtonPrimary>
-              </div>
-            )}
+            <Nfts
+              button_label={"create NFT"}
+              empty_data_current_user_message="you didn't create any NFT yet."
+              empty_data_message="this author doesn't create any nft yet"
+              route_link="/create-nft"
+              api={"/users/created-nfts"}
+              user_id={user_id}
+            />
           </Tab.Panel>
           {/* LOOP nfts */}
           <Tab.Panel className="">
-            <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
-              {owned_nfts && owned_nfts.length > 0 ? (
-                owned_nfts.map((nft: Nft, index: number) => (
-                  <CardNFT nft={nft} key={index} />
-                ))
-              ) : (
-                <div className="flex flex-col items-center justify-start col-span-2 mx-auto lg:col-span-3 xl:col-span-4">
-                  <h3 className="mb-5 text-3xl font-medium">
-                    You didn't buy any NFTs yet
-                  </h3>
-                  <ButtonPrimary href={"/search"}>explore NFT</ButtonPrimary>
-                </div>
-              )}
-            </div>
-            {owned_nfts && owned_nfts.length > 0 && (
-              <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-                {owned_nft_meta && (
-                  <Pagination
-                    setPage={(page) => setOwnedNftPage(page)}
-                    meta={owned_nft_meta}
-                  />
-                )}
-                <ButtonPrimary href={"/search"}>buy more NFTs</ButtonPrimary>
-              </div>
-            )}
+            <Nfts
+              button_label={"explore NFTs"}
+              empty_data_current_user_message="you didn't buy any NFT yet."
+              empty_data_message="this author doesn't buy any nft yet"
+              route_link="/search"
+              api={"/users/owned-nfts"}
+              user_id={user_id}
+            />
           </Tab.Panel>
 
           {/* LOOP liked nfts */}
           <Tab.Panel className="">
-            <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
-              {liked_nfts &&
-                liked_nfts.map(({ nft }, index: number) => (
-                  <CardNFT nft={nft} key={index} />
-                ))}
-            </div>
-            {liked_nfts && liked_nfts.length > 0 && (
-              <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-                {liked_nft_meta && (
-                  <Pagination
-                    setPage={(page) => setLikedNftPage(page)}
-                    meta={liked_nft_meta}
-                  />
-                )}
-              </div>
-            )}
+            <Nfts
+              button_label={"explore NFTs"}
+              empty_data_current_user_message="you didn't like any NFT yet."
+              empty_data_message="this author doesn't like any nft yet"
+              route_link="/search"
+              api={"/users/liked-nfts"}
+              user_id={user_id}
+            />
           </Tab.Panel>
           {/* LOOP following */}
           <Tab.Panel className="">
-            <div className="grid gap-8 mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:mt-10">
-              {following.map(({ user }, index) => (
-                <CardAuthorBox4 user={user} key={index} />
-              ))}
-            </div>
-            {following && following.length > 0 && (
-              <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-                {following_meta && (
-                  <Pagination
-                    setPage={(page) => setFollowingPage(page)}
-                    meta={following_meta}
-                  />
-                )}
-              </div>
-            )}
+            <FollowTab
+              empty_data_current_user_message="you did'nt follow any author yet"
+              empty_data_message="this author doesn't follow anyone yat"
+              api="/users/following"
+              user_id={user_id}
+            />
           </Tab.Panel>
           {/* LOOP followers */}
           <Tab.Panel className="">
-            <div className="grid gap-6 mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-8 lg:mt-10">
-              {followers.map(({ user }, index) => (
-                <CardAuthorBox4 user={user} key={index} />
-              ))}
-            </div>
-            {followers && followers.length > 0 && (
-              <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-                {followers_meta && (
-                  <Pagination
-                    setPage={(page) => setFollowersPage(page)}
-                    meta={followers_meta}
-                  />
-                )}
-              </div>
-            )}
+            <FollowTab
+              empty_data_current_user_message="you didn't get follow by anyone yet"
+              empty_data_message="this author has no followers"
+              api="/users/followers"
+              user_id={user_id}
+            />
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
