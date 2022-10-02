@@ -15,6 +15,7 @@ import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecom
 import { useCrud } from "hooks/useCrud";
 import { useParams } from "react-router-dom";
 import LoadingScreen from "components/LoadingScreen";
+import { useAppSelector } from "app/hooks";
 
 interface CollectionNftsProps {
   collection_id: number | string;
@@ -58,6 +59,7 @@ export interface PageCollectionProps {
 const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
   const params: any = useParams();
   const { fetchById, item: collection, loading } = useCrud("/collections");
+  const userData = useAppSelector(state => state.account.userData)
 
   collection as Collection;
 
@@ -123,16 +125,17 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                   />
                   <NftMoreDropdown
                     actions={[
-                      {
-                        id: "report",
-                        name: "Report abuse",
-                        icon: "las la-flag",
-                      },
-                      {
-                        id: "delete",
-                        name: "Delete item",
-                        icon: "las la-trash-alt",
-                      },
+                      collection?.created_by?.id == userData?.id
+                        ? {
+                            id: "addCollaboration",
+                            name: "Add Collaboration",
+                            icon: "las la-sync",
+                          }
+                        : {
+                            id: "report",
+                            name: "Report abuse",
+                            icon: "las la-flag",
+                          },
                     ]}
                     collection={collection}
                     containerClassName="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800 cursor-pointer"

@@ -3,7 +3,7 @@ import NcDropDown, { NcDropDownItem } from "shared/NcDropDown/NcDropDown";
 import ModalDelete from "./ModalDelete";
 import ModalEdit from "./ModalEdit";
 import ModalReportItem from "./ModalReportItem";
-import ModalTransferToken from "./ModalTransferToken";
+import ModalAddCollaboration from "./ModalAddCollaboration";
 
 export interface NftMoreDropdownProps {
   containerClassName?: string;
@@ -17,7 +17,7 @@ export interface NftMoreDropdownProps {
 
 const actionsDefault: NftMoreDropdownProps["actions"] = [
   { id: "edit", name: "Change price", icon: "las la-dollar-sign" },
-  { id: "transferToken", name: "Transfer token", icon: "las la-sync" },
+  { id: "addCollaboration", name: "Add Collaboration", icon: "las la-sync" },
   { id: "report", name: "Report abuse", icon: "las la-flag" },
   { id: "delete", name: "Delete item", icon: "las la-trash-alt" },
 ];
@@ -34,7 +34,7 @@ const NftMoreDropdown: FC<NftMoreDropdownProps> = ({
   const [isEditting, setIsEditting] = useState(false);
   const [isReporting, setIsReporting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isTransfering, setIsTransfering] = useState(false);
+  const [isCollaborating, setIsCollaborating] = useState(false);
 
   const openModalEdit = () => setIsEditting(true);
   const closeModalEdit = () => setIsEditting(false);
@@ -45,8 +45,8 @@ const NftMoreDropdown: FC<NftMoreDropdownProps> = ({
   const openModalDelete = () => setIsDeleting(true);
   const closeModalDelete = () => setIsDeleting(false);
 
-  const openModalTransferToken = () => setIsTransfering(true);
-  const closeModalTransferToken = () => setIsTransfering(false);
+  const openModalCollaboration = () => setIsCollaborating(true);
+  const closeModalCollaboration = () => setIsCollaborating(false);
 
   const hanldeClickDropDown = (item: NcDropDownItem) => {
     if (item.href) {
@@ -62,8 +62,8 @@ const NftMoreDropdown: FC<NftMoreDropdownProps> = ({
     if (item.id === "delete") {
       return openModalDelete();
     }
-    if (item.id === "transferToken") {
-      return openModalTransferToken();
+    if (item.id === "addCollaboration") {
+      return openModalCollaboration();
     }
     return;
   };
@@ -97,10 +97,11 @@ const NftMoreDropdown: FC<NftMoreDropdownProps> = ({
       <ModalEdit nft={nft} show={isEditting} onCloseModalEdit={closeModalEdit} />
 
       <ModalDelete show={isDeleting} onCloseModalDelete={closeModalDelete} />
-      <ModalTransferToken
-        show={isTransfering}
-        onCloseModalTransferToken={closeModalTransferToken}
-      />
+      {collection && <ModalAddCollaboration
+        show={isCollaborating}
+        collection_id={collection?.id}
+        onCloseModalCollaboration={closeModalCollaboration}
+      />}
     </div>
   );
 };
