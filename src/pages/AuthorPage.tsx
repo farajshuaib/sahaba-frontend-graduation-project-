@@ -1,25 +1,19 @@
-import React, { FC, Fragment, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import NcImage from "shared/NcImage/NcImage";
-import CardNFT from "components/CardNFT";
-import Pagination from "shared/Pagination/Pagination";
-import ButtonPrimary from "shared/Button/ButtonPrimary";
 import authorBanner from "assets/images/nfts/authorBanner.png";
-import { nftsImgs } from "contains/fakeData";
 import NftMoreDropdown from "components/NftMoreDropdown";
 import ButtonDropDownShare from "components/ButtonDropDownShare";
 import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
 import SocialsList from "shared/SocialsList/SocialsList";
 import FollowButton from "components/FollowButton";
 import VerifyIcon from "components/VerifyIcon";
-import { Tab } from "@headlessui/react";
 import SectionGridAuthorBox from "components/SectionGridAuthorBox/SectionGridAuthorBox";
 import ProfileTabs from "components/ProfileTabs";
 import { useCrud } from "hooks/useCrud";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "app/hooks";
-import VerifyAccount from "components/VerifyAccount";
 import LoadingScreen from "components/LoadingScreen";
 
 export interface AuthorPageProps {
@@ -65,7 +59,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
             <div className="flex-grow pt-5 md:pt-1 md:ml-6 xl:ml-14">
               <div className="max-w-screen-sm ">
                 <h2 className="inline-flex items-center text-2xl font-semibold sm:text-3xl lg:text-4xl">
-                  <span>{item?.username || "user"}</span>
+                  <span>{item?.username || "anon"}</span>
                   {item?.is_verified && (
                     <VerifyIcon
                       className="ml-2"
@@ -100,7 +94,12 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
                 </span>
               </div>
               <div className="mt-4 ">
-                <SocialsList itemClass="block w-7 h-7" />
+                <SocialsList 
+                facebook_url={item.facebook_url} 
+                telegram_url={item.telegram_url} 
+                twitter_url={item.twitter_url} 
+                website_url={item.website_url} 
+                itemClass="block w-7 h-7" />
               </div>
             </div>
             <div className="absolute flex flex-row-reverse justify-end md:static left-5 top-4 sm:left-auto sm:top-5 sm:right-5">

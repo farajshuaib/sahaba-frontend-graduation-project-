@@ -63,7 +63,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
               <div className="ml-3">
                 <div className="text-xs dark:text-neutral-400">Creator</div>
                 <div className="flex items-center text-sm font-semibold">
-                  <span>{nft.creator.username || "user"}</span>
+                  <span>{nft.creator.username || "anon"}</span>
                   {nft.creator.is_verified && <VerifyIcon />}
                 </div>
               </div>
