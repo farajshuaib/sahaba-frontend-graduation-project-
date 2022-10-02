@@ -8,6 +8,11 @@ import Textarea from "shared/Textarea/Textarea";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
+import FormItem from "components/FormItem";
+import { ErrorMessage, Formik } from "formik";
+import { contactSchema } from "services/validations";
+import { useApi } from "hooks/useApi";
+import { toast } from "react-toastify";
 
 export interface PageContactProps {
   className?: string;
@@ -29,6 +34,7 @@ const info = [
 ];
 
 const PageContact: FC<PageContactProps> = ({ className = "" }) => {
+  const api = useApi();
   return (
     <div
       className={`nc-PageContact overflow-hidden ${className}`}
@@ -41,12 +47,12 @@ const PageContact: FC<PageContactProps> = ({ className = "" }) => {
         <h2 className="my-20 flex items-center text-3xl leading-[115%] md:text-5xl md:leading-[115%] font-semibold text-neutral-900 dark:text-neutral-100 justify-center">
           Contact
         </h2>
-        <div className="container max-w-7xl mx-auto">
-          <div className="flex-shrink-0 grid grid-cols-1 md:grid-cols-2 gap-12 ">
+        <div className="container mx-auto max-w-7xl">
+          <div className="grid flex-shrink-0 grid-cols-1 gap-12 md:grid-cols-2 ">
             <div className="max-w-sm space-y-8">
               {info.map((item, index) => (
                 <div key={index}>
-                  <h3 className="uppercase font-semibold text-sm dark:text-neutral-200 tracking-wider">
+                  <h3 className="text-sm font-semibold tracking-wider uppercase dark:text-neutral-200">
                     {item.title}
                   </h3>
                   <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
@@ -55,42 +61,112 @@ const PageContact: FC<PageContactProps> = ({ className = "" }) => {
                 </div>
               ))}
               <div>
-                <h3 className="uppercase font-semibold text-sm dark:text-neutral-200 tracking-wider">
+                <h3 className="text-sm font-semibold tracking-wider uppercase dark:text-neutral-200">
                   🌏 SOCIALS
                 </h3>
                 <SocialsList className="mt-2" />
               </div>
             </div>
-            <div>
-              <form className="grid grid-cols-1 gap-6" action="#" method="post">
-                <label className="block">
-                  <Label>Full name</Label>
-
-                  <Input
-                    placeholder="Example Doe"
-                    type="text"
-                    className="mt-1"
-                  />
-                </label>
-                <label className="block">
-                  <Label>Email address</Label>
-
-                  <Input
-                    type="email"
-                    placeholder="example@example.com"
-                    className="mt-1"
-                  />
-                </label>
-                <label className="block">
-                  <Label>Message</Label>
-
-                  <Textarea className="mt-1" rows={6} />
-                </label>
+            <Formik
+              initialValues={{ name: "", email: "", subject: "", message: "" }}
+              validationSchema={contactSchema}
+              onSubmit={async (values) => {
+                try {
+                  const response = await api.post("/contact", values);
+                  toast.success(response.data.message);
+                } catch (error: any) {
+                  toast.error(error.response.data.message);
+                }
+              }}
+            >
+              {({
+                values,
+                handleBlur,
+                handleChange,
+                handleSubmit,
+                isSubmitting,
+              }) => (
                 <div>
-                  <ButtonPrimary type="submit">Send Message</ButtonPrimary>
+                  <form className="grid grid-cols-1 gap-6">
+                    <FormItem htmlFor="name" label="Full name">
+                      <Input
+                        placeholder="Example Doe"
+                        name="name"
+                        id="name"
+                        value={values.name}
+                        onChange={handleChange("name")}
+                        onBlur={handleBlur("name")}
+                        type="text"
+                        autoComplete="username"
+                        className="mt-1"
+                      />
+                      <ErrorMessage
+                        name="name"
+                        component="p"
+                        className="text-sm text-red-500"
+                      />
+                    </FormItem>
+                    <FormItem htmlFor="email" label="Email Address">
+                      <Input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={values.email}
+                        onChange={handleChange("email")}
+                        onBlur={handleBlur("email")}
+                        autoComplete="email"
+                        placeholder="example@example.com"
+                      />
+                      <ErrorMessage
+                        name="email"
+                        component="p"
+                        className="text-sm text-red-500"
+                      />
+                    </FormItem>
+                    <FormItem htmlFor="subject" label="Subject">
+                      <Input
+                        type="email"
+                        id="subject"
+                        name="subject"
+                        value={values.subject}
+                        onChange={handleChange("subject")}
+                        onBlur={handleBlur("subject")}
+                        placeholder=""
+                      />
+                      <ErrorMessage
+                        name="subject"
+                        component="p"
+                        className="text-sm text-red-500"
+                      />
+                    </FormItem>
+                    <FormItem htmlFor="message" label="Message">
+                      <Textarea
+                        id="message"
+                        name="message"
+                        value={values.message}
+                        onChange={handleChange("message")}
+                        onBlur={handleBlur("message")}
+                        rows={6}
+                      />
+                      <ErrorMessage
+                        name="message"
+                        component="p"
+                        className="text-sm text-red-500"
+                      />
+                    </FormItem>
+                    <div>
+                      <ButtonPrimary
+                        loading={isSubmitting}
+                        onClick={handleSubmit}
+                        type="submit"
+                      >
+                        Send Message
+                      </ButtonPrimary>
+                    </div>
+                  </form>
                 </div>
-              </form>
-            </div>
+              )}
+            </Formik>
           </div>
         </div>
       </div>

@@ -25,6 +25,14 @@ export const updatePriceSchema = yup.object().shape({
   price: yup.number().required().positive().min(0.01).max(5.0),
 })
 
+
+export const contactSchema = yup.object().shape({
+  name: yup.string().required(),
+  email: yup.string().email().required(),
+  subject: yup.string().required(),
+  message: yup.string().required(),
+})
+
 export const validateImage = (file: any) => {
   const fileType = file.type;
   const fileSize = file.size;
