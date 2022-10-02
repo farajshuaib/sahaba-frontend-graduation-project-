@@ -12,6 +12,10 @@ export interface HeaderFilterSearchPageProps {
   no_filter?: boolean;
   selectedCategory: Category;
   setSelectedCategory: (category: Category) => void;
+  setFileType: (val: string) => void;
+  setPriceRange: (val: number[]) => void;
+  setSortBy: (val: string) => void;
+  setIsVerifiedUser: (val: boolean) => void
 }
 
 const HeaderFilterSearchPage: FC<HeaderFilterSearchPageProps> = ({
@@ -19,10 +23,33 @@ const HeaderFilterSearchPage: FC<HeaderFilterSearchPageProps> = ({
   no_filter,
   selectedCategory,
   setSelectedCategory,
+  setFileType: setParentFileType,
+  setPriceRange: setParentPriceRange,
+  setSortBy: setParentSortBy,
+  setIsVerifiedUser: setParentIsVerifiedUser
 }) => {
   const [isOpen, setIsOpen] = useState(true);
-
+  const [fileType, setFileType] = useState("");
+  const [sortBy, setSortBy] = useState("");
+  const [priceRange, setPriceRange] = useState([0.1, 5.0]);
+  const [isVerifiedUser, setIsVerifiedUser] = useState<boolean>();
   const categories = useAppSelector((state) => state.general.categories);
+
+  useEffect(() => {
+    if (fileType) setParentFileType(fileType);
+  }, [fileType]);
+  
+  useEffect(() => {
+    if (priceRange) setParentPriceRange(priceRange);
+  }, [fileType]);
+
+  useEffect(() => {
+    if (sortBy) setParentSortBy(sortBy);
+  }, [sortBy]);
+
+  useEffect(() => {
+    if (isVerifiedUser) setParentIsVerifiedUser(isVerifiedUser);
+  }, [isVerifiedUser]);
 
   return (
     <div className={`flex flex-col relative ${className}`}>
@@ -114,7 +141,12 @@ const HeaderFilterSearchPage: FC<HeaderFilterSearchPageProps> = ({
           leaveTo="opacity-0"
         >
           <div className="w-full my-8 border-b border-neutral-200/70 dark:border-neutral-700"></div>
-          <TabFilters />
+          <TabFilters
+            setPriceRange={(val) => setPriceRange(val)}
+            setFileType={(val: string) => setFileType(val)}
+            setSortBy={(val: string) => setSortBy(val)}
+            setIsVerifiedUser={(val: boolean) => setIsVerifiedUser(val)}
+          />
         </Transition>
       )}
     </div>

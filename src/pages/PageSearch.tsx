@@ -13,6 +13,7 @@ import { useCrud } from "hooks/useCrud";
 import LoadingScreen from "components/LoadingScreen";
 import CardNFTVideo from "components/CardNFTVideo";
 import CardNFTMusic from "components/CardNFTMusic";
+import ServerError from "components/ServerError";
 
 export interface PageSearchProps {
   className?: string;
@@ -21,6 +22,10 @@ export interface PageSearchProps {
 const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
+  const [fileType, setFileType] = useState<string>("");
+  const [priceRange, setPriceRange] = useState([0.1, 5.0]);
+  const [sortBy, setSortBy] = useState<string>("");
+  const [isVerifiedUser, setIsVerifiedUser] = useState<boolean>();
   const { data, loading, fetch, meta, errors } = useCrud("/nfts");
   const [selectedCategory, setSelectedCategory] = useState<Category>({
     id: 0,
@@ -31,8 +36,16 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
   });
 
   useEffect(() => {
-    fetch({ page, search, category: selectedCategory?.id || "" });
-  }, [page, selectedCategory]);
+    fetch({
+      page,
+      search,
+      category: selectedCategory?.id || "",
+      type: fileType,
+      price_range:priceRange,
+      sort_by:sortBy,
+      is_verified: isVerifiedUser,
+    });
+  }, [page, selectedCategory, fileType, priceRange, sortBy, isVerifiedUser]);
 
   const submitSearch = () => {
     fetch({ page, search, category: selectedCategory?.id || "" });
@@ -133,20 +146,27 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
           <HeaderFilterSearchPage
             selectedCategory={selectedCategory}
             setSelectedCategory={(id) => setSelectedCategory(id)}
+            setPriceRange={val => setPriceRange(val)}
+            setFileType={(val) => setFileType(val)}
+            setSortBy={(val) => setSortBy(val)}
+            setIsVerifiedUser={(val) => setIsVerifiedUser(val)}
           />
 
           {/* LOOP ITEMS */}
-          <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
-            {loading ? (
-              <LoadingScreen />
-            ) : (
-              data.map((nft: Nft, index) => (
+
+          {loading ? (
+            <LoadingScreen />
+          ) : errors ? (
+            <ServerError />
+          ) : (
+            <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
+              {data.map((nft: Nft, index) => (
                 <React.Fragment key={index}>
                   {renderNFTComponent(nft, index)}
                 </React.Fragment>
-              ))
-            )}
-          </div>
+              ))}
+            </div>
+          )}
 
           {/* PAGINATION */}
           <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">

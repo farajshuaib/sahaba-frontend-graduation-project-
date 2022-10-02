@@ -14,6 +14,10 @@ export interface SectionGridFeatureNFT2Props {}
 
 const SectionGridFeatureNFT2: FC<SectionGridFeatureNFT2Props> = () => {
   const { fetch, data, loading, errors } = useCrud("/latest-nfts");
+  const [fileType, setFileType] = useState<string>("");
+  const [sortBy, setSortBy] = useState<string>("");
+  const [isVerifiedUser, setIsVerifiedUser] = useState<boolean>();
+  const [priceRange, setPriceRange] = useState([0.1, 5.0]);
   const [selectedCategory, setSelectedCategory] = useState<Category>({
     id: 0,
     name: "All NFTs",
@@ -23,8 +27,15 @@ const SectionGridFeatureNFT2: FC<SectionGridFeatureNFT2Props> = () => {
   });
 
   useEffect(() => {
-    fetch({ page: 1, category: selectedCategory?.id || "" });
-  }, [selectedCategory]);
+    fetch({
+      page: 1,
+      category: selectedCategory?.id || "",
+      type: fileType,
+      price_range: priceRange,
+      sort_by: sortBy,
+      is_verified: isVerifiedUser,
+    });
+  }, [selectedCategory, fileType, priceRange, sortBy, isVerifiedUser]);
 
   if (errors) {
     return <ServerError />;
@@ -43,7 +54,12 @@ const SectionGridFeatureNFT2: FC<SectionGridFeatureNFT2Props> = () => {
           />
         );
       case "video":
-        return <CardNFTVideo nft={nft} featuredImage="https://images.unsplash.com/photo-1643101808200-0d159c1331f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" />
+        return (
+          <CardNFTVideo
+            nft={nft}
+            featuredImage="https://images.unsplash.com/photo-1643101808200-0d159c1331f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+          />
+        );
       default:
         return <></>;
     }
@@ -54,7 +70,11 @@ const SectionGridFeatureNFT2: FC<SectionGridFeatureNFT2Props> = () => {
       {/* <HeaderFilterSection /> */}
       <HeaderFilterSearchPage
         selectedCategory={selectedCategory}
+        setFileType={(val) => setFileType(val)}
+        setPriceRange={(val) => setPriceRange(val)}
         setSelectedCategory={(id) => setSelectedCategory(id)}
+        setSortBy={(val) => setSortBy(val)}
+        setIsVerifiedUser={(val) => setIsVerifiedUser(val)}
       />
       <div className={`grid gap-6 lg:gap-8 sm:grid-cols-2 xl:grid-cols-3`}>
         {loading ? (

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Dialog, Popover, Transition } from "@headlessui/react";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import ButtonThird from "shared/Button/ButtonThird";
@@ -8,30 +8,17 @@ import Slider from "rc-slider";
 import Radio from "shared/Radio/Radio";
 import { ChevronDownIcon } from "@heroicons/react/outline";
 
-// DEMO DATA
-const typeOfSales = [
-  {
-    name: "Buy now",
-  },
-  {
-    name: "On Auction",
-  },
-  {
-    name: "New",
-  },
-  {
-    name: "Has Offers",
-  },
-];
-
 const fileTypes = [
   {
+    id: "image",
     name: "Image",
   },
   {
+    id: "video",
     name: "Video",
   },
   {
+    id: "audio",
     name: "Audio",
   },
 ];
@@ -39,38 +26,40 @@ const fileTypes = [
 const sortOrderRadios = [
   { name: "Recently listed", id: "Recently-listed" },
   { name: "Ending soon", id: "Ending-soon" },
-  { name: "Price low - hight", id: "Price-low-hight" },
-  { name: "Price hight - low", id: "Price-hight-low" },
-  { name: "Most favorited", id: "Most-favorited" },
+  { name: "Price low - hight", id: "Price-low-high" },
+  { name: "Price hight - low", id: "Price-high-low" },
+  { name: "Most favorited", id: "Most-favorite" },
 ];
 
+interface Props {
+  setFileType: (val: string) => void;
+  setPriceRange: (val: number[]) => void;
+  setSortBy: (val: string) => void;
+  setIsVerifiedUser: (val:boolean) => void
+}
+
 //
-const TabFilters = () => {
+const TabFilters: React.FC<Props> = ({
+  setFileType,
+  setPriceRange,
+  setSortBy,
+  setIsVerifiedUser
+}) => {
   const [isOpenMoreFilter, setisOpenMoreFilter] = useState(false);
   //
   const [isVerifiedCreator, setIsVerifiedCreator] = useState(true);
-  const [rangePrices, setRangePrices] = useState([0.01, 10]);
-  const [fileTypesState, setfileTypesState] = useState<string[]>([]);
-  const [saleTypeStates, setSaleTypeStates] = useState<string[]>([]);
+  const [rangePrices, setRangePrices] = useState([0.01, 5]);
+  const [fileTypesState, setfileTypesState] = useState<string>("");
   const [sortOrderStates, setSortOrderStates] = useState<string>("");
+
+
+  useEffect(() => {
+    if(isVerifiedCreator)setIsVerifiedUser(isVerifiedCreator)
+  },[isVerifiedCreator])
 
   //
   const closeModalMoreFilter = () => setisOpenMoreFilter(false);
   const openModalMoreFilter = () => setisOpenMoreFilter(true);
-
-  //
-  const handleChangeFileTypes = (checked: boolean, name: string) => {
-    checked
-      ? setfileTypesState([...fileTypesState, name])
-      : setfileTypesState(fileTypesState.filter((i) => i !== name));
-  };
-
-  const handleChangeSaleType = (checked: boolean, name: string) => {
-    checked
-      ? setSaleTypeStates([...saleTypeStates, name])
-      : setSaleTypeStates(saleTypeStates.filter((i) => i !== name));
-  };
-
   //
 
   // OK
@@ -193,13 +182,17 @@ const TabFilters = () => {
                       onClick={() => {
                         close();
                         setSortOrderStates("");
+                        setSortBy("")
                       }}
                       sizeClass="px-4 py-2 sm:px-5"
                     >
                       Clear
                     </ButtonThird>
                     <ButtonPrimary
-                      onClick={close}
+                      onClick={() => {
+                        setSortBy(sortOrderStates)
+                        close();
+                      }}
                       sizeClass="px-4 py-2 sm:px-5"
                     >
                       Apply
@@ -278,7 +271,7 @@ const TabFilters = () => {
               {!fileTypesState.length ? (
                 <ChevronDownIcon className="w-4 h-4 ml-3" />
               ) : (
-                <span onClick={() => setfileTypesState([])}>
+                <span onClick={() => setfileTypesState("")}>
                   {renderXClear()}
                 </span>
               )}
@@ -297,13 +290,13 @@ const TabFilters = () => {
                   <div className="relative flex flex-col px-5 py-6 space-y-5">
                     {fileTypes.map((item) => (
                       <div key={item.name} className="">
-                        <Checkbox
-                          name={item.name}
+                        <Radio
+                          id={item.id}
+                          key={item.id}
+                          name="radioNameSort"
                           label={item.name}
-                          defaultChecked={fileTypesState.includes(item.name)}
-                          onChange={(checked) =>
-                            handleChangeFileTypes(checked, item.name)
-                          }
+                          defaultChecked={fileTypesState === item.id}
+                          onChange={setfileTypesState}
                         />
                       </div>
                     ))}
@@ -312,14 +305,18 @@ const TabFilters = () => {
                     <ButtonThird
                       onClick={() => {
                         close();
-                        setfileTypesState([]);
+                        setFileType("");
+                        setfileTypesState("");
                       }}
                       sizeClass="px-4 py-2 sm:px-5"
                     >
                       Clear
                     </ButtonThird>
                     <ButtonPrimary
-                      onClick={close}
+                      onClick={() => {
+                        setFileType(fileTypesState);
+                        close();
+                      }}
                       sizeClass="px-4 py-2 sm:px-5"
                     >
                       Apply
@@ -399,13 +396,14 @@ const TabFilters = () => {
                       <Slider
                         range
                         min={0.01}
-                        max={10}
+                        max={5}
                         step={0.01}
                         defaultValue={[rangePrices[0], rangePrices[1]]}
                         allowCross={false}
-                        onChange={(_input: number | number[]) =>
-                          setRangePrices(_input as number[])
-                        }
+                        onChange={(_input: number | number[]) => {
+                          console.log("_input", _input);
+                          setRangePrices(_input as number[]);
+                        }}
                       />
                     </div>
 
@@ -457,7 +455,7 @@ const TabFilters = () => {
                   <div className="flex items-center justify-between p-5 bg-neutral-50 dark:bg-neutral-900 dark:border-t dark:border-neutral-800">
                     <ButtonThird
                       onClick={() => {
-                        setRangePrices([0.01, 10]);
+                        setRangePrices([0.01, 5]);
                         close();
                       }}
                       sizeClass="px-4 py-2 sm:px-5"
@@ -465,7 +463,10 @@ const TabFilters = () => {
                       Clear
                     </ButtonThird>
                     <ButtonPrimary
-                      onClick={close}
+                      onClick={() => {
+                        setPriceRange(rangePrices);
+                        close();
+                      }}
                       sizeClass="px-4 py-2 sm:px-5"
                     >
                       Apply
@@ -632,14 +633,6 @@ const TabFilters = () => {
                       {/* --------- */}
                       {/* ---- */}
                       <div className="py-7">
-                        <h3 className="text-xl font-medium">Sale Types</h3>
-                        <div className="relative mt-6 ">
-                          {renderMoreFilterItem(typeOfSales)}
-                        </div>
-                      </div>
-                      {/* --------- */}
-                      {/* ---- */}
-                      <div className="py-7">
                         <h3 className="text-xl font-medium">File Types</h3>
                         <div className="relative mt-6 ">
                           {renderMoreFilterItem(fileTypes)}
@@ -744,8 +737,7 @@ const TabFilters = () => {
                     <ButtonThird
                       onClick={() => {
                         setRangePrices([0.01, 10]);
-                        setSaleTypeStates([]);
-                        setfileTypesState([]);
+                        setfileTypesState("");
                         setSortOrderStates("");
                         closeModalMoreFilter();
                       }}
