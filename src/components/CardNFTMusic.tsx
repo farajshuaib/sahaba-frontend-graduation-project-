@@ -73,7 +73,7 @@ const CardNFTMusic: FC<CardNFTMusicProps> = ({
       data-nc-id="CardNFTMusic"
     >
       {/* AUDIO MEDiA */}
-      <AudioForNft src={nft.file_path} nftId={nft.id.toString()} />
+      <AudioForNft src={nft?.file_path} nftId={nft?.id?.toString()} />
 
       <div className="">
         <NcImage
@@ -86,16 +86,16 @@ const CardNFTMusic: FC<CardNFTMusicProps> = ({
       {/* LIKE AND AVATARS */}
       <div className="absolute top-2.5 left-2.5 z-10 flex items-center space-x-2">
         <LikeButton
-          like_count={nft.like_count}
-          nft_id={nft.id}
-          liked={nft.is_liked}
+          like_count={nft?.like_count}
+          nft_id={nft?.id}
+          liked={nft?.is_liked}
           className=" !h-9"
         />
       </div>
 
       {/* ----TIME--- */}
-      {nft.is_for_sale && (
-        <RemainingTimeNftCard sale_end_at={nft.sale_end_at} />
+      {nft?.is_for_sale && (
+        <RemainingTimeNftCard sale_end_at={nft?.sale_end_at} />
       )}
 
       {/* MAIN CONTENT */}
@@ -106,7 +106,7 @@ const CardNFTMusic: FC<CardNFTMusicProps> = ({
           </div>
           <ButtonPlayMusicRunningContainer
             className="relative z-10"
-            nftId={nft.id.toString()}
+            nftId={nft?.id?.toString()}
             renderDefaultBtn={() => renderListenButtonDefault()}
             renderPlayingBtn={() => renderListenButtonDefault("playing")}
             renderLoadingBtn={() => renderListenButtonDefault("loading")}
@@ -114,11 +114,11 @@ const CardNFTMusic: FC<CardNFTMusicProps> = ({
         </div>
 
         <Link
-          to={`/nft-details/${nft.id}`}
+          to={`/nft-details/${nft?.id}`}
           className="block p-5 mt-5 bg-white rounded-tl-none shadow-xl dark:bg-neutral-800 dark:shadow-2xl rounded-3xl"
         >
           <div className="flex items-center justify-between">
-            <h2 className={`text-lg font-semibold`}>{nft.title}</h2>
+            <h2 className={`text-lg font-semibold`}>{nft?.title}</h2>
             <div className="flex items-center">
               <Avatar
                 imgUrl={nft?.creator?.profile_photo}
@@ -137,14 +137,14 @@ const CardNFTMusic: FC<CardNFTMusicProps> = ({
           <div className="w-full mt-1.5 flex justify-between items-end ">
             <Prices
               labelText="Price"
-              price={`${nft.price} ETH`}
+              price={`${nft?.price} ETH`}
               labelTextClassName="bg-white dark:bg-neutral-800 "
             />
           </div>
         </Link>
       </div>
 
-      <Link to={`/nft-details/${nft.id}`} className="absolute inset-0 "></Link>
+      <Link to={`/nft-details/${nft?.id}`} className="absolute inset-0 "></Link>
     </div>
   );
 };

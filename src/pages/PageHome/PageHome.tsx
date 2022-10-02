@@ -15,8 +15,10 @@ import SectionSubscribe2 from "components/SectionSubscribe2/SectionSubscribe2";
 import SectionGridFeatureNFT2 from "./SectionGridFeatureNFT2";
 import SectionSliderCardNftVideo from "components/SectionSliderCardNftVideo";
 import SectionMagazine8 from "components/SectionMagazine8";
+import { useAppSelector } from "app/hooks";
 
 function PageHome() {
+  const userData:UserData = useAppSelector(state => state.account.userData)
   return (
     <div className="relative overflow-hidden nc-PageHome">
       <Helmet>
@@ -60,9 +62,7 @@ function PageHome() {
        {/* SECTION 3 */}
        <SectionMagazine8 />
 
-        {/* SECTION */}
-        <SectionGridAuthorBox boxCard="box3" />
-
+        
          {/* SECTION 4 */}
          <SectionSliderCardNftVideo />
         {/* SECTION */}
@@ -77,6 +77,8 @@ function PageHome() {
           <SectionGridFeatureNFT2 />
         </div>
 
+        <SectionGridAuthorBox boxCard="box3" />
+
         {/* SECTION */}
         <div className="relative py-20 lg:py-24">
           <BackgroundSection />
@@ -84,7 +86,7 @@ function PageHome() {
         </div>
 
         {/* SECTION */}
-        <SectionSubscribe2 />
+        {!userData || !userData?.is_subscribed && <SectionSubscribe2 />}
 
         {/* SECTION 1 */}
         <SectionSliderCategories />

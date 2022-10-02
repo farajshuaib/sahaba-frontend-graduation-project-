@@ -110,5 +110,6 @@ interface UserData {
   following?: Nft[];
   liked_nfts?: Nft[];
   nfts?: Nft[];
-  is_followed?: boolean 
+  is_followed?: boolean ;
+  is_subscribed: boolean
 }

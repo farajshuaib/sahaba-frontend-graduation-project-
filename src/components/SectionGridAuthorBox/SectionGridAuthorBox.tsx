@@ -1,6 +1,3 @@
-import CardAuthorBox from "components/CardAuthorBox/CardAuthorBox";
-import CardAuthorBox2 from "components/CardAuthorBox2/CardAuthorBox2";
-import CardAuthorBox3 from "components/CardAuthorBox3/CardAuthorBox3";
 import CardAuthorBox4 from "components/CardAuthorBox4/CardAuthorBox4";
 import Heading from "components/Heading/Heading";
 import LoadingScreen from "components/LoadingScreen";
@@ -155,8 +152,8 @@ const SectionGridAuthorBox: FC<SectionGridAuthorBoxProps> = ({
         ))}
       </div>
       <div className="flex flex-col items-center justify-center mt-16 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-5">
-        <ButtonSecondary>Show me more </ButtonSecondary>
-        <ButtonPrimary>Become a author</ButtonPrimary>
+        <ButtonSecondary href="/search">Show me more </ButtonSecondary>
+        <ButtonPrimary href="/create-nft">Become a author</ButtonPrimary>
       </div>
     </div>
   );
