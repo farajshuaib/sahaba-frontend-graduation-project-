@@ -22,11 +22,29 @@ interface CollectionNftsProps {
 }
 const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection_id }) => {
   const [page, setPage] = useState<number>(1);
+  const [fileType, setFileType] = useState<string>("");
+  const [priceRange, setPriceRange] = useState([0.1, 5.0]);
+  const [sortBy, setSortBy] = useState<string>("");
+  const [isVerifiedUser, setIsVerifiedUser] = useState<boolean>();
   const { fetch, meta, loading, data } = useCrud("/nfts");
 
   useEffect(() => {
-    fetch({ collection: collection_id, page });
-  }, [page]);
+    fetch({
+      collection: collection_id,
+      page,
+      type: fileType,
+      price_range: priceRange,
+      sort_by: sortBy,
+      is_verified: isVerifiedUser,
+    });
+  }, [
+    page,
+    collection_id,
+    fileType,
+    priceRange,
+    sortBy,
+    isVerifiedUser,
+  ]);
 
   if (loading) {
     return <LoadingScreen />;
@@ -35,7 +53,12 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection_id }) => {
   return (
     <main>
       {/* TABS FILTER */}
-      <TabFilters />
+      <TabFilters
+        setPriceRange={(val) => setPriceRange(val)}
+        setFileType={(val: string) => setFileType(val)}
+        setSortBy={(val: string) => setSortBy(val)}
+        setIsVerifiedUser={(val: boolean) => setIsVerifiedUser(val)}
+      />
 
       {/* LOOP ITEMS */}
       <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
@@ -59,7 +82,7 @@ export interface PageCollectionProps {
 const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
   const params: any = useParams();
   const { fetchById, item: collection, loading } = useCrud("/collections");
-  const userData = useAppSelector(state => state.account.userData)
+  const userData = useAppSelector((state) => state.account.userData);
 
   collection as Collection;
 

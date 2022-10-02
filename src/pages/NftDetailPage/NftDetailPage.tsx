@@ -179,7 +179,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
         {/* ---------- 1 ----------  */}
         <div className="space-y-5 pb-9">
           <div className="flex items-center justify-between">
-            <Badge name="Virtual Worlds" color="green" />
+            <Badge icon={<i className='text-xl bx bx-show'></i>} name={`${item.watch_time}`} color="green" />
             <LikeSaveBtns nft={item} />
           </div>
           <h2 className="text-2xl font-semibold sm:text-3xl lg:text-4xl">

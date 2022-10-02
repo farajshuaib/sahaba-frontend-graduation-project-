@@ -7,12 +7,14 @@ export interface BadgeProps {
   name: ReactNode;
   color?: TwMainColor;
   href?: string;
+  icon?: ReactNode;
 }
 
 const Badge: FC<BadgeProps> = ({
   className = "relative",
   name,
   color = "blue",
+  icon,
   href,
 }) => {
   const getColorClass = (hasHover = true) => {
@@ -65,8 +67,13 @@ const Badge: FC<BadgeProps> = ({
       {name}
     </Link>
   ) : (
-    <span className={`${CLASSES} ${getColorClass(false)} ${className}`}>
-      {name}
+    <span
+      className={`${CLASSES} ${getColorClass(
+        false
+      )} ${className} flex items-center gap-1`}
+    >
+      <span>{icon}</span>
+      <span>{name}</span>
     </span>
   );
 };
