@@ -10,6 +10,7 @@ import { ToastContainer } from "react-toastify";
 import { persistor, store } from "app/store";
 import { Web3Provider } from "@ethersproject/providers";
 import { Buffer } from "buffer";
+import { useRegisterSW } from "virtual:pwa-register/react";
 
 globalThis.Buffer = Buffer;
 //
@@ -46,11 +47,25 @@ const getLibrary = (provider: any): Web3Provider => {
   return library;
 };
 
+const intervalMS = 60 * 60 * 1000;
+
+
 interface Props {
   children: React.ReactNode;
 }
 const Wrapper: React.FC<Props> = ({ children }) => {
   const { i18n } = useTranslation();
+
+  useRegisterSW({
+    onRegistered(r) {
+      r &&
+        setInterval(() => {
+          r.update();
+        }, intervalMS);
+    },
+  });
+
+
   useEffect(() => {
     document.body.dir = i18n.language == "ar" ? "rtl" : "ltr";
     document.documentElement.lang = i18n.language;
