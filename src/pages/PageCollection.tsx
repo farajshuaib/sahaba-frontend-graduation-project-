@@ -16,6 +16,7 @@ import { useCrud } from "hooks/useCrud";
 import { useParams } from "react-router-dom";
 import LoadingScreen from "components/LoadingScreen";
 import { useAppSelector } from "app/hooks";
+import ServerError from "components/ServerError";
 
 interface CollectionNftsProps {
   collection_id: number | string;
@@ -37,14 +38,7 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection_id }) => {
       sort_by: sortBy,
       is_verified: isVerifiedUser,
     });
-  }, [
-    page,
-    collection_id,
-    fileType,
-    priceRange,
-    sortBy,
-    isVerifiedUser,
-  ]);
+  }, [page, collection_id, fileType, priceRange, sortBy, isVerifiedUser]);
 
   if (loading) {
     return <LoadingScreen />;
@@ -81,7 +75,12 @@ export interface PageCollectionProps {
 
 const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
   const params: any = useParams();
-  const { fetchById, item: collection, loading } = useCrud("/collections");
+  const {
+    fetchById,
+    item: collection,
+    loading,
+    errors,
+  } = useCrud("/collections");
   const userData = useAppSelector((state) => state.account.userData);
 
   collection as Collection;
@@ -94,7 +93,9 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
     return <LoadingScreen />;
   }
 
-  console.log(collection);
+  if (errors) {
+    return <ServerError />;
+  }
 
   return (
     <div
@@ -103,6 +104,18 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
     >
       <Helmet>
         <title>{collection?.name || "Collection"}</title>
+        <meta property="og:url" content={window.location.href} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={collection?.name} />
+        <meta property="og:description" content={collection?.description} />
+        <meta property="og:image" content={collection.logo_image} />
+        <meta property="twitter:title" content={collection?.name} />
+        <meta
+          property="twitter:description"
+          content={collection?.description}
+        />
+        <meta property="twitter:url" content={window.location.href} />
+        <meta property="twitter:image" content={collection.logo_image} />
       </Helmet>
 
       {/* HEADER */}
@@ -143,6 +156,18 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                 <div className="h-5 border-l border-neutral-200 dark:border-neutral-700"></div>
                 <div className="flex space-x-1.5">
                   <ButtonDropDownShare
+                    handleShareOnFacebook={() => {
+                      window.open(
+                        `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`,
+                        "_blank"
+                      );
+                    }}
+                    handleShareOnTwitter={() => {
+                      window.open(
+                        `http://www.twitter.com/share?url=${window.location.href}`,
+                        "_blank"
+                      );
+                    }}
                     className="flex items-center justify-center w-8 h-8 rounded-full cursor-pointer md:w-10 md:h-10 bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800 "
                     panelMenusClass="origin-top-right !-right-5 !w-40 sm:!w-52"
                   />

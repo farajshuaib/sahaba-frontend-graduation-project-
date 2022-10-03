@@ -75,7 +75,7 @@ interface Transactions {
   from: UserData;
   to: UserData;
   price: number | string;
-  created_at: Date
+  created_at: Date;
 }
 interface Nft {
   id: number;
@@ -83,7 +83,7 @@ interface Nft {
   creator_address: string;
   description: string;
   file_path: string;
-  file_type: 'image' | 'audio' | 'video';
+  file_type: "image" | "audio" | "video";
   collection: Collection;
   creator: UserData;
   owner: UserData;
@@ -92,9 +92,8 @@ interface Nft {
   is_for_sale: boolean;
   token_id: string;
   is_liked?: boolean;
-  transactions: Transactions[],
-  sale_end_at: Date,
-
+  transactions: Transactions[];
+  sale_end_at: Date;
 }
 
 interface Collection {
@@ -111,8 +110,8 @@ interface Collection {
   twitter_url: string | null;
   website_url: string | null;
   nfts: Nft[];
-  created_by: UserData,
-  nfts_count: number
+  created_by: UserData;
+  nfts_count: number;
 }
 
 interface UserData {
@@ -133,12 +132,18 @@ interface UserData {
   following?: Nft[];
   liked_nfts?: Nft[];
   nfts?: Nft[];
-  is_followed?: boolean ;
-  is_subscribed: boolean
+  is_followed?: boolean;
+  is_subscribed: boolean;
 }
 
-
 interface SupportedLocales {
-  key: 'fr' | 'ar' | 'en',
-  value: string
+  key: "fr" | "ar" | "en";
+  value: string;
+}
+
+interface NcDropDownItem {
+  id: string;
+  name: string;
+  icon?: string;
+  href?: string;
 }

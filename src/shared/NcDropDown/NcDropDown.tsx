@@ -2,12 +2,6 @@ import React, { FC, Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 
-export interface NcDropDownItem {
-  id: string;
-  name: string;
-  icon?: string;
-  href?: string;
-}
 
 export interface NcDropDownProps {
   className?: string;

@@ -3,15 +3,12 @@ import Avatar from "shared/Avatar/Avatar";
 import Badge from "shared/Badge/Badge";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
-import NcImage from "shared/NcImage/NcImage";
 import LikeSaveBtns from "./LikeSaveBtns";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import SectionSliderCategories from "components/SectionSliderCategories/SectionSliderCategories";
 import VerifyIcon from "components/VerifyIcon";
 import TimeCountDown from "./TimeCountDown";
 import TabDetail from "./TabDetail";
-import ItemTypeVideoIcon from "components/ItemTypeVideoIcon";
-import LikeButton from "components/LikeButton";
 import AccordionInfo from "./AccordionInfo";
 import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
 import { useCrud } from "hooks/useCrud";
@@ -23,7 +20,6 @@ import { BigNumber, Contract, ethers, utils } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "constant";
 import { useApi } from "hooks/useApi";
-import { parseEther } from "ethers/lib/utils";
 import ServerError from "components/ServerError";
 import { usdPrice } from "utils/functions";
 import { Label, Modal } from "flowbite-react";
@@ -33,6 +29,8 @@ import FormItem from "components/FormItem";
 import ItemTypeImageIcon from "components/ItemTypeImageIcon";
 import AudioForNft from "components/AudioForNft";
 import NftItem from "./NftItem";
+import { Helmet } from "react-helmet";
+
 export interface NftDetailPageProps {
   className?: string;
   isPreviewMode?: boolean;
@@ -179,7 +177,11 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
         {/* ---------- 1 ----------  */}
         <div className="space-y-5 pb-9">
           <div className="flex items-center justify-between">
-            <Badge icon={<i className='text-xl bx bx-show'></i>} name={`${item.watch_time}`} color="green" />
+            <Badge
+              icon={<i className="text-xl bx bx-show"></i>}
+              name={`${item.watch_time}`}
+              color="green"
+            />
             <LikeSaveBtns nft={item} />
           </div>
           <h2 className="text-2xl font-semibold sm:text-3xl lg:text-4xl">
@@ -390,6 +392,18 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       className={`nc-NftDetailPage  ${className}`}
       data-nc-id="NftDetailPage"
     >
+      <Helmet>
+        <title>{item?.title || "NFT Details"}</title>
+        <meta property="og:url" content={window.location.href} />
+        <meta property="og:type" content={item?.file_type} />
+        <meta property="og:title" content={item?.title} />
+        <meta property="og:description" content={item?.description} />
+        <meta property="og:image" content={item.file_path} />
+        <meta property="twitter:title" content={item?.title} />
+        <meta property="twitter:description" content={item?.description} />
+        <meta property="twitter:url" content={window.location.href} />
+        <meta property="twitter:image" content={item.file_path} />
+      </Helmet>
       {/* MAIn */}
       <main className="container flex mt-11 ">
         {item?.file_type == "audio" && (

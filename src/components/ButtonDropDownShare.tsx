@@ -4,12 +4,30 @@ import NcDropDown from "shared/NcDropDown/NcDropDown";
 export interface ButtonDropDownShareProps {
   className?: string;
   panelMenusClass?: string;
+  handleShareOnFacebook: () => void;
+  handleShareOnTwitter: () => void;
 }
 
-const ButtonDropDownShare = ({
+const ButtonDropDownShare: React.FC<ButtonDropDownShareProps> = ({
   className = "py-1.5 px-3 flex rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer ",
   panelMenusClass = "",
+  handleShareOnFacebook,
+  handleShareOnTwitter,
 }) => {
+  const handleClick = (share_to: NcDropDownItem) => {
+    switch (share_to.id) {
+      case "Facebook":
+        handleShareOnFacebook();
+        break;
+
+      case "Twitter":
+        handleShareOnTwitter();
+        break;
+      default:
+        return;
+    }
+  };
+
   return (
     <NcDropDown
       className={className}
@@ -44,7 +62,7 @@ const ButtonDropDownShare = ({
         </svg>
       )}
       panelMenusClass={panelMenusClass}
-      onClick={() => {}}
+      onClick={(val) => handleClick(val)}
       data={[
         {
           id: "Facebook",
@@ -52,16 +70,6 @@ const ButtonDropDownShare = ({
           icon: "lab la-facebook-f",
         },
         { id: "Twitter", name: "Twitter", icon: "lab la-twitter" },
-        {
-          id: "Linkedin",
-          name: "Linkedin",
-          icon: "lab la-linkedin-in",
-        },
-        {
-          id: "Instagram",
-          name: "Instagram",
-          icon: "lab la-instagram",
-        },
       ]}
     />
   );

@@ -33,14 +33,23 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
   if (loading) {
     return <LoadingScreen />;
   }
-  if(errors) {
-    return <ServerError />
+  if (errors) {
+    return <ServerError />;
   }
 
   return (
     <div className={`nc-AuthorPage  ${className}`} data-nc-id="AuthorPage">
       <Helmet>
         <title>{item?.username || "profile"}</title>
+        <meta property="og:url" content={window.location.href} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={item?.username} />
+        <meta property="og:description" content={item?.bio} />
+        <meta property="og:image" content={item.profile_image} />
+        <meta property="twitter:title" content={item?.username} />
+        <meta property="twitter:description" content={item?.bio} />
+        <meta property="twitter:url" content={window.location.href} />
+        <meta property="twitter:image" content={item.profile_image} />
       </Helmet>
 
       {/* HEADER */}
@@ -98,12 +107,13 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
                 </span>
               </div>
               <div className="mt-4 ">
-                <SocialsList 
-                facebook_url={item.facebook_url} 
-                telegram_url={item.telegram_url} 
-                twitter_url={item.twitter_url} 
-                website_url={item.website_url} 
-                itemClass="block w-7 h-7" />
+                <SocialsList
+                  facebook_url={item.facebook_url}
+                  telegram_url={item.telegram_url}
+                  twitter_url={item.twitter_url}
+                  website_url={item.website_url}
+                  itemClass="block w-7 h-7"
+                />
               </div>
             </div>
             <div className="absolute flex flex-row-reverse justify-end md:static left-5 top-4 sm:left-auto sm:top-5 sm:right-5">
@@ -121,6 +131,18 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
                 />
               )}
               <ButtonDropDownShare
+                handleShareOnFacebook={() => {
+                  window.open(
+                    `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`,
+                    "_blank"
+                  );
+                }}
+                handleShareOnTwitter={() => {
+                  window.open(
+                    `http://www.twitter.com/share?url=${window.location.href}`,
+                    "_blank"
+                  );
+                }}
                 className="flex items-center justify-center w-8 h-8 mx-2 rounded-full cursor-pointer md:w-10 md:h-10 bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800"
                 panelMenusClass="origin-top-right !-right-5 !w-40 sm:!w-52"
               />

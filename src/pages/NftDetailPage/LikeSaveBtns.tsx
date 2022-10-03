@@ -13,7 +13,21 @@ const LikeSaveBtns: React.FC<LikeSaveBtnProps> = ({ nft }) => {
   return (
     <div className="flow-root">
       <div className="flex text-neutral-700 dark:text-neutral-300 text-sm -mx-3 -my-1.5">
-        <ButtonDropDownShare panelMenusClass="!w-52" />
+        <ButtonDropDownShare
+          panelMenusClass="!w-52"
+          handleShareOnFacebook={() => {
+            window.open(
+              `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`,
+              "_blank"
+            );
+          }}
+          handleShareOnTwitter={() => {
+            window.open(
+              `http://www.twitter.com/share?url=${window.location.href}`,
+              "_blank"
+            );
+          }}
+        />
         <NftMoreDropdown
           nft={nft}
           actions={
