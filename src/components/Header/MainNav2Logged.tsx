@@ -8,6 +8,7 @@ import Input from "shared/Input/Input";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Navigation from "shared/Navigation/Navigation";
 import { useAppSelector } from "app/hooks";
+import LocalesDropDown from "./LocalesDropDown";
 
 export interface MainNav2LoggedProps {}
 
@@ -61,6 +62,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
             <div className="flex">
               <SwitchDarkMode />
               <NotifyDropdown />
+              <LocalesDropDown />
             </div>
             <div></div>
             {userData && (
@@ -84,6 +86,7 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
           </div>
           <div className="flex items-center space-x-3 xl:hidden">
             <NotifyDropdown />
+            <LocalesDropDown />
             {userData && <AvatarDropdown />}
             <MenuBar />
           </div>

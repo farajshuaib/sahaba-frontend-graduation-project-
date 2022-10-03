@@ -1,5 +1,5 @@
 import Label from "components/Label/Label";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Input from "shared/Input/Input";
 import Textarea from "shared/Textarea/Textarea";
@@ -23,9 +23,11 @@ import {
 import { BigNumber, Contract } from "ethers";
 import { createNftSchema } from "services/validations";
 import { toast } from "react-toastify";
-import { parseEther } from "ethers/lib/utils";
+import { formatEther, parseEther } from "ethers/lib/utils";
 import { useHistory } from "react-router-dom";
 import { usdPrice } from "utils/functions";
+import { Alert } from "shared/Alert/Alert";
+import { useTranslation } from "react-i18next";
 
 interface UploadFileProps {
   errors: FormikErrors<any>;
@@ -89,7 +91,9 @@ const UploadFile: React.FC<UploadFileProps> = ({
                 htmlFor="file-upload"
                 className="relative font-medium rounded-md cursor-pointer text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
               >
-                <span>{values.file_path ? "replace file" : "Upload a file"}</span>
+                <span>
+                  {values.file_path ? "replace file" : "Upload a file"}
+                </span>
                 <input
                   id="file-upload"
                   name="file-upload"
@@ -141,10 +145,23 @@ export interface PageUploadItemProps {
 }
 
 const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
+  const { t } = useTranslation();
   const { library, account } = useWeb3React();
   const history = useHistory();
   const myCollections = useAppSelector((state) => state.general.myCollections);
   const { create } = useCrud("/nfts");
+  const [balance, setBalance] = useState<string>("");
+  const [error, setError] = useState<string>("");
+
+  const getAccountBalance = async () => {
+    if (!account) return;
+    const balance = await library.getBalance(account);
+    setBalance(formatEther(balance));
+  };
+
+  useEffect(() => {
+    getAccountBalance();
+  }, []);
 
   return (
     <div
@@ -159,7 +176,7 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
           {/* HEADING */}
           <div className="max-w-2xl">
             <h2 className="text-3xl font-semibold sm:text-4xl">
-              Create New NFT
+              {t("Create_New_NFT")}
             </h2>
             <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
               You can set preferred display name, create your profile URL and
@@ -178,15 +195,19 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
             }}
             validationSchema={createNftSchema}
             onSubmit={async (values, { setFieldError }) => {
+              if (balance == "0") {
+                setError("you don't have enough balance to mint a NFT");
+                return;
+              }
+              if (values.collection_id == 0) {
+                setFieldError("collection_id", "collection id is required");
+                return;
+              }
+              if (values.price == 0) {
+                setFieldError("price", "price must be above 0");
+                return;
+              }
               try {
-                if (values.collection_id == 0) {
-                  setFieldError("collection_id", "collection id is required");
-                  return;
-                }
-                if (values.price == 0) {
-                  setFieldError("price", "price must be above 0");
-                  return;
-                }
                 const signer = library?.getSigner();
                 const contract = new Contract(
                   CONTRACT_ADDRESS,
@@ -429,6 +450,12 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                   onChange={(val: boolean) => setFieldValue("is_for_sale", val)}
                   desc="does the collection allow sharing sensitive content"
                 /> */}
+
+                {!!error && (
+                  <Alert type="error">
+                    <h6>{error}</h6>
+                  </Alert>
+                )}
 
                 {/* ---- */}
                 <div className="flex flex-col pt-2 space-x-0 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3 ">

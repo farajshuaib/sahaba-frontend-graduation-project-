@@ -113,3 +113,9 @@ interface UserData {
   is_followed?: boolean ;
   is_subscribed: boolean
 }
+
+
+interface SupportedLocales {
+  key: 'fr' | 'ar' | 'en',
+  value: string
+}

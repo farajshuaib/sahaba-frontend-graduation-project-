@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import facebook from "assets/images/socials/facebook.svg";
 import twitter from "assets/images/socials/twitter.svg";
 import telegram from "assets/images/socials/telegram.svg";
-import youtube from "assets/images/socials/youtube.svg";
+import website from "assets/images/socials/website.svg";
 
 export interface SocialsListProps {
   className?: string;
@@ -25,7 +25,7 @@ const SocialsList: FC<SocialsListProps> = ({
   const socials: SocialType[] = [
     { name: "Facebook", icon: facebook, href: facebook_url },
     { name: "Twitter", icon: twitter, href: twitter_url },
-    { name: "website", icon: youtube, href: website_url },
+    { name: "website", icon: website, href: website_url },
     { name: "Telegram", icon: telegram, href: telegram_url },
   ];
   return (

@@ -26,15 +26,7 @@ export default function AvatarDropdown() {
   const getAccountBalance = async () => {
     if (!account) return;
     const balance = await library.getBalance(account);
-    setBalance(formatEther(balance));
-    const tokenContract = new Contract(
-      CONTRACT_ADDRESS,
-      CONTRACT_ABI,
-      library.getSigner()
-    );
-
-    const tokenBalance = await tokenContract.balanceOf(account);
-    console.log(formatEther(tokenBalance));
+    setBalance(formatEther(balance))
   };
 
   useEffect(() => {
