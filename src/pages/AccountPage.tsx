@@ -7,11 +7,8 @@ import Textarea from "shared/Textarea/Textarea";
 import { Helmet } from "react-helmet";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { Formik, ErrorMessage } from "formik";
-import useIpfs from "hooks/useIpfs";
-import { IPFS_BASE_URL } from "constant";
 import { useCrud } from "hooks/useCrud";
-import { validateImage } from "services/validations";
-import { useApi } from "hooks/useApi";
+import { updateAccountSchema, validateImage } from "services/validations";
 import { connectToWallet } from "app/account/actions";
 import VerifyAccount from "components/VerifyAccount";
 
@@ -62,6 +59,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
             {initFormState && (
               <Formik
                 initialValues={initFormState}
+                validationSchema={updateAccountSchema}
                 onSubmit={async (values) => {
                   const form = new FormData();
                   for (const [key, value] of Object.entries(values)) {
@@ -129,6 +127,34 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                     </div>
                     <div className="flex-grow max-w-3xl mt-10 space-y-5 md:mt-0 md:pl-16 sm:space-y-6 md:sm:space-y-7">
                       {/* ---- */}
+                      <div className="flex items-center w-full gap-3">
+                        <div className="flex-grow">
+                          <Label htmlFor="first_name">First name</Label>
+                          <Input
+                            className="mt-1.5"
+                            type="text"
+                            id="first_name"
+                            name="first_name"
+                            value={values.first_name}
+                            onBlur={handleBlur("first_name")}
+                            onChange={handleChange("first_name")}
+                          />
+                          <ErrorMessage name="first_name" />
+                        </div>
+                        <div className="flex-grow">
+                          <Label htmlFor="last_name">Last name</Label>
+                          <Input
+                            className="mt-1.5"
+                            type="text"
+                            id="last_name"
+                            name="last_name"
+                            value={values.last_name}
+                            onBlur={handleBlur("last_name")}
+                            onChange={handleChange("last_name")}
+                          />
+                          <ErrorMessage name="last_name" />
+                        </div>
+                      </div>
                       <div>
                         <Label>Username</Label>
                         <Input
@@ -138,7 +164,12 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                           name="username"
                           value={values.username}
                           onBlur={handleBlur("username")}
-                          onChange={handleChange("username")}
+                          onChange={(e) =>
+                            setFieldValue(
+                              "username",
+                              e.currentTarget.value.trim()
+                            )
+                          }
                         />
                         <ErrorMessage name="username" />
                       </div>
@@ -161,6 +192,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                             onBlur={handleBlur("email")}
                           />
                         </div>
+                        <ErrorMessage name="email" />
                       </div>
 
                       {/* ---- */}
@@ -176,6 +208,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                           onBlur={handleBlur("bio")}
                           placeholder="Something about yourself in a few word."
                         />
+                        <ErrorMessage name="bio" />
                       </div>
 
                       {/* ---- */}
@@ -196,6 +229,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                             placeholder="your website.com"
                           />
                         </div>
+                        <ErrorMessage name="website_url" />
                       </div>
 
                       {/* ---- */}
@@ -218,6 +252,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                               sizeClass="h-11 px-4 pl-2 pr-3"
                             />
                           </div>
+                          <ErrorMessage name="facebook_url" />
                         </div>
                         <div>
                           <Label>Twitter</Label>
@@ -237,6 +272,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                               sizeClass="h-11 px-4 pl-2 pr-3"
                             />
                           </div>
+                          <ErrorMessage name="twitter_url" />
                         </div>
                         <div>
                           <Label>Telegram</Label>
@@ -256,6 +292,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                               sizeClass="h-11 px-4 pl-2 pr-3"
                             />
                           </div>
+                          <ErrorMessage name="telegram_url" />
                         </div>
                       </div>
 

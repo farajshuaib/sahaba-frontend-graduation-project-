@@ -116,6 +116,8 @@ interface Collection {
 
 interface UserData {
   id: number;
+  first_name: string;
+  last_name: string;
   wallet_address: string;
   username: string;
   email: string;
@@ -134,6 +136,14 @@ interface UserData {
   nfts?: Nft[];
   is_followed?: boolean;
   is_subscribed: boolean;
+  gender?: "male" | "female",
+  country?: string,
+  city?: string,
+  address?: string,
+  phone_number?: string,
+  author_type?: 'creator' | 'collector',
+  author_art_type?: string,
+  passport_id?: string,
 }
 
 interface SupportedLocales {

@@ -35,20 +35,28 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
     collections_count: 0,
   });
 
+
   useEffect(() => {
+    submitSearch();
+  }, [
+    page,
+    selectedCategory,
+    fileType,
+    JSON.stringify(priceRange),
+    sortBy,
+    isVerifiedUser,
+  ]);
+
+  const submitSearch = () => {
     fetch({
       page,
       search,
       category: selectedCategory?.id || "",
       type: fileType,
-      price_range:priceRange,
-      sort_by:sortBy,
+      price_range: priceRange,
+      sort_by: sortBy,
       is_verified: isVerifiedUser,
     });
-  }, [page, selectedCategory, fileType, priceRange, sortBy, isVerifiedUser]);
-
-  const submitSearch = () => {
-    fetch({ page, search, category: selectedCategory?.id || "" });
   };
 
   const renderNFTComponent = (nft: Nft, index: number) => {
@@ -146,7 +154,7 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
           <HeaderFilterSearchPage
             selectedCategory={selectedCategory}
             setSelectedCategory={(id) => setSelectedCategory(id)}
-            setPriceRange={val => setPriceRange(val)}
+            setPriceRange={(val) => setPriceRange(val)}
             setFileType={(val) => setFileType(val)}
             setSortBy={(val) => setSortBy(val)}
             setIsVerifiedUser={(val) => setIsVerifiedUser(val)}

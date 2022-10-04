@@ -9,7 +9,6 @@ import AuthorPage from "pages/AuthorPage";
 import AccountPage from "pages/AccountPage";
 import PageContact from "pages/PageContact";
 import PageAbout from "pages/PageAbout/PageAbout";
-import PageSubcription from "pages/PageSubcription";
 import NftDetailPage from "pages/NftDetailPage/NftDetailPage";
 import PageCollection from "pages/PageCollection";
 import PageSearch from "pages/PageSearch";
@@ -19,6 +18,7 @@ import HeaderLogged from "components/Header/HeaderLogged";
 import PageCreateCollection from "pages/PageCreateCollection";
 import PageCollections from "pages/PageCollections";
 import { useAppSelector } from "app/hooks";
+import KYC_Form from "pages/KYC_Form";
 
 
 export const pages: Page[] = [
@@ -34,11 +34,9 @@ export const pages: Page[] = [
   { path: "/author/:id", component: AuthorPage },
   { path: "/connect-wallet", component: PageConnectWallet },
   { path: "/account", component: AccountPage },
-  //
-  //
   { path: "/contact", component: PageContact },
   { path: "/about", component: PageAbout },
-  { path: "/subscription", component: PageSubcription },
+  { path: "/kyc-form", component: KYC_Form },
 ];
 
 const Routes = () => {

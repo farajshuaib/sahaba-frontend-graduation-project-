@@ -19,7 +19,7 @@ const VerifyAccount: FC<VerifyAccountProps> = ({
           className={className}
           sizeClass={sizeClass}
           fontSize={fontSize}
-          onClick={() => {}}
+          href="/kyc-form"
         >
           verify account
         </ButtonPrimary>

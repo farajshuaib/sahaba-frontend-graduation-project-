@@ -1,5 +1,7 @@
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import * as yup from "yup";
+export const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 export const createCollectionSchema = yup.object().shape({
   logo_image: yup.string().required(),
@@ -23,15 +25,52 @@ export const createNftSchema = yup.object().shape({
 
 export const updatePriceSchema = yup.object().shape({
   price: yup.number().required().positive().min(0.01).max(5.0),
-})
-
+});
 
 export const contactSchema = yup.object().shape({
   name: yup.string().required(),
   email: yup.string().email().required(),
   subject: yup.string().required(),
   message: yup.string().required(),
-})
+});
+
+export const kycSchema = yup.object().shape({
+  
+  gender: yup.string().required(),
+  country: yup.string().required(),
+  city: yup.string().required(),
+  address: yup.string().required(),
+  phone_number: yup
+    .string()
+    .matches(phoneRegExp, "invalid phone number")
+    .required(),
+  author_type: yup.string().required(),
+  author_art_type: yup.string().required(),
+  passport_id: yup
+    .mixed()
+    .test("fileSize", "The file is too large", (value) => {
+      if (!value.length) return true; // attachment is optional
+      return value.size <= 100000024;
+    }),
+});
+
+export const updateAccountSchema = yup.object().shape({
+  first_name: yup.string().required(),
+  last_name: yup.string().required(),
+  username: yup.string().required().trim(),
+  email: yup.string().email().required(),
+  bio: yup.string(),
+  website_url: yup.string().url(),
+  facebook_url: yup.string().url(),
+  twitter_url: yup.string().url(),
+  telegram_url: yup.string().url(),
+  profile_photo: yup
+    .mixed()
+    .test("fileSize", "The file is too large", (value) => {
+      if (!value.length) return true; // attachment is optional
+      return value.size <= 100000024;
+    }),
+});
 
 export const validateImage = (file: any) => {
   const fileType = file.type;

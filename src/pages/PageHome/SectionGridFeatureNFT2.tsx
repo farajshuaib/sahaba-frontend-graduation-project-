@@ -29,13 +29,14 @@ const SectionGridFeatureNFT2: FC<SectionGridFeatureNFT2Props> = () => {
   useEffect(() => {
     fetch({
       page: 1,
+      search: "",
       category: selectedCategory?.id || "",
       type: fileType,
       price_range: priceRange,
       sort_by: sortBy,
       is_verified: isVerifiedUser,
     });
-  }, [selectedCategory, fileType, priceRange, sortBy, isVerifiedUser]);
+  }, [selectedCategory, fileType, JSON.stringify(priceRange), sortBy, isVerifiedUser]);
 
   if (errors) {
     return <ServerError />;

@@ -41,7 +41,7 @@ const HeaderFilterSearchPage: FC<HeaderFilterSearchPageProps> = ({
   
   useEffect(() => {
     if (priceRange) setParentPriceRange(priceRange);
-  }, [fileType]);
+  }, [priceRange]);
 
   useEffect(() => {
     if (sortBy) setParentSortBy(sortBy);

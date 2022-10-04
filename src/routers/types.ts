@@ -17,7 +17,7 @@ export interface LocationStates {
   "/contact"?: {};
   "/forgot-pass"?: {};
   "/page404"?: {};
-  "/subscription"?: {};
+  "/kyc-form"?: {}
 }
 
 export type PathName = keyof LocationStates;
