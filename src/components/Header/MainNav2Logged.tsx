@@ -20,12 +20,12 @@ const MainNav2Logged: FC<MainNav2LoggedProps> = () => {
       <div className="container relative flex items-center justify-between py-5 space-x-4 xl:space-x-8">
         <div className="flex items-center justify-start flex-grow space-x-3 sm:space-x-8 lg:space-x-10">
           <Logo />
-          <div className="flex-grow hidden max-w-xs sm:block">
-            <form action="" method="POST" className="relative">
+          <div className="flex-grow hidden max-w-sm sm:block">
+            <form  className="relative">
               <Input
                 type="search"
-                placeholder="Search items"
-                className="w-full pr-10"
+                placeholder="Search by art name, creator or collection"
+                className="w-full pr-8"
                 sizeClass="h-[42px] pl-4 py-3"
               />
               <span className="absolute -translate-y-1/2 top-1/2 right-3 text-neutral-500">

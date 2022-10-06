@@ -59,11 +59,11 @@ export const updateAccountSchema = yup.object().shape({
   last_name: yup.string().required(),
   username: yup.string().required().trim(),
   email: yup.string().email().required(),
-  bio: yup.string(),
-  website_url: yup.string().url(),
-  facebook_url: yup.string().url(),
-  twitter_url: yup.string().url(),
-  telegram_url: yup.string().url(),
+  bio: yup.string().nullable(),
+  website_url: yup.string().url().nullable(),
+  facebook_url: yup.string().url().nullable(),
+  twitter_url: yup.string().url().nullable(),
+  telegram_url: yup.string().url().nullable(),
   profile_photo: yup
     .mixed()
     .test("fileSize", "The file is too large", (value) => {

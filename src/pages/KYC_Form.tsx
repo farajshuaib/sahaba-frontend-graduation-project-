@@ -1,10 +1,4 @@
-import React, {
-  FC,
-  HTMLInputTypeAttribute,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useRef } from "react";
 import { Helmet } from "react-helmet";
 import Label from "components/Label/Label";
 import Input from "shared/Input/Input";
@@ -13,12 +7,9 @@ import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { ErrorMessage, Formik } from "formik";
 import { useApi } from "hooks/useApi";
 import { toast } from "react-toastify";
-import { useCrud } from "hooks/useCrud";
-import { useAppDispatch, useAppSelector } from "app/hooks";
-import { connectToWallet } from "app/account/actions";
+import {  useAppSelector } from "app/hooks";
 import Select from "shared/Select/Select";
 import countries from "data/countries";
-import Checkbox from "shared/Checkbox/Checkbox";
 import Radio from "shared/Radio/Radio";
 import { kycSchema } from "services/validations";
 
@@ -119,7 +110,7 @@ const KYC_Form: React.FC = () => {
                 isSubmitting,
               }) => (
                 <>
-                  <div className="flex-grow max-w-3xl mt-10 space-y-5 md:mt-0 md:pl-16 sm:space-y-6 md:sm:space-y-7">                    
+                  <div className="flex-grow max-w-3xl mt-10 space-y-5 md:mt-0 md:pl-16 sm:space-y-6 md:sm:space-y-7">
                     {/* ---- */}
                     <div>
                       <Label htmlFor="gender">Gender</Label>
