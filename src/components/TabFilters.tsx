@@ -8,21 +8,6 @@ import Slider from "rc-slider";
 import Radio from "shared/Radio/Radio";
 import { ChevronDownIcon } from "@heroicons/react/outline";
 
-const fileTypes = [
-  {
-    id: "image",
-    name: "Image",
-  },
-  {
-    id: "video",
-    name: "Video",
-  },
-  {
-    id: "audio",
-    name: "Audio",
-  },
-];
-
 const sortOrderRadios = [
   { name: "Recently listed", id: "Recently-listed" },
   { name: "Ending soon", id: "Ending-soon" },
@@ -32,30 +17,27 @@ const sortOrderRadios = [
 ];
 
 interface Props {
-  setFileType: (val: string) => void;
   setPriceRange: (val: number[]) => void;
   setSortBy: (val: string) => void;
-  setIsVerifiedUser: (val:boolean) => void
+  setIsVerifiedUser: (val: boolean) => void;
 }
 
 //
 const TabFilters: React.FC<Props> = ({
-  setFileType,
   setPriceRange,
   setSortBy,
-  setIsVerifiedUser
+  setIsVerifiedUser,
 }) => {
   const [isOpenMoreFilter, setisOpenMoreFilter] = useState(false);
   //
   const [isVerifiedCreator, setIsVerifiedCreator] = useState(true);
   const [rangePrices, setRangePrices] = useState([0.01, 5]);
-  const [fileTypesState, setfileTypesState] = useState<string>("");
+
   const [sortOrderStates, setSortOrderStates] = useState<string>("");
 
-
   useEffect(() => {
-    if(isVerifiedCreator)setIsVerifiedUser(isVerifiedCreator)
-  },[isVerifiedCreator])
+    if (isVerifiedCreator) setIsVerifiedUser(isVerifiedCreator);
+  }, [isVerifiedCreator]);
 
   //
   const closeModalMoreFilter = () => setisOpenMoreFilter(false);
@@ -182,7 +164,7 @@ const TabFilters: React.FC<Props> = ({
                       onClick={() => {
                         close();
                         setSortOrderStates("");
-                        setSortBy("")
+                        setSortBy("");
                       }}
                       sizeClass="px-4 py-2 sm:px-5"
                     >
@@ -190,131 +172,7 @@ const TabFilters: React.FC<Props> = ({
                     </ButtonThird>
                     <ButtonPrimary
                       onClick={() => {
-                        setSortBy(sortOrderStates)
-                        close();
-                      }}
-                      sizeClass="px-4 py-2 sm:px-5"
-                    >
-                      Apply
-                    </ButtonPrimary>
-                  </div>
-                </div>
-              </Popover.Panel>
-            </Transition>
-          </>
-        )}
-      </Popover>
-    );
-  };
-
-  // OK
-  const renderTabsFileTypes = () => {
-    return (
-      <Popover className="relative">
-        {({ open, close }) => (
-          <>
-            <Popover.Button
-              className={`flex items-center justify-center px-4 py-2 text-sm rounded-full border focus:outline-none 
-              ${open ? "!border-primary-500 " : ""}
-                ${
-                  !!fileTypesState.length
-                    ? "!border-primary-500 bg-primary-50 text-primary-900"
-                    : "border-neutral-300 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:border-neutral-400 dark:hover:border-neutral-500"
-                }
-                `}
-            >
-              <svg
-                className="w-4 h-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15Z"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M2.52002 7.11011H21.48"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M8.52002 2.11011V6.97011"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M15.48 2.11011V6.52011"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M9.75 14.4501V13.2501C9.75 11.7101 10.84 11.0801 12.17 11.8501L13.21 12.4501L14.25 13.0501C15.58 13.8201 15.58 15.0801 14.25 15.8501L13.21 16.4501L12.17 17.0501C10.84 17.8201 9.75 17.1901 9.75 15.6501V14.4501V14.4501Z"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeMiterlimit="10"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-
-              <span className="ml-2">File Types</span>
-              {!fileTypesState.length ? (
-                <ChevronDownIcon className="w-4 h-4 ml-3" />
-              ) : (
-                <span onClick={() => setfileTypesState("")}>
-                  {renderXClear()}
-                </span>
-              )}
-            </Popover.Button>
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-200"
-              enterFrom="opacity-0 translate-y-1"
-              enterTo="opacity-100 translate-y-0"
-              leave="transition ease-in duration-150"
-              leaveFrom="opacity-100 translate-y-0"
-              leaveTo="opacity-0 translate-y-1"
-            >
-              <Popover.Panel className="absolute left-0 z-40 w-screen max-w-sm px-4 mt-3 sm:px-0 lg:max-w-md">
-                <div className="overflow-hidden bg-white border shadow-xl rounded-2xl dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700">
-                  <div className="relative flex flex-col px-5 py-6 space-y-5">
-                    {fileTypes.map((item) => (
-                      <div key={item.name} className="">
-                        <Radio
-                          id={item.id}
-                          key={item.id}
-                          name="radioNameSort"
-                          label={item.name}
-                          defaultChecked={fileTypesState === item.id}
-                          onChange={setfileTypesState}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex items-center justify-between p-5 bg-neutral-50 dark:bg-neutral-900 dark:border-t dark:border-neutral-800">
-                    <ButtonThird
-                      onClick={() => {
-                        close();
-                        setFileType("");
-                        setfileTypesState("");
-                      }}
-                      sizeClass="px-4 py-2 sm:px-5"
-                    >
-                      Clear
-                    </ButtonThird>
-                    <ButtonPrimary
-                      onClick={() => {
-                        setFileType(fileTypesState);
+                        setSortBy(sortOrderStates);
                         close();
                       }}
                       sizeClass="px-4 py-2 sm:px-5"
@@ -630,17 +488,6 @@ const TabFilters: React.FC<Props> = ({
 
                   <div className="flex-grow overflow-y-auto">
                     <div className="px-8 divide-y md:px-10 divide-neutral-200 dark:divide-neutral-800">
-                      {/* --------- */}
-                      {/* ---- */}
-                      <div className="py-7">
-                        <h3 className="text-xl font-medium">File Types</h3>
-                        <div className="relative mt-6 ">
-                          {renderMoreFilterItem(fileTypes)}
-                        </div>
-                      </div>
-
-                      {/* --------- */}
-                      {/* ---- */}
                       <div className="py-7">
                         <h3 className="text-xl font-medium">Range Prices</h3>
                         <div className="relative mt-6 ">
@@ -737,7 +584,7 @@ const TabFilters: React.FC<Props> = ({
                     <ButtonThird
                       onClick={() => {
                         setRangePrices([0.01, 10]);
-                        setfileTypesState("");
+
                         setSortOrderStates("");
                         closeModalMoreFilter();
                       }}
@@ -766,7 +613,7 @@ const TabFilters: React.FC<Props> = ({
       {/* FOR DESKTOP */}
       <div className="hidden space-x-4 lg:flex">
         {renderTabsPriceRage()}
-        {renderTabsFileTypes()}
+
         {renderTabsSortOrder()}
         {renderTabVerifiedCreator()}
       </div>

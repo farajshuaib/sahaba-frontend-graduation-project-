@@ -11,8 +11,6 @@ import LoadingScreen from "./LoadingScreen";
 import ServerError from "./ServerError";
 import { LocationStates } from "routers/types";
 import CollectionCard2 from "./CollectionCard2";
-import CardNFTMusic from "./CardNFTMusic";
-import CardNFTVideo from "./CardNFTVideo";
 interface ProfileTabsProps {
   user_id: number;
 }
@@ -115,36 +113,12 @@ const Nfts: React.FC<NftsTabs> = ({
     return <ServerError />;
   }
 
-  const renderNFTComponent = (nft: Nft, index: number) => {
-    switch (nft.file_type) {
-      case "image":
-        return <CardNFT nft={nft} key={index} />;
-      case "audio":
-        return (
-          <CardNFTMusic
-            key={index}
-            nft={nft}
-            featuredImage="https://images.unsplash.com/photo-1618556450994-a6a128ef0d9d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80"
-          />
-        );
-      case "video":
-        return (
-          <CardNFTVideo
-            nft={nft}
-            featuredImage="https://images.unsplash.com/photo-1643101808200-0d159c1331f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-          />
-        );
-      default:
-        return <></>;
-    }
-  };
-
   return (
     <React.Fragment>
       <div className="grid gap-6 mt-8 sm:grid-cols-2 lg:grid-cols-3 md:gap-8 lg:mt-10">
         {data && data.length > 0 ? (
-          data.map((nft: Nft, index) => (
-            <React.Fragment>{renderNFTComponent(nft, index)}</React.Fragment>
+          data.map((item, index) => (
+            <CardNFT nft={item.price ? item : item.nft} key={index} />
           ))
         ) : (
           <div className="flex flex-col items-center justify-start col-span-3 mx-auto">
@@ -225,7 +199,7 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ user_id }) => {
   let [categories] = useState([
     "Collections",
     "created tokens",
-    "collated tokens",
+    "owned tokens",
     "Liked",
     "Following",
     "Followers",

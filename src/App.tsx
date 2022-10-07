@@ -3,6 +3,8 @@ import { connectToWallet, logout } from "app/account/actions";
 import { getCategories } from "app/general/actions";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import MyRouter from "routers/index";
 import { injected } from "services/connectors";
 import { networkParams } from "services/networks";
@@ -11,6 +13,7 @@ import { switchNetwork } from "utils/functions";
 function App() {
   const { account, activate, active, error, chainId } = useWeb3React();
   const dispatch = useAppDispatch();
+  const history = useHistory()
   const userData: UserData = useAppSelector((state) => state.account.userData);
 
   const handleAccountState = async () => {
@@ -19,6 +22,10 @@ function App() {
     }
     if (!account) return;
     await dispatch(connectToWallet(account));
+    if(!userData?.username || !userData?.email){
+      history.push('/account')
+      toast.warning("please complete your profile data")
+    }
   };
 
   useEffect(() => {

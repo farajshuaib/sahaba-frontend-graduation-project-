@@ -1,4 +1,3 @@
-import { nftsImgs } from "contains/fakeData";
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "shared/Avatar/Avatar";
@@ -11,15 +10,16 @@ export interface CollectionCardProps {
   collection: Collection;
 }
 
-const CollectionCard: FC<CollectionCardProps> = ({ className, collection , imgs = [nftsImgs[9], nftsImgs[10], nftsImgs[11], nftsImgs[8]],}) => {
+const CollectionCard: FC<CollectionCardProps> = ({
+  className,
+  collection,
+  imgs,
+}) => {
   return (
     <div
       className={`CollectionCard relative p-4 rounded-2xl overflow-hidden h-[410px] flex flex-col group ${className}`}
     >
-      <NcImage
-        containerClassName=""
-        src={collection?.banner_image || imgs[0]}
-      />
+      <NcImage containerClassName="" src={collection?.banner_image} />
       <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 group-hover:h-full to-transparent "></div>
 
       <div className="relative mt-auto">

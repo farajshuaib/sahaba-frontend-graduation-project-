@@ -1,7 +1,5 @@
-import { avatarColors } from "contains/contants";
+import { avatarColors } from "constant";
 import React, { FC } from "react";
-
-import {  nftsImgs } from "contains/fakeData";
 import VerifyIcon from "components/VerifyIcon";
 
 export interface AvatarProps {
@@ -23,7 +21,7 @@ const Avatar: FC<AvatarProps> = ({
   hasChecked,
   hasCheckedClass = "w-4 h-4 bottom-1 -right-0.5",
 }) => {
-  const url = imgUrl || nftsImgs[2];
+  const url = imgUrl;
   const name = userName || "John Doe";
   const _setBgColor = (name: string) => {
     const backgroundIndex = Math.floor(

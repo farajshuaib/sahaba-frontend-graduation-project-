@@ -1,8 +1,6 @@
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
-import Avatar from "shared/Avatar/Avatar";
 import NcImage from "shared/NcImage/NcImage";
-import { nftsImgs } from "contains/fakeData";
 import ItemTypeImageIcon from "./ItemTypeImageIcon";
 import LikeButton from "./LikeButton";
 import ItemTypeVideoIcon from "./ItemTypeVideoIcon";

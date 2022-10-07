@@ -6,7 +6,6 @@ import Textarea from "shared/Textarea/Textarea";
 import { Helmet } from "react-helmet";
 import FormItem from "components/FormItem";
 import { RadioGroup } from "@headlessui/react";
-import { nftsImgs } from "contains/fakeData";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 import NcImage from "shared/NcImage/NcImage";
 import { Formik, ErrorMessage, FormikErrors, FormikTouched } from "formik";
@@ -14,20 +13,16 @@ import { useAppSelector } from "app/hooks";
 import { useWeb3React } from "@web3-react/core";
 import useIpfs from "hooks/useIpfs";
 import { useCrud } from "hooks/useCrud";
-import {
-  CONTRACT_ABI,
-  CONTRACT_ADDRESS,
-  IPFS_BASE_URL,
-  validNFTsTypes,
-} from "constant";
+import { CONTRACT_ABI, CONTRACT_ADDRESS, IPFS_BASE_URL } from "constant";
 import { BigNumber, Contract } from "ethers";
-import { createNftSchema } from "services/validations";
+import { createNftSchema, validateImage } from "services/validations";
 import { toast } from "react-toastify";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import { useHistory } from "react-router-dom";
 import { usdPrice } from "utils/functions";
 import { Alert } from "shared/Alert/Alert";
 import { useTranslation } from "react-i18next";
+import NcInputNumber from "components/NcInputNumber/NcInputNumber";
 
 interface UploadFileProps {
   errors: FormikErrors<any>;
@@ -47,10 +42,10 @@ const UploadFile: React.FC<UploadFileProps> = ({
 
   return (
     <div>
-      <h3 className="text-lg font-semibold sm:text-2xl">Image, Video, Audio</h3>
+      <h3 className="text-lg font-semibold sm:text-2xl">Image/*</h3>
       <span className="text-sm text-neutral-500 dark:text-neutral-400">
-        File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB,
-        GLTF. Max size: 100 MB
+        File types supported: JPG, PNG, GIF, SVG, WEBM, WAV, OGG, GLB, GLTF. Max
+        size: 10 MB
       </span>
       <div className="mt-5 ">
         <div
@@ -99,31 +94,25 @@ const UploadFile: React.FC<UploadFileProps> = ({
                   name="file-upload"
                   type="file"
                   className="sr-only"
-                  accept="image/*, audio/*, video/*"
+                  accept="image/*"
                   onChange={async (e) => {
                     if (!e.target.files) return;
                     const file = e.target.files[0];
-                    let file_type = file?.type.split("/")[0];
-                    if (file?.size / 1024 / 1024 > 100) {
-                      toast.warn("file size is to large, max size is 100mb");
-                      return;
-                    }
+                    if (!validateImage(file)) return;
 
-                    if (!validNFTsTypes.includes(file_type)) {
+                    try {
+                      setUploadLoading(true);
+
+                      const added = await ipfs.add(file);
+
+                      setFieldValue("file_path", IPFS_BASE_URL + added.path);
+
+                      toast.success("image uploaded to the IPFS successfully");
+                    } catch (e) {
                       toast.error(
-                        "invalid file type, make sure you are uploading an image or video or audio"
+                        "something went wrong while uploading the image"
                       );
-                      return;
                     }
-
-                    setUploadLoading(true);
-
-                    setFieldValue("file_type", file_type);
-
-                    const added = await ipfs.add(file);
-
-                    setFieldValue("file_path", IPFS_BASE_URL + added.path);
-
                     setUploadLoading(false);
                   }}
                 />
@@ -131,7 +120,7 @@ const UploadFile: React.FC<UploadFileProps> = ({
               <p className="pl-1">or drag and drop</p>
             </div>
             <p className="text-xs text-neutral-500 dark:text-neutral-400">
-              PNG, JPG, GIF up to 100MB
+              PNG, JPG, GIF up to 10MB
             </p>
           </div>
         </div>
@@ -442,14 +431,6 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                     className="text-sm text-red-600"
                   />
                 </div>
-
-                {/* ----
-                <MySwitch
-                  label="is for sale"
-                  enabled={values.is_for_sale}
-                  onChange={(val: boolean) => setFieldValue("is_for_sale", val)}
-                  desc="does the collection allow sharing sensitive content"
-                /> */}
 
                 {!!error && (
                   <Alert type="error">

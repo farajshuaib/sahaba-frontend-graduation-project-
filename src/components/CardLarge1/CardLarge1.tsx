@@ -3,13 +3,9 @@ import { Link } from "react-router-dom";
 import NextPrev from "shared/NextPrev/NextPrev";
 import NcImage from "shared/NcImage/NcImage";
 import Avatar from "shared/Avatar/Avatar";
-import ButtonPrimary from "shared/Button/ButtonPrimary";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 import LikeButton from "components/LikeButton";
-import ItemTypeVideoIcon from "components/ItemTypeVideoIcon";
-import { nftsLargeImgs } from "contains/fakeData";
 import TimeCountDown from "./TimeCountDown";
-import collectionPng from "assets/images/nfts/collection.png";
 import VerifyIcon from "components/VerifyIcon";
 import { usdPrice } from "utils/functions";
 import ItemTypeImageIcon from "components/ItemTypeImageIcon";
@@ -28,7 +24,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
   isShowing = true,
   onClickNext = () => {},
   onClickPrev = () => {},
-  featuredImgUrl = nftsLargeImgs[0],
+  featuredImgUrl,
   nft,
 }) => {
   const randomTitle = [
@@ -120,7 +116,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
         </div>
       </div>
 
-      <div className="w-full lg:w-[64%] relative ">
+      <div className="w-full lg:w-[40%] relative ">
         <div className="nc-CardLarge1__right ">
           <Link to={`/nft-details/${nft.id}`}>
             <NcImage

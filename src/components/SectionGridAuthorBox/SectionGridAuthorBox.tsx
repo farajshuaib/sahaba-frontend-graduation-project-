@@ -20,54 +20,24 @@ export interface SectionGridAuthorBoxProps {
 
 const SectionGridAuthorBox: FC<SectionGridAuthorBoxProps> = ({
   className = "",
-  sectionStyle = "style1",
   gridClassName = "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",
-  // data = Array.from("11111111"),
 }) => {
   const { fetch, data, loading, errors } = useCrud("/users");
   const [tabActive, setTabActive] = React.useState("Popular");
 
   useEffect(() => {
-    fetch();
+    fetch({ page: 1, sort_by: tabActive });
   }, []);
 
-  if(loading){
-    return <LoadingScreen />
+  if (loading) {
+    return <LoadingScreen />;
   }
 
-  if(errors){
-    return <ServerError />
+  if (errors) {
+    return <ServerError />;
   }
 
-  
-
-  const renderHeading1 = () => {
-    return (
-      <div className="flex flex-col justify-between mb-12 lg:mb-16 sm:flex-row">
-        <Heading
-          rightPopoverText="Creators"
-          rightPopoverOptions={[
-            {
-              name: "Creators",
-              href: "#",
-            },
-            {
-              name: "Buyers",
-              href: "#",
-            },
-          ]}
-          className="text-neutral-900 dark:text-neutral-50"
-        >
-          Popular
-        </Heading>
-        <div className="mt-4 sm:mt-0">
-          <SortOrderFilter />
-        </div>
-      </div>
-    );
-  };
-
-  const renderHeading2 = () => {
+  const renderHeading = () => {
     return (
       <div>
         <Heading
@@ -104,7 +74,7 @@ const SectionGridAuthorBox: FC<SectionGridAuthorBoxProps> = ({
               `,
             },
             {
-              name: "New & Noteworthy",
+              name: "New",
               icon: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M21.08 8.58003V15.42C21.08 16.54 20.48 17.58 19.51 18.15L13.57 21.58C12.6 22.14 11.4 22.14 10.42 21.58L4.48003 18.15C3.51003 17.59 2.91003 16.55 2.91003 15.42V8.58003C2.91003 7.46003 3.51003 6.41999 4.48003 5.84999L10.42 2.42C11.39 1.86 12.59 1.86 13.57 2.42L19.51 5.84999C20.48 6.41999 21.08 7.45003 21.08 8.58003Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M12 11.0001C13.2869 11.0001 14.33 9.95687 14.33 8.67004C14.33 7.38322 13.2869 6.34009 12 6.34009C10.7132 6.34009 9.67004 7.38322 9.67004 8.67004C9.67004 9.95687 10.7132 11.0001 12 11.0001Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -141,7 +111,7 @@ const SectionGridAuthorBox: FC<SectionGridAuthorBoxProps> = ({
       className={`nc-SectionGridAuthorBox relative ${className}`}
       data-nc-id="SectionGridAuthorBox"
     >
-      {sectionStyle === "style1" ? renderHeading1() : renderHeading2()}
+      {renderHeading()}
       <div className={`grid gap-4 md:gap-7 ${gridClassName}`}>
         {data.map((user: UserData, index) => (
           <CardAuthorBox4
@@ -150,10 +120,6 @@ const SectionGridAuthorBox: FC<SectionGridAuthorBoxProps> = ({
             key={index}
           />
         ))}
-      </div>
-      <div className="flex flex-col items-center justify-center mt-16 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-5">
-        <ButtonSecondary href="/search">Show me more </ButtonSecondary>
-        <ButtonPrimary href="/create-nft">Become a author</ButtonPrimary>
       </div>
     </div>
   );

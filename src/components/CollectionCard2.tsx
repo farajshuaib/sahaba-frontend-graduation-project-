@@ -1,4 +1,3 @@
-import { nftsImgs, _getPersonNameRd } from "contains/fakeData";
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "shared/Avatar/Avatar";

@@ -2,11 +2,9 @@ import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "shared/Avatar/Avatar";
 import NcImage from "shared/NcImage/NcImage";
-import { nftsAbstracts, personNames } from "contains/fakeData";
 import VerifyIcon from "components/VerifyIcon";
 import FollowButton from "components/FollowButton";
-import Badge from "shared/Badge/Badge";
-
+import banner_image  from "assets/images/authorBanner.png"
 export interface CardAuthorBox4Props {
   className?: string;
   authorIndex?: number;
@@ -24,21 +22,11 @@ const CardAuthorBox4: FC<CardAuthorBox4Props> = ({
       data-nc-id="CardAuthorBox4"
     >
       <div className="relative flex-shrink-0 h-36">
-        {authorIndex && (
-          <Badge
-            className="absolute top-2 left-3 !font-semibold"
-            name={
-              authorIndex === 1 ? `🏆 #${authorIndex}` : `🏅 #${authorIndex}`
-            }
-            color={
-              authorIndex === 1 ? "red" : authorIndex === 2 ? "green" : "yellow"
-            }
-          />
-        )}
+        
 
         <NcImage
           containerClassName="flex h-full w-full flex-shrink-0 rounded-3xl overflow-hidden"
-          src={nftsAbstracts[Math.floor(Math.random() * nftsAbstracts.length)]}
+          src={banner_image}
         />
       </div>
 

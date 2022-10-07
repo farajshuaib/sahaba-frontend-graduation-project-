@@ -1,19 +1,16 @@
 import React, { FC, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import Pagination from "shared/Pagination/Pagination";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
-import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
-import HeaderFilterSearchPage from "components/HeaderFilterSearchPage";
-import Input from "shared/Input/Input";
-import ButtonCircle from "shared/Button/ButtonCircle";
 import { useCrud } from "hooks/useCrud";
 import LoadingScreen from "components/LoadingScreen";
 import CollectionCard2 from "components/CollectionCard2";
-import SectionGridFeatureNFT2 from "./PageHome/SectionGridFeatureNFT2";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "app/hooks";
 import SectionSliderCategories from "components/SectionSliderCategories/SectionSliderCategories";
+import Heading from "components/Heading/Heading";
+import ServerError from "components/ServerError";
+import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
 
 export interface PageCollectionsProps {
   className?: string;
@@ -31,7 +28,7 @@ const PageCollections: FC<PageCollectionsProps> = ({ className = "" }) => {
     nfts_count: 0,
     collections_count: 0,
   });
-  const { data, loading, fetch, meta } = useCrud("/collections");
+  const { data, loading, fetch, meta, errors } = useCrud("/collections");
 
   useEffect(() => {
     if (params?.category_id && categories) {
@@ -55,6 +52,10 @@ const PageCollections: FC<PageCollectionsProps> = ({ className = "" }) => {
     return <LoadingScreen />;
   }
 
+  if (errors) {
+    return <ServerError />;
+  }
+
   return (
     <div
       className={`nc-PageCollection  ${className}`}
@@ -72,7 +73,11 @@ const PageCollections: FC<PageCollectionsProps> = ({ className = "" }) => {
       <div className="container py-16 space-y-16 lg:pb-28 lg:pt-20 lg:space-y-28">
         <main>
           {/* FILTER */}
-          <h1 className="my-8 text-5xl font-bold text-white">Collections</h1>
+          <Heading isCenter={false} desc="Discover the new creative economy">
+            Collections
+          </Heading>
+
+          <BgGlassmorphism />
 
           {loading ? (
             <LoadingScreen />

@@ -4,14 +4,10 @@ import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import NcImage from "shared/NcImage/NcImage";
 import CardNFT from "components/CardNFT";
 import Pagination from "shared/Pagination/Pagination";
-import ButtonPrimary from "shared/Button/ButtonPrimary";
-import collectionBanner from "assets/images/nfts/collectionBanner.png";
-import { nftsImgs } from "contains/fakeData";
 import NftMoreDropdown from "components/NftMoreDropdown";
 import ButtonDropDownShare from "components/ButtonDropDownShare";
 import TabFilters from "components/TabFilters";
 import SectionSliderCollections from "components/SectionSliderCollections";
-import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
 import { useCrud } from "hooks/useCrud";
 import { useParams } from "react-router-dom";
 import LoadingScreen from "components/LoadingScreen";
@@ -23,8 +19,7 @@ interface CollectionNftsProps {
 }
 const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection_id }) => {
   const [page, setPage] = useState<number>(1);
-  const [fileType, setFileType] = useState<string>("");
-  const [priceRange, setPriceRange] = useState([0.1, 5.0]);
+  const [priceRange, setPriceRange] = useState([0.01, 5.0]);
   const [sortBy, setSortBy] = useState<string>("");
   const [isVerifiedUser, setIsVerifiedUser] = useState<boolean>();
   const { fetch, meta, loading, data } = useCrud("/nfts");
@@ -33,12 +28,11 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection_id }) => {
     fetch({
       collection: collection_id,
       page,
-      type: fileType,
       price_range: priceRange,
       sort_by: sortBy,
       is_verified: isVerifiedUser,
     });
-  }, [page, collection_id, fileType, priceRange, sortBy, isVerifiedUser]);
+  }, [page, collection_id, priceRange, sortBy, isVerifiedUser]);
 
   if (loading) {
     return <LoadingScreen />;
@@ -49,7 +43,6 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection_id }) => {
       {/* TABS FILTER */}
       <TabFilters
         setPriceRange={(val) => setPriceRange(val)}
-        setFileType={(val: string) => setFileType(val)}
         setSortBy={(val: string) => setSortBy(val)}
         setIsVerifiedUser={(val: boolean) => setIsVerifiedUser(val)}
       />
@@ -262,8 +255,6 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
           <SectionSliderCollections />
         </div>
 
-        {/* SUBCRIBES */}
-        <SectionBecomeAnAuthor />
       </div>
     </div>
   );

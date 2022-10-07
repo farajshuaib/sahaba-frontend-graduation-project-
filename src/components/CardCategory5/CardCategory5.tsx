@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import NcImage from "shared/NcImage/NcImage";
 import { Link } from "react-router-dom";
-import images1 from "assets/images/nfts/cat1.webp";
 
 export interface CardCategory5Props {
   className?: string;
@@ -27,7 +26,7 @@ const COLORS = [
 
 const CardCategory5: FC<CardCategory5Props> = ({
   className = "",
-  featuredImage = images1,
+  featuredImage ,
   name,
   nft_count,
   category_id,

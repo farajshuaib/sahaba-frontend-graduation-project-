@@ -2,10 +2,9 @@ import React, { FC, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import NcImage from "shared/NcImage/NcImage";
-import authorBanner from "assets/images/nfts/authorBanner.png";
+import authorBanner from "assets/images/authorBanner.png";
 import NftMoreDropdown from "components/NftMoreDropdown";
 import ButtonDropDownShare from "components/ButtonDropDownShare";
-import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
 import SocialsList from "shared/SocialsList/SocialsList";
 import FollowButton from "components/FollowButton";
 import VerifyIcon from "components/VerifyIcon";
@@ -164,14 +163,12 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
       <div className="container py-16 space-y-16 lg:pb-28 lg:pt-20 lg:space-y-28">
         <ProfileTabs user_id={item?.id} />
 
-        {/* === SECTION 5 === */}
-        <div className="relative py-16 lg:py-28">
-          <BackgroundSection />
-          <SectionGridAuthorBox boxCard="box4" />
-        </div>
-
-        {/* SUBCRIBES */}
-        <SectionBecomeAnAuthor />
+        {item?.id != userData?.id && (
+          <div className="relative py-16 lg:py-28">
+            <BackgroundSection />
+            <SectionGridAuthorBox boxCard="box4" />
+          </div>
+        )}
       </div>
     </div>
   );

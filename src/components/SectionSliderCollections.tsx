@@ -64,9 +64,8 @@ const CollectionsSlider: React.FC<CollectionsSliderProp> = ({
         isCenter={false}
         hasNextPrev
         desc="Discover the new creative economy"
-        rightPopoverText="last 7 days"
       >
-        Top collections
+        Latest collections
       </Heading>
       <div className="glide__track" data-glide-el="track">
         <ul className="glide__slides">

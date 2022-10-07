@@ -50,7 +50,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
   const [loadingButton, setLoadingButton] = useState<boolean>(false);
   const [forSaleModal, setForSaleModal] = useState<boolean>(false);
   const [serviceFee, setServiceFee] = useState<number>(0);
-  const [saleEndAt, setSaleEndAt] = useState<Date>();
+  const [saleEndAt, setSaleEndAt] = useState<string>();
 
   const contract = new Contract(
     CONTRACT_ADDRESS,
@@ -81,7 +81,9 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     try {
       setLoadingButton(true);
       await api.put(`/nfts/sale/${item.id}`, {
-        sale_end_at: moment(saleEndAt).format("YYYY-MM-DD HH:MM:SS"),
+        sale_end_at: moment(
+          moment(new Date()).add(saleEndAt, "days").toString()
+        ).format("YYYY-MM-DD HH:MM:SS"),
       });
       setForSaleModal(false);
       toast.success("NFT set for sale successfully");
@@ -199,7 +201,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
               <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
                 <span className="text-sm">Creator</span>
                 <span className="flex items-center font-medium text-neutral-900 dark:text-neutral-200">
-                  <span>{item?.creator?.username}</span>
+                  <span>{item?.creator?.username || item.creator.wallet_address.slice(0,8) + "..."}</span>
                   {item.creator?.is_verified && (
                     <VerifyIcon iconClass="w-4 h-4" />
                   )}
@@ -230,7 +232,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
               <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
                 <span className="text-sm">Owner</span>
                 <span className="flex items-center font-medium text-neutral-900 dark:text-neutral-200">
-                  <span>{item.owner?.username}</span>
+                  <span>{item.owner?.username || item.owner.wallet_address.slice(0,8) + "..."}</span>
                 </span>
               </span>
             </div>
@@ -336,8 +338,9 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
           <Select
             value={saleEndAt?.toString()}
             onChange={(e) => {
+              console.log(e.currentTarget.value);
               if (!e.currentTarget.value) return;
-              setSaleEndAt(moment(e.currentTarget.value).toDate());
+              setSaleEndAt(e.currentTarget.value);
             }}
           >
             <option
@@ -350,19 +353,19 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
             {[
               {
                 label: "5 days",
-                value: moment(new Date()).add(5, "days").toString(),
+                value: 5,
               },
               {
-                label: " 7 days",
-                value: moment(new Date()).add(7, "days").toString(),
+                label: "7 days",
+                value: 7,
               },
               {
-                label: "  15 days",
-                value: moment(new Date()).add(15, "days").toString(),
+                label: "15 days",
+                value: 15,
               },
               {
-                label: "one month",
-                value: moment(new Date()).add(1, "M").toString(),
+                label: "30 days",
+                value: 30,
               },
             ].map((item, index) => (
               <option
@@ -406,17 +409,11 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       </Helmet>
       {/* MAIn */}
       <main className="container flex mt-11 ">
-        {item?.file_type == "audio" && (
-          <AudioForNft src={item.file_path} nftId={item.id.toString()} />
-        )}
         <div className="grid w-full grid-cols-1 gap-10 lg:grid-cols-2 md:gap-14">
           {/* CONTENT */}
           <div className="space-y-8 lg:space-y-10">
             {/* HEADING */}
-            <NftItem
-              nft={item}
-              featuredImage="https://images.unsplash.com/photo-1643101808200-0d159c1331f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-            />
+            <NftItem nft={item} />
 
             <AccordionInfo nft={item} />
           </div>
@@ -440,7 +437,6 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
           </div>
 
           {/* SECTION */}
-          <SectionBecomeAnAuthor className="pt-24 lg:pt-32" />
         </div>
       )}
     </div>

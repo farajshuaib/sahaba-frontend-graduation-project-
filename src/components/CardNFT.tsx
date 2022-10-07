@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "shared/Avatar/Avatar";
 import NcImage from "shared/NcImage/NcImage";
-import { nftsImgs } from "contains/fakeData";
 import ItemTypeImageIcon from "./ItemTypeImageIcon";
 import LikeButton from "./LikeButton";
 import Prices from "./Prices";
@@ -31,11 +30,8 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", nft }) => {
             className="object-cover w-full h-full group-hover:scale-[1.03] transition-transform duration-300 ease-in-out will-change-transform"
           />
         </div>
-        {nft?.file_type == "video" ? (
-          <ItemTypeVideoIcon className="absolute top-3 left-3 !w-9 !h-9" />
-        ) : (
-          <ItemTypeImageIcon className="absolute top-3 left-3 !w-9 !h-9" />
-        )}
+
+        <ItemTypeImageIcon className="absolute top-3 left-3 !w-9 !h-9" />
         <LikeButton
           liked={nft.is_liked}
           nft_id={nft.id}
@@ -54,7 +50,9 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", nft }) => {
           <div className="ml-2 text-xs text-white">
             <span className="font-normal">by</span>
             {` `}
-            <span className="font-medium">{nft?.creator?.username}</span>
+            <span className="font-medium">
+              {nft?.creator?.username || "anon"}
+            </span>
           </div>
           {nft?.creator?.is_verified && <VerifyIcon iconClass="w-4 h-4" />}
         </div>
@@ -71,7 +69,12 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", nft }) => {
           {nft.is_for_sale && (
             <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400">
               <ClockIcon className="w-4 h-4" />
-              <span className="ml-1 mt-0.5">{timeLeft.hours} hours left</span>
+              <span className="ml-1 mt-0.5">
+                <span className="">
+                  {timeLeft.days}d : {timeLeft.hours}h : {timeLeft.minutes}m :{" "}
+                  {timeLeft.seconds}s
+                </span>
+              </span>
             </div>
           )}
         </div>

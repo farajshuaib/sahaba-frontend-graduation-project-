@@ -1,13 +1,13 @@
-import { _getTagNameRd } from "contains/fakeData";
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
 
 export interface TagProps {
   className?: string;
   hideCount?: boolean;
+  name: string;
 }
 
-const Tag: FC<TagProps> = ({ className = "", hideCount = false }) => {
+const Tag: FC<TagProps> = ({ className = "", hideCount = false, name }) => {
   // DEMO DATA
   return (
     <Link
@@ -15,7 +15,7 @@ const Tag: FC<TagProps> = ({ className = "", hideCount = false }) => {
       data-nc-id="Tag"
       to={"#"}
     >
-      {`${_getTagNameRd()}`}
+      {`${name}`}
       {!hideCount && <span className="text-xs font-normal"> (22)</span>}
     </Link>
   );

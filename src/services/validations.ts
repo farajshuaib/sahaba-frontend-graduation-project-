@@ -18,7 +18,6 @@ export const createNftSchema = yup.object().shape({
   title: yup.string().required(),
   description: yup.string().required(),
   file_path: yup.string().required(),
-  file_type: yup.string().required(),
   collection_id: yup.number().required(),
   price: yup.number().required().positive().min(0.01).max(5.0),
 });

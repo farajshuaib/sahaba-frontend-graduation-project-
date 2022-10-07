@@ -1,23 +1,20 @@
 import React, { FC, useEffect, useState } from "react";
-import HeaderFilterSection from "components/HeaderFilterSection";
 import CardNFT2 from "components/CardNFT2";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { useCrud } from "hooks/useCrud";
 import LoadingScreen from "components/LoadingScreen";
 import HeaderFilterSearchPage from "components/HeaderFilterSearchPage";
 import ServerError from "components/ServerError";
-import CardNFTMusic from "components/CardNFTMusic";
-import CardNFTVideo from "components/CardNFTVideo";
+import Heading from "components/Heading/Heading";
 
 //
 export interface SectionGridFeatureNFT2Props {}
 
 const SectionGridFeatureNFT2: FC<SectionGridFeatureNFT2Props> = () => {
   const { fetch, data, loading, errors } = useCrud("/latest-nfts");
-  const [fileType, setFileType] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>("");
   const [isVerifiedUser, setIsVerifiedUser] = useState<boolean>();
-  const [priceRange, setPriceRange] = useState([0.1, 5.0]);
+  const [priceRange, setPriceRange] = useState([0.01, 5.0]);
   const [selectedCategory, setSelectedCategory] = useState<Category>({
     id: 0,
     name: "All NFTs",
@@ -31,47 +28,22 @@ const SectionGridFeatureNFT2: FC<SectionGridFeatureNFT2Props> = () => {
       page: 1,
       search: "",
       category: selectedCategory?.id || "",
-      type: fileType,
       price_range: priceRange,
       sort_by: sortBy,
       is_verified: isVerifiedUser,
     });
-  }, [selectedCategory, fileType, JSON.stringify(priceRange), sortBy, isVerifiedUser]);
+  }, [selectedCategory, JSON.stringify(priceRange), sortBy, isVerifiedUser]);
 
   if (errors) {
     return <ServerError />;
   }
 
-  const renderNFTComponent = (nft: Nft, index: number) => {
-    switch (nft.file_type) {
-      case "image":
-        return <CardNFT2 nft={nft} key={index} />;
-      case "audio":
-        return (
-          <CardNFTMusic
-            key={index}
-            nft={nft}
-            featuredImage="https://images.unsplash.com/photo-1618556450994-a6a128ef0d9d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80"
-          />
-        );
-      case "video":
-        return (
-          <CardNFTVideo
-            nft={nft}
-            featuredImage="https://images.unsplash.com/photo-1643101808200-0d159c1331f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-          />
-        );
-      default:
-        return <></>;
-    }
-  };
-
   return (
     <div className="relative nc-SectionGridFeatureNFT2">
+      <Heading isCenter={false}>Latest NFTs</Heading>
       {/* <HeaderFilterSection /> */}
       <HeaderFilterSearchPage
         selectedCategory={selectedCategory}
-        setFileType={(val) => setFileType(val)}
         setPriceRange={(val) => setPriceRange(val)}
         setSelectedCategory={(id) => setSelectedCategory(id)}
         setSortBy={(val) => setSortBy(val)}
@@ -87,9 +59,9 @@ const SectionGridFeatureNFT2: FC<SectionGridFeatureNFT2Props> = () => {
                 <h1 className="text-3xl text-center">no result</h1>
               </div>
             ) : (
-              data.map((item: Nft, index) => (
+              data.map((nft: Nft, index) => (
                 <React.Fragment key={index}>
-                  {renderNFTComponent(item, index)}
+                  <CardNFT2 nft={nft} key={index} />
                 </React.Fragment>
               ))
             )}

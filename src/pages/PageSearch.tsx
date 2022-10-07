@@ -4,15 +4,12 @@ import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import Pagination from "shared/Pagination/Pagination";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import SectionSliderCollections from "components/SectionSliderCollections";
-import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
 import HeaderFilterSearchPage from "components/HeaderFilterSearchPage";
 import Input from "shared/Input/Input";
 import ButtonCircle from "shared/Button/ButtonCircle";
 import CardNFT from "components/CardNFT";
 import { useCrud } from "hooks/useCrud";
 import LoadingScreen from "components/LoadingScreen";
-import CardNFTVideo from "components/CardNFTVideo";
-import CardNFTMusic from "components/CardNFTMusic";
 import ServerError from "components/ServerError";
 
 export interface PageSearchProps {
@@ -22,7 +19,6 @@ export interface PageSearchProps {
 const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
-  const [fileType, setFileType] = useState<string>("");
   const [priceRange, setPriceRange] = useState([0.1, 5.0]);
   const [sortBy, setSortBy] = useState<string>("");
   const [isVerifiedUser, setIsVerifiedUser] = useState<boolean>();
@@ -35,13 +31,11 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
     collections_count: 0,
   });
 
-
   useEffect(() => {
     submitSearch();
   }, [
     page,
     selectedCategory,
-    fileType,
     JSON.stringify(priceRange),
     sortBy,
     isVerifiedUser,
@@ -52,35 +46,10 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
       page,
       search,
       category: selectedCategory?.id || "",
-      type: fileType,
       price_range: priceRange,
       sort_by: sortBy,
       is_verified: isVerifiedUser,
     });
-  };
-
-  const renderNFTComponent = (nft: Nft, index: number) => {
-    switch (nft.file_type) {
-      case "image":
-        return <CardNFT nft={nft} key={index} />;
-      case "audio":
-        return (
-          <CardNFTMusic
-            key={index}
-            nft={nft}
-            featuredImage="https://images.unsplash.com/photo-1618556450994-a6a128ef0d9d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80"
-          />
-        );
-      case "video":
-        return (
-          <CardNFTVideo
-            nft={nft}
-            featuredImage="https://images.unsplash.com/photo-1643101808200-0d159c1331f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-          />
-        );
-      default:
-        return <></>;
-    }
   };
 
   return (
@@ -155,7 +124,6 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
             selectedCategory={selectedCategory}
             setSelectedCategory={(id) => setSelectedCategory(id)}
             setPriceRange={(val) => setPriceRange(val)}
-            setFileType={(val) => setFileType(val)}
             setSortBy={(val) => setSortBy(val)}
             setIsVerifiedUser={(val) => setIsVerifiedUser(val)}
           />
@@ -169,9 +137,7 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
           ) : (
             <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
               {data.map((nft: Nft, index) => (
-                <React.Fragment key={index}>
-                  {renderNFTComponent(nft, index)}
-                </React.Fragment>
+                <CardNFT nft={nft} key={index} />
               ))}
             </div>
           )}
@@ -194,9 +160,6 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
           <BackgroundSection />
           <SectionSliderCollections />
         </div>
-
-        {/* SUBCRIBES */}
-        <SectionBecomeAnAuthor />
       </div>
     </div>
   );

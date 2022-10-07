@@ -9,14 +9,14 @@ interface Props {
 
 const RemainingTimeNftCard: FC<Props> = ({
   className = "absolute top-[-1px] right-[-1px] flex items-center",
-  contentClassName = "right-5 top-1/2 -translate-y-1/2",
+  contentClassName = "right-5 top-1/2 -translate-y-1/2 ",
   sale_end_at
 }) => {
   const timeLeft = useCountDownTime(sale_end_at);
   return (
     <div className={className}>
       <svg
-        className="text-white dark:text-neutral-900 w-44 md:w-[195px]"
+        className="text-white dark:text-neutral-900 w-56 md:w-[255px]"
         viewBox="0 0 196 55"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +31,7 @@ const RemainingTimeNftCard: FC<Props> = ({
         <span className="block text-xs tracking-wide text-neutral-500 dark:text-neutral-400">
           Remaining time
         </span>
-        <span className="block font-semibold md:text-lg">{timeLeft.hours}h : {timeLeft.minutes}m : {timeLeft.seconds}s</span>
+        <span className="block font-semibold md:text-lg">{timeLeft.days}d : {timeLeft.hours}h : {timeLeft.minutes}m : {timeLeft.seconds}s</span>
       </div>
     </div>
   );
