@@ -76,6 +76,7 @@ interface Transactions {
   to: UserData;
   price: number | string;
   created_at: Date;
+  type: "mint" | "set_for_sale" | "sale" | "update_price";
 }
 interface Nft {
   id: number;
@@ -136,14 +137,14 @@ interface UserData {
   nfts?: Nft[];
   is_followed?: boolean;
   is_subscribed: boolean;
-  gender?: "male" | "female",
-  country?: string,
-  city?: string,
-  address?: string,
-  phone_number?: string,
-  author_type?: 'creator' | 'collector',
-  author_art_type?: string,
-  passport_id?: string,
+  gender?: "male" | "female";
+  country?: string;
+  city?: string;
+  address?: string;
+  phone_number?: string;
+  author_type?: "creator" | "collector";
+  author_art_type?: string;
+  passport_id?: string;
 }
 
 interface SupportedLocales {

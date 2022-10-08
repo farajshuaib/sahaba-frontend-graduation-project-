@@ -10,7 +10,6 @@ import VerifyIcon from "components/VerifyIcon";
 import TimeCountDown from "./TimeCountDown";
 import TabDetail from "./TabDetail";
 import AccordionInfo from "./AccordionInfo";
-import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
 import { useCrud } from "hooks/useCrud";
 import { useHistory, useParams } from "react-router-dom";
 import LoadingScreen from "components/LoadingScreen";
@@ -201,7 +200,10 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
               <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
                 <span className="text-sm">Creator</span>
                 <span className="flex items-center font-medium text-neutral-900 dark:text-neutral-200">
-                  <span>{item?.creator?.username || item.creator.wallet_address.slice(0,8) + "..."}</span>
+                  <span>
+                    {item?.creator?.username ||
+                      item.creator.wallet_address.slice(0, 8) + "..."}
+                  </span>
                   {item.creator?.is_verified && (
                     <VerifyIcon iconClass="w-4 h-4" />
                   )}
@@ -219,20 +221,6 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
                 <span className="text-sm">Collection</span>
                 <span className="flex items-center font-medium text-neutral-900 dark:text-neutral-200">
                   <span>{item.collection?.name}</span>
-                </span>
-              </span>
-            </div>
-            <div className="hidden h-6 border-l sm:block border-neutral-200 dark:border-neutral-700"></div>
-            <div className="flex items-center">
-              <Avatar
-                imgUrl={item?.owner?.profile_photo}
-                sizeClass="h-9 w-9"
-                radius="rounded-full"
-              />
-              <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
-                <span className="text-sm">Owner</span>
-                <span className="flex items-center font-medium text-neutral-900 dark:text-neutral-200">
-                  <span>{item.owner?.username || item.owner.wallet_address.slice(0,8) + "..."}</span>
                 </span>
               </span>
             </div>
@@ -324,7 +312,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
 
         {/* ---------- 9 ----------  */}
         <div className="pt-9">
-          <TabDetail transactions={item.transactions} />
+          <TabDetail owner={item.owner} transactions={item.transactions} />
         </div>
       </div>
     );

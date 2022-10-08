@@ -1,7 +1,6 @@
 import { avatarColors } from "constant";
 import React, { FC } from "react";
 import VerifyIcon from "components/VerifyIcon";
-
 export interface AvatarProps {
   containerClassName?: string;
   sizeClass?: string;
