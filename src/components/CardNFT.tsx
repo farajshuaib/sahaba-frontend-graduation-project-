@@ -9,6 +9,8 @@ import { ClockIcon } from "@heroicons/react/outline";
 import ItemTypeVideoIcon from "./ItemTypeVideoIcon";
 import VerifyIcon from "./VerifyIcon";
 import useCountDownTime from "hooks/useCountDownTime";
+import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 export interface CardNFTProps {
   className?: string;
@@ -16,6 +18,7 @@ export interface CardNFTProps {
 }
 
 const CardNFT: FC<CardNFTProps> = ({ className = "", nft }) => {
+  const { t } = useTranslation();
   const timeLeft = useCountDownTime(nft?.sale_end_at);
   return (
     <div
@@ -62,7 +65,7 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", nft }) => {
 
         <div className="flex items-end justify-between ">
           <Prices
-            labelText="price"
+            labelText={t("price")}
             price={`${nft.price} ETH`}
             labelTextClassName="bg-white dark:bg-neutral-900 dark:group-hover:bg-neutral-800 group-hover:bg-neutral-50"
           />
@@ -71,8 +74,10 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", nft }) => {
               <ClockIcon className="w-4 h-4" />
               <span className="ml-1 mt-0.5">
                 <span className="">
-                  {timeLeft.days}d : {timeLeft.hours}h : {timeLeft.minutes}m :{" "}
-                  {timeLeft.seconds}s
+                  {timeLeft.days} {t("d")} : {timeLeft.hours} {t("h")} :{" "}
+                  {timeLeft.minutes}
+                  {t("m")} : {timeLeft.seconds}
+                  {t("s")}
                 </span>
               </span>
             </div>

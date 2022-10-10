@@ -1,11 +1,13 @@
 import useCountDownTime from "hooks/useCountDownTime";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface props {
   sale_end_at: Date;
 }
 
 const TimeCountDown: React.FC<props> = ({ sale_end_at }) => {
+  const { t } = useTranslation();
   const timeLeft = useCountDownTime(sale_end_at);
 
   return (
@@ -41,7 +43,7 @@ const TimeCountDown: React.FC<props> = ({ sale_end_at }) => {
             strokeLinejoin="round"
           />
         </svg>
-        <span className="mt-1 leading-none">Sell ending in:</span>
+        <span className="mt-1 leading-none">{t("Sell_ending_in")}:</span>
       </div>
       <div className="flex space-x-5 sm:space-x-10">
         <div className="flex flex-col ">
@@ -49,7 +51,7 @@ const TimeCountDown: React.FC<props> = ({ sale_end_at }) => {
             {timeLeft.days}
           </span>
           <span className="sm:text-lg text-neutral-500 dark:text-neutral-400">
-            Days
+            {t("Days")}
           </span>
         </div>
         <div className="flex flex-col ">
@@ -57,7 +59,7 @@ const TimeCountDown: React.FC<props> = ({ sale_end_at }) => {
             {timeLeft.hours}
           </span>
           <span className="sm:text-lg text-neutral-500 dark:text-neutral-400">
-            hours
+            {t("Hours")}
           </span>
         </div>
         <div className="flex flex-col ">
@@ -65,14 +67,14 @@ const TimeCountDown: React.FC<props> = ({ sale_end_at }) => {
             {timeLeft.minutes}
           </span>
           <span className="sm:text-lg text-neutral-500 dark:text-neutral-400">
-            minutes
+            {t("Minutes")}
           </span>
         </div>
         <div className="flex flex-col ">
           <span className="text-2xl font-semibold sm:text-2xl">
             {timeLeft.seconds}
           </span>
-          <span className="sm:text-lg text-neutral-500">seconds</span>
+          <span className="sm:text-lg text-neutral-500">{t("Seconds")}</span>
         </div>
       </div>
     </div>

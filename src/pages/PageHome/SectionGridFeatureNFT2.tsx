@@ -6,6 +6,7 @@ import LoadingScreen from "components/LoadingScreen";
 import HeaderFilterSearchPage from "components/HeaderFilterSearchPage";
 import ServerError from "components/ServerError";
 import Heading from "components/Heading/Heading";
+import { useTranslation } from "react-i18next";
 
 //
 export interface SectionGridFeatureNFT2Props {}
@@ -22,6 +23,7 @@ const SectionGridFeatureNFT2: FC<SectionGridFeatureNFT2Props> = () => {
     nfts_count: 0,
     collections_count: 0,
   });
+  const {t}= useTranslation()
 
   useEffect(() => {
     fetch({
@@ -40,8 +42,7 @@ const SectionGridFeatureNFT2: FC<SectionGridFeatureNFT2Props> = () => {
 
   return (
     <div className="relative nc-SectionGridFeatureNFT2">
-      <Heading isCenter={false}>Latest NFTs</Heading>
-      {/* <HeaderFilterSection /> */}
+      <Heading isCenter={false}>{t("Latest_NFTs")}</Heading>
       <HeaderFilterSearchPage
         selectedCategory={selectedCategory}
         setPriceRange={(val) => setPriceRange(val)}
@@ -56,7 +57,7 @@ const SectionGridFeatureNFT2: FC<SectionGridFeatureNFT2Props> = () => {
           <>
             {data.length == 0 ? (
               <div className="col-span-3">
-                <h1 className="text-3xl text-center">no result</h1>
+                <h1 className="text-3xl text-center">{t("No_result")}</h1>
               </div>
             ) : (
               data.map((nft: Nft, index) => (
@@ -69,7 +70,7 @@ const SectionGridFeatureNFT2: FC<SectionGridFeatureNFT2Props> = () => {
         )}
       </div>
       <div className="flex items-center justify-center mt-16">
-        <ButtonPrimary href={"/search"}>Show me more</ButtonPrimary>
+        <ButtonPrimary href={"/search"}>{t("Show_me_more")}</ButtonPrimary>
       </div>
     </div>
   );

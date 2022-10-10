@@ -28,7 +28,7 @@ const Home: React.FC = () => {
         {/* SECTION */}
         <div className="relative py-20 lg:py-28">
           <BackgroundSection />
-          <SectionSliderCollections cardStyle="style2" />
+          <SectionSliderCollections />
         </div>
 
         {/* SECTION */}

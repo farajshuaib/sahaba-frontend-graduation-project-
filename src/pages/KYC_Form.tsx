@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useTransition } from "react";
 import { Helmet } from "react-helmet";
 import Label from "components/Label/Label";
 import Input from "shared/Input/Input";
@@ -7,13 +7,15 @@ import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { ErrorMessage, Formik } from "formik";
 import { useApi } from "hooks/useApi";
 import { toast } from "react-toastify";
-import {  useAppSelector } from "app/hooks";
+import { useAppSelector } from "app/hooks";
 import Select from "shared/Select/Select";
 import countries from "data/countries";
 import Radio from "shared/Radio/Radio";
 import { kycSchema } from "services/validations";
+import { useTranslation } from "react-i18next";
 
 const KYC_Form: React.FC = () => {
+  const { t } = useTranslation();
   const passportIdInput = useRef<HTMLInputElement>(null);
   const api = useApi();
   const userData: UserData = useAppSelector((state) => state.account.userData);
@@ -28,40 +30,32 @@ const KYC_Form: React.FC = () => {
           {/* HEADING */}
           <div className="max-w-2xl">
             <h2 className="text-3xl font-semibold sm:text-4xl">
-              Sahaba NFTs Verification
+              {t("Sahaba_NFTs_Verification")}
             </h2>
             <p className="block mt-3 text-neutral-500 dark:text-neutral-400">
               <span className="block my-3">
-                Please note that verification may take several days/weeks for
-                the process.
+                {t("Sahaba_NFTs_Verification_desc1")}
               </span>
+              <span className="block my-3"></span>
               <span className="block my-3">
-                Due to the amount of applications we get, we are not able to
-                inform you about your status of your application, if your
-                profile hasn't been verified in 60 days of applying, you can try
-                again
-              </span>
-              <span className="block my-3">
-                Request for verification does not guarantee that your account
-                will be verified.
+                {t("Sahaba_NFTs_Verification_desc3")}
               </span>
               <span className="block my-3 text-white">
-                🚫 AirNFT Rules (if you do not follow any of these rules you
-                won't be verified)
+                {t("Sahaba_NFTs_Verification_desc4")}
               </span>
               <ul>
                 {[
                   {
-                    title: "Be Authentic",
-                    p: "You should only mint artwork originally created by you, do not upload copyrighted artwork and do not modify work done by other artists (do not do fan art, use logos of big companies, copy paste and sell images that are free to use etc...)",
+                    title: t("Be_Authentic"),
+                    p: t("Be_Authentic_desc"),
                   },
                   {
-                    title: "Stay Respectful",
-                    p: "Do not mint or share any artwork that our community will deem racist, sexist, homophobic, NSFW or otherwise harmful and non-inclusive",
+                    title: t("Stay_Respectful"),
+                    p: t("Stay_Respectful_desc"),
                   },
                   {
-                    title: "No Double Minting",
-                    p: "Do not mint and sell the same artwork that is sold anywhere else, otherwise your verification will fail",
+                    title: t("No_Double_Minting"),
+                    p: t("No_Double_Minting_desc"),
                   },
                 ].map((item, index) => (
                   <li key={index} className="my-3">
@@ -93,11 +87,13 @@ const KYC_Form: React.FC = () => {
                   form.append(key, value);
                 }
 
-                await api.post("/kyc", form, {
-                  headers: {
-                    "Content-Type": "multipart/form-data",
-                  },
-                });
+                try {
+                  await api.post("/kyc", form, {
+                    headers: {
+                      "Content-Type": "multipart/form-data",
+                    },
+                  });
+                } catch {}
               }}
             >
               {({
@@ -113,32 +109,30 @@ const KYC_Form: React.FC = () => {
                   <div className="flex-grow max-w-3xl mt-10 space-y-5 md:mt-0 md:pl-16 sm:space-y-6 md:sm:space-y-7">
                     {/* ---- */}
                     <div>
-                      <Label htmlFor="gender">Gender</Label>
+                      <Label htmlFor="gender">{t("Gender")}</Label>
                       <Select
-                        placeholder="male"
                         id="gender"
                         name="gender"
                         value={values.gender}
                         onChange={handleChange("gender")}
                         onBlur={handleBlur("gender")}
                       >
-                        <option disabled>select your gender</option>
-                        <option value={"male"}>male</option>
-                        <option value={"female"}>female</option>
+                        <option disabled>{t("Select_your_gender")}</option>
+                        <option value={"male"}>{t("male")}</option>
+                        <option value={"female"}>{t("female")}</option>
                       </Select>
                     </div>
 
                     <div>
-                      <Label htmlFor="country">Country</Label>
+                      <Label htmlFor="country">{t("Country")}</Label>
                       <Select
-                        placeholder="male"
                         id="country"
                         name="country"
                         value={values.country}
                         onChange={handleChange("country")}
                         onBlur={handleBlur("country")}
                       >
-                        <option disabled>select your country</option>
+                        <option disabled>{t("Select_your_country")}</option>
                         {countries.map((country, index) => (
                           <option key={index} value={country.name}>
                             {country.name}
@@ -148,7 +142,7 @@ const KYC_Form: React.FC = () => {
                     </div>
 
                     <div>
-                      <Label htmlFor="city">City</Label>
+                      <Label htmlFor="city">{t("City")}</Label>
                       <Input
                         className="mt-1.5"
                         type="text"
@@ -162,7 +156,7 @@ const KYC_Form: React.FC = () => {
                     </div>
 
                     <div>
-                      <Label htmlFor="address">Address</Label>
+                      <Label htmlFor="address">{t("Address")}</Label>
                       <Input
                         className="mt-1.5"
                         type="text"
@@ -177,7 +171,9 @@ const KYC_Form: React.FC = () => {
 
                     {values.country && (
                       <div className="">
-                        <Label htmlFor="phone_number">phone number</Label>
+                        <Label htmlFor="phone_number">
+                          {t("phone_number")}
+                        </Label>
                         <div className="mt-1.5 flex">
                           <span className="inline-flex items-center px-3 text-sm border border-r-0 rounded-l-2xl border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">
                             {
@@ -202,7 +198,7 @@ const KYC_Form: React.FC = () => {
 
                     <div>
                       <Label htmlFor="author_type">
-                        Are you a creator or collector
+                        {t("Are_you_a_creator_or_collector")}
                       </Label>
                       <Radio
                         label="Creator"
@@ -225,7 +221,9 @@ const KYC_Form: React.FC = () => {
                     {/* ---- */}
                     <div>
                       <Label>
-                        What art do you plan to create or share on SahabaNFTs
+                        {t(
+                          "What_art_do_you_plan_to_create_or_share_on_SahabaNFTs"
+                        )}
                       </Label>
                       <Textarea
                         rows={3}
@@ -240,7 +238,7 @@ const KYC_Form: React.FC = () => {
                     </div>
 
                     <div>
-                      <Label>Upload your passport id</Label>
+                      <Label>{t("Upload_your_passport_id")}</Label>
                       <div
                         onClick={() => {
                           passportIdInput?.current?.click();
@@ -292,7 +290,7 @@ const KYC_Form: React.FC = () => {
                         className="w-full"
                         onClick={handleSubmit}
                       >
-                        Submit verification
+                        {t("Submit_verification")}
                       </ButtonPrimary>
                     </div>
                   </div>

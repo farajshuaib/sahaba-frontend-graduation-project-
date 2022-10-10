@@ -6,6 +6,7 @@ import ButtonPrimary from "shared/Button/ButtonPrimary";
 import TabFilters from "components/TabFilters";
 import { Transition } from "@headlessui/react";
 import { useAppSelector } from "app/hooks";
+import { useTranslation } from "react-i18next";
 
 export interface HeaderFilterSearchPageProps {
   className?: string;
@@ -26,6 +27,7 @@ const HeaderFilterSearchPage: FC<HeaderFilterSearchPageProps> = ({
   setSortBy: setParentSortBy,
   setIsVerifiedUser: setParentIsVerifiedUser,
 }) => {
+  const {t} = useTranslation()
   const [isOpen, setIsOpen] = useState(true);
   const [sortBy, setSortBy] = useState("");
   const [priceRange, setPriceRange] = useState([0.01, 5.0]);
@@ -109,7 +111,7 @@ const HeaderFilterSearchPage: FC<HeaderFilterSearchPageProps> = ({
                 />
               </svg>
 
-              <span className="block truncate ml-2.5">Filter</span>
+              <span className="block truncate ml-2.5">{t("filters")}</span>
               <span className="absolute -translate-y-1/2 top-1/2 right-5">
                 <ChevronDownIcon
                   className={`w-4 h-4 sm:w-5 sm:h-5 ${

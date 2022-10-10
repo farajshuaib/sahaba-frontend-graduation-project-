@@ -18,7 +18,7 @@ import { BigNumber, Contract } from "ethers";
 import { createNftSchema, validateImage } from "services/validations";
 import { toast } from "react-toastify";
 import { formatEther, parseEther } from "ethers/lib/utils";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { usdPrice } from "utils/functions";
 import { Alert } from "shared/Alert/Alert";
 import { useTranslation } from "react-i18next";
@@ -37,6 +37,7 @@ const UploadFile: React.FC<UploadFileProps> = ({
   setFieldValue,
   values,
 }) => {
+  const { t } = useTranslation();
   const [uploadLoading, setUploadLoading] = useState<boolean>(false);
   const ipfs = useIpfs();
 
@@ -44,8 +45,7 @@ const UploadFile: React.FC<UploadFileProps> = ({
     <div>
       <h3 className="text-lg font-semibold sm:text-2xl">Image/*</h3>
       <span className="text-sm text-neutral-500 dark:text-neutral-400">
-        File types supported: JPG, PNG, GIF, SVG, WEBM, WAV, OGG, GLB, GLTF. Max
-        size: 10 MB
+        {t("supported_files")}
       </span>
       <div className="mt-5 ">
         <div
@@ -87,7 +87,7 @@ const UploadFile: React.FC<UploadFileProps> = ({
                 className="relative font-medium rounded-md cursor-pointer text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
               >
                 <span>
-                  {values.file_path ? "replace file" : "Upload a file"}
+                  {values.file_path ? t("replace_file") : t("Upload_image")}
                 </span>
                 <input
                   id="file-upload"
@@ -107,17 +107,19 @@ const UploadFile: React.FC<UploadFileProps> = ({
 
                       setFieldValue("file_path", IPFS_BASE_URL + added.path);
 
-                      toast.success("image uploaded to the IPFS successfully");
+                      toast.success(
+                        t("image_uploaded_to_the_IPFS_successfully")
+                      );
                     } catch (e) {
                       toast.error(
-                        "something went wrong while uploading the image"
+                        t("something_went_wrong_while_uploading_the_image")
                       );
                     }
                     setUploadLoading(false);
                   }}
                 />
               </label>
-              <p className="pl-1">or drag and drop</p>
+              <p className="pl-1">{t("or_drag_and_drop")}</p>
             </div>
             <p className="text-xs text-neutral-500 dark:text-neutral-400">
               PNG, JPG, GIF up to 10MB
@@ -136,7 +138,7 @@ export interface PageUploadItemProps {
 const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
   const { t } = useTranslation();
   const { library, account } = useWeb3React();
-  const history = useHistory();
+  const navigate = useNavigate();
   const myCollections = useAppSelector((state) => state.general.myCollections);
   const { create } = useCrud("/nfts");
   const [balance, setBalance] = useState<string>("");
@@ -168,8 +170,7 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
               {t("Create_New_NFT")}
             </h2>
             <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
-              You can set preferred display name, create your profile URL and
-              manage other personal settings.
+              {t("Create_NFT_desc")}
             </span>
           </div>
           <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
@@ -185,15 +186,15 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
             validationSchema={createNftSchema}
             onSubmit={async (values, { setFieldError }) => {
               if (balance == "0") {
-                setError("you don't have enough balance to mint a NFT");
+                setError(t("not_enough_balance"));
                 return;
               }
               if (values.collection_id == 0) {
-                setFieldError("collection_id", "collection id is required");
+                setFieldError("collection_id", t("collection_is_required"));
                 return;
               }
               if (values.price == 0) {
-                setFieldError("price", "price must be above 0");
+                setFieldError("price", t("price_must_be_above_0"));
                 return;
               }
               try {
@@ -235,9 +236,9 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                   token_id,
                 });
 
-                toast.success("nft created successfully");
+                toast.success(t("nft_created_successfully"));
 
-                history.goBack();
+                navigate(-1);
               } catch (error) {
                 console.log(error);
               }
@@ -266,7 +267,7 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                 />
 
                 {/* ---- */}
-                <FormItem htmlFor="title" label="Title">
+                <FormItem htmlFor="title" label={t("Title")}>
                   <Input
                     id="title"
                     type="text"
@@ -284,14 +285,15 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
 
                 {/* ---- */}
                 <FormItem
-                  label="Description"
+                  label={t("Description")}
                   htmlFor="description"
                   desc={
                     <div>
-                      The description will be included on the item's detail page
-                      underneath its image.{" "}
-                      <span className="text-green-500">Markdown</span> syntax is
-                      supported.
+                      {t("nft_description_desc")}
+                      <span className="text-green-500">
+                        {t("Markdown")}
+                      </span>{" "}
+                      {t("syntax_is_supported")}
                     </div>
                   }
                 >
@@ -314,7 +316,7 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
 
                 {/* ---- */}
                 <FormItem
-                  label="price"
+                  label={t("price")}
                   desc="Sahabat will include a link to this URL on this item's detail page, so that users can click to learn more about it. You are welcome to link to your own webpage with more details."
                 >
                   <div className="flex">
@@ -333,7 +335,7 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                       className="!rounded-l-none"
                       placeholder="0.01"
                     />
-                    <span className="inline-flex items-center px-3 text-sm transform -translate-x-3 border border-l-0 rounded-r-2xl border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">
+                    <span className="px-3 text-sm transform -translate-x-3 border border-l-0 rounded-r-2xl border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">
                       {usdPrice(+values.price)}
                     </span>
                   </div>
@@ -348,9 +350,9 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                 <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
 
                 <div>
-                  <Label>Choose collection</Label>
+                  <Label>{t("Choose_collection")}</Label>
                   <div className="text-sm text-neutral-500 dark:text-neutral-400">
-                    Choose an exiting collection or create a new one
+                    {t("Choose_collection_desc")}
                   </div>
                   <RadioGroup
                     value={
@@ -446,10 +448,10 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                     onClick={handleSubmit}
                     className="flex-1"
                   >
-                    Upload item
+                    {t("Upload_item")}
                   </ButtonPrimary>
                   <ButtonSecondary onClick={handleReset} className="flex-1">
-                    cancel
+                    {t("Cancel")}
                   </ButtonSecondary>
                 </div>
               </div>

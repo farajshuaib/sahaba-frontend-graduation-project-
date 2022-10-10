@@ -4,26 +4,19 @@ import Avatar from "shared/Avatar/Avatar";
 import NcImage from "shared/NcImage/NcImage";
 import VerifyIcon from "components/VerifyIcon";
 import FollowButton from "components/FollowButton";
-import banner_image  from "assets/images/authorBanner.png"
+import banner_image from "assets/images/authorBanner.png";
 export interface CardAuthorBox4Props {
   className?: string;
-  authorIndex?: number;
   user: UserData;
 }
 
-const CardAuthorBox4: FC<CardAuthorBox4Props> = ({
-  className = "",
-  authorIndex,
-  user,
-}) => {
+const CardAuthorBox4: FC<CardAuthorBox4Props> = ({ className = "", user }) => {
   return (
     <div
       className={`nc-CardAuthorBox4 relative flex flex-col overflow-hidden group bg-white dark:bg-neutral-800 group rounded-3xl hover:shadow-xl transition-shadow ${className}`}
       data-nc-id="CardAuthorBox4"
     >
       <div className="relative flex-shrink-0 h-36">
-        
-
         <NcImage
           containerClassName="flex h-full w-full flex-shrink-0 rounded-3xl overflow-hidden"
           src={banner_image}
@@ -63,12 +56,6 @@ const CardAuthorBox4: FC<CardAuthorBox4Props> = ({
               <span className="">{user.username}</span>
               {user.is_verified && <VerifyIcon />}
             </h2>
-            <span className={`block mt-0.5 text-sm `}>
-              <span className="font-medium">12.321</span>
-              <span className={`ml-1.5 text-neutral-500 dark:text-neutral-400`}>
-                ETH
-              </span>
-            </span>
           </div>
           <FollowButton
             sizeClass="px-4 py-2 min-w-[84px]"

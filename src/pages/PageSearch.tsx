@@ -11,12 +11,14 @@ import CardNFT from "components/CardNFT";
 import { useCrud } from "hooks/useCrud";
 import LoadingScreen from "components/LoadingScreen";
 import ServerError from "components/ServerError";
+import { useTranslation } from "react-i18next";
 
 export interface PageSearchProps {
   className?: string;
 }
 
 const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
+  const { t } = useTranslation();
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
   const [priceRange, setPriceRange] = useState([0.1, 5.0]);
@@ -69,7 +71,6 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
               htmlFor="search-input"
               className="text-neutral-500 dark:text-neutral-300"
             >
-              <span className="sr-only">Search all icons</span>
               <Input
                 className="border-0 shadow-lg dark:border"
                 id="search-input"
@@ -77,7 +78,7 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
                 value={search}
                 onChange={(e) => setSearch(e.currentTarget.value)}
                 autoComplete="search"
-                placeholder="Type your keywords"
+                placeholder={t("Type_your_keywords")}
                 sizeClass="pl-14 py-5 pr-5 md:pl-16"
                 rounded="rounded-full"
               />
@@ -135,7 +136,7 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
           ) : errors ? (
             <ServerError />
           ) : (
-            <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
+            <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 lg:mt-10">
               {data.map((nft: Nft, index) => (
                 <CardNFT nft={nft} key={index} />
               ))}
@@ -149,7 +150,7 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
             )}
             {meta && page < meta?.last_page && (
               <ButtonPrimary onClick={() => setPage(page + 1)}>
-                Show me more
+                {t("Show_me_more")}
               </ButtonPrimary>
             )}
           </div>

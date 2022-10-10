@@ -11,7 +11,7 @@ import TimeCountDown from "./TimeCountDown";
 import TabDetail from "./TabDetail";
 import AccordionInfo from "./AccordionInfo";
 import { useCrud } from "hooks/useCrud";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import LoadingScreen from "components/LoadingScreen";
 import { useAppSelector } from "app/hooks";
 import { toast } from "react-toastify";
@@ -26,9 +26,9 @@ import Select from "shared/Select/Select";
 import moment from "moment";
 import FormItem from "components/FormItem";
 import ItemTypeImageIcon from "components/ItemTypeImageIcon";
-import AudioForNft from "components/AudioForNft";
 import NftItem from "./NftItem";
 import { Helmet } from "react-helmet";
+import { useTranslation } from "react-i18next";
 
 export interface NftDetailPageProps {
   className?: string;
@@ -39,8 +39,9 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
   className = "",
   isPreviewMode,
 }) => {
+  const { t } = useTranslation();
   const params: any = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { library, account } = useWeb3React();
   const api = useApi();
   const userData: UserData = useAppSelector((state) => state.account.userData);
@@ -74,7 +75,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
 
   const setForSell = async () => {
     if (!userData) {
-      history.push("/connect-wallet");
+      navigate("/connect-wallet");
       return;
     }
     try {
@@ -85,41 +86,35 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
         ).format("YYYY-MM-DD HH:MM:SS"),
       });
       setForSaleModal(false);
-      toast.success("NFT set for sale successfully");
+      toast.success(t("NFT_set_for_sale_successfully"));
       await fetchById(params.id);
       setLoadingButton(false);
     } catch (err: any) {
-      toast.error(
-        err?.response.data.message ||
-          "System error please try again later if the problem persists report an incident by contacting our Support Team."
-      );
+      toast.error(err?.response.data.message || t("system_error"));
       setLoadingButton(false);
     }
   };
 
   const stopSale = async () => {
     if (!userData) {
-      history.push("/connect-wallet");
+      navigate("/connect-wallet");
       return;
     }
     try {
       setLoadingButton(true);
       await api.put(`/nfts/stop-sale/${item.id}`);
-      toast.success("Item canceled from the selling successfully");
+      toast.success(t("Item_canceled_from_the_selling_successfully"));
       await fetchById(params.id);
       setLoadingButton(false);
     } catch (err: any) {
-      toast.error(
-        err?.response.data.message ||
-          "System error please try again later if the problem persists report an incident by contacting our Support Team."
-      );
+      toast.error(err?.response.data.message || t("system_error"));
       setLoadingButton(false);
     }
   };
 
   const buyNft = async () => {
     if (!userData) {
-      history.push("/connect-wallet");
+      navigate("/connect-wallet");
       return;
     }
     setLoadingButton(true);
@@ -150,16 +145,13 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
 
       await submitBuyNft();
 
-      toast.success("You have successfully bought this NFT");
+      toast.success(t("buy_success"));
 
       await fetchById(params.id);
       setLoadingButton(false);
     } catch (err: any) {
       console.log(err?.error?.message ?? err);
-      toast.error(
-        err?.response?.data?.message ||
-          "System error please try again later if the problem persists report an incident by contacting our Support Team."
-      );
+      toast.error(err?.response?.data?.message || t("system_error"));
     }
     setLoadingButton(false);
   };
@@ -198,7 +190,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
                 radius="rounded-full"
               />
               <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
-                <span className="text-sm">Creator</span>
+                <span className="text-sm">{t("Creator")}</span>
                 <span className="flex items-center font-medium text-neutral-900 dark:text-neutral-200">
                   <span>
                     {item?.creator?.username ||
@@ -218,7 +210,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
                 radius="rounded-full"
               />
               <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
-                <span className="text-sm">Collection</span>
+                <span className="text-sm">{t("Collection")}</span>
                 <span className="flex items-center font-medium text-neutral-900 dark:text-neutral-200">
                   <span>{item.collection?.name}</span>
                 </span>
@@ -240,11 +232,13 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between">
             <div className="relative flex flex-col items-baseline flex-1 p-6 border-2 border-green-500 sm:flex-row rounded-xl">
               <span className="absolute bottom-full translate-y-1 py-1 px-1.5 bg-white dark:bg-neutral-900 text-sm text-neutral-500 dark:text-neutral-400">
-                price
+                {t("price")}
               </span>
               <span className="text-3xl font-semibold text-green-500 xl:text-4xl">
                 {item?.price} ETH{" "}
-                <span className="text-xs">{`+ ${serviceFee} service fees`}</span>
+                <span className="text-xs">{`+ ${serviceFee} ${t(
+                  "service_fees"
+                )}`}</span>
               </span>
               <span className="text-lg text-neutral-400 sm:ml-2">
                 ≈ ${usdPrice(item?.price + serviceFee)}
@@ -300,10 +294,10 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
 
                 <span className="ml-2.5">
                   {userData?.id != item?.owner?.id
-                    ? "buy"
+                    ? t("buy")
                     : item.is_for_sale
-                    ? "stop sale"
-                    : "set for sale"}
+                    ? t("stop_sale")
+                    : t("set_for_sale")}
                 </span>
               </ButtonPrimary>
             </div>
@@ -322,7 +316,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     <Modal show={forSaleModal} onClose={() => setForSaleModal(false)}>
       <Modal.Header>Set NFT for sale</Modal.Header>
       <Modal.Body>
-        <FormItem htmlFor="sale_end_at" label="Sale end in">
+        <FormItem htmlFor="sale_end_at" label={t("Sale_end_in")}>
           <Select
             value={saleEndAt?.toString()}
             onChange={(e) => {
@@ -336,23 +330,23 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
               value={new Date().toString()}
               className="text-neutral-500 dark:text-white placeholder:text-white"
             >
-              select a date will sell end at
+              {t("select_a_date_will_sell_end_at")}
             </option>
             {[
               {
-                label: "5 days",
+                label: "5 " + t("days"),
                 value: 5,
               },
               {
-                label: "7 days",
+                label: "7 " + t("days"),
                 value: 7,
               },
               {
-                label: "15 days",
+                label: "15 " + t("days"),
                 value: 15,
               },
               {
-                label: "30 days",
+                label: "30 " + t("days"),
                 value: 30,
               },
             ].map((item, index) => (
@@ -369,10 +363,10 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       </Modal.Body>
       <Modal.Footer>
         <ButtonPrimary loading={loadingButton} onClick={setForSell}>
-          confirm
+          {t("Confirm")}
         </ButtonPrimary>
         <ButtonSecondary onClick={() => setForSaleModal(false)}>
-          Decline
+          {t("Cancel")}
         </ButtonSecondary>
       </Modal.Footer>
     </Modal>

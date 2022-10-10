@@ -7,13 +7,15 @@ import Checkbox from "shared/Checkbox/Checkbox";
 import Slider from "rc-slider";
 import Radio from "shared/Radio/Radio";
 import { ChevronDownIcon } from "@heroicons/react/outline";
+import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 const sortOrderRadios = [
-  { name: "Recently listed", id: "Recently-listed" },
-  { name: "Ending soon", id: "Ending-soon" },
-  { name: "Price low - hight", id: "Price-low-high" },
-  { name: "Price hight - low", id: "Price-high-low" },
-  { name: "Most favorited", id: "Most-favorite" },
+  { name: t("Recently_listed"), id: "Recently-listed" },
+  { name: t("Ending_soon"), id: "Ending-soon" },
+  { name: t("Price_low_hight"), id: "Price-low-high" },
+  { name: t("Price_hight_low"), id: "Price-high-low" },
+  { name: t("Most_favorited"), id: "Most-favorite" },
 ];
 
 interface Props {
@@ -28,6 +30,7 @@ const TabFilters: React.FC<Props> = ({
   setSortBy,
   setIsVerifiedUser,
 }) => {
+  const { t } = useTranslation();
   const [isOpenMoreFilter, setisOpenMoreFilter] = useState(false);
   //
   const [isVerifiedCreator, setIsVerifiedCreator] = useState(true);
@@ -126,7 +129,7 @@ const TabFilters: React.FC<Props> = ({
                 {sortOrderStates
                   ? sortOrderRadios.filter((i) => i.id === sortOrderStates)[0]
                       .name
-                  : "Sort order"}
+                  : t("Sort_order")}
               </span>
               {!sortOrderStates.length ? (
                 <ChevronDownIcon className="w-4 h-4 ml-3" />
@@ -168,7 +171,7 @@ const TabFilters: React.FC<Props> = ({
                       }}
                       sizeClass="px-4 py-2 sm:px-5"
                     >
-                      Clear
+                      {t("Clear")}
                     </ButtonThird>
                     <ButtonPrimary
                       onClick={() => {
@@ -177,7 +180,7 @@ const TabFilters: React.FC<Props> = ({
                       }}
                       sizeClass="px-4 py-2 sm:px-5"
                     >
-                      Apply
+                      {t("Apply")}
                     </ButtonPrimary>
                   </div>
                 </div>
@@ -258,10 +261,9 @@ const TabFilters: React.FC<Props> = ({
                         step={0.01}
                         defaultValue={[rangePrices[0], rangePrices[1]]}
                         allowCross={false}
-                        onChange={(_input: number | number[]) => {
-                          console.log("_input", _input);
-                          setRangePrices(_input as number[]);
-                        }}
+                        onChange={(_input: number | number[]) =>
+                          setRangePrices(_input as number[])
+                        }
                       />
                     </div>
 
@@ -271,7 +273,7 @@ const TabFilters: React.FC<Props> = ({
                           htmlFor="minPrice"
                           className="block text-sm font-medium text-neutral-700 dark:text-neutral-300"
                         >
-                          Min price
+                          {t("Min_price")}
                         </label>
                         <div className="relative mt-1 rounded-md">
                           <span className="absolute inset-y-0 flex items-center pointer-events-none right-4 text-neutral-500 sm:text-sm">
@@ -292,7 +294,7 @@ const TabFilters: React.FC<Props> = ({
                           htmlFor="maxPrice"
                           className="block text-sm font-medium text-neutral-700 dark:text-neutral-300"
                         >
-                          Max price
+                          {t("Max_price")}
                         </label>
                         <div className="relative mt-1 rounded-md">
                           <span className="absolute inset-y-0 flex items-center pointer-events-none right-4 text-neutral-500 sm:text-sm">
@@ -318,7 +320,7 @@ const TabFilters: React.FC<Props> = ({
                       }}
                       sizeClass="px-4 py-2 sm:px-5"
                     >
-                      Clear
+                      {t("Clear")}
                     </ButtonThird>
                     <ButtonPrimary
                       onClick={() => {
@@ -327,7 +329,7 @@ const TabFilters: React.FC<Props> = ({
                       }}
                       sizeClass="px-4 py-2 sm:px-5"
                     >
-                      Apply
+                      {t("Apply")}
                     </ButtonPrimary>
                   </div>
                 </div>
@@ -380,7 +382,7 @@ const TabFilters: React.FC<Props> = ({
             strokeLinejoin="round"
           />
         </svg>
-        <span className="ml-2 line-clamp-1">Verified creator</span>
+        <span className="ml-2 line-clamp-1">{t("Verified_creator")}</span>
         {isVerifiedCreator && renderXClear()}
       </div>
     );
@@ -433,7 +435,7 @@ const TabFilters: React.FC<Props> = ({
           onClick={openModalMoreFilter}
         >
           <span>
-            <span className="hidden sm:inline">NFTs</span> filters (3)
+            <span className="hidden sm:inline">NFTs</span> {t("filters")}
           </span>
           {renderXClear()}
         </div>
@@ -479,7 +481,7 @@ const TabFilters: React.FC<Props> = ({
                       as="h3"
                       className="text-lg font-medium leading-6 text-gray-900"
                     >
-                      NFTs filters
+                      NFTs {t("filters")}
                     </Dialog.Title>
                     <span className="absolute left-3 top-3">
                       <ButtonClose onClick={closeModalMoreFilter} />
@@ -489,7 +491,9 @@ const TabFilters: React.FC<Props> = ({
                   <div className="flex-grow overflow-y-auto">
                     <div className="px-8 divide-y md:px-10 divide-neutral-200 dark:divide-neutral-800">
                       <div className="py-7">
-                        <h3 className="text-xl font-medium">Range Prices</h3>
+                        <h3 className="text-xl font-medium">
+                          {t("Range_Prices")}
+                        </h3>
                         <div className="relative mt-6 ">
                           <div className="relative flex flex-col space-y-8">
                             <div className="space-y-5">
@@ -512,7 +516,7 @@ const TabFilters: React.FC<Props> = ({
                                   htmlFor="minPrice"
                                   className="block text-sm font-medium text-neutral-700 dark:text-neutral-300"
                                 >
-                                  Min price
+                                  {t("Min_price")}
                                 </label>
                                 <div className="relative mt-1 rounded-md">
                                   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -535,7 +539,7 @@ const TabFilters: React.FC<Props> = ({
                                   htmlFor="maxPrice"
                                   className="block text-sm font-medium text-neutral-700 dark:text-neutral-300"
                                 >
-                                  Max price
+                                  {t("Max_price")}
                                 </label>
                                 <div className="relative mt-1 rounded-md">
                                   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -561,7 +565,9 @@ const TabFilters: React.FC<Props> = ({
                       {/* --------- */}
                       {/* ---- */}
                       <div className="py-7">
-                        <h3 className="text-xl font-medium">Sort Order</h3>
+                        <h3 className="text-xl font-medium">
+                          {t("Sort_order")}
+                        </h3>
                         <div className="relative mt-6 ">
                           <div className="relative flex flex-col space-y-5">
                             {sortOrderRadios.map((item) => (
@@ -590,13 +596,13 @@ const TabFilters: React.FC<Props> = ({
                       }}
                       sizeClass="px-4 py-2 sm:px-5"
                     >
-                      Clear
+                      {t("Clear")}
                     </ButtonThird>
                     <ButtonPrimary
                       onClick={closeModalMoreFilter}
                       sizeClass="px-4 py-2 sm:px-5"
                     >
-                      Apply
+                      {t("Apply")}
                     </ButtonPrimary>
                   </div>
                 </div>

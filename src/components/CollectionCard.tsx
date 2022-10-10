@@ -1,4 +1,6 @@
+import { t } from "i18next";
 import React, { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Avatar from "shared/Avatar/Avatar";
 import NcImage from "shared/NcImage/NcImage";
@@ -6,15 +8,11 @@ import VerifyIcon from "./VerifyIcon";
 
 export interface CollectionCardProps {
   className?: string;
-  imgs?: string[];
   collection: Collection;
 }
 
-const CollectionCard: FC<CollectionCardProps> = ({
-  className,
-  collection,
-  imgs,
-}) => {
+const CollectionCard: FC<CollectionCardProps> = ({ className, collection }) => {
+  const {t} = useTranslation()
   return (
     <div
       className={`CollectionCard relative p-4 rounded-2xl overflow-hidden h-[410px] flex flex-col group ${className}`}
@@ -31,7 +29,7 @@ const CollectionCard: FC<CollectionCardProps> = ({
             containerClassName="ring-2 ring-white"
           />
           <div className="ml-2 text-xs text-white">
-            <span className="font-normal">by</span>
+            <span className="font-normal">{t("by")}</span>
             {` `}
             <span className="font-medium">
               {collection?.created_by?.username}

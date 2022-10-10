@@ -1,7 +1,7 @@
 import React from "react";
 import Avatar from "shared/Avatar/Avatar";
 import moment from "moment";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Tab } from "@headlessui/react";
 import VerifyIcon from "components/VerifyIcon";
 
@@ -11,7 +11,7 @@ interface TabDetailProps {
 }
 
 const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const TABS = ["History", "Owner"];
 
   const renderTabItem = (item: string) => {
@@ -33,7 +33,9 @@ const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
         <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
           <span className="text-sm">Owner</span>
           <span className="flex items-center font-medium text-neutral-900 dark:text-neutral-200">
-            <span>{owner?.username || owner?.wallet_address?.slice(0,8) + "..."}</span>
+            <span>
+              {owner?.username || owner?.wallet_address?.slice(0, 8) + "..."}
+            </span>
             {owner?.is_verified && <VerifyIcon iconClass="w-4 h-4" />}
           </span>
         </span>
@@ -78,7 +80,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
             <span className="">sold by</span>
             <span
               onClick={() => {
-                history.push(`/author/${transaction.from.id}`);
+                navigate(`/author/${transaction.from.id}`);
               }}
               className="font-medium cursor-pointer text-neutral-900 dark:text-neutral-200"
             >
@@ -88,7 +90,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
             <span className="">to</span>
             <span
               onClick={() => {
-                history.push(`/author/${transaction.to.id}`);
+                navigate(`/author/${transaction.to.id}`);
               }}
               className="font-medium cursor-pointer text-neutral-900 dark:text-neutral-200"
             >
@@ -108,7 +110,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
             <span className="">Minted by</span>
             <span
               onClick={() => {
-                history.push(`/author/${transaction.to.id}`);
+                navigate(`/author/${transaction.to.id}`);
               }}
               className="font-medium cursor-pointer text-neutral-900 dark:text-neutral-200"
             >
@@ -128,7 +130,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
             <span className="">Set for Sale by</span>
             <span
               onClick={() => {
-                history.push(`/author/${transaction.to.id}`);
+                navigate(`/author/${transaction.to.id}`);
               }}
               className="font-medium cursor-pointer text-neutral-900 dark:text-neutral-200"
             >
@@ -148,7 +150,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
             <span className="">price updated by</span>
             <span
               onClick={() => {
-                history.push(`/author/${transaction.to.id}`);
+                navigate(`/author/${transaction.to.id}`);
               }}
               className="font-medium cursor-pointer text-neutral-900 dark:text-neutral-200"
             >

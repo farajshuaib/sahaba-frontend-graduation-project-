@@ -6,6 +6,8 @@ import ButtonSecondary from "shared/Button/ButtonSecondary";
 import NcModal from "shared/NcModal/NcModal";
 import { useApi } from "hooks/useApi";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 export interface ProblemPlan {
   name: string;
@@ -23,10 +25,10 @@ export interface ModalReportItemProps {
 }
 
 const problemPlansDemo = [
-  { name: "violence", id: "Violence", label: "Violence" },
-  { name: "trouble", id: "Trouble", label: "Trouble" },
-  { name: "spam", id: "Spam", label: "Spam" },
-  { name: "other", id: "Other", label: "Other" },
+  { name: "violence", id: "Violence", label: t("Violence") },
+  { name: "trouble", id: "Trouble", label: t("Trouble") },
+  { name: "spam", id: "Spam", label: t("Spam") },
+  { name: "other", id: "Other", label: t("Other") },
 ];
 
 const ModalReportItem: FC<ModalReportItemProps> = ({
@@ -37,6 +39,7 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
   user,
   collection,
 }) => {
+  const { t } = useTranslation();
   const textareaRef = useRef(null);
   const api = useApi();
   const [problemSelected, setProblemSelected] = useState(problemPlans[0]);
@@ -55,7 +58,7 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
   }, [show]);
 
   const handleClickSubmitForm = async () => {
-    setLoading(true)
+    setLoading(true);
     let api_route = user
       ? `/users/report/${user.id}`
       : nft
@@ -64,19 +67,16 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
       ? `/collections/report/${collection.id}`
       : "";
     try {
-      const response = await api.post(api_route, {
+      await api.post(api_route, {
         message,
         type: problemSelected.name,
       });
-      console.log("response", response);
-      toast.success("Thank you for your report");
-      setLoading(false)
-      onCloseModalReportItem()
+      toast.success(t("Thank_you_for_your_report"));
+      setLoading(false);
+      onCloseModalReportItem();
     } catch (error: any) {
-      toast.error(
-        error?.response.data.message || "something went wrong when reporting"
-      );
-      setLoading(false)
+      toast.error(error?.response.data.message || t("system_error"));
+      setLoading(false);
     }
   };
 
@@ -100,7 +100,9 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
       <form action="#">
         {/* RADIO PROBLEM PLANS */}
         <RadioGroup value={problemSelected} onChange={setProblemSelected}>
-          <RadioGroup.Label className="sr-only">Problem Plans</RadioGroup.Label>
+          <RadioGroup.Label className="sr-only">
+            {t("Problem_Plans")}
+          </RadioGroup.Label>
           <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
             {problemPlans.map((plan) => (
               <RadioGroup.Option
@@ -145,11 +147,10 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
         {/* TEXAREA MESSAGER */}
         <div className="mt-4">
           <h4 className="text-lg font-semibold text-neutral-700 dark:text-neutral-200">
-            Message
+            {t("Message")}
           </h4>
           <span className="text-sm text-neutral-6000 dark:text-neutral-400">
-            Please provide any additional information or context that will help
-            us understand and handle the situation.
+            {t("Report_Message_desc")}
           </span>
           <Textarea
             placeholder="..."
@@ -166,11 +167,15 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
           />
         </div>
         <div className="mt-4 space-x-3">
-          <ButtonPrimary loading={loading} onClick={handleClickSubmitForm} type="button">
-            Submit
+          <ButtonPrimary
+            loading={loading}
+            onClick={handleClickSubmitForm}
+            type="button"
+          >
+            {t("submit")}
           </ButtonPrimary>
           <ButtonSecondary type="button" onClick={onCloseModalReportItem}>
-            Cancel
+            {t("Cancel")}
           </ButtonSecondary>
         </div>
       </form>

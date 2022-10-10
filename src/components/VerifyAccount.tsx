@@ -1,4 +1,6 @@
+import { t } from "i18next";
 import React, { FC } from "react";
+import { useTranslation } from "react-i18next";
 import ButtonPrimary, { ButtonPrimaryProps } from "shared/Button/ButtonPrimary";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 
@@ -12,6 +14,7 @@ const VerifyAccount: FC<VerifyAccountProps> = ({
   fontSize = "text-sm font-medium",
   isVerified,
 }) => {
+  const { t } = useTranslation();
   return (
     <>
       {!isVerified ? (
@@ -21,7 +24,7 @@ const VerifyAccount: FC<VerifyAccountProps> = ({
           fontSize={fontSize}
           href="/kyc-form"
         >
-          verify account
+          {t("verify_account")}
         </ButtonPrimary>
       ) : (
         <ButtonSecondary
@@ -29,7 +32,7 @@ const VerifyAccount: FC<VerifyAccountProps> = ({
           sizeClass={sizeClass}
           fontSize={fontSize}
         >
-          <span className="text-sm ">verified</span>
+          <span className="text-sm ">{t("verified")}</span>
         </ButtonSecondary>
       )}
     </>

@@ -11,13 +11,14 @@ import ButtonSecondary from "shared/Button/ButtonSecondary";
 import NcImage from "shared/NcImage/NcImage";
 import { Formik, ErrorMessage } from "formik";
 import { useCrud } from "hooks/useCrud";
-import { useWeb3React } from "@web3-react/core";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import Avatar from "shared/Avatar/Avatar";
 import { createCollectionSchema, validateImage } from "services/validations";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getCollections } from "app/general/actions";
+import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 export interface PageCreateCollectionProps {
   className?: string;
@@ -26,10 +27,9 @@ export interface PageCreateCollectionProps {
 const PageCreateCollection: FC<PageCreateCollectionProps> = ({
   className = "",
 }) => {
-  const userData: UserData = useAppSelector((state) => state.account.userData);
-  const history = useHistory();
+  const { t } = useTranslation();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { library } = useWeb3React();
   const categories = useAppSelector((state) => state.general.categories);
   const { create } = useCrud("/collections");
   const [bannerImage, setBannerImage] = useState<string>("");
@@ -52,18 +52,17 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
       data-nc-id="PageUploadItem"
     >
       <Helmet>
-        <title>Create Collection </title>
+        <title>{t("Create_Collection")}</title>
       </Helmet>
       <div className="container">
         <div className="max-w-4xl mx-auto my-12 space-y-8 sm:lg:my-16 lg:my-24 sm:space-y-10">
           {/* HEADING */}
           <div className="max-w-2xl">
             <h2 className="text-3xl font-semibold sm:text-4xl">
-              Create New Collection
+              {t("Create_Collection")}
             </h2>
             <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
-              You can set preferred display name, create your profile URL and
-              manage other personal settings.
+              {t("Create_Collection_desc")}
             </span>
           </div>
           <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
@@ -74,6 +73,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
               try {
                 const form = new FormData();
                 for (const [key, value] of Object.entries(values)) {
+                  value as any;
                   form.append(key, value);
                 }
 
@@ -85,7 +85,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
 
                 dispatch(getCollections());
 
-                history.goBack();
+                navigate(-1);
               } catch (error) {
                 console.log(error);
               }
@@ -106,11 +106,10 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                 {/* cover image */}
                 <div>
                   <h3 className="text-lg font-semibold sm:text-2xl">
-                    cover image
+                    {t("cover_image")}
                   </h3>
                   <span className="text-sm text-neutral-500 dark:text-neutral-400">
-                    File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3,
-                    WAV, OGG, GLB, GLTF. Max size: 100 MB
+                    {t("supported_files")}
                   </span>
                   <div className="mt-5 ">
                     <div
@@ -144,7 +143,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                             htmlFor="file-upload"
                             className="relative font-medium rounded-md cursor-pointer text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
                           >
-                            <span>Upload image</span>
+                            <span>{t("Upload_image")}</span>
                             <input
                               id="file-upload"
                               name="file-upload"
@@ -160,10 +159,10 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                               }}
                             />
                           </label>
-                          <p className="pl-1">or drag and drop</p>
+                          <p className="pl-1">{t("or_drag_and_drop")}</p>
                         </div>
                         <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                          PNG, JPG, GIF up to 10MB
+                          {t("extensions_sizes")}
                         </p>
                       </div>
                       {bannerImage && (
@@ -206,7 +205,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                         />
                       </svg>
 
-                      <span className="mt-1 text-xs">Logo Image</span>
+                      <span className="mt-1 text-xs">{t("Logo_Image")}</span>
                     </div>
                     <input
                       type="file"
@@ -225,7 +224,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                 </div>
 
                 {/* ---- */}
-                <FormItem htmlFor="name" label="Collection Name">
+                <FormItem htmlFor="name" label={t("Collection_Name")}>
                   <Input
                     id="name"
                     type="text"
@@ -233,21 +232,21 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                     value={values.name}
                     onChange={handleChange("name")}
                     onBlur={handleBlur("name")}
-                    defaultValue="enter Collection display name"
                   />
                   <ErrorMessage name="name" className="text-sm text-red-600" />
                 </FormItem>
 
                 {/* ---- */}
                 <FormItem
-                  label="Description"
+                  label={t("Description")}
                   htmlFor="description"
                   desc={
                     <div>
-                      The description will be included on the collection's
-                      detail page underneath its nfts.{" "}
-                      <span className="text-green-500">Markdown</span> syntax is
-                      supported.
+                      {t("Collection_Description_desc")}
+                      <span className="text-green-500">
+                        {t("Markdown")}
+                      </span>{" "}
+                      {t("syntax_is_supported")}
                     </div>
                   }
                 >
@@ -271,9 +270,9 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
 
                 {/* categories */}
                 <div>
-                  <Label>Choose category</Label>
+                  <Label>{t("Choose_category")}</Label>
                   <div className="text-sm text-neutral-500 dark:text-neutral-400">
-                    Choose a category
+                    {t("Choose_a_category")}
                   </div>
                   <RadioGroup
                     value={categories?.find(
@@ -351,16 +350,16 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                 </div>
 
                 {/* ---- */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-2.5 my-5">
+                <div className="grid grid-cols-1 gap-5 my-5 sm:grid-cols-2">
                   <div>
-                    <Label>Facebook page url</Label>
+                    <Label>{t("Facebook")}</Label>
                     <div className="mt-1.5 flex">
                       <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
                         <i className="text-2xl lab la-facebook-f"></i>
                       </span>
                       <Input
                         className="!rounded-l-none"
-                        placeholder="collection facebook page"
+                        placeholder={t("collection_facebook_page")}
                         value={values.facebook_url}
                         type="url"
                         id="facebook_url"
@@ -376,14 +375,14 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                     />
                   </div>
                   <div>
-                    <Label>Twitter page url</Label>
+                    <Label>{t("Twitter")}</Label>
                     <div className="mt-1.5 flex">
                       <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
                         <i className="text-2xl lab la-twitter"></i>
                       </span>
                       <Input
                         className="!rounded-l-none"
-                        placeholder="collection twitter"
+                        placeholder={t("collection_twitter_page")}
                         value={values.twitter_url}
                         type="url"
                         id="twitter_url"
@@ -402,12 +401,12 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
 
                 {/* ---- */}
                 <MySwitch
-                  label="is sensitive content"
+                  label={t("is_sensitive_content")}
                   enabled={values.is_sensitive_content}
                   onChange={(val: boolean) =>
                     setFieldValue("is_sensitive_content", val)
                   }
-                  desc="does the collection allow sharing sensitive content"
+                  desc={t("is_sensitive_content_desc")}
                 />
 
                 {/* ---- */}
@@ -418,10 +417,10 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                     onClick={handleSubmit}
                     className="flex-1"
                   >
-                    submit
+                    {t("submit")}
                   </ButtonPrimary>
                   <ButtonSecondary onClick={handleReset} className="flex-1">
-                    cancel
+                    {t("Cancel")}
                   </ButtonSecondary>
                 </div>
               </div>

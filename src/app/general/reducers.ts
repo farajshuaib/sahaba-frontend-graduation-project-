@@ -1,23 +1,45 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
-import { clearGeneralState, getCategories, getCollections, getEthPriceInUSD } from "./actions";
+import {
+  clearGeneralState,
+  getCategories,
+  getCollections,
+  getEthPriceInUSD,
+} from "./actions";
 
 export interface GeneralState {
   categories: Category[] | null;
   myCollections: Collection[] | null;
-  ethPrice: number | null
+  ethPrice: number | null;
+  notifications: any[];
+  notificationsLength: number;
 }
 
 const initialState: GeneralState = {
   categories: null,
   myCollections: null,
-  ethPrice: null
+  ethPrice: null,
+  notifications: [],
+  notificationsLength: 0,
 };
 
 export const generalSlice = createSlice({
   name: "general",
   initialState,
-  reducers: {},
+  reducers: {
+    setNotifications: (state, action) => {
+      return {
+        ...state,
+        notifications: action.payload,
+      };
+    },
+    setNotificationsLength: (state, action) => {
+      return {
+        ...state,
+        notificationsLength: action.payload,
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getCategories.fulfilled, (state, action) => {
       state.categories = action.payload;
@@ -33,6 +55,9 @@ export const generalSlice = createSlice({
     });
   },
 });
+
+export const { setNotifications, setNotificationsLength } =
+  generalSlice.actions;
 
 export const generalData = (state: RootState) => state.general;
 

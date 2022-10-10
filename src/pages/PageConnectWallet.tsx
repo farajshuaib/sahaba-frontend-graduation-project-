@@ -7,17 +7,12 @@ import NcImage from "shared/NcImage/NcImage";
 import QrCodeImg from "assets/images/qr-code.png";
 import metamaskImg from "assets/images/metamask.webp";
 import walletconnectImg from "assets/images/walletconnect.webp";
-import walletlinkImg from "assets/images/walletlink.webp";
-import fortmaticImg from "assets/images/fortmatic.webp";
 import { toast } from "react-toastify";
 import { connectors } from "services/connectors";
 import { useWeb3React } from "@web3-react/core";
-import { networkParams } from "services/networks";
-import { useAppDispatch } from "app/hooks";
-import { connectToWallet } from "app/account/actions";
 import { switchNetwork } from "utils/functions";
-import { currentNetwork } from "./../constant/index";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export interface PageConnectWalletProps {
   className?: string;
@@ -46,11 +41,10 @@ const plans = [
   // },
 ];
 const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const web3React = useWeb3React();
   const [showModal, setShowModal] = useState(false);
-  
-
+  const { t } = useTranslation();
   const handleSignIn = async (wallet_item: any) => {
     try {
       const result = await switchNetwork();
@@ -58,7 +52,7 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
       web3React.activate(wallet_item.connector);
       localStorage.setItem("provider", wallet_item.provider);
       if (!web3React.error) {
-        history.goBack();
+        navigate(-1);
         return;
       }
       toast.error(
@@ -70,20 +64,14 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
     }
   };
 
-  useEffect(() => {
-    if (web3React.account) {
-      history.push("/");
-    }
-  }, [web3React.account]);
-
   const renderContent = () => {
     return (
       <form action="#">
         <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
-          Scan to connect
+         {t("Scan_to_connect")}
         </h3>
         <span className="text-sm">
-          Open Coinbase Wallet on your mobile phone and scan
+          {t("Open_Coinbase_Wallet_on_your_mobile_phone_and_scan")}
         </span>
 
         <div className="flex items-center justify-center p-5 mt-4 bg-white border dark:bg-neutral-300 border-neutral-200 dark:border-neutral-700 rounded-xl">
@@ -91,8 +79,8 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
         </div>
 
         <div className="mt-5 space-x-3">
-          <ButtonPrimary type="submit">Install app</ButtonPrimary>
-          <ButtonSecondary type="button">Cancel</ButtonSecondary>
+          <ButtonPrimary type="submit">{t("Install_app")}</ButtonPrimary>
+          <ButtonSecondary type="button">{t("Cancel")}</ButtonSecondary>
         </div>
       </form>
     );
@@ -104,18 +92,17 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
       data-nc-id="PageConnectWallet"
     >
       <Helmet>
-        <title>Connect Wallet</title>
+        <title>{t("Connect_your_wallet")}</title>
       </Helmet>
       <div className="container">
         <div className="max-w-3xl mx-auto my-12 space-y-8 sm:lg:my-16 lg:my-24 sm:space-y-10">
           {/* HEADING */}
           <div className="max-w-2xl">
             <h2 className="text-3xl font-semibold sm:text-4xl">
-              Connect your wallet.
+              {t("Connect_your_wallet")}
             </h2>
             <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
-              Connect with one of our available wallet providers or create a new
-              one.
+              {t("Connect_wallet_desc")}
             </span>
           </div>
           <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
@@ -166,7 +153,7 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
                   />
                 </svg>
 
-                <span className="ml-2">Go Back Home</span>
+                <span className="ml-2">{t("Return_Home_Page")}</span>
               </ButtonPrimary>
             </div>
           </div>
@@ -179,7 +166,7 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
         renderContent={renderContent}
         contentExtraClass="max-w-md"
         onCloseModal={() => setShowModal(false)}
-        modalTitle="Connect Wallet"
+        modalTitle={t("Connect_your_wallet")}
       />
     </div>
   );

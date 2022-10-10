@@ -9,11 +9,13 @@ import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Navigation from "shared/Navigation/Navigation";
 import { useAppSelector } from "app/hooks";
 import LocalesDropDown from "./LocalesDropDown";
-
+import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 export interface HeaderLoggedProps {}
 
 const HeaderLogged: FC<HeaderLoggedProps> = () => {
+  const {t} = useTranslation()
   const userData = useAppSelector((state) => state.account.userData);
   return (
     <div className="relative z-40 w-full nc-HeaderLogged ">
@@ -29,7 +31,7 @@ const HeaderLogged: FC<HeaderLoggedProps> = () => {
               <div className="hidden h-6 border-l sm:block border-neutral-300 dark:border-neutral-6000"></div>
               <div className="flex">
                 <SwitchDarkMode />
-                <NotifyDropdown />
+                {userData && <NotifyDropdown />}
                 <LocalesDropDown />
               </div>
               <div></div>
@@ -38,7 +40,7 @@ const HeaderLogged: FC<HeaderLoggedProps> = () => {
                   href={"/create-nft"}
                   sizeClass="px-4 py-2 sm:px-5"
                 >
-                  Create
+                  {t("Create")}
                 </ButtonPrimary>
               )}
               {!userData && (
@@ -46,14 +48,14 @@ const HeaderLogged: FC<HeaderLoggedProps> = () => {
                   href={"/connect-wallet"}
                   sizeClass="px-4 py-2 sm:px-5"
                 >
-                  Connect Wallet
+                  {t("Connect_wallet")}
                 </ButtonPrimary>
               )}
               <div></div>
               {userData && <AvatarDropdown />}
             </div>
             <div className="flex items-center space-x-3 xl:hidden">
-              <NotifyDropdown />
+              {userData && <NotifyDropdown />}
               <LocalesDropDown />
               {userData && <AvatarDropdown />}
               <MenuBar />

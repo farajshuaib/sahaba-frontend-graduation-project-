@@ -15,7 +15,7 @@ import { useRegisterSW } from "virtual:pwa-register/react";
 globalThis.Buffer = Buffer;
 //
 import "./styles/index.scss";
-import "./index.css";
+import "./styles/index.css";
 import "./assets/fonts/line-awesome-1.3.0/css/line-awesome.css";
 import "rc-slider/assets/index.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -49,7 +49,6 @@ const getLibrary = (provider: any): Web3Provider => {
 
 const intervalMS = 60 * 60 * 1000;
 
-
 interface Props {
   children: React.ReactNode;
 }
@@ -64,7 +63,6 @@ const Wrapper: React.FC<Props> = ({ children }) => {
         }, intervalMS);
     },
   });
-
 
   useEffect(() => {
     document.body.dir = i18n.language == "ar" ? "rtl" : "ltr";

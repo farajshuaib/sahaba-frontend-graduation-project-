@@ -11,6 +11,9 @@ import { useCrud } from "hooks/useCrud";
 import { updateAccountSchema, validateImage } from "services/validations";
 import { connectToWallet } from "app/account/actions";
 import VerifyAccount from "components/VerifyAccount";
+import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 export interface AccountPageProps {
   className?: string;
@@ -18,6 +21,8 @@ export interface AccountPageProps {
 
 const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { t } = useTranslation();
   const userData: UserData = useAppSelector((state) => state.account.userData);
   const [profileImage, setProfileImage] = useState<string>("");
 
@@ -33,18 +38,17 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
   return (
     <div className={`nc-AccountPage ${className}`} data-nc-id="AccountPage">
       <Helmet>
-        <title>My Account</title>
+        <title>{t("My_Account")}</title>
       </Helmet>
       <div className="container">
         <div className="max-w-4xl mx-auto my-12 space-y-8 sm:lg:my-16 lg:my-24 sm:space-y-10">
           {/* HEADING */}
           <div className="max-w-2xl">
             <h2 className="text-3xl font-semibold sm:text-4xl">
-              Profile settings
+              {t("Profile_settings")}
             </h2>
             <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
-              You can set preferred display name, create your profile URL and
-              manage other personal settings.
+              {t("Profile_settings_desc")}
             </span>
           </div>
           <div className="flex items-center justify-end w-full">
@@ -68,11 +72,18 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
 
                   form.append("_method", "put");
 
-                  await create(form, {
-                    "Content-Type": "multipart/form-data",
-                  });
-
-                  dispatch(connectToWallet(values.wallet_address));
+                  try {
+                    await create(form, {
+                      "Content-Type": "multipart/form-data",
+                    });
+                    dispatch(connectToWallet(values.wallet_address));
+                    toast.success(t("Account_successfully_updated"));
+                    navigate("/");
+                  } catch (e: any) {
+                    toast.error(
+                      e.response?.data?.message || t("Account_update_error")
+                    );
+                  }
                 }}
               >
                 {({
@@ -108,7 +119,9 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                             />
                           </svg>
 
-                          <span className="mt-1 text-xs">Change Image</span>
+                          <span className="mt-1 text-xs">
+                            {t("Change_Image")}
+                          </span>
                         </div>
                         <input
                           type="file"
@@ -129,7 +142,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                       {/* ---- */}
                       <div className="flex items-center w-full gap-3">
                         <div className="flex-grow">
-                          <Label htmlFor="first_name">First name</Label>
+                          <Label htmlFor="first_name">{t("First_name")}</Label>
                           <Input
                             className="mt-1.5"
                             type="text"
@@ -142,7 +155,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                           <ErrorMessage name="first_name" />
                         </div>
                         <div className="flex-grow">
-                          <Label htmlFor="last_name">Last name</Label>
+                          <Label htmlFor="last_name">{t("Last_name")}</Label>
                           <Input
                             className="mt-1.5"
                             type="text"
@@ -156,7 +169,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                         </div>
                       </div>
                       <div>
-                        <Label>Username</Label>
+                        <Label>{t("Username")}</Label>
                         <Input
                           className="mt-1.5"
                           type="text"
@@ -176,7 +189,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
 
                       {/* ---- */}
                       <div>
-                        <Label>Email</Label>
+                        <Label>{t("Email")}</Label>
                         <div className="mt-1.5 flex">
                           <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
                             <i className="text-2xl las la-envelope"></i>
@@ -197,7 +210,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
 
                       {/* ---- */}
                       <div>
-                        <Label>Bio</Label>
+                        <Label>{t("Bio")}</Label>
                         <Textarea
                           rows={5}
                           className="mt-1.5"
@@ -213,7 +226,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
 
                       {/* ---- */}
                       <div className="">
-                        <Label>Website</Label>
+                        <Label>{t("Website")}</Label>
                         <div className="mt-1.5 flex">
                           <span className="inline-flex items-center px-3 text-sm border border-r-0 rounded-l-2xl border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">
                             https://
@@ -235,14 +248,14 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                       {/* ---- */}
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-2.5">
                         <div>
-                          <Label>Facebook</Label>
+                          <Label>{t("Facebook")}</Label>
                           <div className="mt-1.5 flex">
                             <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
                               <i className="text-2xl lab la-facebook-f"></i>
                             </span>
                             <Input
                               className="!rounded-l-none"
-                              placeholder="your facebook account"
+                              placeholder={t("your_facebook_account_url")}
                               value={values.facebook_url}
                               type="url"
                               id="facebook_url"
@@ -255,14 +268,14 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                           <ErrorMessage name="facebook_url" />
                         </div>
                         <div>
-                          <Label>Twitter</Label>
+                          <Label>{t("Twitter")}</Label>
                           <div className="mt-1.5 flex">
                             <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
                               <i className="text-2xl lab la-twitter"></i>
                             </span>
                             <Input
                               className="!rounded-l-none"
-                              placeholder="your twitter"
+                              placeholder={t("your_twitter_account_url")}
                               value={values.twitter_url}
                               type="url"
                               id="twitter_url"
@@ -275,14 +288,14 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                           <ErrorMessage name="twitter_url" />
                         </div>
                         <div>
-                          <Label>Telegram</Label>
+                          <Label>{t("Telegram")}</Label>
                           <div className="mt-1.5 flex">
                             <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
                               <i className="text-2xl lab la-telegram-plane"></i>
                             </span>
                             <Input
                               className="!rounded-l-none"
-                              placeholder="your telegram"
+                              placeholder={t("your_telegram_account_url")}
                               value={values.telegram_url}
                               type="url"
                               id="telegram_url"
@@ -298,7 +311,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
 
                       {/* ---- */}
                       <div>
-                        <Label>Wallet Address</Label>
+                        <Label>{t("Wallet_Address")}</Label>
                         <div className="mt-1.5 relative text-neutral-700 dark:text-neutral-300">
                           <Input
                             className="!pr-10 "
@@ -339,8 +352,9 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                           disabled={isSubmitting}
                           className="w-full"
                           onClick={handleSubmit}
+                          type="button"
                         >
-                          Update profile
+                          {t("Update_profile")}
                         </ButtonPrimary>
                       </div>
                     </div>

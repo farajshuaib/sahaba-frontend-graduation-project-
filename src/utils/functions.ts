@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { ethers, Contract, utils, BigNumber } from "ethers";
 import { networkParams } from "services/networks";
 import { store } from "app/store";
+import { t } from "i18next";
 
 export const getBalance = async (address: string) => {
   if (!window?.ethereum) {
@@ -82,3 +83,8 @@ export const usdPrice = (nft_price: number): string => {
   if (!eth_price) return "";
   return `${(nft_price * eth_price).toFixed(2)} USD`;
 };
+
+export function copyToClipboard(value: string) {
+  navigator.clipboard.writeText(value);
+  toast.success(t("copied_success"));
+}

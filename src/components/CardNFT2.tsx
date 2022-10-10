@@ -7,16 +7,15 @@ import ItemTypeVideoIcon from "./ItemTypeVideoIcon";
 import Prices from "./Prices";
 import RemainingTimeNftCard from "./RemainingTimeNftCard";
 import useCountDownTime from "hooks/useCountDownTime";
+import { useTranslation } from "react-i18next";
 
 export interface CardNFT2Props {
   className?: string;
-  isLiked?: boolean;
   nft: Nft;
 }
 
-const CardNFT2: FC<CardNFT2Props> = ({ className = "", isLiked, nft }) => {
-  
-
+const CardNFT2: FC<CardNFT2Props> = ({ className = "", nft }) => {
+  const { t } = useTranslation();
   return (
     <div
       className={`nc-CardNFT2 relative bg-white dark:bg-neutral-900 rounded-3xl flex flex-col group p-2.5  ${className}`}
@@ -31,20 +30,25 @@ const CardNFT2: FC<CardNFT2Props> = ({ className = "", isLiked, nft }) => {
           />
         </div>
 
-        {/* NFT TYPE */}
-        {nft.file_type == "video" ? (
-          <ItemTypeVideoIcon className="absolute bottom-2.5 right-2.5 w-7 h-7 md:w-9 md:h-9" />
-        ) : (
-          <ItemTypeImageIcon className="absolute bottom-2.5 right-2.5 w-7 h-7 md:w-9 md:h-9" />
-        )}
+        <ItemTypeImageIcon className="absolute bottom-2.5 right-2.5 w-7 h-7 md:w-9 md:h-9" />
 
         {/* LIKE AND AVATARS */}
         <div className="absolute top-2.5 left-2.5 z-10 flex items-center space-x-2">
-          <LikeButton nft_id={nft.id} like_count={nft.like_count} liked={nft.is_liked} className=" !h-9" />
+          <LikeButton
+            nft_id={nft.id}
+            like_count={nft.like_count}
+            liked={nft.is_liked}
+            className=" !h-9"
+          />
         </div>
 
         {/* ----TIME--- */}
-        {nft.is_for_sale && <RemainingTimeNftCard sale_end_at={nft.sale_end_at}  contentClassName="right-5 top-1/2 -translate-y-1/2 pb-1" />}
+        {nft.is_for_sale && (
+          <RemainingTimeNftCard
+            sale_end_at={nft.sale_end_at}
+            contentClassName="right-5 top-1/2 -translate-y-1/2 pb-1"
+          />
+        )}
 
         <div className="absolute left-[-1px] bottom-[-0.4px] ">
           <svg
@@ -67,7 +71,7 @@ const CardNFT2: FC<CardNFT2Props> = ({ className = "", isLiked, nft }) => {
               {/* <Prices2 /> */}
               <Prices
                 price={`${nft.price} ETH`}
-                labelText="price"
+                labelText={t("price")}
                 labelTextClassName="bg-white dark:bg-neutral-900 "
               />
             </div>

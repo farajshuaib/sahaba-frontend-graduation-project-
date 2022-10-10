@@ -13,11 +13,13 @@ import { useParams } from "react-router-dom";
 import LoadingScreen from "components/LoadingScreen";
 import { useAppSelector } from "app/hooks";
 import ServerError from "components/ServerError";
+import { useTranslation } from "react-i18next";
 
 interface CollectionNftsProps {
   collection_id: number | string;
 }
 const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection_id }) => {
+  
   const [page, setPage] = useState<number>(1);
   const [priceRange, setPriceRange] = useState([0.01, 5.0]);
   const [sortBy, setSortBy] = useState<string>("");
@@ -68,6 +70,7 @@ export interface PageCollectionProps {
 
 const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
   const params: any = useParams();
+  const { t } = useTranslation();
   const {
     fetchById,
     item: collection,
@@ -169,12 +172,12 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                       collection?.created_by?.id == userData?.id
                         ? {
                             id: "addCollaboration",
-                            name: "Add Collaboration",
+                            name: t("Add_Collaboration"),
                             icon: "las la-sync",
                           }
                         : {
                             id: "report",
-                            name: "Report abuse",
+                            name: t("Report_abuse"),
                             icon: "las la-flag",
                           },
                     ]}
@@ -197,7 +200,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                 {/* ----- 1 ----- */}
                 <div className="flex flex-col items-center justify-center p-5 border shadow-md rounded-2xl border-neutral-50 dark:border-neutral-800 lg:p-6">
                   <span className="text-sm text-neutral-500 dark:text-neutral-400">
-                    Floor Price
+                    {t("Floor_Price")}
                   </span>
                   <span className="mt-4 text-base font-medium sm:text-xl sm:mt-6">
                     {collection.min_price} ETH
@@ -208,19 +211,19 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                 {/* ----- Volume ----- */}
                 <div className="flex flex-col items-center justify-center p-5 border shadow-md rounded-2xl border-neutral-50 dark:border-neutral-800 lg:p-6">
                   <span className="text-sm text-neutral-500 dark:text-neutral-400">
-                    Volume
+                    {t("Volume")}
                   </span>
                   <span className="mt-4 text-base font-medium sm:text-xl sm:mt-6">
                     {collection.volume} ETH
                   </span>
                   <span className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
-                    total
+                    {t("total")}
                   </span>
                 </div>
                 {/* ----- Latest Price ----- */}
                 <div className="flex flex-col items-center justify-center p-5 border shadow-md rounded-2xl border-neutral-50 dark:border-neutral-800 lg:p-6">
                   <span className="text-sm text-neutral-500 dark:text-neutral-400">
-                    Latest Price
+                    {t("Latest_Price")}
                   </span>
                   <span className="mt-4 text-base font-medium sm:text-xl sm:mt-6">
                     {collection.max_price} ETH
@@ -231,13 +234,13 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                 {/* -----Items ----- */}
                 <div className="flex flex-col items-center justify-center p-5 border shadow-md rounded-2xl border-neutral-50 dark:border-neutral-800 lg:p-6">
                   <span className="text-sm text-neutral-500 dark:text-neutral-400">
-                    Items
+                    {t("Items")}
                   </span>
                   <span className="mt-4 text-base font-medium sm:text-xl sm:mt-6">
                     {collection?.nfts_count}
                   </span>
                   <span className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
-                    total
+                    {t("total")}
                   </span>
                 </div>
               </div>
@@ -254,7 +257,6 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
           <BackgroundSection />
           <SectionSliderCollections />
         </div>
-
       </div>
     </div>
   );

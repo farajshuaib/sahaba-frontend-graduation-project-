@@ -4,6 +4,7 @@ import { Contract } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 import { useCrud } from "hooks/useCrud";
 import React, { FC, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
@@ -17,6 +18,7 @@ export interface ModalEditProps {
 }
 
 const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, nft }) => {
+  const { t } = useTranslation();
   const textareaRef = useRef(null);
   const { library, account } = useWeb3React();
   const [price, setPrice] = useState<number>(nft?.price || 0);
@@ -39,7 +41,7 @@ const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, nft }) => {
       );
       await transaction.wait();
       await update({ id: nft.id, payload: { price } });
-      toast.success("price updated successfully");
+      toast.success(t("NFT_price_updated_successfully"));
       setLoading(false);
       onCloseModalEdit();
     } catch (error) {
@@ -67,9 +69,9 @@ const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, nft }) => {
     return (
       <form action="#">
         <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
-          Change price
+          {t("Change_price")}
         </h3>
-        <span className="text-sm">Are you sure you want to change price?</span>
+        <span className="text-sm">{t("Change_price_desc")}</span>
         <div className="relative mt-8 rounded-md shadow-sm">
           <Input
             ref={textareaRef}
@@ -85,7 +87,7 @@ const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, nft }) => {
 
           <div className="absolute inset-y-0 right-0 flex items-center">
             <label htmlFor="currency" className="sr-only">
-              Currency
+              {t("Currency")}
             </label>
             <select
               id="currency"
@@ -106,14 +108,14 @@ const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, nft }) => {
             type="button"
             onClick={submit}
           >
-            Submit
+            {t("submit")}
           </ButtonPrimary>
           <ButtonSecondary
             disabled={loading}
             type="button"
             onClick={onCloseModalEdit}
           >
-            Cancel
+            {t("Cancel")}
           </ButtonSecondary>
         </div>
       </form>

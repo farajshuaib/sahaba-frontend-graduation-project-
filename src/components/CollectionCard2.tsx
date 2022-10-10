@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Avatar from "shared/Avatar/Avatar";
 import NcImage from "shared/NcImage/NcImage";
@@ -14,6 +15,7 @@ const CollectionCard2: FC<CollectionCard2Props> = ({
   className,
   collection,
 }) => {
+  const { t } = useTranslation();
   return (
     <div className={`CollectionCard2 group relative ${className}`}>
       <div className="relative flex flex-col overflow-hidden rounded-2xl">
@@ -22,7 +24,7 @@ const CollectionCard2: FC<CollectionCard2Props> = ({
           src={collection?.logo_image}
         />
         <div className="grid grid-cols-3 gap-1.5 mt-1.5">
-          {collection?.nfts.slice(0,3).map((nft: Nft, index: number) => (
+          {collection?.nfts.slice(0, 3).map((nft: Nft, index: number) => (
             <NcImage
               key={index}
               containerClassName="w-full h-28"
@@ -45,7 +47,7 @@ const CollectionCard2: FC<CollectionCard2Props> = ({
             />
             <div className="ml-2 text-sm truncate">
               <span className="hidden font-normal sm:inline-block">
-                Creator
+                {t("Creator")}
               </span>
               {` `}
               <span className="font-medium">
@@ -57,7 +59,7 @@ const CollectionCard2: FC<CollectionCard2Props> = ({
             )}
           </div>
           <span className="mb-0.5 ml-2 inline-flex justify-center items-center px-2 py-1.5 border-2 border-secondary-500 text-secondary-500 rounded-md text-xs !leading-none font-medium">
-            {collection?.nfts_count} Items
+            {collection?.nfts_count} {t("Items")}
           </span>
         </div>
       </div>

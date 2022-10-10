@@ -11,12 +11,14 @@ import SectionSliderCategories from "components/SectionSliderCategories/SectionS
 import Heading from "components/Heading/Heading";
 import ServerError from "components/ServerError";
 import BgGlassmorphism from "components/BgGlassmorphism/BgGlassmorphism";
+import { useTranslation } from "react-i18next";
 
 export interface PageCollectionsProps {
   className?: string;
 }
 
 const PageCollections: FC<PageCollectionsProps> = ({ className = "" }) => {
+  const { t } = useTranslation();
   const params: any = useParams();
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
@@ -62,7 +64,7 @@ const PageCollections: FC<PageCollectionsProps> = ({ className = "" }) => {
       data-nc-id="PageCollections"
     >
       <Helmet>
-        <title>Collections</title>
+        <title>{t("Collections")}</title>
       </Helmet>
 
       <div
@@ -74,7 +76,7 @@ const PageCollections: FC<PageCollectionsProps> = ({ className = "" }) => {
         <main>
           {/* FILTER */}
           <Heading isCenter={false} desc="Discover the new creative economy">
-            Collections
+            {t("Collections")}
           </Heading>
 
           <BgGlassmorphism />
@@ -96,7 +98,7 @@ const PageCollections: FC<PageCollectionsProps> = ({ className = "" }) => {
             )}
             {meta && page < meta?.last_page && (
               <ButtonPrimary onClick={() => setPage(page + 1)}>
-                Show me more
+                {t("Show_me_more")}
               </ButtonPrimary>
             )}
           </div>

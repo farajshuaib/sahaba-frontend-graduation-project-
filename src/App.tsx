@@ -1,30 +1,32 @@
 import { useWeb3React } from "@web3-react/core";
 import { connectToWallet, logout } from "app/account/actions";
-import { getCategories } from "app/general/actions";
+import { getCategories, getEthPriceInUSD } from "app/general/actions";
 import { useAppDispatch, useAppSelector } from "app/hooks";
+import HeaderLogged from "components/Header/HeaderLogged";
 import React, { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { Outlet, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import MyRouter from "routers/index";
 import { injected } from "services/connectors";
-import { networkParams } from "services/networks";
+import Footer from "shared/Footer/Footer";
 import { switchNetwork } from "utils/functions";
 
 function App() {
   const { account, activate, active, error, chainId } = useWeb3React();
   const dispatch = useAppDispatch();
-  const history = useHistory()
+  const navigate = useNavigate();
+  const { t } = useTranslation();
   const userData: UserData = useAppSelector((state) => state.account.userData);
 
   const handleAccountState = async () => {
-    if (account && (userData?.wallet_address != account)) {
+    if (account && userData?.wallet_address != account) {
       await dispatch(logout());
     }
     if (!account) return;
     await dispatch(connectToWallet(account));
-    if(!userData?.username || !userData?.email){
-      history.push('/account')
-      toast.warning("please complete your profile data")
+    if (userData && (!userData?.username || !userData?.email)) {
+      navigate("/account");
+      toast.warning(t("please_complete_your_profile_data"));
     }
   };
 
@@ -46,11 +48,17 @@ function App() {
 
   useEffect(() => {
     handleAccountState();
-  }, [account, chainId]);
+  }, [account, chainId, active]);
+
+  useEffect(() => {
+    dispatch(getEthPriceInUSD());
+  }, []);
 
   return (
     <div className="text-base bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
-      <MyRouter />
+      <HeaderLogged />
+      <Outlet />
+      <Footer />
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import { useCrud } from "hooks/useCrud";
+import { t } from "i18next";
 import React, { FC } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useLocation, useNavigate } from "react-router-dom";
 import ButtonPrimary, { ButtonPrimaryProps } from "shared/Button/ButtonPrimary";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 
@@ -16,7 +18,8 @@ const FollowButton: FC<FollowButtonProps> = ({
   isFollowing,
   user_id
 }) => {
-  const history = useHistory()
+  const {t} = useTranslation()
+  const navigate = useNavigate()
   const { create } = useCrud(`/users/toggle-follow/${user_id}`);
   const [following, setFollowing] = React.useState(isFollowing);
 
@@ -30,14 +33,14 @@ const FollowButton: FC<FollowButtonProps> = ({
       fontSize={fontSize}
       onClick={() => {
         if(typeof(isFollowing) == 'undefined'){
-          history.push('/connect-wallet')
+          navigate('/connect-wallet')
           return
         }
         create();
         setFollowing(true);
       }}
     >
-      Follow
+      {t("Follow")}
     </ButtonPrimary>
   ) : (
     <ButtonSecondary
@@ -46,14 +49,14 @@ const FollowButton: FC<FollowButtonProps> = ({
       fontSize={fontSize}
       onClick={() => {
         if(typeof(isFollowing) == 'undefined'){
-          history.push('/connect-wallet')
+          navigate('/connect-wallet')
           return
         }
         create();
         setFollowing(false);
       }}
     >
-      <span className="text-sm ">Following</span>
+      <span className="text-sm ">{t("Following")}</span>
     </ButtonSecondary>
   );
 };

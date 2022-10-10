@@ -9,31 +9,22 @@ import TimeCountDown from "./TimeCountDown";
 import VerifyIcon from "components/VerifyIcon";
 import { usdPrice } from "utils/functions";
 import ItemTypeImageIcon from "components/ItemTypeImageIcon";
+import { useTranslation } from "react-i18next";
 
 export interface CardLarge1Props {
   className?: string;
   onClickNext?: () => void;
   onClickPrev?: () => void;
-  isShowing?: boolean;
-  featuredImgUrl?: string;
   nft: Nft;
 }
 
 const CardLarge1: FC<CardLarge1Props> = ({
   className = "",
-  isShowing = true,
   onClickNext = () => {},
   onClickPrev = () => {},
-  featuredImgUrl,
   nft,
 }) => {
-  const randomTitle = [
-    "Walking On Air ",
-    "Amazing Nature",
-    "Beautiful NFT",
-    "Lovely NFT",
-    "Wolf Face #1",
-  ];
+  const { t } = useTranslation();
   return (
     <div
       className={`nc-CardLarge1 nc-CardLarge1--hasAnimation relative flex flex-col-reverse lg:flex-row justify-end ${className}`}
@@ -57,7 +48,9 @@ const CardLarge1: FC<CardLarge1Props> = ({
                 />
               </div>
               <div className="ml-3">
-                <div className="text-xs dark:text-neutral-400">Creator</div>
+                <div className="text-xs dark:text-neutral-400">
+                  {t("Creator")}
+                </div>
                 <div className="flex items-center text-sm font-semibold">
                   <span>{nft.creator.username || "anon"}</span>
                   {nft.creator.is_verified && <VerifyIcon />}
@@ -72,7 +65,9 @@ const CardLarge1: FC<CardLarge1Props> = ({
                 />
               </div>
               <div className="ml-3">
-                <div className="text-xs dark:text-neutral-400">Collection</div>
+                <div className="text-xs dark:text-neutral-400">
+                  {t("Collection")}
+                </div>
                 <div className="text-sm font-semibold ">
                   {nft.collection.name}
                 </div>
@@ -84,13 +79,13 @@ const CardLarge1: FC<CardLarge1Props> = ({
           <div className="pt-6">
             <div className="relative flex flex-col items-baseline p-6 border-2 border-green-500 sm:flex-row rounded-xl">
               <span className="block absolute bottom-full translate-y-1.5 py-1 px-1.5 bg-white dark:bg-neutral-900 text-sm text-neutral-500 dark:text-neutral-400 ring ring-offset-0 ring-white dark:ring-neutral-900">
-                Price
+                {t("Price")}
               </span>
               <span className="text-3xl font-semibold text-green-500 xl:text-4xl">
                 {nft.price} ETH
               </span>
               <span className="text-lg text-neutral-400 sm:ml-3.5">
-                (≈ ${usdPrice(nft.price)})
+                ≈ ${usdPrice(nft.price)}
               </span>
             </div>
           </div>
@@ -103,7 +98,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
           {/* DESCRIPTION */}
           <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-3">
             <ButtonSecondary href={`/nft-details/${nft.id}`} className="flex-1">
-              View item
+              {t("View_item")}
             </ButtonSecondary>
           </div>
         </div>

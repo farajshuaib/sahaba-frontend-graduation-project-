@@ -3,6 +3,7 @@ import LoadingScreen from "components/LoadingScreen";
 import ServerError from "components/ServerError";
 import { useCrud } from "hooks/useCrud";
 import React, { FC, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export interface SectionLargeSliderProps {
   className?: string;
@@ -11,6 +12,7 @@ export interface SectionLargeSliderProps {
 const SectionLargeSlider: FC<SectionLargeSliderProps> = ({
   className = "",
 }) => {
+  
   const { fetch, data, loading, errors } = useCrud("/latest-nfts?type=image");
   const [indexActive, setIndexActive] = useState(0);
 
@@ -50,9 +52,7 @@ const SectionLargeSlider: FC<SectionLargeSliderProps> = ({
         indexActive === index ? (
           <CardLarge1
             key={index}
-            isShowing
             nft={nft}
-            featuredImgUrl={nft.file_path}
             onClickNext={handleClickNext}
             onClickPrev={handleClickPrev}
           />

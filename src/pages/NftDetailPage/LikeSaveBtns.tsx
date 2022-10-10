@@ -2,12 +2,14 @@ import { useAppSelector } from "app/hooks";
 import ButtonDropDownShare from "components/ButtonDropDownShare";
 import NftMoreDropdown from "components/NftMoreDropdown";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface LikeSaveBtnProps {
   nft: Nft;
 }
 
 const LikeSaveBtns: React.FC<LikeSaveBtnProps> = ({ nft }) => {
+  const {t} = useTranslation()
   const userData = useAppSelector((state) => state.account.userData);
 
   return (
@@ -35,19 +37,19 @@ const LikeSaveBtns: React.FC<LikeSaveBtnProps> = ({ nft }) => {
               ? [
                   {
                     id: "report",
-                    name: "Report abuse",
+                    name: t("Report_abuse"),
                     icon: "las la-flag",
                   },
                 ]
               : [
                   {
                     id: "edit",
-                    name: "Change price",
+                    name: t("Change_price"),
                     icon: "las la-dollar-sign",
                   },
                   {
                     id: "delete",
-                    name: "Delete item",
+                    name: t("Delete_item"),
                     icon: "las la-trash-alt",
                   },
                 ]

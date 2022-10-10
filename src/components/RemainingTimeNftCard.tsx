@@ -1,17 +1,19 @@
 import useCountDownTime from "hooks/useCountDownTime";
 import React, { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   className?: string;
   contentClassName?: string;
-  sale_end_at: Date
+  sale_end_at: Date;
 }
 
 const RemainingTimeNftCard: FC<Props> = ({
   className = "absolute top-[-1px] right-[-1px] flex items-center",
   contentClassName = "right-5 top-1/2 -translate-y-1/2 ",
-  sale_end_at
+  sale_end_at,
 }) => {
+  const { t } = useTranslation();
   const timeLeft = useCountDownTime(sale_end_at);
   return (
     <div className={className}>
@@ -29,9 +31,15 @@ const RemainingTimeNftCard: FC<Props> = ({
 
       <div className={`absolute ${contentClassName}`}>
         <span className="block text-xs tracking-wide text-neutral-500 dark:text-neutral-400">
-          Remaining time
+          {t("Remaining_time")}
         </span>
-        <span className="block font-semibold md:text-lg">{timeLeft.days}d : {timeLeft.hours}h : {timeLeft.minutes}m : {timeLeft.seconds}s</span>
+        <span className="block font-semibold md:text-lg">
+          {timeLeft.days}
+          {t("d")} : {timeLeft.hours}
+          {t("h")} : {timeLeft.minutes}
+          {t("m")} : {timeLeft.seconds}
+          {t("s")}
+        </span>
       </div>
     </div>
   );

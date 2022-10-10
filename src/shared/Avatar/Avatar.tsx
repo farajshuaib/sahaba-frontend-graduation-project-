@@ -34,14 +34,15 @@ const Avatar: FC<AvatarProps> = ({
       className={`wil-avatar relative flex-shrink-0 inline-flex items-center justify-center text-neutral-100 uppercase font-semibold shadow-inner ${radius} ${sizeClass} ${containerClassName}`}
       style={{ background: url ? undefined : _setBgColor(name) }}
     >
-      {url && (
+      {url ? (
         <img
           className={`absolute inset-0 object-cover w-full h-full text-center mx-auto  ${radius}`}
           src={url}
           alt={userName}
         />
+      ) : (
+        <i className="absolute inset-0 block object-cover w-full h-full mx-auto text-xl text-center bx bx-user"></i>
       )}
-      <span className="wil-avatar__name">{userName}</span>
 
       {hasChecked && (
         <span className={`  text-white  absolute  ${hasCheckedClass}`}>

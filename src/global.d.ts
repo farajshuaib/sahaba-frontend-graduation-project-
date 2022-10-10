@@ -22,6 +22,26 @@ declare module "virtual:pwa-register/react" {
   };
 }
 
+interface LocationStates {
+  "/"?: {};
+  "/#"?: {};
+  "/nft-details/:id"?: {};
+  "/collections"?: {};
+  "/collections/:category_id"?:{};
+  "/create-collection"?:{};
+  "/collection/:id"?: {};
+  "/search"?: {};
+  "/author/:id"?: {};
+  "/create-nft"?: {};
+  "/connect-wallet"?: {};
+  "/account"?: {};
+  "/about"?: {};
+  "/contact"?: {};
+  "/forgot-pass"?: {};
+  "/page404"?: {};
+  "/kyc-form"?: {}
+}
+
 interface Meta {
   count: number;
   current: number;
@@ -84,7 +104,6 @@ interface Nft {
   creator_address: string;
   description: string;
   file_path: string;
-  file_type: "image" | "audio" | "video";
   collection: Collection;
   creator: UserData;
   owner: UserData;

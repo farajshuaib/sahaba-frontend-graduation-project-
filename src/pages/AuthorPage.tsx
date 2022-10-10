@@ -15,12 +15,15 @@ import { useParams } from "react-router-dom";
 import { useAppSelector } from "app/hooks";
 import LoadingScreen from "components/LoadingScreen";
 import ServerError from "components/ServerError";
+import { useTranslation } from "react-i18next";
+import { copyToClipboard } from "utils/functions";
 
 export interface AuthorPageProps {
   className?: string;
 }
 
 const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
+  const { t } = useTranslation();
   const userData: UserData = useAppSelector((state) => state.account.userData);
   const params: any = useParams();
   const { fetchById, loading, item, errors } = useCrud("/users");
@@ -83,7 +86,16 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
                   <span className="text-neutral-700 dark:text-neutral-300">
                     {item?.wallet_address}
                   </span>
-                  <svg width="20" height="21" viewBox="0 0 20 21" fill="none">
+                  <svg
+                    onClick={() => {
+                      copyToClipboard(item?.wallet_address);
+                    }}
+                    width="20"
+                    height="21"
+                    viewBox="0 0 20 21"
+                    className="cursor-pointer"
+                    fill="none"
+                  >
                     <path
                       d="M18.05 9.19992L17.2333 12.6833C16.5333 15.6916 15.15 16.9083 12.55 16.6583C12.1333 16.6249 11.6833 16.5499 11.2 16.4333L9.79999 16.0999C6.32499 15.2749 5.24999 13.5583 6.06665 10.0749L6.88332 6.58326C7.04999 5.87492 7.24999 5.25826 7.49999 4.74992C8.47499 2.73326 10.1333 2.19159 12.9167 2.84993L14.3083 3.17493C17.8 3.99159 18.8667 5.71659 18.05 9.19992Z"
                       stroke="currentColor"
@@ -122,7 +134,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
                   actions={[
                     {
                       id: "report",
-                      name: "Report abuse",
+                      name: t("Report_abuse"),
                       icon: "las la-flag",
                     },
                   ]}

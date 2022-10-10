@@ -2,8 +2,9 @@ import React, { FC, useEffect, useId, useRef } from "react";
 import Heading from "components/Heading/Heading";
 import Glide from "@glidejs/glide";
 import CardCategory5 from "components/CardCategory5/CardCategory5";
-import { nftsCatImgs } from "contains/fakeData";
-import {  useAppSelector } from "app/hooks";
+import { useAppSelector } from "app/hooks";
+import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 export interface SectionSliderCategoriesProps {
   className?: string;
@@ -12,22 +13,16 @@ export interface SectionSliderCategoriesProps {
   subHeading?: string;
 }
 
-
-
 const SectionSliderCategories: FC<SectionSliderCategoriesProps> = ({
-  heading = "Browse by category",
-  subHeading = "Explore the NFTs in the most featured categories.",
+  heading = t("Browse_by_category"),
+  subHeading = t("Browse_by_category_desc"),
   className = "",
   itemClassName = "",
 }) => {
   const sliderRef = useRef(null);
   const id = useId();
   const UNIQUE_CLASS = "glidejs" + id.replace(/:/g, "_");
-  const categories = useAppSelector((state) => state.general.categories)
-
-
-
- 
+  const categories = useAppSelector((state) => state.general.categories);
 
   useEffect(() => {
     if (!sliderRef.current) {
@@ -75,17 +70,18 @@ const SectionSliderCategories: FC<SectionSliderCategoriesProps> = ({
         </Heading>
         <div className="glide__track" data-glide-el="track">
           <ul className="glide__slides">
-            {categories && categories.map((item: Category, index: number) => (
-              <li key={index} className={`glide__slide ${itemClassName}`}>
-                <CardCategory5
-                  index={index}
-                  category_id={item.id}
-                  featuredImage={item.icon}
-                  nft_count={item.nfts_count}
-                  name={item.name}
-                />
-              </li>
-            ))}
+            {categories &&
+              categories.map((item: Category, index: number) => (
+                <li key={index} className={`glide__slide ${itemClassName}`}>
+                  <CardCategory5
+                    index={index}
+                    category_id={item.id}
+                    featuredImage={item.icon}
+                    nft_count={item.nfts_count}
+                    name={item.name}
+                  />
+                </li>
+              ))}
           </ul>
         </div>
       </div>

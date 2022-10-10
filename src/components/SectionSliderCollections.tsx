@@ -6,16 +6,16 @@ import CollectionCard2 from "./CollectionCard2";
 import { Link } from "react-router-dom";
 import { useCrud } from "hooks/useCrud";
 import LoadingScreen from "./LoadingScreen";
+import { useTranslation } from "react-i18next";
 
 interface CollectionsSliderProp {
   collections: Collection[];
-  cardStyle: string;
 }
 
 const CollectionsSlider: React.FC<CollectionsSliderProp> = ({
   collections,
-  cardStyle,
 }) => {
+  const { t } = useTranslation();
   const sliderRef = useRef(null);
   const id = useId();
   const UNIQUE_CLASS = "glidejs" + id.replace(/:/g, "_");
@@ -55,9 +55,6 @@ const CollectionsSlider: React.FC<CollectionsSliderProp> = ({
     return () => slider.destroy();
   }, [sliderRef, UNIQUE_CLASS]);
 
-  const MyCollectionCard =
-    cardStyle === "style1" ? CollectionCard : CollectionCard2;
-
   return (
     <div className={`${UNIQUE_CLASS} flow-root`} ref={sliderRef}>
       <Heading
@@ -65,13 +62,13 @@ const CollectionsSlider: React.FC<CollectionsSliderProp> = ({
         hasNextPrev
         desc="Discover the new creative economy"
       >
-        Latest collections
+        {t("Latest_collections")}
       </Heading>
       <div className="glide__track" data-glide-el="track">
         <ul className="glide__slides">
           {collections.map((collection, index: number) => (
             <li key={index} className={`glide__slide`}>
-              <MyCollectionCard collection={collection}  />
+              <CollectionCard2 collection={collection} />
             </li>
           ))}
 
@@ -81,7 +78,9 @@ const CollectionsSlider: React.FC<CollectionsSliderProp> = ({
                 <div className="h-[410px] bg-black/5 dark:bg-neutral-800"></div>
                 <div className="absolute flex flex-col items-center justify-center inset-y-6 inset-x-10">
                   <div className="relative flex items-center justify-center">
-                    <span className="text-xl font-semibold">Collections</span>
+                    <span className="text-xl font-semibold">
+                      {t("Collections")}
+                    </span>
                     <svg
                       className="absolute w-5 h-5 ml-2 transition-transform rotate-45 left-full group-hover:scale-110"
                       viewBox="0 0 24 24"
@@ -106,7 +105,7 @@ const CollectionsSlider: React.FC<CollectionsSliderProp> = ({
                       />
                     </svg>
                   </div>
-                  <span className="mt-1 text-sm">Show me more</span>
+                  <span className="mt-1 text-sm">{t("Show_me_more")}</span>
                 </div>
               </div>
             </Link>
@@ -119,12 +118,10 @@ const CollectionsSlider: React.FC<CollectionsSliderProp> = ({
 export interface SectionSliderCollectionsProps {
   className?: string;
   itemClassName?: string;
-  cardStyle?: "style1" | "style2";
 }
 
 const SectionSliderCollections: FC<SectionSliderCollectionsProps> = ({
   className = "",
-  cardStyle = "style1",
 }) => {
   const { fetch, data, loading } = useCrud("/collections");
 
@@ -138,7 +135,7 @@ const SectionSliderCollections: FC<SectionSliderCollectionsProps> = ({
 
   return (
     <div className={`nc-SectionSliderCollections ${className}`}>
-      <CollectionsSlider cardStyle={cardStyle} collections={data} />
+      <CollectionsSlider collections={data} />
     </div>
   );
 };
