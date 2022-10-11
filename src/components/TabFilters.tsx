@@ -492,7 +492,7 @@ const TabFilters: React.FC<Props> = ({
                     <div className="px-8 divide-y md:px-10 divide-neutral-200 dark:divide-neutral-800">
                       <div className="py-7">
                         <h3 className="text-xl font-medium">
-                          {t("Range_Prices")}
+                          {t("Price_range")}
                         </h3>
                         <div className="relative mt-6 ">
                           <div className="relative flex flex-col space-y-8">
