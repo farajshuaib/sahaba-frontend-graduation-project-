@@ -21,11 +21,10 @@ import { CONTRACT_ABI, CONTRACT_ADDRESS } from "constant";
 import { useApi } from "hooks/useApi";
 import ServerError from "components/ServerError";
 import { usdPrice } from "utils/functions";
-import { Label, Modal } from "flowbite-react";
+import { Modal } from "flowbite-react";
 import Select from "shared/Select/Select";
 import moment from "moment";
 import FormItem from "components/FormItem";
-import ItemTypeImageIcon from "components/ItemTypeImageIcon";
 import NftItem from "./NftItem";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
@@ -182,14 +181,14 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
           </h2>
 
           {/* ---------- 4 ----------  */}
-          <div className="flex flex-col space-y-4 text-sm sm:flex-row sm:items-center sm:space-y-0 sm:space-x-8">
-            <div className="flex items-center ">
+          <div className="flex flex-col gap-5 text-sm sm:flex-row sm:items-center sm:gap-8">
+            <div className="flex items-center gap-3">
               <Avatar
                 imgUrl={item?.creator?.profile_photo}
                 sizeClass="h-9 w-9"
                 radius="rounded-full"
               />
-              <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
+              <span className="flex flex-col text-neutral-500 dark:text-neutral-400">
                 <span className="text-sm">{t("Creator")}</span>
                 <span className="flex items-center font-medium text-neutral-900 dark:text-neutral-200">
                   <span>
@@ -203,13 +202,13 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
               </span>
             </div>
             <div className="hidden h-6 border-l sm:block border-neutral-200 dark:border-neutral-700"></div>
-            <div className="flex items-center">
+            <div className="flex items-center gap-3">
               <Avatar
                 imgUrl={item?.collection?.logo_image}
                 sizeClass="h-9 w-9"
                 radius="rounded-full"
               />
-              <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
+              <span className="flex flex-col text-neutral-500 dark:text-neutral-400">
                 <span className="text-sm">{t("Collection")}</span>
                 <span className="flex items-center font-medium text-neutral-900 dark:text-neutral-200">
                   <span>{item.collection?.name}</span>
@@ -234,14 +233,14 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
               <span className="absolute bottom-full translate-y-1 py-1 px-1.5 bg-white dark:bg-neutral-900 text-sm text-neutral-500 dark:text-neutral-400">
                 {t("price")}
               </span>
-              <span className="text-3xl font-semibold text-green-500 xl:text-4xl">
-                {item?.price} ETH{" "}
-                <span className="text-xs">{`+ ${serviceFee} ${t(
-                  "service_fees"
-                )}`}</span>
+              <span className="flex items-baseline gap-1 text-3xl font-semibold text-green-500 xl:text-4xl">
+                <span>{item?.price} ETH</span>
+                <span className="text-xs">
+                  {`+ ${serviceFee} ${t("service_fees")}`}
+                </span>
               </span>
-              <span className="text-lg text-neutral-400 sm:ml-2">
-                ≈ ${usdPrice(item?.price + serviceFee)}
+              <span className="text-lg text-neutral-400 sm:mx-2">
+                ≈ {usdPrice(item?.price + serviceFee)}
               </span>
             </div>
           </div>
@@ -314,7 +313,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
 
   const renderSetForSaleModal = () => (
     <Modal show={forSaleModal} onClose={() => setForSaleModal(false)}>
-      <Modal.Header>Set NFT for sale</Modal.Header>
+      <Modal.Header>{t("Set_NFT_for_sale")}</Modal.Header>
       <Modal.Body>
         <FormItem htmlFor="sale_end_at" label={t("Sale_end_in")}>
           <Select

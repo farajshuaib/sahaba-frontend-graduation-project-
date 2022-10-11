@@ -19,6 +19,7 @@ import "./styles/index.css";
 import "./assets/fonts/line-awesome-1.3.0/css/line-awesome.css";
 import "rc-slider/assets/index.css";
 import "react-toastify/dist/ReactToastify.css";
+import useDarkMode from "hooks/useDarkMode";
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -54,6 +55,7 @@ interface Props {
 }
 const Wrapper: React.FC<Props> = ({ children }) => {
   const { i18n } = useTranslation();
+  const {} = useDarkMode();
 
   useRegisterSW({
     onRegistered(r) {
@@ -65,9 +67,14 @@ const Wrapper: React.FC<Props> = ({ children }) => {
   });
 
   useEffect(() => {
-    document.body.dir = i18n.language == "ar" ? "rtl" : "ltr";
+    document.body.dir = i18n.language == "en" ? "ltr" : "rtl";
     document.documentElement.lang = i18n.language;
-  }, []);
+    if (i18n.language == "ar") {
+      document.body.style.fontFamily = "Tajawal, sans-serif";
+    } else {
+      document.body.style.fontFamily = "Inter, sans-serif";
+    }
+  }, [i18n.language]);
 
   return (
     <Web3ReactProvider getLibrary={getLibrary}>

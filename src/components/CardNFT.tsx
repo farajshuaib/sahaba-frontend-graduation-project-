@@ -6,10 +6,8 @@ import ItemTypeImageIcon from "./ItemTypeImageIcon";
 import LikeButton from "./LikeButton";
 import Prices from "./Prices";
 import { ClockIcon } from "@heroicons/react/outline";
-import ItemTypeVideoIcon from "./ItemTypeVideoIcon";
 import VerifyIcon from "./VerifyIcon";
 import useCountDownTime from "hooks/useCountDownTime";
-import { t } from "i18next";
 import { useTranslation } from "react-i18next";
 
 export interface CardNFTProps {
@@ -44,13 +42,13 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", nft }) => {
       </div>
 
       <div className="p-4 py-5 space-y-3">
-        <div className="flex items-center">
+        <div className="flex items-center gap-3">
           <Avatar
             imgUrl={nft?.creator?.profile_photo}
             sizeClass="h-6 w-6"
             containerClassName="ring-2 ring-white"
           />
-          <div className="ml-2 text-xs text-white">
+          <div className="text-xs text-white ">
             <span className="font-normal">by</span>
             {` `}
             <span className="font-medium">

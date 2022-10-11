@@ -40,12 +40,12 @@ const CollectionCard2: FC<CollectionCard2Props> = ({
         </h2>
         {/* AUTHOR */}
         <div className="flex justify-between mt-2">
-          <div className="flex items-center truncate">
+          <div className="flex items-center gap-3 truncate">
             <Avatar
               imgUrl={collection?.created_by?.profile_photo}
               sizeClass="h-6 w-6"
             />
-            <div className="ml-2 text-sm truncate">
+            <div className="text-sm truncate ">
               <span className="hidden font-normal sm:inline-block">
                 {t("Creator")}
               </span>

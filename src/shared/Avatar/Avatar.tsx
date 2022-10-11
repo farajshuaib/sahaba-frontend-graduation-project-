@@ -41,7 +41,9 @@ const Avatar: FC<AvatarProps> = ({
           alt={userName}
         />
       ) : (
-        <i className="absolute inset-0 block object-cover w-full h-full mx-auto text-xl text-center bx bx-user"></i>
+        <div className="absolute inset-0 flex items-center justify-center ">
+          <i className="text-xl text-center bx bx-user"></i>
+        </div>
       )}
 
       {hasChecked && (

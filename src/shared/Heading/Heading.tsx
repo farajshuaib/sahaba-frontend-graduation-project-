@@ -29,13 +29,13 @@ const Heading: React.FC<HeadingProps> = ({
           {children || `Section Heading`}
         </h2>
         {desc && (
-          <span className="mt-2 md:mt-4 font-normal block text-base sm:text-lg text-neutral-500 dark:text-neutral-400">
+          <span className="block mt-2 text-base font-normal md:mt-4 sm:text-lg text-neutral-500 dark:text-neutral-400">
             {desc}
           </span>
         )}
       </div>
       {hasNextPrev && !isCenter && (
-        <div className="mt-4 flex justify-end sm:ml-2 sm:mt-0 flex-shrink-0">
+        <div className="flex justify-end flex-shrink-0 mt-4 sm:ml-2 sm:mt-0">
           <NextPrev onClickNext={() => {}} onClickPrev={() => {}} />
         </div>
       )}

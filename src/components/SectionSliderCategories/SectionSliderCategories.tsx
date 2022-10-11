@@ -9,13 +9,9 @@ import { t } from "i18next";
 export interface SectionSliderCategoriesProps {
   className?: string;
   itemClassName?: string;
-  heading?: string;
-  subHeading?: string;
 }
 
 const SectionSliderCategories: FC<SectionSliderCategoriesProps> = ({
-  heading = t("Browse_by_category"),
-  subHeading = t("Browse_by_category_desc"),
   className = "",
   itemClassName = "",
 }) => {
@@ -23,6 +19,7 @@ const SectionSliderCategories: FC<SectionSliderCategoriesProps> = ({
   const id = useId();
   const UNIQUE_CLASS = "glidejs" + id.replace(/:/g, "_");
   const categories = useAppSelector((state) => state.general.categories);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!sliderRef.current) {
@@ -65,8 +62,8 @@ const SectionSliderCategories: FC<SectionSliderCategoriesProps> = ({
   return (
     <div className={`nc-SectionSliderCategories ${className}`}>
       <div className={`${UNIQUE_CLASS} flow-root`} ref={sliderRef}>
-        <Heading desc={subHeading} hasNextPrev>
-          {heading}
+        <Heading desc={t("Browse_by_category_desc")} hasNextPrev>
+          {t("Browse_by_category")}
         </Heading>
         <div className="glide__track" data-glide-el="track">
           <ul className="glide__slides">

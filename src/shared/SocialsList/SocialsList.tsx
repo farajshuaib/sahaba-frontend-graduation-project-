@@ -25,12 +25,12 @@ const SocialsList: FC<SocialsListProps> = ({
   const socials: SocialType[] = [
     { name: "Facebook", icon: facebook, href: facebook_url },
     { name: "Twitter", icon: twitter, href: twitter_url },
-    { name: "website", icon: website, href: website_url },
     { name: "Telegram", icon: telegram, href: telegram_url },
+    { name: "website", icon: website, href: website_url },
   ];
   return (
     <nav
-      className={`nc-SocialsList flex space-x-2.5 text-2xl text-neutral-6000 dark:text-neutral-300 ${className}`}
+      className={`nc-SocialsList flex space-x-2.5 text-2xl text-neutral-6000 dark:text-neutral-300 gap-3 ${className}`}
       data-nc-id="SocialsList"
     >
       {socials

@@ -12,7 +12,7 @@ const TimeCountDown: React.FC<props> = ({ sale_end_at }) => {
 
   return (
     <div className="space-y-5">
-      <div className="flex items-center space-x-2 text-neutral-500 dark:text-neutral-400 ">
+      <div className="flex items-center gap-3 space-x-2 text-neutral-500 dark:text-neutral-400">
         <svg
           width="24"
           height="24"
@@ -45,8 +45,8 @@ const TimeCountDown: React.FC<props> = ({ sale_end_at }) => {
         </svg>
         <span className="mt-1 leading-none">{t("Sale_end_in")}:</span>
       </div>
-      <div className="flex space-x-5 sm:space-x-10">
-        <div className="flex flex-col items-center">
+      <div className="flex gap-5 space-x-5 text-center sm:space-x-10">
+        <div className="flex flex-col items-center justify-center text-center">
           <span className="text-2xl font-semibold sm:text-3xl">
             {timeLeft.days}
           </span>
@@ -54,7 +54,7 @@ const TimeCountDown: React.FC<props> = ({ sale_end_at }) => {
             {t("Days")}
           </span>
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center justify-center text-center">
           <span className="text-2xl font-semibold sm:text-3xl">
             {timeLeft.hours}
           </span>
@@ -62,7 +62,7 @@ const TimeCountDown: React.FC<props> = ({ sale_end_at }) => {
             {t("Hours")}
           </span>
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center justify-center text-center">
           <span className="text-2xl font-semibold sm:text-3xl">
             {timeLeft.minutes}
           </span>
@@ -70,11 +70,11 @@ const TimeCountDown: React.FC<props> = ({ sale_end_at }) => {
             {t("Minutes")}
           </span>
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center justify-center text-center">
           <span className="text-2xl font-semibold sm:text-3xl">
             {timeLeft.seconds}
           </span>
-          <span className="sm:text-lg text-neutral-500">{t("Seconds")}</span>
+          <span className="sm:text-lg text-neutral-500 dark:text-neutral-400">{t("Seconds")}</span>
         </div>
       </div>
     </div>

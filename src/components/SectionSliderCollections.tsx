@@ -60,7 +60,7 @@ const CollectionsSlider: React.FC<CollectionsSliderProp> = ({
       <Heading
         isCenter={false}
         hasNextPrev
-        desc="Discover the new creative economy"
+        desc={t("Discover_the_new_creative_economy")}
       >
         {t("Latest_collections")}
       </Heading>

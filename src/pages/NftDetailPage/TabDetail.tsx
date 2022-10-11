@@ -4,6 +4,7 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { Tab } from "@headlessui/react";
 import VerifyIcon from "components/VerifyIcon";
+import { useTranslation } from "react-i18next";
 
 interface TabDetailProps {
   transactions: Transactions[];
@@ -12,6 +13,7 @@ interface TabDetailProps {
 
 const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const TABS = ["History", "Owner"];
 
   const renderTabItem = (item: string) => {
@@ -53,13 +55,13 @@ const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
               index % 2 === 1 ? "bg-neutradl-100" : ""
             }`}
           >
-            <div className="flex items-center">
+            <div className="flex items-center gap-2">
               <Avatar
                 imgUrl={transaction.to.profile_photo}
                 sizeClass="h-10 w-10"
                 radius="rounded-full"
               />
-              <h6 className="flex flex-col ml-4 text-neutral-500 dark:text-neutral-400">
+              <h6 className="flex flex-col text-neutral-500 dark:text-neutral-400">
                 {renderType(transaction)}
                 <p className="mt-1 text-xs">
                   {moment(transaction.created_at).toLocaleString()}
@@ -87,7 +89,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
               {transaction.from.username ||
                 transaction.from.wallet_address.slice(0, 8) + "..."}
             </span>
-            <span className="">to</span>
+            <span className="">{t("to")}</span>
             <span
               onClick={() => {
                 navigate(`/author/${transaction.to.id}`);
@@ -97,7 +99,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
               {transaction.to.username ||
                 transaction.to.wallet_address.slice(0, 8) + "..."}
             </span>
-            <span className="">return of </span>
+            <span className="">{t("return_of")} </span>
             <span className="font-medium cursor-pointer text-neutral-900 dark:text-neutral-200">
               {transaction.price} ETH
             </span>
@@ -107,7 +109,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
       case "mint": {
         return (
           <p className="flex items-center gap-1 text-sm">
-            <span className="">Minted by</span>
+            <span className="">{t("Minted_by")}</span>
             <span
               onClick={() => {
                 navigate(`/author/${transaction.to.id}`);
@@ -117,7 +119,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
               {transaction.to.username ||
                 transaction.to.wallet_address.slice(0, 8) + "..."}
             </span>
-            <span className="">return of </span>
+            <span className="">{t("return_of")}</span>
             <span className="font-medium cursor-pointer text-neutral-900 dark:text-neutral-200">
               {transaction.price} ETH
             </span>
@@ -127,7 +129,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
       case "set_for_sale": {
         return (
           <p className="flex items-center gap-1 text-sm">
-            <span className="">Set for Sale by</span>
+            <span className="">{t("Set_for_Sale_by")}</span>
             <span
               onClick={() => {
                 navigate(`/author/${transaction.to.id}`);
@@ -137,7 +139,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
               {transaction.to.username ||
                 transaction.to.wallet_address.slice(0, 8) + "..."}
             </span>
-            <span className="">return of </span>
+            <span className="">{t("return_of")}</span>
             <span className="font-medium cursor-pointer text-neutral-900 dark:text-neutral-200">
               {transaction.price} ETH
             </span>
@@ -157,7 +159,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
               {transaction.to.username ||
                 transaction.to.wallet_address.slice(0, 8) + "..."}
             </span>
-            <span className="">to</span>
+            <span className="">{t("to")}</span>
             <span className="font-medium cursor-pointer text-neutral-900 dark:text-neutral-200">
               {transaction.price} ETH
             </span>
@@ -170,7 +172,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
   return (
     <div className="w-full pdx-2 sm:px-0">
       <Tab.Group>
-        <Tab.List className="flex justify-start pd-1 space-x-2.5 rounded-full bordedr border-neutral-300 dark:border-neutral-500">
+        <Tab.List className="flex justify-start gap-3 rounded-full pd-1 ">
           {TABS.map((tab) => (
             <Tab
               key={tab}

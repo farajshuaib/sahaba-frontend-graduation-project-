@@ -12,7 +12,6 @@ export interface SectionLargeSliderProps {
 const SectionLargeSlider: FC<SectionLargeSliderProps> = ({
   className = "",
 }) => {
-  
   const { fetch, data, loading, errors } = useCrud("/latest-nfts?type=image");
   const [indexActive, setIndexActive] = useState(0);
 
@@ -22,10 +21,6 @@ const SectionLargeSlider: FC<SectionLargeSliderProps> = ({
 
   if (loading) {
     return <LoadingScreen />;
-  }
-
-  if (errors) {
-    return <ServerError />;
   }
 
   const handleClickNext = () => {

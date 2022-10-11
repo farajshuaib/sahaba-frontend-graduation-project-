@@ -64,14 +64,14 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
           />
         </div>
         <div className="container -mt-10 lg:-mt-16">
-          <div className="relative bg-white dark:bg-neutral-900 dark:border dark:border-neutral-700 p-5 lg:p-8 rounded-3xl md:rounded-[40px] shadow-xl flex flex-col md:flex-row">
+          <div className="relative bg-white dark:bg-neutral-900 dark:border dark:border-neutral-700 p-5 lg:p-8 rounded-3xl md:rounded-[40px] shadow-xl flex flex-col md:flex-row gap-8">
             <div className="flex-shrink-0 w-32 mt-12 lg:w-44 sm:mt-0">
               <NcImage
                 src={item?.profile_image}
                 containerClassName="aspect-w-1 aspect-h-1 rounded-3xl overflow-hidden"
               />
             </div>
-            <div className="flex-grow pt-5 md:pt-1 md:ml-6 xl:ml-14">
+            <div className="flex-grow pt-5 md:pt-1 ">
               <div className="max-w-screen-sm ">
                 <h2 className="inline-flex items-center text-2xl font-semibold sm:text-3xl lg:text-4xl">
                   <span>{item?.username || "anon"}</span>

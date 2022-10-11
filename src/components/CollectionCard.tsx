@@ -22,13 +22,13 @@ const CollectionCard: FC<CollectionCardProps> = ({ className, collection }) => {
 
       <div className="relative mt-auto">
         {/* AUTHOR */}
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
           <Avatar
             imgUrl={collection?.created_by?.profile_photo}
             sizeClass="h-6 w-6"
             containerClassName="ring-2 ring-white"
           />
-          <div className="ml-2 text-xs text-white">
+          <div className="text-xs text-white ">
             <span className="font-normal">{t("by")}</span>
             {` `}
             <span className="font-medium">

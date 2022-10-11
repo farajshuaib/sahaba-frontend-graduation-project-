@@ -44,7 +44,7 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
   const navigate = useNavigate();
   const web3React = useWeb3React();
   const [showModal, setShowModal] = useState(false);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const handleSignIn = async (wallet_item: any) => {
     try {
       const result = await switchNetwork();
@@ -57,7 +57,7 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
       }
       toast.error(
         web3React.error?.message ||
-          "Connecting to wallet has been failed!, you're connecting to unsupported network! please switch to polygon network"
+          "Connecting to wallet has been failed!, you're connecting to unsupported network! please switch to ethereum network"
       );
     } catch (e: any) {
       toast.error(e || "Connecting to wallet has been failed!");
@@ -116,13 +116,13 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
                   tabIndex={0}
                   className="relative flex px-3 py-4 border cursor-pointer rounded-xl hover:shadow-lg hover:bg-neutral-50 border-neutral-200 dark:border-neutral-700 sm:px-5 focus:outline-none focus:shadow-outline-blue focus:border-blue-500 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-900 dark:hover:text-neutral-200"
                 >
-                  <div className="flex items-center w-full">
+                  <div className="flex items-center w-full gap-5">
                     <NcImage
                       src={plan.img}
                       containerClassName="flex-shrink-0 w-10 h-10 sm:w-14 sm:h-14 p-2 sm:p-3 bg-white rounded-full overflow-hidden shadow-lg"
                     />
                     <div
-                      className={`ml-4 sm:ml-8 font-semibold text-xl sm:text-2xl `}
+                      className={` font-semibold text-xl sm:text-2xl `}
                     >
                       {plan.name}
                     </div>
@@ -133,7 +133,7 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
 
             {/* ---- */}
             <div className="pt-2 ">
-              <ButtonPrimary href={"/"} className="flex-1">
+              <ButtonPrimary href={"/"} className={`flex flex-1 gap-3 flex-row ${i18n.language == 'ar' && "flex-row-reverse"}`}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <path
                     d="M9.57 5.92993L3.5 11.9999L9.57 18.0699"
@@ -153,7 +153,7 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
                   />
                 </svg>
 
-                <span className="ml-2">{t("Return_Home_Page")}</span>
+                <span className="">{t("Return_Home_Page")}</span>
               </ButtonPrimary>
             </div>
           </div>

@@ -47,9 +47,9 @@ const CardCategory5: FC<CardCategory5Props> = ({
         />
         <span className="absolute inset-0 transition-opacity bg-black opacity-0 group-hover:opacity-100 bg-opacity-10"></span>
       </div>
-      <div className="flex items-center mt-4">
+      <div className="flex items-center gap-4 mt-4">
         <div className={`w-10 h-10 rounded-full ${COLORS[index]}`}></div>
-        <div className="ml-3">
+        <div className="">
           <h2
             className={`text-base sm:text-lg text-neutral-900 dark:text-neutral-100 font-medium truncate`}
           >

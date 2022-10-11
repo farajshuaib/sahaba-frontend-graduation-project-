@@ -4,7 +4,6 @@ import MenuBar from "shared/MenuBar/MenuBar";
 import SwitchDarkMode from "shared/SwitchDarkMode/SwitchDarkMode";
 import NotifyDropdown from "./NotifyDropdown";
 import AvatarDropdown from "./AvatarDropdown";
-import Input from "shared/Input/Input";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Navigation from "shared/Navigation/Navigation";
 import { useAppSelector } from "app/hooks";
@@ -30,11 +29,10 @@ const HeaderLogged: FC<HeaderLoggedProps> = () => {
               <Navigation />
               <div className="hidden h-6 border-l sm:block border-neutral-300 dark:border-neutral-6000"></div>
               <div className="flex">
-                <SwitchDarkMode />
+                
                 {userData && <NotifyDropdown />}
                 <LocalesDropDown />
               </div>
-              <div></div>
               {userData && (
                 <ButtonPrimary
                   href={"/create-nft"}

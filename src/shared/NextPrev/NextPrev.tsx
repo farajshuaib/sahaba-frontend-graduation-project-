@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 export interface NextPrevProps {
   className?: string;
@@ -19,11 +20,12 @@ const NextPrev: FC<NextPrevProps> = ({
   onlyNext = false,
   onlyPrev = false,
 }) => {
+  const { t, i18n } = useTranslation();
   const [focus, setFocus] = React.useState<"left" | "right">("right");
 
   return (
     <div
-      className={`nc-NextPrev relative flex items-center text-neutral-500 dark:text-neutral-400 ${className}`}
+      className={`nc-NextPrev relative flex items-center text-neutral-500 dark:text-neutral-400 ${i18n.language == 'ar' ? "flex-row-reverse" : ""} ${className}`}
       data-nc-id="NextPrev"
       data-glide-el="controls"
     >

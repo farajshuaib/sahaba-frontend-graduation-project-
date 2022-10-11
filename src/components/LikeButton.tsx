@@ -22,7 +22,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
 
   return (
     <button
-      className={`bg-black/50 px-3.5 h-10 flex items-center justify-center rounded-full text-white ${className}`}
+      className={`bg-black/50 px-3.5 gap-2 h-10 flex items-center justify-center rounded-full text-white ${className}`}
       onClick={() => {
         if (typeof liked == "undefined") {
           navigate("/connect-wallet");
@@ -45,7 +45,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({
           strokeLinejoin="round"
         />
       </svg>
-      <span className="ml-2 text-sm">{likeCount}</span>
+      <span className="text-sm">{likeCount}</span>
     </button>
   );
 };

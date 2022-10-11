@@ -7,10 +7,11 @@ import { Fragment, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Avatar from "shared/Avatar/Avatar";
+import SwitchDarkMode from "shared/SwitchDarkMode/SwitchDarkMode";
 import { usdPrice } from "utils/functions";
 
 export default function AvatarDropdown() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { deactivate, library, account } = useWeb3React();
   const userData: UserData = useAppSelector((state) => state.account.userData);
   const [balance, setBalance] = useState<string>("");
@@ -53,10 +54,16 @@ export default function AvatarDropdown() {
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Popover.Panel className="absolute z-10 w-screen max-w-[260px] px-4 mt-3 -right-10 sm:right-0 sm:px-0">
+              <Popover.Panel
+                className={`absolute z-10 w-screen max-w-[260px] px-4 mt-3 ${
+                  i18n.language == "ar"
+                    ? "-left-10 sm:left-0"
+                    : "-right-10 sm:right-0"
+                }  sm:px-0`}
+              >
                 <div className="overflow-hidden shadow-lg rounded-3xl ring-1 ring-black ring-opacity-5">
                   <div className="relative grid grid-cols-1 gap-6 px-6 bg-white dark:bg-neutral-800 py-7">
-                    <div className="flex items-center space-x-3">
+                    <div className="flex items-center gap-3 space-x-3">
                       <Avatar
                         imgUrl={userData?.profile_photo}
                         sizeClass="w-12 h-12"
@@ -90,7 +97,7 @@ export default function AvatarDropdown() {
                     {/* ------------------ 1 --------------------- */}
                     <Link
                       to={`/author/${userData?.id}`}
-                      className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                      className="flex items-center gap-3 p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                     >
                       <div className="flex items-center justify-center flex-shrink-0 text-neutral-500 dark:text-neutral-300">
                         <svg
@@ -116,7 +123,7 @@ export default function AvatarDropdown() {
                           />
                         </svg>
                       </div>
-                      <div className="ml-4">
+                      <div className="">
                         <p className="text-sm font-medium ">
                           {t("My_Profile")}
                         </p>
@@ -126,12 +133,12 @@ export default function AvatarDropdown() {
                     {/* ------------------ 2 --------------------- */}
                     <Link
                       to={"/account"}
-                      className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                      className="flex items-center gap-3 p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                     >
                       <div className="flex items-center justify-center flex-shrink-0 text-neutral-500 dark:text-neutral-300">
                         <i className="text-2xl bx bx-cog"></i>
                       </div>
-                      <div className="ml-4">
+                      <div className="">
                         <p className="text-sm font-medium ">{t("settings")}</p>
                       </div>
                     </Link>
@@ -139,9 +146,12 @@ export default function AvatarDropdown() {
                     <div className="w-full border-b border-neutral-200 dark:border-neutral-700" />
 
                     {/* ------------------ 2 --------------------- */}
+                    <SwitchDarkMode />
+                     
+
                     <button
                       onClick={disconnect}
-                      className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                      className="flex items-center gap-3 p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                     >
                       <div className="flex items-center justify-center flex-shrink-0 text-neutral-500 dark:text-neutral-300">
                         <svg
@@ -174,7 +184,7 @@ export default function AvatarDropdown() {
                           />
                         </svg>
                       </div>
-                      <div className="ml-4">
+                      <div className="">
                         <p className="text-sm font-medium ">
                           {t("Disconnect")}
                         </p>

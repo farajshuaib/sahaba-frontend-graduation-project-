@@ -24,12 +24,12 @@ const CardLarge1: FC<CardLarge1Props> = ({
   onClickPrev = () => {},
   nft,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   return (
     <div
       className={`nc-CardLarge1 nc-CardLarge1--hasAnimation relative flex flex-col-reverse lg:flex-row justify-end ${className}`}
     >
-      <div className="z-10 w-full -mt-2 lg:absolute lg:left-0 lg:top-1/2 lg:transform lg:-translate-y-1/2 lg:mt-0 sm:px-5 lg:px-0 lg:max-w-lg ">
+      <div className={`z-10 w-full -mt-2 lg:absolute ${i18n.language == 'ar'  ? "lg:right-0" : "lg:left-0"} lg:top-1/2 lg:transform lg:-translate-y-1/2 lg:mt-0 sm:px-5 lg:px-0 lg:max-w-lg `}>
         <div className="p-4 space-y-3 bg-white shadow-lg nc-CardLarge1__left sm:p-8 xl:py-14 md:px-10 dark:bg-neutral-900 rounded-3xl sm:space-y-8 ">
           {/* TITLE */}
           <h2 className="text-2xl font-semibold lg:text-3xl 2xl:text-5xl ">
@@ -39,15 +39,15 @@ const CardLarge1: FC<CardLarge1Props> = ({
           </h2>
 
           {/* AUTHOR AND COLLECTION */}
-          <div className="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-12">
-            <div className="flex items-center">
+          <div className="flex flex-col gap-5 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-12">
+            <div className="flex items-center gap-3">
               <div className="flex-shrink-0 w-10 h-10">
                 <Avatar
                   imgUrl={nft.creator.profile_photo}
                   sizeClass="w-10 h-10"
                 />
               </div>
-              <div className="ml-3">
+              <div className="">
                 <div className="text-xs dark:text-neutral-400">
                   {t("Creator")}
                 </div>
@@ -57,14 +57,14 @@ const CardLarge1: FC<CardLarge1Props> = ({
                 </div>
               </div>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center gap-3">
               <div className="flex-shrink-0 w-10 h-10">
                 <Avatar
                   imgUrl={nft.collection?.logo_image}
                   sizeClass="w-10 h-10"
                 />
               </div>
-              <div className="ml-3">
+              <div className="">
                 <div className="text-xs dark:text-neutral-400">
                   {t("Collection")}
                 </div>
@@ -77,14 +77,14 @@ const CardLarge1: FC<CardLarge1Props> = ({
 
           {/* PRICE */}
           <div className="pt-6">
-            <div className="relative flex flex-col items-baseline p-6 border-2 border-green-500 sm:flex-row rounded-xl">
+            <div className="relative flex flex-col items-baseline gap-3 p-6 border-2 border-green-500 sm:flex-row rounded-xl">
               <span className="block absolute bottom-full translate-y-1.5 py-1 px-1.5 bg-white dark:bg-neutral-900 text-sm text-neutral-500 dark:text-neutral-400 ring ring-offset-0 ring-white dark:ring-neutral-900">
-                {t("Price")}
+                {t("price")}
               </span>
               <span className="text-3xl font-semibold text-green-500 xl:text-4xl">
                 {nft.price} ETH
               </span>
-              <span className="text-lg text-neutral-400 sm:ml-3.5">
+              <span className="text-lg text-neutral-400">
                 ≈ ${usdPrice(nft.price)}
               </span>
             </div>

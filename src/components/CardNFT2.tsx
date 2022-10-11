@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import NcImage from "shared/NcImage/NcImage";
 import ItemTypeImageIcon from "./ItemTypeImageIcon";
 import LikeButton from "./LikeButton";
-import ItemTypeVideoIcon from "./ItemTypeVideoIcon";
 import Prices from "./Prices";
 import RemainingTimeNftCard from "./RemainingTimeNftCard";
 import useCountDownTime from "hooks/useCountDownTime";
@@ -15,7 +14,7 @@ export interface CardNFT2Props {
 }
 
 const CardNFT2: FC<CardNFT2Props> = ({ className = "", nft }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   return (
     <div
       className={`nc-CardNFT2 relative bg-white dark:bg-neutral-900 rounded-3xl flex flex-col group p-2.5  ${className}`}
@@ -64,7 +63,7 @@ const CardNFT2: FC<CardNFT2Props> = ({ className = "", nft }) => {
             />
           </svg>
 
-          <div className="absolute bottom-0 w-48 left-4 ">
+          <div dir="ltr" className={`absolute bottom-0 w-48 left-4 text-left  `}>
             <h2 className={`text-lg font-semibold `}>{nft.title}</h2>
 
             <div className="w-full mt-1.5 flex justify-between items-end ">

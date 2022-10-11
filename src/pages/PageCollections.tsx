@@ -75,7 +75,7 @@ const PageCollections: FC<PageCollectionsProps> = ({ className = "" }) => {
       <div className="container py-16 space-y-16 lg:pb-28 lg:pt-20 lg:space-y-28">
         <main>
           {/* FILTER */}
-          <Heading isCenter={false} desc="Discover the new creative economy">
+          <Heading isCenter={false} desc={t("Discover_the_new_creative_economy")}>
             {t("Collections")}
           </Heading>
 

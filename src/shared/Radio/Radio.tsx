@@ -19,19 +19,19 @@ const Radio: FC<RadioProps> = ({
   defaultChecked,
 }) => {
   return (
-    <div className={`flex items-center text-sm sm:text-base ${className}`}>
+    <div className={`flex items-center text-sm sm:text-base gap-3 ${className}`}>
       <input
         id={id}
         name={name}
         type="radio"
-        className="focus:ring-action-primary h-6 w-6 text-primary-500 border-primary rounded-full border-neutral-500 bg-white dark:bg-neutral-700  dark:checked:bg-primary-500 focus:ring-primary-500"
+        className="w-6 h-6 bg-white rounded-full focus:ring-action-primary text-primary-500 border-primary border-neutral-500 dark:bg-neutral-700 dark:checked:bg-primary-500 focus:ring-primary-500"
         onChange={(e) => onChange && onChange(e.target.value)}
         defaultChecked={defaultChecked}
         value={id}
       />
       <label
         htmlFor={id}
-        className="ml-2.5 sm:ml-3 block text-neutral-900 dark:text-neutral-100"
+        className="block  sm:ml-3 text-neutral-900 dark:text-neutral-100"
       >
         {label}
       </label>

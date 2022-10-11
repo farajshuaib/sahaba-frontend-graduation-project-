@@ -12,7 +12,7 @@ const TimeCountDown: React.FC<props> = ({ sale_end_at }) => {
 
   return (
     <div className="space-y-5">
-      <div className="flex items-center space-x-2 text-neutral-500 dark:text-neutral-400 ">
+      <div className="flex items-center gap-2 space-x-2 text-neutral-500 dark:text-neutral-400 ">
         <svg
           width="24"
           height="24"
@@ -45,37 +45,22 @@ const TimeCountDown: React.FC<props> = ({ sale_end_at }) => {
         </svg>
         <span className="mt-1 leading-none">{t("Sell_ending_in")}:</span>
       </div>
-      <div className="flex space-x-5 sm:space-x-10">
-        <div className="flex flex-col ">
-          <span className="text-2xl font-semibold sm:text-2xl">
-            {timeLeft.days}
-          </span>
-          <span className="sm:text-lg text-neutral-500 dark:text-neutral-400">
-            {t("Days")}
-          </span>
-        </div>
-        <div className="flex flex-col ">
-          <span className="text-2xl font-semibold sm:text-2xl">
-            {timeLeft.hours}
-          </span>
-          <span className="sm:text-lg text-neutral-500 dark:text-neutral-400">
-            {t("Hours")}
-          </span>
-        </div>
-        <div className="flex flex-col ">
-          <span className="text-2xl font-semibold sm:text-2xl">
-            {timeLeft.minutes}
-          </span>
-          <span className="sm:text-lg text-neutral-500 dark:text-neutral-400">
-            {t("Minutes")}
-          </span>
-        </div>
-        <div className="flex flex-col ">
-          <span className="text-2xl font-semibold sm:text-2xl">
-            {timeLeft.seconds}
-          </span>
-          <span className="sm:text-lg text-neutral-500">{t("Seconds")}</span>
-        </div>
+      <div className="flex gap-5 md:gap-8 ">
+        {[
+          { val: timeLeft.days, label: t("Days") },
+          { val: timeLeft.hours, label: t("Hours") },
+          { val: timeLeft.minutes, label: t("Minutes") },
+          { val: timeLeft.seconds, label: t("Seconds") },
+        ].map((item, index) => (
+          <div key={index} className="flex flex-col text-center align-middle">
+            <span className="text-2xl font-semibold text-center sm:text-2xl">
+              {item.val}
+            </span>
+            <span className="text-center sm:text-lg text-neutral-500 dark:text-neutral-400">
+              {item.label}
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   );

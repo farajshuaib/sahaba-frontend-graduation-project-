@@ -8,15 +8,6 @@ import Slider from "rc-slider";
 import Radio from "shared/Radio/Radio";
 import { ChevronDownIcon } from "@heroicons/react/outline";
 import { useTranslation } from "react-i18next";
-import { t } from "i18next";
-
-const sortOrderRadios = [
-  { name: t("Recently_listed"), id: "Recently-listed" },
-  { name: t("Ending_soon"), id: "Ending-soon" },
-  { name: t("Price_low_hight"), id: "Price-low-high" },
-  { name: t("Price_hight_low"), id: "Price-high-low" },
-  { name: t("Most_favorited"), id: "Most-favorite" },
-];
 
 interface Props {
   setPriceRange: (val: number[]) => void;
@@ -30,13 +21,22 @@ const TabFilters: React.FC<Props> = ({
   setSortBy,
   setIsVerifiedUser,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
   const [isOpenMoreFilter, setisOpenMoreFilter] = useState(false);
   //
   const [isVerifiedCreator, setIsVerifiedCreator] = useState(true);
   const [rangePrices, setRangePrices] = useState([0.01, 5]);
 
   const [sortOrderStates, setSortOrderStates] = useState<string>("");
+
+  const sortOrderRadios = [
+    { name: t("Recently_listed"), id: "Recently-listed" },
+    { name: t("Ending_soon"), id: "Ending-soon" },
+    { name: t("Price_low_hight"), id: "Price-low-high" },
+    { name: t("Price_hight_low"), id: "Price-high-low" },
+    { name: t("Most_favorited"), id: "Most-favorite" },
+  ];
 
   useEffect(() => {
     if (isVerifiedCreator) setIsVerifiedUser(isVerifiedCreator);
@@ -74,7 +74,7 @@ const TabFilters: React.FC<Props> = ({
         {({ open, close }) => (
           <>
             <Popover.Button
-              className={`flex items-center justify-center px-4 py-2 text-sm border rounded-full focus:outline-none 
+              className={`flex items-center gap-2 justify-center px-4 py-2 text-sm border rounded-full focus:outline-none 
               ${open ? "!border-primary-500 " : ""}
                 ${
                   !!sortOrderStates.length
@@ -125,14 +125,14 @@ const TabFilters: React.FC<Props> = ({
                 />
               </svg>
 
-              <span className="ml-2">
+              <span className="">
                 {sortOrderStates
                   ? sortOrderRadios.filter((i) => i.id === sortOrderStates)[0]
                       .name
                   : t("Sort_order")}
               </span>
               {!sortOrderStates.length ? (
-                <ChevronDownIcon className="w-4 h-4 ml-3" />
+                <ChevronDownIcon className="w-4 h-4 " />
               ) : (
                 <span onClick={() => setSortOrderStates("")}>
                   {renderXClear()}
@@ -148,9 +148,9 @@ const TabFilters: React.FC<Props> = ({
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Popover.Panel className="absolute left-0 z-40 w-screen max-w-sm px-4 mt-3 sm:px-0 lg:max-w-md">
+              <Popover.Panel className={`absolute ${i18n.language == 'ar'  ? "right-0" : "left-0" } z-40 w-screen max-w-sm px-4 mt-3 sm:px-0 lg:max-w-md`}>
                 <div className="overflow-hidden bg-white border shadow-xl rounded-2xl dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700">
-                  <div className="relative flex flex-col px-5 py-6 space-y-5">
+                  <div className="relative flex flex-col gap-4 px-5 py-6 space-y-5">
                     {sortOrderRadios.map((item) => (
                       <Radio
                         id={item.id}
@@ -199,7 +199,7 @@ const TabFilters: React.FC<Props> = ({
         {({ open, close }) => (
           <>
             <Popover.Button
-              className={`flex items-center justify-center px-4 py-2 text-sm rounded-full border border-primary-500 bg-primary-50 text-primary-900 focus:outline-none `}
+              className={`flex items-center gap-2 justify-center px-4 py-2 text-sm rounded-full border border-primary-500 bg-primary-50 text-primary-900 focus:outline-none `}
             >
               <svg
                 className="w-4 h-4"
@@ -237,7 +237,7 @@ const TabFilters: React.FC<Props> = ({
                 />
               </svg>
 
-              <span className="ml-2">{`${rangePrices[0]} ETH - ${rangePrices[1]} ETH`}</span>
+              <span className="">{`${rangePrices[0]} ETH - ${rangePrices[1]} ETH`}</span>
               {renderXClear()}
             </Popover.Button>
             <Transition
@@ -249,11 +249,11 @@ const TabFilters: React.FC<Props> = ({
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Popover.Panel className="absolute left-0 z-40 w-screen max-w-sm px-4 mt-3 sm:px-0 ">
+              <Popover.Panel className={`absolute ${i18n.language == 'ar'  ? "right-0" : "left-0" } z-40 w-screen max-w-sm px-4 mt-3 sm:px-0 `}>
                 <div className="overflow-hidden bg-white border shadow-xl rounded-2xl dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700">
                   <div className="relative flex flex-col px-5 py-6 space-y-8">
                     <div className="space-y-5">
-                      <span className="font-medium">Price range</span>
+                      <span className="font-medium">{t("Price_range")}</span>
                       <Slider
                         range
                         min={0.01}
@@ -284,7 +284,7 @@ const TabFilters: React.FC<Props> = ({
                             name="minPrice"
                             disabled
                             id="minPrice"
-                            className="block w-32 pl-4 pr-10 bg-transparent rounded-full sm:text-sm border-neutral-200 dark:border-neutral-700"
+                            className="block w-32 px-12 bg-transparent rounded-full sm:text-sm border-neutral-200 dark:border-neutral-700"
                             value={rangePrices[0]}
                           />
                         </div>
@@ -305,7 +305,7 @@ const TabFilters: React.FC<Props> = ({
                             disabled
                             name="maxPrice"
                             id="maxPrice"
-                            className="block w-32 pl-4 pr-10 bg-transparent rounded-full sm:text-sm border-neutral-200 dark:border-neutral-700"
+                            className="block w-32 px-12 bg-transparent rounded-full sm:text-sm border-neutral-200 dark:border-neutral-700"
                             value={rangePrices[1]}
                           />
                         </div>
@@ -345,7 +345,7 @@ const TabFilters: React.FC<Props> = ({
   const renderTabVerifiedCreator = () => {
     return (
       <div
-        className={`flex items-center justify-center px-4 py-2 text-sm rounded-full border focus:outline-none cursor-pointer  ${
+        className={`flex items-center gap-3 justify-center px-4 py-2 text-sm rounded-full border focus:outline-none cursor-pointer  ${
           isVerifiedCreator
             ? "border-primary-500 bg-primary-50 text-primary-900"
             : "border-neutral-300 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:border-neutral-400 dark:hover:border-neutral-500"
@@ -382,7 +382,7 @@ const TabFilters: React.FC<Props> = ({
             strokeLinejoin="round"
           />
         </svg>
-        <span className="ml-2 line-clamp-1">{t("Verified_creator")}</span>
+        <span className=" line-clamp-1">{t("Verified_creator")}</span>
         {isVerifiedCreator && renderXClear()}
       </div>
     );
@@ -431,7 +431,7 @@ const TabFilters: React.FC<Props> = ({
     return (
       <div className="flex-shrink-0">
         <div
-          className={`flex flex-shrink-0 items-center justify-center px-4 py-2 text-sm rounded-full border border-primary-500 bg-primary-50 text-primary-900 focus:outline-none cursor-pointer`}
+          className={`flex flex-shrink-0 items-center gap-2 justify-center px-4 py-2 text-sm rounded-full border border-primary-500 bg-primary-50 text-primary-900 focus:outline-none cursor-pointer`}
           onClick={openModalMoreFilter}
         >
           <span>
@@ -617,9 +617,8 @@ const TabFilters: React.FC<Props> = ({
   return (
     <div className="flex lg:space-x-4">
       {/* FOR DESKTOP */}
-      <div className="hidden space-x-4 lg:flex">
+      <div className="hidden gap-5 space-x-4 lg:flex">
         {renderTabsPriceRage()}
-
         {renderTabsSortOrder()}
         {renderTabVerifiedCreator()}
       </div>

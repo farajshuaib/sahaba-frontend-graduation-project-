@@ -1,5 +1,6 @@
 {
   "Create_New_NFT": "Create New NFT",
+  "Home": "Home",
   "My_Account": "My Account",
   "Profile_settings": "Profile settings",
   "Profile_settings_desc": "You can set preferred display name, create your profile URL and manage other personal settings.",
@@ -200,5 +201,14 @@
   "Spam": "Spam",
   "Other": "Other",
   "verify_account": "Verify_account",
-  "verified": "Verified"
+  "verified": "Verified",
+  "header_mobile_desc": "Discover the most outstanding articles on all topics of life. Write your stories and share them",
+  "Discover_the_new_creative_economy" : "Discover the new creative economy",
+  "Price_range": "Price range",
+  "dark_mode": "Dark Mode",
+  "to": "To",
+  "return_of": "Return of",
+  "Minted_by": "Minted by",
+  "Set_for_Sale_by": "Set for Sale by",
+  "Set_NFT_for_sale": "Set NFT for sale"
 }

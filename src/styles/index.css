@@ -2,3 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 @tailwind variants;
+
+
+.tajwal-font {
+  font-family: "Tajawal", sans-serif !important;; 
+}
+
