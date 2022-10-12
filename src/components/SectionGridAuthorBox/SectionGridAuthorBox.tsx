@@ -4,7 +4,7 @@ import LoadingScreen from "components/LoadingScreen";
 import NavItem2 from "components/NavItem2";
 import ServerError from "components/ServerError";
 import { useCrud } from "hooks/useCrud";
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Nav from "shared/Nav/Nav";
 
@@ -22,7 +22,7 @@ const SectionGridAuthorBox: FC<SectionGridAuthorBoxProps> = ({
 }) => {
   const { t } = useTranslation();
   const { fetch, data, loading, errors } = useCrud("/users");
-  const [tabActive, setTabActive] = React.useState("Popular");
+  const [tabActive, setTabActive] = useState("New");
 
   useEffect(() => {
     fetch({ page: 1, sort_by: tabActive });
@@ -53,7 +53,8 @@ const SectionGridAuthorBox: FC<SectionGridAuthorBoxProps> = ({
         >
           {[
             {
-              name: t("Popular"),
+              id: "Popular-creator",
+              name: t("Popular_creator"),
               icon: ` <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M14.4399 19.05L15.9599 20.57L18.9999 17.53" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M12.16 10.87C12.06 10.86 11.94 10.86 11.83 10.87C9.44997 10.79 7.55997 8.84 7.55997 6.44C7.54997 3.99 9.53997 2 11.99 2C14.44 2 16.43 3.99 16.43 6.44C16.43 8.84 14.53 10.79 12.16 10.87Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -62,7 +63,8 @@ const SectionGridAuthorBox: FC<SectionGridAuthorBoxProps> = ({
               `,
             },
             {
-              name: t("Following"),
+              id: "Popular-collector",
+              name: t("Popular_collector"),
               icon: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M18.5 19.5H14.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M16.5 21.5V17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -73,6 +75,7 @@ const SectionGridAuthorBox: FC<SectionGridAuthorBoxProps> = ({
               `,
             },
             {
+              id: "New",
               name: t("New"),
               icon: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M21.08 8.58003V15.42C21.08 16.54 20.48 17.58 19.51 18.15L13.57 21.58C12.6 22.14 11.4 22.14 10.42 21.58L4.48003 18.15C3.51003 17.59 2.91003 16.55 2.91003 15.42V8.58003C2.91003 7.46003 3.51003 6.41999 4.48003 5.84999L10.42 2.42C11.39 1.86 12.59 1.86 13.57 2.42L19.51 5.84999C20.48 6.41999 21.08 7.45003 21.08 8.58003Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -84,8 +87,8 @@ const SectionGridAuthorBox: FC<SectionGridAuthorBoxProps> = ({
           ].map((item, index) => (
             <NavItem2
               key={index}
-              isActive={tabActive === item.name}
-              onClick={() => setTabActive(item.name)}
+              isActive={tabActive === item.id}
+              onClick={() => setTabActive(item.id)}
             >
               <div className="flex items-center justify-center sm:space-x-2.5 text-xs sm:text-sm ">
                 <span

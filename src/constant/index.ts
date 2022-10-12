@@ -13,7 +13,6 @@ export const FCM_vapidKey =
 export const locales: SupportedLocales[] = [
   { key: "ar", value: "عربي" },
   { key: "en", value: "english" },
-  { key: "fr", value: "france" },
 ];
 
 export const avatarColors = [
