@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import i18n from "i18next";
 import { initReactI18next, useTranslation } from "react-i18next";
-import { ar, en, fr } from "./locales";
+import { ar, en } from "./locales";
 import { Web3ReactProvider } from "@web3-react/core";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -28,9 +28,6 @@ i18n.use(initReactI18next).init({
     },
     ar: {
       translation: ar,
-    },
-    fr: {
-      translation: fr,
     },
   },
   lng:

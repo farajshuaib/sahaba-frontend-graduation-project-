@@ -200,10 +200,10 @@
   "Trouble": "Trouble",
   "Spam": "Spam",
   "Other": "Other",
-  "verify_account": "Verify_account",
+  "verify_account": "Verify account",
   "verified": "Verified",
   "header_mobile_desc": "Discover the most outstanding articles on all topics of life. Write your stories and share them",
-  "Discover_the_new_creative_economy" : "Discover the new creative economy",
+  "Discover_the_new_creative_economy": "Discover the new creative economy",
   "Price_range": "Price range",
   "dark_mode": "Dark Mode",
   "to": "To",
@@ -212,5 +212,6 @@
   "Set_for_Sale_by": "Set for Sale by",
   "Set_NFT_for_sale": "Set NFT for sale",
   "Popular_creator": "Popular Creator",
-  "Popular_collector": "Popular Collector"
+  "Popular_collector": "Popular Collector",
+  "no_provider": "ethereum provider not found, please install metamask extension on your browser or other ethereum wallet"
 }
