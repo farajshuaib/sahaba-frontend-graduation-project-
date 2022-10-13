@@ -14,16 +14,12 @@ export interface ModalDeleteProps {
   show: boolean;
   onCloseModalDelete: () => void;
   nft?: Nft;
-  collection?: Collection;
-  user?: UserData;
 }
 
 const ModalDelete: FC<ModalDeleteProps> = ({
   show,
   onCloseModalDelete,
   nft,
-  collection,
-  user,
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const { t } = useTranslation();
@@ -33,26 +29,16 @@ const ModalDelete: FC<ModalDeleteProps> = ({
 
   const handleClickSubmitForm = async () => {
     setLoading(true);
-    let api_route = user
-      ? `/users/${user.id}`
-      : collection
-      ? `/collection/${collection.id}`
-      : nft
-      ? `/nfts/burn/${nft.id}`
-      : "";
-
     try {
-      if (nft) {
-        await burnNft();
-      }
-      await api.delete(api_route);
-      toast.success(t("Deleted_successfully"));
+      await burnNft();
+      await api.delete(`/nfts/burn/${nft?.id}`);
+      toast.success(t("NFT_deleted_successfully"));
       onCloseModalDelete();
       setLoading(false);
       navigate(-1);
     } catch (errors: any) {
       setLoading(false);
-      toast.error(errors?.response?.data?.message || t("Deleted_failed"));
+      toast.error(errors?.response?.data?.message || t("NFT_deleted_failed"));
     }
   };
   const burnNft = async () => {
@@ -73,12 +59,11 @@ const ModalDelete: FC<ModalDeleteProps> = ({
           await contract.setApprovalForAll(CONTRACT_ADDRESS, true);
         }
         await contract.burn(nft?.token_id);
-        toast.success(t("NFT_deleted_successfully"));
 
         resolve(true);
       } catch (errors: any) {
         console.log("errors", errors);
-        toast.error(t("NFT_deleted_failed"));
+
         reject(errors);
       }
     });
@@ -88,9 +73,9 @@ const ModalDelete: FC<ModalDeleteProps> = ({
     return (
       <form action="#">
         <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
-          {nft ? t("Delete_NFT") : ""}
+          {t("Delete_NFT")}
         </h3>
-        <span className="text-sm">{nft ? t("Delete_NFT_desc") : ""}</span>
+        <span className="text-sm">{t("Delete_NFT_desc")}</span>
         <div className="mt-4 space-x-3">
           <ButtonPrimary
             loading={loading}

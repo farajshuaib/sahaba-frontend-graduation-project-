@@ -102,9 +102,7 @@ const NftMoreDropdown: FC<NftMoreDropdownProps> = ({
 
       <ModalDelete
         show={isDeleting}
-        collection={collection}
         nft={nft}
-        user={user}
         onCloseModalDelete={closeModalDelete}
       />
       {collection && (
