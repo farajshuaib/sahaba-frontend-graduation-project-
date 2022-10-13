@@ -4,12 +4,35 @@ export const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 export const createCollectionSchema = yup.object().shape({
-  logo_image: yup.string().required(),
-  banner_image: yup.string().required(),
+  logo_image: yup
+    .mixed()
+    .test("fileSize", "The file is too large", (value) => {
+      if (!value.length) return true; // attachment is optional
+      return value.size <= 100000024;
+    })
+    .required(),
+  banner_image: yup
+    .mixed()
+    .test("fileSize", "The file is too large", (value) => {
+      if (!value.length) return true; // attachment is optional
+      return value.size <= 100000024;
+    })
+    .required(),
   name: yup.string().required(),
   description: yup.string().required(),
-  facebook_url: yup.string().url(),
-  twitter_url: yup.string().url(),
+  facebook_url: yup.string().url().nullable(),
+  twitter_url: yup.string().url().nullable(),
+  telegram_url: yup.string().url().nullable(),
+  is_sensitive_content: yup.boolean().required(),
+  category_id: yup.number().required(),
+});
+
+export const updateCollectionSchema = yup.object().shape({
+  name: yup.string().required(),
+  description: yup.string().required(),
+  facebook_url: yup.string().url().nullable(),
+  twitter_url: yup.string().url().nullable(),
+  telegram_url: yup.string().url().nullable(),
   is_sensitive_content: yup.boolean().required(),
   category_id: yup.number().required(),
 });
@@ -34,7 +57,6 @@ export const contactSchema = yup.object().shape({
 });
 
 export const kycSchema = yup.object().shape({
-  
   gender: yup.string().required(),
   country: yup.string().required(),
   city: yup.string().required(),
@@ -63,10 +85,16 @@ export const updateAccountSchema = yup.object().shape({
   facebook_url: yup.string().url().nullable(),
   twitter_url: yup.string().url().nullable(),
   telegram_url: yup.string().url().nullable(),
+  banner_photo: yup
+    .mixed()
+    .test("fileSize", "The file is too large", (value) => {
+      if (!value?.length) return true; // attachment is optional
+      return value.size <= 100000024;
+    }),
   profile_photo: yup
     .mixed()
     .test("fileSize", "The file is too large", (value) => {
-      if (!value.length) return true; // attachment is optional
+      if (!value?.length) return true; // attachment is optional
       return value.size <= 100000024;
     }),
 });

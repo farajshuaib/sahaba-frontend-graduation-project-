@@ -14,6 +14,7 @@ import VerifyAccount from "components/VerifyAccount";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { copyToClipboard } from "utils/functions";
 
 export interface AccountPageProps {
   className?: string;
@@ -32,8 +33,11 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
   const { create } = useCrud("/my-profile");
 
   useEffect(() => {
-    setInitFormState(userData);
-    setProfileImage(userData?.profile_photo);
+    if (userData) {
+      setInitFormState({ ...userData, banner_photo: "", profile_photo: "" });
+      setProfileImage(userData?.profile_photo);
+      setBannerImage(userData?.banner_photo);
+    }
   }, [userData]);
 
   return (
@@ -71,6 +75,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                   form.append(key, value);
                 }
 
+
                 form.append("_method", "put");
 
                 try {
@@ -99,6 +104,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
               }) => (
                 <>
                   <div className="w-full mt-5">
+                    {JSON.stringify(errors)}
                     <div
                       className={`flex relative overflow-hidden justify-center mt-1 border-2 border-dashed ${
                         touched.banner_photo && errors.banner_photo
@@ -384,7 +390,12 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                             defaultValue={values.wallet_address || ""}
                           />
 
-                          <span className="absolute right-2.5 cursor-pointer top-1/2 -translate-y-1/2 ">
+                          <span
+                            onClick={() => {
+                              copyToClipboard(values?.wallet_address);
+                            }}
+                            className="absolute right-2.5 cursor-pointer top-1/2 -translate-y-1/2 "
+                          >
                             <svg
                               width="24"
                               height="24"

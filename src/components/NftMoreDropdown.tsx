@@ -4,6 +4,7 @@ import ModalDelete from "./ModalDelete";
 import ModalEdit from "./ModalEdit";
 import ModalReportItem from "./ModalReportItem";
 import ModalAddCollaboration from "./ModalAddCollaboration";
+import { useNavigate } from "react-router-dom";
 
 export interface NftMoreDropdownProps {
   containerClassName?: string;
@@ -31,6 +32,7 @@ const NftMoreDropdown: FC<NftMoreDropdownProps> = ({
   collection,
   user,
 }) => {
+  const navigate = useNavigate();
   const [isEditting, setIsEditting] = useState(false);
   const [isReporting, setIsReporting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -64,6 +66,9 @@ const NftMoreDropdown: FC<NftMoreDropdownProps> = ({
     }
     if (item.id === "addCollaboration") {
       return openModalCollaboration();
+    }
+    if(item.id === "editCollection") {
+      navigate(`/collection/${collection?.id}/edit`)
     }
     return;
   };

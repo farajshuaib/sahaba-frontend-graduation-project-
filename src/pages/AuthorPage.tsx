@@ -74,13 +74,20 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
             <div className="flex-grow pt-5 md:pt-1 ">
               <div className="max-w-screen-sm ">
                 <h2 className="inline-flex items-center text-2xl font-semibold sm:text-3xl lg:text-4xl">
-                  <span>{item?.username || "anon"}</span>
+                  <span>
+                    {item?.first_name || item.last_name
+                      ? item?.first_name + " " + item.last_name
+                      : "anon"}
+                  </span>
                   {item?.is_verified && (
                     <VerifyIcon
                       className="ml-2"
                       iconClass="w-6 h-6 sm:w-7 sm:h-7 xl:w-8 xl:h-8"
                     />
                   )}
+                </h2>
+                <h2 className="text-base font-semibold sm:text-lg lg:text-xl text-neutral-500 dark:text-neutral-400">
+                  {"@" + item.username}
                 </h2>
                 <div className="flex items-center text-sm font-medium space-x-2.5 mt-2.5 text-green-600 cursor-pointer">
                   <span className="text-neutral-700 dark:text-neutral-300">

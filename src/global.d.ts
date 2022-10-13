@@ -40,6 +40,7 @@ interface LocationStates {
   "/forgot-pass"?: {};
   "/page404"?: {};
   "/kyc-form"?: {};
+  "/collection/:id/edit"?: {};
 }
 
 interface Meta {
@@ -133,6 +134,7 @@ interface Collection {
   nfts: Nft[];
   created_by: UserData;
   nfts_count: number;
+  collaborators: UserData[]
 }
 
 interface KycData {

@@ -101,6 +101,7 @@
   "Choose_a_category": "Choose a category",
   "collection_facebook_page": "Collection facebook page",
   "collection_twitter_page": "collection twitter page",
+  "collection_telegram_page": "collection telegram page",
   "is_sensitive_content": "Is sensitive content",
   "is_sensitive_content_desc": "does the collection allow sharing sensitive content",
   "submit": "Submit",
@@ -218,5 +219,9 @@
   "NFT_deleted_successfully": "NFT Deleted Successfully",
   "NFT_deleted_failed": "NFT deleted failed",
   "Deleted_successfully": "Deleted Successfully",
-  "Deleted_failed": "Deleted Failed"
+  "Deleted_failed": "Deleted Failed",
+  "Create_your_own_collection": "Create your own collection",
+  "edit_collection": "Edit collection",
+  "collection_created_successfully": "Collection created successfully",
+  "collection_updated_successfully": "Collection updated successfully"
 }

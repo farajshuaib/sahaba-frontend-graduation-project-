@@ -73,13 +73,24 @@ const PageCollections: FC<PageCollectionsProps> = ({ className = "" }) => {
       />
 
       <div className="container py-16 space-y-16 lg:pb-28 lg:pt-20 lg:space-y-28">
+        
         <main>
           {/* FILTER */}
-          <Heading isCenter={false} desc={t("Discover_the_new_creative_economy")}>
+          <Heading
+            isCenter={false}
+            desc={t("Discover_the_new_creative_economy")}
+          >
             {t("Collections")}
           </Heading>
+          <div className="flex justify-end">
+            <ButtonPrimary href={"/create-collection"} className="relative z-50 ">
+              {t("Create_your_own_collection")}
+            </ButtonPrimary>
+          </div>
 
           <BgGlassmorphism />
+
+          
 
           {loading ? (
             <LoadingScreen />

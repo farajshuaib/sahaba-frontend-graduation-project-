@@ -1,14 +1,12 @@
 import React, { FC } from "react";
 import Logo from "shared/Logo/Logo";
 import MenuBar from "shared/MenuBar/MenuBar";
-import SwitchDarkMode from "shared/SwitchDarkMode/SwitchDarkMode";
 import NotifyDropdown from "./NotifyDropdown";
 import AvatarDropdown from "./AvatarDropdown";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Navigation from "shared/Navigation/Navigation";
 import { useAppSelector } from "app/hooks";
 import LocalesDropDown from "./LocalesDropDown";
-import { t } from "i18next";
 import { useTranslation } from "react-i18next";
 
 export interface HeaderLoggedProps {}

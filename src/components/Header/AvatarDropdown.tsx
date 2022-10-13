@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Avatar from "shared/Avatar/Avatar";
 import SwitchDarkMode from "shared/SwitchDarkMode/SwitchDarkMode";
-import { usdPrice } from "utils/functions";
+import { copyToClipboard, usdPrice } from "utils/functions";
 
 export default function AvatarDropdown() {
   const { t, i18n } = useTranslation();
@@ -73,7 +73,12 @@ export default function AvatarDropdown() {
                         <h4 className="font-semibold">
                           {userData?.username || "anon"}
                         </h4>
-                        <p className="text-xs mt-0.5">
+                        <p
+                          onClick={() => {
+                            copyToClipboard(userData?.wallet_address);
+                          }}
+                          className="text-xs mt-0.5 cursor-pointer"
+                        >
                           {userData.wallet_address?.slice(0, 10) +
                             "..." +
                             userData.wallet_address?.slice(10, 15)}
@@ -147,7 +152,6 @@ export default function AvatarDropdown() {
 
                     {/* ------------------ 2 --------------------- */}
                     <SwitchDarkMode />
-                     
 
                     <button
                       onClick={disconnect}

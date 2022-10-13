@@ -1,5 +1,5 @@
 import Label from "components/Label/Label";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Input from "shared/Input/Input";
 import Textarea from "shared/Textarea/Textarea";
@@ -13,12 +13,16 @@ import { Formik, ErrorMessage } from "formik";
 import { useCrud } from "hooks/useCrud";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import Avatar from "shared/Avatar/Avatar";
-import { createCollectionSchema, validateImage } from "services/validations";
-import { useNavigate } from "react-router-dom";
+import {
+  createCollectionSchema,
+  validateImage,
+  updateCollectionSchema,
+} from "services/validations";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getCollections } from "app/general/actions";
-import { t } from "i18next";
 import { useTranslation } from "react-i18next";
+import { useApi } from "hooks/useApi";
 
 export interface PageCreateCollectionProps {
   className?: string;
@@ -27,11 +31,13 @@ export interface PageCreateCollectionProps {
 const PageCreateCollection: FC<PageCreateCollectionProps> = ({
   className = "",
 }) => {
+  const params = useParams();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const api = useApi();
   const categories = useAppSelector((state) => state.general.categories);
-  const { create } = useCrud("/collections");
+  const { create, fetchById, item } = useCrud("/collections");
   const [bannerImage, setBannerImage] = useState<string>("");
   const [logoImage, setLogoImage] = useState<string>("");
 
@@ -42,9 +48,27 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
     description: "",
     facebook_url: "",
     twitter_url: "",
+    telegram_url: "",
     is_sensitive_content: false,
     category_id: null,
   });
+
+  useEffect(() => {
+    if (params.id) fetchById(params.id);
+  }, []);
+
+  useEffect(() => {
+    if (item) {
+      setInitFormState({
+        ...item,
+        logo_image: "",
+        banner_image: "",
+        category_id: item.category.id,
+      });
+      setLogoImage(item?.logo_image);
+      setBannerImage(item?.banner_image);
+    }
+  }, [item]);
 
   return (
     <div
@@ -59,7 +83,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
           {/* HEADING */}
           <div className="max-w-2xl">
             <h2 className="text-3xl font-semibold sm:text-4xl">
-              {t("Create_Collection")}
+              {params.id ? t("edit_collection") : t("Create_Collection")}
             </h2>
             <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
               {t("Create_Collection_desc")}
@@ -68,20 +92,31 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
           <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
           <Formik
             initialValues={initFormState}
-            validationSchema={createCollectionSchema}
+            validationSchema={
+              params.id ? updateCollectionSchema : createCollectionSchema
+            }
+            enableReinitialize
             onSubmit={async (values) => {
               try {
                 const form = new FormData();
                 for (const [key, value] of Object.entries(values)) {
-                  value as any;
                   form.append(key, value);
                 }
 
-                await create(form, {
-                  "Content-Type": "multipart/form-data",
-                });
-
-                toast.success("collection created successfully");
+                if (params.id) {
+                  form.append("_method", "put");
+                  await api.post(`/collections/${params.id}`, form, {
+                    headers: {
+                      "Content-Type": "multipart/form-data",
+                    },
+                  });
+                  toast.success(t("collection_created_successfully"));
+                } else {
+                  await create(form, {
+                    "Content-Type": "multipart/form-data",
+                  });
+                  toast.success(t("collection_updated_successfully"));
+                }
 
                 dispatch(getCollections());
 
@@ -350,7 +385,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                 </div>
 
                 {/* ---- */}
-                <div className="grid grid-cols-1 gap-5 my-5 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-5 my-5 sm:grid-cols-3">
                   <div>
                     <Label>{t("Facebook")}</Label>
                     <div className="mt-1.5 flex">
@@ -397,6 +432,26 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                       className="text-sm text-red-600"
                     />
                   </div>
+                  <div>
+                    <Label>{t("Telegram")}</Label>
+                    <div className="mt-1.5 flex">
+                      <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
+                        <i className="text-2xl lab la-telegram-plane"></i>
+                      </span>
+                      <Input
+                        className="!rounded-l-none"
+                        placeholder={t("collection_telegram_page")}
+                        value={values.telegram_url}
+                        type="url"
+                        id="telegram_url"
+                        name="telegram_url"
+                        onChange={handleChange("telegram_url")}
+                        onBlur={handleBlur("telegram_url")}
+                        sizeClass="h-11 px-4 pl-2 pr-3"
+                      />
+                    </div>
+                    <ErrorMessage name="telegram_url" />
+                  </div>
                 </div>
 
                 {/* ---- */}
@@ -419,7 +474,16 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   >
                     {t("submit")}
                   </ButtonPrimary>
-                  <ButtonSecondary onClick={handleReset} className="flex-1">
+                  <ButtonSecondary
+                    onClick={() => {
+                      if (params.id) {
+                        navigate(-1);
+                      } else {
+                        handleReset();
+                      }
+                    }}
+                    className="flex-1"
+                  >
                     {t("Cancel")}
                   </ButtonSecondary>
                 </div>

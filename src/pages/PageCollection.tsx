@@ -19,7 +19,6 @@ interface CollectionNftsProps {
   collection_id: number | string;
 }
 const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection_id }) => {
-  
   const [page, setPage] = useState<number>(1);
   const [priceRange, setPriceRange] = useState([0.01, 5.0]);
   const [sortBy, setSortBy] = useState<string>("");
@@ -168,19 +167,28 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                     panelMenusClass="origin-top-right !-right-5 !w-40 sm:!w-52"
                   />
                   <NftMoreDropdown
-                    actions={[
+                    actions={
                       collection?.created_by?.id == userData?.id
-                        ? {
-                            id: "addCollaboration",
-                            name: t("Add_Collaboration"),
-                            icon: "las la-sync",
-                          }
-                        : {
-                            id: "report",
-                            name: t("Report_abuse"),
-                            icon: "las la-flag",
-                          },
-                    ]}
+                        ? [
+                            {
+                              id: "addCollaboration",
+                              name: t("Add_Collaboration"),
+                              icon: "las la-sync",
+                            },
+                            {
+                              id: "editCollection",
+                              name: t("edit_collection"),
+                              icon: "las la-edit",
+                            },
+                          ]
+                        : [
+                            {
+                              id: "report",
+                              name: t("Report_abuse"),
+                              icon: "las la-flag",
+                            },
+                          ]
+                    }
                     collection={collection}
                     containerClassName="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800 cursor-pointer"
                   />
@@ -203,7 +211,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                     {t("Floor_Price")}
                   </span>
                   <span className="mt-4 text-base font-medium sm:text-xl sm:mt-6">
-                    {collection.min_price} ETH
+                    {collection.min_price || 0} ETH
                   </span>
                   <span className="mt-1 text-xs text-green-500"> --</span>
                 </div>
@@ -214,7 +222,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                     {t("Volume")}
                   </span>
                   <span className="mt-4 text-base font-medium sm:text-xl sm:mt-6">
-                    {collection.volume} ETH
+                    {collection.volume || 0} ETH
                   </span>
                   <span className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
                     {t("total")}
@@ -226,7 +234,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                     {t("Latest_Price")}
                   </span>
                   <span className="mt-4 text-base font-medium sm:text-xl sm:mt-6">
-                    {collection.max_price} ETH
+                    {collection.max_price || 0} ETH
                   </span>
                   <span className="mt-1 text-xs text-green-500"> --</span>
                 </div>

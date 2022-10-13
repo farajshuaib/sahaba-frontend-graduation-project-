@@ -208,5 +208,12 @@
   "to": "إلى",
   "Popular_collector": "جامع شعبي",
   "Popular_creator": "منشئ مشهور",
-  "Range_Prices": "أسعار النطاق"
+  "Range_Prices": "أسعار النطاق",
+  "Create_your_own_collection": "إنشاء مجموعتك الخاصة",
+  "Deleted_failed": "فشل الحذف",
+  "Deleted_successfully": "حذف بنجاح",
+  "NFT_deleted_failed": "فشل حذف NFT",
+  "NFT_deleted_successfully": "تم حذف NFT بنجاح",
+  "Upload_banner_image": "تحميل صورة البانر",
+  "no_provider": "لم يتم العثور على مزود ethereum ، يرجى تثبيت ملحق metamask على متصفحك أو محفظة ethereum أخرى"
 }

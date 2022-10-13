@@ -21,6 +21,7 @@ export const pages: Page[] = [
   { path: "/collections", element: <PageCollections /> },
   { path: "/collections/:category_id", element: <PageCollections /> },
   { path: "/collection/:id", element: <PageCollection /> },
+  { path: "/collection/:id/edit", element: <PageCreateCollection /> },
   { path: "/create-collection", element: <PageCreateCollection /> },
   { path: "/search", element: <PageSearch /> },
   { path: "/nft-details/:id", element: <NftDetailPage /> },
