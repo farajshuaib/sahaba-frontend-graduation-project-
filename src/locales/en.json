@@ -92,7 +92,7 @@
   "or_drag_and_drop": "or drag and drop",
   "extensions_sizes": "PNG, JPG, GIF up to 10MB",
   "Logo_Image": "Logo Image",
-  "Collection_Name": "Collection_Name",
+  "Collection_Name": "Collection Name",
   "Description": "Description",
   "Collection_Description_desc": "The description will be included on the collection's detail page underneath its NFTs.",
   "Markdown": "Markdown",
@@ -214,5 +214,9 @@
   "Popular_creator": "Popular Creator",
   "Popular_collector": "Popular Collector",
   "no_provider": "ethereum provider not found, please install metamask extension on your browser or other ethereum wallet",
-  "Upload_banner_image": "Upload banner image"
+  "Upload_banner_image": "Upload banner image",
+  "NFT_deleted_successfully": "NFT Deleted Successfully",
+  "NFT_deleted_failed": "NFT deleted failed",
+  "Deleted_successfully": "Deleted Successfully",
+  "Deleted_failed": "Deleted Failed"
 }

@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import NcDropDown, { NcDropDownItem } from "shared/NcDropDown/NcDropDown";
+import NcDropDown from "shared/NcDropDown/NcDropDown";
 import ModalDelete from "./ModalDelete";
 import ModalEdit from "./ModalEdit";
 import ModalReportItem from "./ModalReportItem";
@@ -10,9 +10,9 @@ export interface NftMoreDropdownProps {
   iconClass?: string;
   dropdownPositon?: "up" | "down";
   actions?: { id: string; name: string; icon?: string; href?: string }[];
-  nft?: Nft,
-  user?: UserData
-  collection?: Collection
+  nft?: Nft;
+  user?: UserData;
+  collection?: Collection;
 }
 
 const actionsDefault: NftMoreDropdownProps["actions"] = [
@@ -29,7 +29,7 @@ const NftMoreDropdown: FC<NftMoreDropdownProps> = ({
   actions = actionsDefault,
   nft,
   collection,
-  user
+  user,
 }) => {
   const [isEditting, setIsEditting] = useState(false);
   const [isReporting, setIsReporting] = useState(false);
@@ -94,14 +94,26 @@ const NftMoreDropdown: FC<NftMoreDropdownProps> = ({
         user={user}
         onCloseModalReportItem={closeModalReport}
       />
-      <ModalEdit nft={nft} show={isEditting} onCloseModalEdit={closeModalEdit} />
+      <ModalEdit
+        nft={nft}
+        show={isEditting}
+        onCloseModalEdit={closeModalEdit}
+      />
 
-      <ModalDelete show={isDeleting} onCloseModalDelete={closeModalDelete} />
-      {collection && <ModalAddCollaboration
-        show={isCollaborating}
-        collection_id={collection?.id}
-        onCloseModalCollaboration={closeModalCollaboration}
-      />}
+      <ModalDelete
+        show={isDeleting}
+        collection={collection}
+        nft={nft}
+        user={user}
+        onCloseModalDelete={closeModalDelete}
+      />
+      {collection && (
+        <ModalAddCollaboration
+          show={isCollaborating}
+          collection_id={collection?.id}
+          onCloseModalCollaboration={closeModalCollaboration}
+        />
+      )}
     </div>
   );
 };

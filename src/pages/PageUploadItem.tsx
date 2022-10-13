@@ -229,7 +229,7 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                   res.events[0].args.tokenId
                 ).toString();
 
-                console.log("hash", token_id);
+                console.log("token_id", token_id);
 
                 await create({
                   ...values,

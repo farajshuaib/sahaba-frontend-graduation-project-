@@ -1,5 +1,11 @@
-import React, { FC } from "react";
+import { useWeb3React } from "@web3-react/core";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "constant";
+import { Contract } from "ethers";
+import { useApi } from "hooks/useApi";
+import React, { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 import NcModal from "shared/NcModal/NcModal";
@@ -7,23 +13,90 @@ import NcModal from "shared/NcModal/NcModal";
 export interface ModalDeleteProps {
   show: boolean;
   onCloseModalDelete: () => void;
+  nft?: Nft;
+  collection?: Collection;
+  user?: UserData;
 }
 
-const ModalDelete: FC<ModalDeleteProps> = ({ show, onCloseModalDelete }) => {
+const ModalDelete: FC<ModalDeleteProps> = ({
+  show,
+  onCloseModalDelete,
+  nft,
+  collection,
+  user,
+}) => {
+  const [loading, setLoading] = useState<boolean>(false);
   const { t } = useTranslation();
-  const handleClickSubmitForm = () => {
-    console.log({ 1: "1" });
+  const { library, account } = useWeb3React();
+  const api = useApi();
+  const navigate = useNavigate();
+
+  const handleClickSubmitForm = async () => {
+    setLoading(true);
+    let api_route = user
+      ? `/users/${user.id}`
+      : collection
+      ? `/collection/${collection.id}`
+      : nft
+      ? `/nfts/burn/${nft.id}`
+      : "";
+
+    try {
+      if (nft) {
+        await burnNft();
+      }
+      await api.delete(api_route);
+      toast.success(t("Deleted_successfully"));
+      onCloseModalDelete();
+      setLoading(false);
+      navigate(-1);
+    } catch (errors: any) {
+      setLoading(false);
+      toast.error(errors?.response?.data?.message || t("Deleted_failed"));
+    }
+  };
+  const burnNft = async () => {
+    return new Promise(async (resolve, reject) => {
+      const contract = new Contract(
+        CONTRACT_ADDRESS,
+        CONTRACT_ABI,
+        library?.getSigner()
+      );
+
+      try {
+        const isApprovedForAll = await contract.isApprovedForAll(
+          account,
+          CONTRACT_ADDRESS
+        );
+
+        if (!isApprovedForAll) {
+          await contract.setApprovalForAll(CONTRACT_ADDRESS, true);
+        }
+        await contract.burn(nft?.token_id);
+        toast.success(t("NFT_deleted_successfully"));
+
+        resolve(true);
+      } catch (errors: any) {
+        console.log("errors", errors);
+        toast.error(t("NFT_deleted_failed"));
+        reject(errors);
+      }
+    });
   };
 
   const renderContent = () => {
     return (
       <form action="#">
         <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
-          {t("Delete_NFT")}
+          {nft ? t("Delete_NFT") : ""}
         </h3>
-        <span className="text-sm">{t("Delete_NFT_desc")}</span>
+        <span className="text-sm">{nft ? t("Delete_NFT_desc") : ""}</span>
         <div className="mt-4 space-x-3">
-          <ButtonPrimary onClick={handleClickSubmitForm} type="submit">
+          <ButtonPrimary
+            loading={loading}
+            onClick={handleClickSubmitForm}
+            type="submit"
+          >
             {t("Delete")}
           </ButtonPrimary>
           <ButtonSecondary type="button" onClick={onCloseModalDelete}>

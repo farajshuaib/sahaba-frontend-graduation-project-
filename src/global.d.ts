@@ -80,6 +80,7 @@ interface Contract_methods {
   getTokenURI: (tokenId: number) => string;
   getTotalNumberOfTokensOwnedByAnAddress: (owner: string) => number;
   getTokenExists: (tokenId: number) => boolean;
+  burn: (tokenId: number) => void;
 }
 
 interface Category {
