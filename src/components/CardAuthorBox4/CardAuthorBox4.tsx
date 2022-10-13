@@ -19,7 +19,7 @@ const CardAuthorBox4: FC<CardAuthorBox4Props> = ({ className = "", user }) => {
       <div className="relative flex-shrink-0 h-36">
         <NcImage
           containerClassName="flex h-full w-full flex-shrink-0 rounded-3xl overflow-hidden"
-          src={banner_image}
+          src={user.banner_photo || banner_image}
         />
       </div>
 

@@ -25,6 +25,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
   const { t } = useTranslation();
   const userData: UserData = useAppSelector((state) => state.account.userData);
   const [profileImage, setProfileImage] = useState<string>("");
+  const [bannerImage, setBannerImage] = useState<string>("");
 
   const [initFormState, setInitFormState] = useState<UserData>();
 
@@ -59,43 +60,107 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
             />
           </div>
           <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
-          <div className="flex flex-col md:flex-row">
-            {initFormState && (
-              <Formik
-                initialValues={initFormState}
-                validationSchema={updateAccountSchema}
-                onSubmit={async (values) => {
-                  const form = new FormData();
-                  for (const [key, value] of Object.entries(values)) {
-                    form.append(key, value);
-                  }
 
-                  form.append("_method", "put");
+          {initFormState && (
+            <Formik
+              initialValues={initFormState}
+              validationSchema={updateAccountSchema}
+              onSubmit={async (values) => {
+                const form = new FormData();
+                for (const [key, value] of Object.entries(values)) {
+                  form.append(key, value);
+                }
 
-                  try {
-                    await create(form, {
-                      "Content-Type": "multipart/form-data",
-                    });
-                    dispatch(connectToWallet(values.wallet_address));
-                    toast.success(t("Account_successfully_updated"));
-                    navigate("/");
-                  } catch (e: any) {
-                    toast.error(
-                      e.response?.data?.message || t("Account_update_error")
-                    );
-                  }
-                }}
-              >
-                {({
-                  values,
-                  errors,
-                  handleChange,
-                  handleBlur,
-                  handleSubmit,
-                  setFieldValue,
-                  isSubmitting,
-                }) => (
-                  <>
+                form.append("_method", "put");
+
+                try {
+                  await create(form, {
+                    "Content-Type": "multipart/form-data",
+                  });
+                  dispatch(connectToWallet(values.wallet_address));
+                  toast.success(t("Account_successfully_updated"));
+                  navigate("/");
+                } catch (e: any) {
+                  toast.error(
+                    e.response?.data?.message || t("Account_update_error")
+                  );
+                }
+              }}
+            >
+              {({
+                values,
+                errors,
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                setFieldValue,
+                isSubmitting,
+                touched,
+              }) => (
+                <>
+                  <div className="w-full mt-5">
+                    <div
+                      className={`flex relative overflow-hidden justify-center mt-1 border-2 border-dashed ${
+                        touched.banner_photo && errors.banner_photo
+                          ? "border-red-600"
+                          : "border-neutral-300 dark:border-neutral-6000"
+                      } rounded-xl`}
+                    >
+                      <div
+                        className={`relative inset-0 z-20 flex flex-col items-center justify-center w-full h-full px-6 pt-5 pb-6 space-y-1 text-center  cursor-pointer text-neutral-50 ${
+                          bannerImage && "bg-black  bg-opacity-60"
+                        }`}
+                      >
+                        <svg
+                          className="w-12 h-12 mx-auto text-neutral-400"
+                          stroke="currentColor"
+                          fill="none"
+                          viewBox="0 0 48 48"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          ></path>
+                        </svg>
+                        <div className="flex text-sm text-neutral-6000 dark:text-neutral-300">
+                          <label
+                            htmlFor="file-upload"
+                            className="relative font-medium rounded-md cursor-pointer text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
+                          >
+                            <span>{t("Upload_banner_image")}</span>
+                            <input
+                              id="file-upload"
+                              name="file-upload"
+                              type="file"
+                              accept="image/*"
+                              className="sr-only"
+                              onChange={async (e) => {
+                                if (!e.target.files) return;
+                                const file = e.target.files[0];
+                                if (!validateImage(file)) return;
+                                setBannerImage(URL.createObjectURL(file));
+                                setFieldValue("banner_photo", file);
+                              }}
+                            />
+                          </label>
+                        </div>
+                        <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                          {t("extensions_sizes")}
+                        </p>
+                      </div>
+                      {bannerImage && (
+                        <img
+                          className={`absolute z-10 inset-0 w-full h-full object-cover `}
+                          src={bannerImage}
+                          alt={"collection banner image"}
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex flex-col md:flex-row">
                     <div className="flex items-start flex-shrink-0">
                       <div className="relative flex overflow-hidden rounded-full">
                         <Avatar
@@ -358,11 +423,11 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                         </ButtonPrimary>
                       </div>
                     </div>
-                  </>
-                )}
-              </Formik>
-            )}
-          </div>
+                  </div>
+                </>
+              )}
+            </Formik>
+          )}
         </div>
       </div>
     </div>

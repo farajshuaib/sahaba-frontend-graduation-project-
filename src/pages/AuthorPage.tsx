@@ -59,7 +59,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
         <div className="relative w-full h-40 md:h-60 2xl:h-72">
           <NcImage
             containerClassName="absolute inset-0"
-            src={authorBanner}
+            src={item.banner_photo || authorBanner}
             className="object-cover w-full h-full"
           />
         </div>

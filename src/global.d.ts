@@ -27,8 +27,8 @@ interface LocationStates {
   "/#"?: {};
   "/nft-details/:id"?: {};
   "/collections"?: {};
-  "/collections/:category_id"?:{};
-  "/create-collection"?:{};
+  "/collections/:category_id"?: {};
+  "/create-collection"?: {};
   "/collection/:id"?: {};
   "/search"?: {};
   "/author/:id"?: {};
@@ -39,7 +39,7 @@ interface LocationStates {
   "/contact"?: {};
   "/forgot-pass"?: {};
   "/page404"?: {};
-  "/kyc-form"?: {}
+  "/kyc-form"?: {};
 }
 
 interface Meta {
@@ -134,6 +134,18 @@ interface Collection {
   nfts_count: number;
 }
 
+interface KycData {
+  id: number;
+  gender?: "male" | "female";
+  country?: string;
+  city?: string;
+  address?: string;
+  phone_number?: string;
+  author_type?: "creator" | "collector";
+  author_art_type?: string;
+  passport_id?: string;
+}
+
 interface UserData {
   id: number;
   first_name: string;
@@ -147,6 +159,7 @@ interface UserData {
   twitter_url: string;
   telegram_url: string;
   profile_photo: string;
+  banner_photo: string;
   is_verified: boolean;
   status: "enabled" | "pending";
   collections?: Collection[];
@@ -156,14 +169,6 @@ interface UserData {
   nfts?: Nft[];
   is_followed?: boolean;
   is_subscribed: boolean;
-  gender?: "male" | "female";
-  country?: string;
-  city?: string;
-  address?: string;
-  phone_number?: string;
-  author_type?: "creator" | "collector";
-  author_art_type?: string;
-  passport_id?: string;
 }
 
 interface SupportedLocales {

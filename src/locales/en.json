@@ -213,5 +213,6 @@
   "Set_NFT_for_sale": "Set NFT for sale",
   "Popular_creator": "Popular Creator",
   "Popular_collector": "Popular Collector",
-  "no_provider": "ethereum provider not found, please install metamask extension on your browser or other ethereum wallet"
+  "no_provider": "ethereum provider not found, please install metamask extension on your browser or other ethereum wallet",
+  "Upload_banner_image": "Upload banner image"
 }
