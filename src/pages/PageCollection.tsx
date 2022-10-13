@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, useTransition } from "react";
 import { Helmet } from "react-helmet";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import NcImage from "shared/NcImage/NcImage";
@@ -14,6 +14,7 @@ import LoadingScreen from "components/LoadingScreen";
 import { useAppSelector } from "app/hooks";
 import ServerError from "components/ServerError";
 import { useTranslation } from "react-i18next";
+import Heading from "components/Heading/Heading";
 
 interface CollectionNftsProps {
   collection_id: number | string;
@@ -24,6 +25,7 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection_id }) => {
   const [sortBy, setSortBy] = useState<string>("");
   const [isVerifiedUser, setIsVerifiedUser] = useState<boolean>();
   const { fetch, meta, loading, data } = useCrud("/nfts");
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetch({
@@ -37,6 +39,14 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection_id }) => {
 
   if (loading) {
     return <LoadingScreen />;
+  }
+
+  if (data?.length == 0) {
+    return (
+      <Heading isCenter>
+        {t("this_collection_doesnt_contain_any_nfts_yet")}
+      </Heading>
+    );
   }
 
   return (
@@ -57,7 +67,9 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection_id }) => {
 
       {/* PAGINATION */}
       <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-        {meta && <Pagination meta={meta} setPage={(page) => setPage(page)} />}
+        {meta && data.length > 0 && (
+          <Pagination meta={meta} setPage={(page) => setPage(page)} />
+        )}
       </div>
     </main>
   );

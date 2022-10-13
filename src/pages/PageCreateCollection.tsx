@@ -76,7 +76,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
       data-nc-id="PageUploadItem"
     >
       <Helmet>
-        <title>{t("Create_Collection")}</title>
+        <title>{params.id ? t("edit_collection") : t("Create_Collection")}</title>
       </Helmet>
       <div className="container">
         <div className="max-w-4xl mx-auto my-12 space-y-8 sm:lg:my-16 lg:my-24 sm:space-y-10">
@@ -110,12 +110,12 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                       "Content-Type": "multipart/form-data",
                     },
                   });
-                  toast.success(t("collection_created_successfully"));
+                  toast.success(t("collection_updated_successfully"));
                 } else {
                   await create(form, {
                     "Content-Type": "multipart/form-data",
                   });
-                  toast.success(t("collection_updated_successfully"));
+                  toast.success(t("collection_created_successfully"));
                 }
 
                 dispatch(getCollections());

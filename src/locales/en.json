@@ -223,5 +223,6 @@
   "Create_your_own_collection": "Create your own collection",
   "edit_collection": "Edit collection",
   "collection_created_successfully": "Collection created successfully",
-  "collection_updated_successfully": "Collection updated successfully"
+  "collection_updated_successfully": "Collection updated successfully",
+  "this_collection_doesnt_contain_any_nfts_yet": "This collection doesn't contain any NFTs yet"
 }
