@@ -15,21 +15,57 @@ import KYC_Form from "pages/KYC_Form";
 import { Page } from "type";
 import App from "App";
 import ServerError from "components/ServerError";
+import RequireAuth from "components/RequireAuth";
 
 export const pages: Page[] = [
   { path: "/", element: <PageHome /> },
   { path: "/collections", element: <PageCollections /> },
   { path: "/collections/:category_id", element: <PageCollections /> },
   { path: "/collection/:id", element: <PageCollection /> },
-  { path: "/collection/:id/edit", element: <PageCreateCollection /> },
-  { path: "/create-collection", element: <PageCreateCollection /> },
+  {
+    path: "/collection/:id/edit",
+    element: (
+      <RequireAuth>
+        <PageCreateCollection />
+      </RequireAuth>
+    ),
+  },
+  {
+    path: "/create-collection",
+    element: (
+      <RequireAuth>
+        <PageCreateCollection />{" "}
+      </RequireAuth>
+    ),
+  },
   { path: "/search", element: <PageSearch /> },
   { path: "/nft-details/:id", element: <NftDetailPage /> },
-  { path: "/create-nft", element: <PageUploadItem /> },
+  {
+    path: "/create-nft",
+    element: (
+      <RequireAuth>
+        <PageUploadItem />
+      </RequireAuth>
+    ),
+  },
   { path: "/author/:id", element: <AuthorPage /> },
   { path: "/connect-wallet", element: <PageConnectWallet /> },
-  { path: "/account", element: <AccountPage /> },
-  { path: "/kyc-form", element: <KYC_Form /> },
+  {
+    path: "/account",
+    element: (
+      <RequireAuth>
+        <AccountPage />
+      </RequireAuth>
+    ),
+  },
+  {
+    path: "/kyc-form",
+    element: (
+      <RequireAuth>
+        <KYC_Form />
+      </RequireAuth>
+    ),
+  },
 ];
 
 const router = createBrowserRouter([
