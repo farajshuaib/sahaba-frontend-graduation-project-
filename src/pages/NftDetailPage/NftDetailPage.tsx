@@ -48,7 +48,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
   const { create: submitBuyNft } = useCrud(`/nfts/buy/${params.id}`);
   const [loadingButton, setLoadingButton] = useState<boolean>(false);
   const [forSaleModal, setForSaleModal] = useState<boolean>(false);
-  const [serviceFee, setServiceFee] = useState<number>(0);
+
   const [saleEndAt, setSaleEndAt] = useState<string>();
 
   const contract = new Contract(
@@ -57,17 +57,11 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     library?.getSigner()
   );
 
-  async function getServiceFeesPrice() {
-    const res = await contract.getServiceFeesPrice();
-    setServiceFee(+utils.formatEther(res).toString());
-  }
-
   async function increaseWatchTime() {
     api.post("/nfts/watch", { nft_id: params.id });
   }
 
   useEffect(() => {
-    getServiceFeesPrice();
     if (params.id) fetchById(params.id);
     if (params.id && userData) increaseWatchTime();
   }, [params.id]);
@@ -127,12 +121,8 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
         await contract.setApprovalForAll(CONTRACT_ADDRESS, true);
       }
 
-      const amount = utils.parseEther(
-        (parseFloat(serviceFee.toString()) + parseFloat(item.price)).toString()
-      );
-
       const transaction = await contract.buyToken(item.token_id, {
-        value: amount,
+        value: utils.parseEther(parseFloat(item.price).toString()),
         gasLimit: 1 * 10 ** 6,
       });
 
@@ -235,12 +225,9 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
               </span>
               <span className="flex items-baseline gap-1 text-3xl font-semibold text-green-500 xl:text-4xl">
                 <span>{item?.price} ETH</span>
-                <span className="text-xs">
-                  {`+ ${serviceFee} ${t("service_fees")}`}
-                </span>
               </span>
               <span className="text-lg text-neutral-400 sm:mx-2">
-                ≈ {usdPrice(item?.price + serviceFee)}
+                ≈ {usdPrice(item?.price)}
               </span>
             </div>
           </div>

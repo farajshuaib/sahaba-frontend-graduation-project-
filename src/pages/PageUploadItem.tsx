@@ -14,7 +14,7 @@ import { useWeb3React } from "@web3-react/core";
 import useIpfs from "hooks/useIpfs";
 import { useCrud } from "hooks/useCrud";
 import { CONTRACT_ABI, CONTRACT_ADDRESS, IPFS_BASE_URL } from "constant";
-import { BigNumber, Contract } from "ethers";
+import { BigNumber, Contract, utils } from "ethers";
 import { createNftSchema, validateImage } from "services/validations";
 import { toast } from "react-toastify";
 import { formatEther, parseEther } from "ethers/lib/utils";
@@ -22,7 +22,6 @@ import { useNavigate } from "react-router-dom";
 import { usdPrice } from "utils/functions";
 import { Alert } from "shared/Alert/Alert";
 import { useTranslation } from "react-i18next";
-import NcInputNumber from "components/NcInputNumber/NcInputNumber";
 
 interface UploadFileProps {
   errors: FormikErrors<any>;
@@ -143,6 +142,14 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
   const { create } = useCrud("/nfts");
   const [balance, setBalance] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const [serviceFee, setServiceFee] = useState<number>(0);
+  const [ownerReceived, setOwnerReceived] = useState<number>(0);
+
+  const contract = new Contract(
+    CONTRACT_ADDRESS,
+    CONTRACT_ABI,
+    library?.getSigner()
+  );
 
   const getAccountBalance = async () => {
     if (!account) return;
@@ -150,9 +157,20 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
     setBalance(formatEther(balance));
   };
 
+  async function getServiceFeesPrice() {
+    const res = await contract.getServiceFeesPrice();
+    setServiceFee(+utils.formatEther(res).toString());
+  }
+
   useEffect(() => {
+    getServiceFeesPrice();
     getAccountBalance();
   }, []);
+
+  const calcOwnerReceived = (price: number) => {
+    const fees = price * serviceFee;
+    setOwnerReceived(price - fees);
+  };
 
   return (
     <div
@@ -198,13 +216,6 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                 return;
               }
               try {
-                const signer = library?.getSigner();
-                const contract = new Contract(
-                  CONTRACT_ADDRESS,
-                  CONTRACT_ABI,
-                  signer
-                );
-
                 const isApprovedForAll = await contract.isApprovedForAll(
                   account,
                   CONTRACT_ADDRESS
@@ -315,37 +326,48 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                 </FormItem>
 
                 {/* ---- */}
-                <FormItem
-                  label={t("price")}
-                  desc="Sahabat will include a link to this URL on this item's detail page, so that users can click to learn more about it. You are welcome to link to your own webpage with more details."
-                >
-                  <div className="flex">
-                    <span className="inline-flex items-center px-3 text-sm border border-r-0 rounded-l-2xl border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">
-                      ETH
-                    </span>
-                    <Input
-                      id="price"
-                      type="number"
+                <div>
+                  <FormItem
+                    label={t("price")}
+                    desc={`${+serviceFee * 100}% ${t("service_fees")}`}
+                  >
+                    <div className="relative flex">
+                      <span className="inline-flex items-center px-3 text-sm border border-r-0 rounded-l-2xl border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">
+                        ETH
+                      </span>
+                      <Input
+                        id="price"
+                        type="number"
+                        name="price"
+                        value={values.price}
+                        onChange={(e) => {
+                          setFieldValue("price", e.currentTarget.value);
+                          calcOwnerReceived(+e.currentTarget.value);
+                        }}
+                        onBlur={handleBlur("price")}
+                        min={0.001}
+                        max={5.0}
+                        className="!rounded-l-none w-full"
+                        placeholder="0.01"
+                      />
+                      <span className="absolute right-0 p-3 text-sm align-middle border border-l-0 rounded-r-2xl border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 whitespace-nowrap">
+                        {usdPrice(+values.price)}
+                      </span>
+                    </div>
+                    <ErrorMessage
                       name="price"
-                      value={values.price}
-                      onChange={handleChange("price")}
-                      onBlur={handleBlur("price")}
-                      min={0.001}
-                      max={5.0}
-                      className="!rounded-l-none"
-                      placeholder="0.01"
+                      component={"span"}
+                      className="text-sm text-red-600"
                     />
-                    <span className="px-3 text-sm transform -translate-x-3 border border-l-0 rounded-r-2xl border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">
-                      {usdPrice(+values.price)}
+                  </FormItem>
+                  <div className="relative flex items-baseline gap-1 text-sm font-semibold text-green-500">
+                    <span className=" text-neutral-500 dark:text-neutral-400">
+                      {t("you_will_receive")}
                     </span>
+                    <span className="">{ownerReceived} ETH</span>
+                    <span className="">≈ {usdPrice(ownerReceived)}</span>
                   </div>
-
-                  <ErrorMessage
-                    name="price"
-                    component={"span"}
-                    className="text-sm text-red-600"
-                  />
-                </FormItem>
+                </div>
 
                 <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
 

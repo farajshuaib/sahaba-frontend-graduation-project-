@@ -1,4 +1,4 @@
-// https://goerli.etherscan.io/address/0xe2896fe1Dc071A8f7e77D066964415E87C7d51e2#code
+// https://goerli.etherscan.io/address/0x1d8E2BfD82492a14C8C026EA178eB1A6Dc680ed0#code
 import abi from "../contracts/abi.json";
 //
 
@@ -6,7 +6,7 @@ export const currentNetwork: string = "5";
 export const IPFS_BASE_URL: string = "https://ipfs.io/ipfs/";
 
 export const CONTRACT_ADDRESS: string =
-  "0xe2896fe1Dc071A8f7e77D066964415E87C7d51e2";
+  "0x1d8E2BfD82492a14C8C026EA178eB1A6Dc680ed0";
 
 export const TEST_CONTRACT_LINK = `https://goerli.etherscan.io/address/${CONTRACT_ADDRESS}#code`;
 export const CONTRACT_ABI = abi;
