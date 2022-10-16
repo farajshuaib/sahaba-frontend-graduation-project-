@@ -75,7 +75,9 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       setLoadingButton(true);
       await api.put(`/nfts/sale/${item.id}`, {
         sale_end_at: moment(
-          moment(new Date()).add(saleEndAt, "days").toString()
+          moment(new Date())
+            .add(saleEndAt || 5, "days")
+            .toString()
         ).format("YYYY-MM-DD HH:MM:SS"),
       });
       setForSaleModal(false);
@@ -123,7 +125,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
 
       const transaction = await contract.buyToken(item.token_id, {
         value: utils.parseEther(parseFloat(item.price).toString()),
-        gasLimit: 1 * 10 ** 6,
+        gasLimit: 3 * 10 ** 6,
       });
 
       console.log("transaction", transaction);
@@ -306,14 +308,12 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
           <Select
             value={saleEndAt?.toString()}
             onChange={(e) => {
-              console.log(e.currentTarget.value);
               if (!e.currentTarget.value) return;
               setSaleEndAt(e.currentTarget.value);
             }}
           >
             <option
               disabled={true}
-              value={new Date().toString()}
               className="text-neutral-500 dark:text-white placeholder:text-white"
             >
               {t("select_a_date_will_sell_end_at")}

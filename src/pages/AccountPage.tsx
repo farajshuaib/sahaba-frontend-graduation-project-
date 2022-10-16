@@ -75,7 +75,6 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                   form.append(key, value);
                 }
 
-
                 form.append("_method", "put");
 
                 try {
@@ -104,7 +103,6 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
               }) => (
                 <>
                   <div className="w-full mt-5">
-                    {JSON.stringify(errors)}
                     <div
                       className={`flex relative overflow-hidden justify-center mt-1 border-2 border-dashed ${
                         touched.banner_photo && errors.banner_photo

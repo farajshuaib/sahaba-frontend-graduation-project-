@@ -1,4 +1,4 @@
-// https://goerli.etherscan.io/address/0x1d8E2BfD82492a14C8C026EA178eB1A6Dc680ed0#code
+// https://goerli.etherscan.io/address/0x07Ed4f8E75083fA2c8103990682cd15cbb69bB0e
 import abi from "../contracts/abi.json";
 //
 
@@ -6,15 +6,13 @@ export const currentNetwork: string = "5";
 export const IPFS_BASE_URL: string = "https://ipfs.io/ipfs/";
 
 export const CONTRACT_ADDRESS: string =
-  "0x1d8E2BfD82492a14C8C026EA178eB1A6Dc680ed0";
+  "0x07Ed4f8E75083fA2c8103990682cd15cbb69bB0e";
 
-export const TEST_CONTRACT_LINK = `https://goerli.etherscan.io/address/${CONTRACT_ADDRESS}#code`;
+export const TEST_CONTRACT_LINK = `https://goerli.etherscan.io/address/${CONTRACT_ADDRESS}`;
 export const CONTRACT_ABI = abi;
-
 
 export const FCM_vapidKey =
   "BGgA_V7VWLw_wgYxTM8Hb1RL6u85Y9QlyqnZe0FQKJdqrcIs6WTXBoECljxptX119JivpHQg5gsvcCraDUOXk78";
-
 
 export const locales: SupportedLocales[] = [
   { key: "ar", value: "عربي" },
