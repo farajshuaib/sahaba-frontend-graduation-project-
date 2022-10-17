@@ -11,6 +11,7 @@ import { persistor, store } from "app/store";
 import { Web3Provider } from "@ethersproject/providers";
 import { Buffer } from "buffer";
 import { useRegisterSW } from "virtual:pwa-register/react";
+import useDarkMode from "hooks/useDarkMode";
 
 globalThis.Buffer = Buffer;
 //
@@ -19,7 +20,7 @@ import "./styles/index.css";
 import "./assets/fonts/line-awesome-1.3.0/css/line-awesome.css";
 import "rc-slider/assets/index.css";
 import "react-toastify/dist/ReactToastify.css";
-import useDarkMode from "hooks/useDarkMode";
+
 
 i18n.use(initReactI18next).init({
   resources: {

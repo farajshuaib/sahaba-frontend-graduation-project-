@@ -1,4 +1,4 @@
-export const networkParams = {
+export const networkParams:any = {
   "1": {
     chainId: "1",
     networkName: "Ethereum Mainnet",

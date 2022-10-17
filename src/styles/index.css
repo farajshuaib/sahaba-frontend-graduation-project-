@@ -3,8 +3,21 @@
 @tailwind utilities;
 @tailwind variants;
 
-
-.tajwal-font {
-  font-family: "Tajawal", sans-serif !important;; 
+html,
+body {
+  scroll-behavior: smooth;
 }
 
+.tajwal-font {
+  font-family: "Tajawal", sans-serif !important;
+}
+
+.nav-blur-bg {
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
+}
+
+.nav-dark-bg {
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
+}

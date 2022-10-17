@@ -78,7 +78,9 @@ function App() {
         ) : (
           <>
             <HeaderLogged />
-            <Outlet />
+            <div className="pt-24">
+              <Outlet />
+            </div>
             <Footer />
           </>
         )}

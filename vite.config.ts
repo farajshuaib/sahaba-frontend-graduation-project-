@@ -2,8 +2,6 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import viteTsconfigPaths from "vite-tsconfig-paths";
 import svgrPlugin from "vite-plugin-svgr";
-import nodePolyfills from "rollup-plugin-polyfill-node";
-import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 import GlobalsPolyfills from "@esbuild-plugins/node-globals-polyfill";
 import { VitePWA } from "vite-plugin-pwa";
 
@@ -70,13 +68,6 @@ export default defineConfig({
         enabled: !production
       }
     }),
-    !production &&
-      nodePolyfills({
-        include: [
-          "node_modules/**/*.js",
-          new RegExp("node_modules/.vite/.*js"),
-        ],
-      }),
   ],
   server: {
     port: 3000,
@@ -85,8 +76,6 @@ export default defineConfig({
     rollupOptions: {
       external: ["jss-plugin-globalThis"],
       plugins: [
-        // ↓ Needed for build
-        nodePolyfills(),
       ],
     },
     // ↓ Needed for build if using WalletConnect and other providers

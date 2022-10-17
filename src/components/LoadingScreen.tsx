@@ -10,7 +10,7 @@ const LoadingScreen: React.FC = () => {
   return (
     <div
       data-testid="loadingScreen"
-      className="flex items-center justify-center h-screen text-center bg-white dark:text-white text-primary dark:bg-neutral-900 text-neutral-900"
+      className="flex items-center justify-center h-screen text-center bg-white "
     >
       <motion.div
         variants={animation}
@@ -19,7 +19,9 @@ const LoadingScreen: React.FC = () => {
         exit="exit"
         transition={{ duration: 0.3 }}
       >
-        <i className="text-6xl bx bx-loader-alt bx-spin "></i>
+        <iframe src="https://embed.lottiefiles.com/animation/85759"></iframe>
+        <div className="absolute inset-0 z-50"></div>
+        {/* <i className="text-6xl bx bx-loader-alt bx-spin "></i> */}
       </motion.div>
     </div>
   );
