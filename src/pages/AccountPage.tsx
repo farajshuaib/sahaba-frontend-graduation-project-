@@ -28,13 +28,39 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
   const [profileImage, setProfileImage] = useState<string>("");
   const [bannerImage, setBannerImage] = useState<string>("");
 
-  const [initFormState, setInitFormState] = useState<UserData>();
+  const [initFormState, setInitFormState] = useState({
+    first_name: "",
+    last_name: "",
+    username: "",
+    email: "",
+    bio: "",
+    banner_photo: "",
+    profile_photo: "",
+    facebook_url: "",
+    twitter_url: "",
+    telegram_url: "",
+    website_url: "",
+    instagram_url: "",
+  });
 
   const { create } = useCrud("/my-profile");
 
   useEffect(() => {
     if (userData) {
-      setInitFormState({ ...userData, banner_photo: "", profile_photo: "" });
+      setInitFormState({
+        first_name: userData.first_name,
+        last_name: userData.last_name,
+        username: userData.username,
+        email: userData.email,
+        bio: userData.bio,
+        banner_photo: userData.banner_photo,
+        profile_photo: userData.profile_photo,
+        facebook_url: userData.social_links?.facebook_url || "",
+        twitter_url: userData.social_links?.twitter_url || "",
+        telegram_url: userData.social_links?.telegram_url || "",
+        website_url: userData.social_links?.website_url || "",
+        instagram_url: userData.social_links?.instagram_url || "",
+      });
       setProfileImage(userData?.profile_photo);
       setBannerImage(userData?.banner_photo);
     }
@@ -81,7 +107,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                   await create(form, {
                     "Content-Type": "multipart/form-data",
                   });
-                  dispatch(connectToWallet(values.wallet_address));
+                  dispatch(connectToWallet(userData.wallet_address));
                   toast.success(t("Account_successfully_updated"));
                   navigate("/");
                 } catch (e: any) {
@@ -315,7 +341,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                       </div>
 
                       {/* ---- */}
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-2.5">
+                      <div className="grid grid-cols-1 sm:grid-cols-4 gap-5 sm:gap-2.5">
                         <div>
                           <Label>{t("Facebook")}</Label>
                           <div className="mt-1.5 flex">
@@ -360,7 +386,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                           <Label>{t("Telegram")}</Label>
                           <div className="mt-1.5 flex">
                             <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
-                              <i className="text-2xl lab la-telegram-plane"></i>
+                              <i className="text-2xl lab la-telegram"></i>
                             </span>
                             <Input
                               className="!rounded-l-none"
@@ -376,6 +402,26 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                           </div>
                           <ErrorMessage name="telegram_url" />
                         </div>
+                        <div>
+                          <Label>{t("Instagram")}</Label>
+                          <div className="mt-1.5 flex">
+                            <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
+                              <i className="text-2xl lab la-telegram-plane"></i>
+                            </span>
+                            <Input
+                              className="!rounded-l-none"
+                              placeholder={t("your_instagram_account_url")}
+                              value={values.instagram_url}
+                              type="url"
+                              id="instagram_url"
+                              name="instagram_url"
+                              onChange={handleChange("instagram_url")}
+                              onBlur={handleBlur("instagram_url")}
+                              sizeClass="h-11 px-4 pl-2 pr-3"
+                            />
+                          </div>
+                          <ErrorMessage name="instagram_url" />
+                        </div>
                       </div>
 
                       {/* ---- */}
@@ -385,12 +431,12 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                           <Input
                             className="!pr-10 "
                             disabled
-                            defaultValue={values.wallet_address || ""}
+                            defaultValue={userData.wallet_address || ""}
                           />
 
                           <span
                             onClick={() => {
-                              copyToClipboard(values?.wallet_address);
+                              copyToClipboard(userData?.wallet_address);
                             }}
                             className="absolute right-2.5 cursor-pointer top-1/2 -translate-y-1/2 "
                           >

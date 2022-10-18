@@ -126,10 +126,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
               </div>
               <div className="mt-4 ">
                 <SocialsList
-                  facebook_url={item.facebook_url}
-                  telegram_url={item.telegram_url}
-                  twitter_url={item.twitter_url}
-                  website_url={item.website_url}
+                  social_links={item.social_links}
                   itemClass="block w-7 h-7"
                 />
               </div>

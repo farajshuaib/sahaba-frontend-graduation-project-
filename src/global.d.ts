@@ -100,6 +100,16 @@ interface Transactions {
   created_at: Date;
   type: "mint" | "set_for_sale" | "sale" | "update_price";
 }
+
+interface SocialLinks {
+  id: number;
+  twitter_url: string;
+  facebook_url: string;
+  instagram_url: string;
+  website_url: string;
+  telegram_url: string;
+}
+
 interface Nft {
   id: number;
   title: string;
@@ -123,18 +133,14 @@ interface Collection {
   banner_image: string;
   collection_token_id: number;
   description: string;
-  facebook_url: string | null;
-  instagram_url: string | null;
   is_sensitive_content: boolean;
   logo_image: string;
   name: string;
-  telegram_url: string | null;
-  twitter_url: string | null;
-  website_url: string | null;
   nfts: Nft[];
   created_by: UserData;
   nfts_count: number;
-  collaborators: UserData[]
+  collaborators: UserData[];
+  social_links: SocialLinks;
 }
 
 interface KycData {
@@ -157,21 +163,19 @@ interface UserData {
   username: string;
   email: string;
   bio: string;
-  facebook_url: string;
-  website_url: string;
-  twitter_url: string;
-  telegram_url: string;
   profile_photo: string;
   banner_photo: string;
   is_verified: boolean;
   status: "enabled" | "pending";
   collections?: Collection[];
-  followers?: Nft[];
-  following?: Nft[];
+  followers?: UserData[];
+  following?: UserData[];
   liked_nfts?: Nft[];
   nfts?: Nft[];
   is_followed?: boolean;
   is_subscribed: boolean;
+  social_links: SocialLinks;
+  kyc_form: KycData;
 }
 
 interface SupportedLocales {

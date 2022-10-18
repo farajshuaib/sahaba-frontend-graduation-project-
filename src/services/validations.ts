@@ -85,6 +85,7 @@ export const updateAccountSchema = yup.object().shape({
   facebook_url: yup.string().url().nullable(),
   twitter_url: yup.string().url().nullable(),
   telegram_url: yup.string().url().nullable(),
+  instagram_url: yup.string().url().nullable(),
   banner_photo: yup
     .mixed()
     .test("fileSize", "The file is too large", (value) => {

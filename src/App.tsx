@@ -26,7 +26,10 @@ function App() {
     if (account && userData?.wallet_address != account) {
       await dispatch(logout());
     }
-    if (!account) return;
+    if (!account) {
+      setLoading(false);
+      return;
+    }
     await dispatch(connectToWallet(account));
     if (userData && (!userData?.username || !userData?.email)) {
       navigate("/account");

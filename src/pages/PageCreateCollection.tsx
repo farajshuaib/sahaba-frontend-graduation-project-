@@ -49,6 +49,8 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
     facebook_url: "",
     twitter_url: "",
     telegram_url: "",
+    website_url: "",
+    instagram_url: "",
     is_sensitive_content: false,
     category_id: null,
   });
@@ -63,6 +65,11 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
         ...item,
         logo_image: "",
         banner_image: "",
+        facebook_url: item.facebook_url || "",
+        twitter_url: item.twitter_url || "",
+        telegram_url: item.telegram_url || "",
+        website_url: item.website_url || "",
+        instagram_url: item.instagram_url || "",
         category_id: item.category.id,
       });
       setLogoImage(item?.logo_image);
@@ -76,7 +83,9 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
       data-nc-id="PageUploadItem"
     >
       <Helmet>
-        <title>{params.id ? t("edit_collection") : t("Create_Collection")}</title>
+        <title>
+          {params.id ? t("edit_collection") : t("Create_Collection")}
+        </title>
       </Helmet>
       <div className="container">
         <div className="max-w-4xl mx-auto my-12 space-y-8 sm:lg:my-16 lg:my-24 sm:space-y-10">
@@ -98,7 +107,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
             enableReinitialize
             onSubmit={async (values) => {
               try {
-                const form = new FormData();
+                const form:any = new FormData();
                 for (const [key, value] of Object.entries(values)) {
                   form.append(key, value);
                 }
@@ -384,8 +393,28 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   />
                 </div>
 
+                <div className="">
+                  <Label>{t("Website")}</Label>
+                  <div className="mt-1.5 flex">
+                    <span className="inline-flex items-center px-3 text-sm border border-r-0 rounded-l-2xl border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">
+                      https://
+                    </span>
+                    <Input
+                      className="!rounded-l-none"
+                      value={values.website_url}
+                      type="url"
+                      id="website_url"
+                      name="website_url"
+                      onChange={handleChange("website_url")}
+                      onBlur={handleBlur("website_url")}
+                      placeholder="your website.com"
+                    />
+                  </div>
+                  <ErrorMessage name="website_url" />
+                </div>
+
                 {/* ---- */}
-                <div className="grid grid-cols-1 gap-5 my-5 sm:grid-cols-3">
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-5 sm:gap-2.5">
                   <div>
                     <Label>{t("Facebook")}</Label>
                     <div className="mt-1.5 flex">
@@ -394,7 +423,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                       </span>
                       <Input
                         className="!rounded-l-none"
-                        placeholder={t("collection_facebook_page")}
+                        placeholder={t("your_facebook_account_url")}
                         value={values.facebook_url}
                         type="url"
                         id="facebook_url"
@@ -404,10 +433,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                         sizeClass="h-11 px-4 pl-2 pr-3"
                       />
                     </div>
-                    <ErrorMessage
-                      name="facebook_url"
-                      className="text-sm text-red-600"
-                    />
+                    <ErrorMessage name="facebook_url" />
                   </div>
                   <div>
                     <Label>{t("Twitter")}</Label>
@@ -417,7 +443,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                       </span>
                       <Input
                         className="!rounded-l-none"
-                        placeholder={t("collection_twitter_page")}
+                        placeholder={t("your_twitter_account_url")}
                         value={values.twitter_url}
                         type="url"
                         id="twitter_url"
@@ -427,20 +453,17 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                         sizeClass="h-11 px-4 pl-2 pr-3"
                       />
                     </div>
-                    <ErrorMessage
-                      name="twitter_url"
-                      className="text-sm text-red-600"
-                    />
+                    <ErrorMessage name="twitter_url" />
                   </div>
                   <div>
                     <Label>{t("Telegram")}</Label>
                     <div className="mt-1.5 flex">
                       <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
-                        <i className="text-2xl lab la-telegram-plane"></i>
+                        <i className="text-2xl lab la-telegram"></i>
                       </span>
                       <Input
                         className="!rounded-l-none"
-                        placeholder={t("collection_telegram_page")}
+                        placeholder={t("your_telegram_account_url")}
                         value={values.telegram_url}
                         type="url"
                         id="telegram_url"
@@ -451,6 +474,26 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                       />
                     </div>
                     <ErrorMessage name="telegram_url" />
+                  </div>
+                  <div>
+                    <Label>{t("Instagram")}</Label>
+                    <div className="mt-1.5 flex">
+                      <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
+                        <i className="text-2xl lab la-telegram-plane"></i>
+                      </span>
+                      <Input
+                        className="!rounded-l-none"
+                        placeholder={t("your_instagram_account_url")}
+                        value={values.instagram_url}
+                        type="url"
+                        id="instagram_url"
+                        name="instagram_url"
+                        onChange={handleChange("instagram_url")}
+                        onBlur={handleBlur("instagram_url")}
+                        sizeClass="h-11 px-4 pl-2 pr-3"
+                      />
+                    </div>
+                    <ErrorMessage name="instagram_url" />
                   </div>
                 </div>
 

@@ -1,32 +1,42 @@
-import { SocialType } from "shared/SocialsShare/SocialsShare";
 import React, { FC } from "react";
-import facebook from "assets/images/socials/facebook.svg";
-import twitter from "assets/images/socials/twitter.svg";
-import telegram from "assets/images/socials/telegram.svg";
-import website from "assets/images/socials/website.svg";
 
 export interface SocialsListProps {
   className?: string;
   itemClass?: string;
-  facebook_url?: string;
-  twitter_url?: string;
-  telegram_url?: string;
-  website_url?: string;
+  social_links: SocialLinks;
 }
 
 const SocialsList: FC<SocialsListProps> = ({
   className = "",
   itemClass = "block w-6 h-6",
-  facebook_url,
-  twitter_url,
-  telegram_url,
-  website_url,
+  social_links,
 }) => {
-  const socials: SocialType[] = [
-    { name: "Facebook", icon: facebook, href: facebook_url },
-    { name: "Twitter", icon: twitter, href: twitter_url },
-    { name: "Telegram", icon: telegram, href: telegram_url },
-    { name: "website", icon: website, href: website_url },
+  const socials = [
+    {
+      name: "Facebook",
+      icon: <i className="text-base sm:text-xl bx bxl-facebook"></i>,
+      href: social_links?.facebook_url,
+    },
+    {
+      name: "Twitter",
+      icon: <i className="text-base sm:text-xl bx bxl-twitter"></i>,
+      href: social_links?.twitter_url,
+    },
+    {
+      name: "Telegram",
+      icon: <i className="text-base sm:text-xl bx bxl-telegram"></i>,
+      href: social_links?.telegram_url,
+    },
+    {
+      name: "Instagram",
+      icon: <i className="text-base sm:text-xl bx bxl-instagram"></i>,
+      href: social_links?.instagram_url,
+    },
+    {
+      name: "Website",
+      icon: <i className="text-base sm:text-xl bx bx-link"></i>,
+      href: social_links?.website_url,
+    },
   ];
   return (
     <nav
@@ -38,13 +48,13 @@ const SocialsList: FC<SocialsListProps> = ({
         .map((item, i) => (
           <a
             key={i}
-            className={`${itemClass}`}
+            className={`flex items-center justify-center w-8 h-8 rounded-full cursor-pointer md:w-10 md:h-10 bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800 ${itemClass}`}
             href={item.href}
             target="_blank"
             rel="noopener noreferrer"
             title={item.name}
           >
-            <img src={item.icon} alt="" />
+            {item.icon}
           </a>
         ))}
     </nav>

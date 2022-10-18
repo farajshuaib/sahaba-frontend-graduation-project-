@@ -15,6 +15,7 @@ import { useAppSelector } from "app/hooks";
 import ServerError from "components/ServerError";
 import { useTranslation } from "react-i18next";
 import Heading from "components/Heading/Heading";
+import SocialsList from "shared/SocialsList/SocialsList";
 
 interface CollectionNftsProps {
   collection_id: number | string;
@@ -144,23 +145,6 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                 />
               </div>
               <div className="flex items-center mt-4 space-x-3 sm:justify-center">
-                <div className="flex space-x-1.5 text-neutral-700 dark:text-neutral-300">
-                  <a
-                    href={collection.facebook_url}
-                    target="_blank"
-                    className="flex items-center justify-center w-8 h-8 rounded-full cursor-pointer md:w-10 md:h-10 bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800"
-                  >
-                    <i className="text-base sm:text-xl lab la-facebook-f"></i>
-                  </a>
-                  <a
-                    href={collection.twitter_url}
-                    target="_blank"
-                    className="flex items-center justify-center w-8 h-8 rounded-full cursor-pointer md:w-10 md:h-10 bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800"
-                  >
-                    <i className="text-base sm:text-xl lab la-twitter"></i>
-                  </a>
-                </div>
-                <div className="h-5 border-l border-neutral-200 dark:border-neutral-700"></div>
                 <div className="flex space-x-1.5">
                   <ButtonDropDownShare
                     handleShareOnFacebook={() => {
@@ -215,6 +199,12 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                 <span className="block mt-4 text-sm text-neutral-500 dark:text-neutral-400">
                   {collection?.description}
                 </span>
+                <div className="mt-4 ">
+                  <SocialsList
+                    social_links={collection.social_links}
+                    itemClass="block w-7 h-7"
+                  />
+                </div>
               </div>
               <div className="grid grid-cols-2 gap-2 mt-6 xl:mt-8 lg:grid-cols-4 sm:gap-4 xl:gap-6">
                 {/* ----- 1 ----- */}
