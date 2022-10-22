@@ -71,6 +71,10 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       navigate("/connect-wallet");
       return;
     }
+    if (userData.status == "suspended") {
+      toast.error(t("account_suspended"));
+      return;
+    }
     try {
       setLoadingButton(true);
       await api.put(`/nfts/sale/${item.id}`, {
@@ -91,8 +95,13 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
   };
 
   const stopSale = async () => {
+
     if (!userData) {
       navigate("/connect-wallet");
+      return;
+    }
+    if (userData.status == "suspended") {
+      toast.error(t("account_suspended"));
       return;
     }
     try {
@@ -110,6 +119,10 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
   const buyNft = async () => {
     if (!userData) {
       navigate("/connect-wallet");
+      return;
+    }
+    if (userData.status == "suspended") {
+      toast.error(t("account_suspended"));
       return;
     }
     setLoadingButton(true);
@@ -187,7 +200,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
                     {item?.creator?.username ||
                       item.creator.wallet_address.slice(0, 8) + "..."}
                   </span>
-                  {item.creator?.is_verified && (
+                  {item.creator?.kyc_form?.status == "approved" && (
                     <VerifyIcon iconClass="w-4 h-4" />
                   )}
                 </span>
@@ -239,7 +252,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
             <div className="flex flex-col mt-8 space-y-2 sm:flex-row sm:space-y-0 sm:space-x-3">
               <ButtonPrimary
                 loading={loadingButton}
-                disabled={loadingButton}
+                disabled={userData.status == 'suspended' || loadingButton}
                 onClick={() => {
                   userData?.id != item?.owner?.id
                     ? buyNft()
@@ -294,7 +307,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
 
         {/* ---------- 9 ----------  */}
         <div className="pt-9">
-          <TabDetail owner={item.owner} transactions={item.transactions} />
+          <TabDetail owner={item.owner} nft_id={item.id} />
         </div>
       </div>
     );

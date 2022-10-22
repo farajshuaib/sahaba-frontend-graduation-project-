@@ -54,7 +54,7 @@ const CardAuthorBox4: FC<CardAuthorBox4Props> = ({ className = "", user }) => {
           <div>
             <h2 className={`text-base font-medium flex items-center`}>
               <span className="">{user.username}</span>
-              {user.is_verified && <VerifyIcon />}
+              {user.kyc_form?.status == "approved" && <VerifyIcon />}
             </h2>
           </div>
           <FollowButton

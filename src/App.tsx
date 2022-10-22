@@ -75,6 +75,13 @@ function App() {
           </span>
         </Alert>
       )}
+      {userData?.status == 'suspended' && (
+        <Alert color="warning">
+          <span className="block w-screen font-medium text-center">
+            {t("account_suspended")}
+          </span>
+        </Alert>
+      )}
       <div className="text-base bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
         {loading ? (
           <LoadingScreen />

@@ -1,17 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Avatar from "shared/Avatar/Avatar";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { Tab } from "@headlessui/react";
 import VerifyIcon from "components/VerifyIcon";
 import { useTranslation } from "react-i18next";
+import { useCrud } from "hooks/useCrud";
+import LoadingScreen from "components/LoadingScreen";
+import ServerError from "components/ServerError";
+import Pagination from "shared/Pagination/Pagination";
 
 interface TabDetailProps {
-  transactions: Transactions[];
+  nft_id: number;
   owner: UserData;
 }
 
-const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
+const TabDetail: React.FC<TabDetailProps> = ({ nft_id, owner }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const TABS = ["History", "Owner"];
@@ -38,7 +42,9 @@ const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
             <span>
               {owner?.username || owner?.wallet_address?.slice(0, 8) + "..."}
             </span>
-            {owner?.is_verified && <VerifyIcon iconClass="w-4 h-4" />}
+            {owner?.kyc_form?.status == "approved" && (
+              <VerifyIcon iconClass="w-4 h-4" />
+            )}
           </span>
         </span>
       </div>
@@ -46,9 +52,24 @@ const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
   };
 
   const renderTabBidHistory = () => {
+    const { fetch, loading, errors, meta, data } = useCrud("/transactions");
+    const [page, setPage] = React.useState(1);
+
+    useEffect(() => {
+      fetch({ page, nft: nft_id });
+    }, []);
+
+    if (loading) {
+      return <LoadingScreen />;
+    }
+
+    if (errors) {
+      return <ServerError />;
+    }
+
     return (
       <ul className="divide-y divide-neutral-100 dark:divide-neutral-700">
-        {transactions.map((transaction: Transactions, index) => (
+        {data.map((transaction: Transactions, index) => (
           <li
             key={index}
             className={`relative py-4 ${
@@ -70,6 +91,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ transactions, owner }) => {
             </div>
           </li>
         ))}
+        {meta && <Pagination setPage={(page) => setPage(page)} meta={meta} />}
       </ul>
     );
   };

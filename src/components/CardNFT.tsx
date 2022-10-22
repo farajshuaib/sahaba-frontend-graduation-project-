@@ -52,10 +52,10 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", nft }) => {
             <span className="font-normal">by</span>
             {` `}
             <span className="font-medium">
-              {nft?.creator?.username || "anon"}
+              {nft?.creator?.username || nft?.creator.wallet_address.slice(0, 6) + "..." + nft?.creator.wallet_address.slice(-4)}
             </span>
           </div>
-          {nft?.creator?.is_verified && <VerifyIcon iconClass="w-4 h-4" />}
+          {nft?.creator?.kyc_form?.status == "approved" && <VerifyIcon iconClass="w-4 h-4" />}
         </div>
         <h2 className={`text-lg font-medium`}>{nft.title}</h2>
 

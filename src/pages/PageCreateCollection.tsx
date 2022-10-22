@@ -41,6 +41,8 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
   const [bannerImage, setBannerImage] = useState<string>("");
   const [logoImage, setLogoImage] = useState<string>("");
 
+  const userData = useAppSelector((state) => state.account.userData);
+
   const [initFormState, setInitFormState] = useState({
     logo_image: null,
     banner_image: null,
@@ -106,8 +108,11 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
             }
             enableReinitialize
             onSubmit={async (values) => {
+              if (userData.status === "suspended") {
+                return;
+              }
               try {
-                const form:any = new FormData();
+                const form: any = new FormData();
                 for (const [key, value] of Object.entries(values)) {
                   form.append(key, value);
                 }
@@ -511,7 +516,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                 <div className="flex flex-col pt-2 space-x-0 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3 ">
                   <ButtonPrimary
                     loading={isSubmitting}
-                    disabled={isSubmitting}
+                    disabled={userData.status == "suspended" || isSubmitting}
                     onClick={handleSubmit}
                     className="flex-1"
                   >

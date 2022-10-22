@@ -54,7 +54,7 @@ const CollectionCard2: FC<CollectionCard2Props> = ({
                 {collection?.created_by?.username}
               </span>
             </div>
-            {collection?.created_by?.is_verified && (
+            {collection?.created_by?.kyc_form?.status == "approved" && (
               <VerifyIcon iconClass="w-4 h-4" />
             )}
           </div>

@@ -53,7 +53,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
                 </div>
                 <div className="flex items-center text-sm font-semibold">
                   <span>{nft.creator.username || "anon"}</span>
-                  {nft.creator.is_verified && <VerifyIcon />}
+                  {nft.creator.kyc_form?.status == "approved" && <VerifyIcon />}
                 </div>
               </div>
             </div>

@@ -145,6 +145,8 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
   const [serviceFee, setServiceFee] = useState<number>(0);
   const [ownerReceived, setOwnerReceived] = useState<number>(0);
 
+  const userData:UserData = useAppSelector((state) => state.account.userData);
+
   const contract = new Contract(
     CONTRACT_ADDRESS,
     CONTRACT_ABI,
@@ -203,6 +205,9 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
             }}
             validationSchema={createNftSchema}
             onSubmit={async (values, { setFieldError }) => {
+              if (userData.status === "suspended") {
+                return;
+              }
               if (balance == "0") {
                 setError(t("not_enough_balance"));
                 return;
@@ -466,7 +471,7 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                 <div className="flex flex-col pt-2 space-x-0 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3 ">
                   <ButtonPrimary
                     loading={isSubmitting}
-                    disabled={isSubmitting}
+                    disabled={userData?.status == 'suspended' || isSubmitting}
                     onClick={handleSubmit}
                     className="flex-1"
                   >

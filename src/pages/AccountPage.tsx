@@ -84,7 +84,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
           </div>
           <div className="flex items-center justify-end w-full">
             <VerifyAccount
-              isVerified={userData?.is_verified}
+              isVerified={userData?.kyc_form?.status == "approved"}
               fontSize="text-sm md:text-base font-medium"
               sizeClass="px-4 py-1 md:py-2.5 h-8 md:!h-10 sm:px-6 lg:px-8"
             />

@@ -124,21 +124,24 @@ interface Nft {
   is_for_sale: boolean;
   token_id: string;
   is_liked?: boolean;
-  transactions: Transactions[];
+  status: "published" | "hidden";
   sale_end_at: Date;
 }
 
 interface Collection {
   id: number;
-  banner_image: string;
-  collection_token_id: number;
-  description: string;
-  is_sensitive_content: boolean;
-  logo_image: string;
   name: string;
+  description: string;
+  logo_image: string;
+  banner_image: string;
+  is_sensitive_content: boolean;
+  category: Category;
   nfts: Nft[];
   created_by: UserData;
   nfts_count: number;
+  volume: number,
+  min_price: number,
+  max_price: number,
   collaborators: UserData[];
   social_links: SocialLinks;
 }
@@ -153,6 +156,7 @@ interface KycData {
   author_type?: "creator" | "collector";
   author_art_type?: string;
   passport_id?: string;
+  status: "pending" | "approved" | "rejected" | "on_review";
 }
 
 interface UserData {
@@ -165,17 +169,14 @@ interface UserData {
   bio: string;
   profile_photo: string;
   banner_photo: string;
-  is_verified: boolean;
-  status: "enabled" | "pending";
-  collections?: Collection[];
-  followers?: UserData[];
-  following?: UserData[];
-  liked_nfts?: Nft[];
-  nfts?: Nft[];
+  status: "active" | "suspended";
   is_followed?: boolean;
   is_subscribed: boolean;
   social_links: SocialLinks;
   kyc_form: KycData;
+  created_nfts_count: number;
+  owned_nfts_count: number;
+  email_verified_at: boolean;
 }
 
 interface SupportedLocales {

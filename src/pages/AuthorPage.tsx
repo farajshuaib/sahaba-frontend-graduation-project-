@@ -79,7 +79,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
                       ? item?.first_name + " " + item.last_name
                       : "anon"}
                   </span>
-                  {item?.is_verified && (
+                  {item?.kyc_form?.status == "approved" && (
                     <VerifyIcon
                       className="ml-2"
                       iconClass="w-6 h-6 sm:w-7 sm:h-7 xl:w-8 xl:h-8"
