@@ -16,6 +16,7 @@ import ServerError from "components/ServerError";
 import { useTranslation } from "react-i18next";
 import Heading from "components/Heading/Heading";
 import SocialsList from "shared/SocialsList/SocialsList";
+import CollectionCollaborator from "components/CollectionCollaborator";
 
 interface CollectionNftsProps {
   collection_id: number | string;
@@ -32,7 +33,7 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection_id }) => {
     fetch({
       collection: collection_id,
       page,
-      price_range: priceRange,
+      // price_range: priceRange,
       sort_by: sortBy,
       is_verified: isVerifiedUser,
     });
@@ -263,6 +264,15 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
       <div className="container py-16 space-y-20 lg:pb-28 lg:pt-20 lg:space-y-28">
         <CollectionNfts collection_id={collection.id} />
         {/* === SECTION 5 === */}
+
+        {/*  */}
+        {collection.collaborators.length > 0 && (
+          <CollectionCollaborator
+            is_collection_owner={collection.created_by.id == userData.id}
+            collaborators={collection.collaborators}
+          />
+        )}
+
         <div className="relative py-20 lg:py-28">
           <BackgroundSection />
           <SectionSliderCollections />

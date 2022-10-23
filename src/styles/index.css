@@ -22,3 +22,13 @@
 input:disabled, select:disabled, textarea:disabled, button:disabled {
   cursor: not-allowed;
 }
+
+.Toastify__toast-container {
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
+}
+
+.Toastify__toast {
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
+}

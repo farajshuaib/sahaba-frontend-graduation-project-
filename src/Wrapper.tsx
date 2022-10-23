@@ -15,11 +15,11 @@ import useDarkMode from "hooks/useDarkMode";
 
 globalThis.Buffer = Buffer;
 //
-import "./styles/index.scss";
-import "./styles/index.css";
+import "react-toastify/dist/ReactToastify.css";
 import "./assets/fonts/line-awesome-1.3.0/css/line-awesome.css";
 import "rc-slider/assets/index.css";
-import "react-toastify/dist/ReactToastify.css";
+import "./styles/index.scss";
+import "./styles/index.css";
 
 
 i18n.use(initReactI18next).init({

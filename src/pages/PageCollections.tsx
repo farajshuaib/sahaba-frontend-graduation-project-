@@ -83,7 +83,7 @@ const PageCollections: FC<PageCollectionsProps> = ({ className = "" }) => {
             {t("Collections")}
           </Heading>
           <div className="flex justify-end">
-            <ButtonPrimary href={"/create-collection"} className="relative z-50 ">
+            <ButtonPrimary href={"/create-collection"} className="relative z-10">
               {t("Create_your_own_collection")}
             </ButtonPrimary>
           </div>

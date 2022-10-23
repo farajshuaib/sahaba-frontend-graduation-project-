@@ -142,8 +142,13 @@ interface Collection {
   volume: number,
   min_price: number,
   max_price: number,
-  collaborators: UserData[];
+  collaborators: Collaboration[];
   social_links: SocialLinks;
+}
+
+interface Collaboration {
+  id: number;
+  user: UserData;
 }
 
 interface KycData {

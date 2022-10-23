@@ -48,7 +48,8 @@ const ModalAddCollaboration: FC<ModalAddCollaborationProps> = ({
     }
     setLoading(true);
     try {
-      await api.post(`collections/add-collaboration/${collection_id}`, {
+      await api.post(`collections-collaborators`, {
+        collection_id,
         wallet_address: address,
       });
       setLoading(false);

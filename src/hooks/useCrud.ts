@@ -1,13 +1,11 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useApi } from "./useApi";
+import qs from "qs"
 // import assert from "assert";
 
 interface Options {
   meta?: boolean;
-}
-interface method_type {
-  _method: string;
 }
 
 const defaultOptions = {
@@ -30,9 +28,9 @@ export function useCrud(url: string, options?: Options) {
     setState({ ...state, loading: val });
   };
 
-  const deafultParams: any = {};
+  const defaultParams: any = {};
 
-  const fetch: any = async (params = deafultParams) => {
+  const fetch: any = async (params = defaultParams) => {
     setState((prevState) => ({
       ...prevState,
       data: [],
@@ -43,6 +41,9 @@ export function useCrud(url: string, options?: Options) {
     try {
       const { data } = await api.get(url, {
         params: { ...params },
+        paramsSerializer: params => {
+          return qs.stringify(params)
+        }
       });
       setState((prevState) => ({
         ...prevState,

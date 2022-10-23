@@ -9,6 +9,7 @@ import { useAppSelector } from "app/hooks";
 import LocalesDropDown from "./LocalesDropDown";
 import { useTranslation } from "react-i18next";
 import useDarkMode from "hooks/useDarkMode";
+import { toast } from "react-toastify";
 
 export interface HeaderLoggedProps {}
 
