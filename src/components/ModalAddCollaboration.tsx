@@ -1,3 +1,4 @@
+import { useAppSelector } from "app/hooks";
 import { useApi } from "hooks/useApi";
 import React, { FC, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -23,6 +24,7 @@ const ModalAddCollaboration: FC<ModalAddCollaborationProps> = ({
   const [loading, setLoading] = useState(false);
   const textareaRef = useRef(null);
   const api = useApi();
+  const userData: UserData = useAppSelector((state) => state.account.userData);
 
   useEffect(() => {
     if (show) {
@@ -40,6 +42,10 @@ const ModalAddCollaboration: FC<ModalAddCollaborationProps> = ({
   }, [show]);
 
   const submit = async () => {
+    if (userData.status == "suspended") {
+      toast.error(t("account_suspended"));
+      return;
+    }
     setLoading(true);
     try {
       await api.post(`collections/add-collaboration/${collection_id}`, {
@@ -73,7 +79,12 @@ const ModalAddCollaboration: FC<ModalAddCollaborationProps> = ({
           />
         </div>
         <div className="mt-4 space-x-3">
-          <ButtonPrimary onClick={submit} loading={loading} type="button">
+          <ButtonPrimary
+            disabled={userData.status == "suspended" || loading}
+            onClick={submit}
+            loading={loading}
+            type="button"
+          >
             {t("submit")}
           </ButtonPrimary>
           <ButtonSecondary type="button" onClick={onCloseModalCollaboration}>

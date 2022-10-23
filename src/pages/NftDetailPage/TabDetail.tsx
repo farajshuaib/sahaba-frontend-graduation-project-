@@ -57,7 +57,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ nft_id, owner }) => {
 
     useEffect(() => {
       fetch({ page, nft: nft_id });
-    }, []);
+    }, [page]);
 
     if (loading) {
       return <LoadingScreen />;
@@ -91,7 +91,11 @@ const TabDetail: React.FC<TabDetailProps> = ({ nft_id, owner }) => {
             </div>
           </li>
         ))}
-        {meta && <Pagination setPage={(page) => setPage(page)} meta={meta} />}
+        {meta && (
+          <div className="my-5">
+            <Pagination setPage={(page) => setPage(page)} meta={meta} />
+          </div>
+        )}
       </ul>
     );
   };

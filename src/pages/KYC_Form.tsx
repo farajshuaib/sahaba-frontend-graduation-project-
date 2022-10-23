@@ -1,4 +1,4 @@
-import React, { useRef, useTransition } from "react";
+import React, { useEffect, useRef, useState, useTransition } from "react";
 import { Helmet } from "react-helmet";
 import Label from "components/Label/Label";
 import Input from "shared/Input/Input";
@@ -13,12 +13,39 @@ import countries from "data/countries";
 import Radio from "shared/Radio/Radio";
 import { kycSchema } from "services/validations";
 import { useTranslation } from "react-i18next";
+import { Alert } from "flowbite-react";
+import { useNavigate } from "react-router-dom";
 
 const KYC_Form: React.FC = () => {
   const { t } = useTranslation();
   const passportIdInput = useRef<HTMLInputElement>(null);
   const api = useApi();
+  const navigate = useNavigate();
+  const [initFormState, setInitFormState] = useState<KycData>({
+    id: 0,
+    gender: "",
+    country: "",
+    city: "",
+    address: "",
+    phone_number: "",
+    author_type: "",
+    author_art_type: "",
+    passport_id: "",
+  });
   const userData: UserData = useAppSelector((state) => state.account.userData);
+
+  useEffect(() => {
+    if (userData?.kyc_form) {
+      setInitFormState(userData?.kyc_form);
+    }
+  }, [userData]);
+
+  const isFormDisables = () => {
+    return (
+      userData?.kyc_form?.status == "on_review" ||
+      userData?.kyc_form?.status == "approved"
+    );
+  };
 
   return (
     <div data-nc-id="KYCPage">
@@ -68,20 +95,40 @@ const KYC_Form: React.FC = () => {
           </div>
 
           <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
+          {userData.kyc_form && (
+            <Alert
+              color={
+                userData.kyc_form.status == "approved"
+                  ? "success"
+                  : userData.kyc_form.status == "on_review"
+                  ? "info"
+                  : userData.kyc_form.status == "pending"
+                  ? "warning"
+                  : userData.kyc_form.status == "rejected"
+                  ? "error"
+                  : "default"
+              }
+            >
+              {userData.kyc_form.status == "approved"
+                ? t("kyc_approved")
+                : userData.kyc_form.status == "on_review"
+                ? t("kyc_on_review")
+                : userData.kyc_form.status == "pending"
+                ? t("kyc_pending")
+                : userData.kyc_form.status == "rejected"
+                ? t("kyc_rejected")
+                : "default"}
+            </Alert>
+          )}
           <div className="flex flex-col md:flex-row">
             <Formik
-              initialValues={{
-                gender: "",
-                country: "",
-                city: "",
-                address: "",
-                phone_number: "",
-                author_type: "",
-                author_art_type: "",
-                passport_id: "",
-              }}
+              initialValues={initFormState}
+              enableReinitialize
               validationSchema={kycSchema}
               onSubmit={async (values) => {
+                if (userData.status === "suspended") {
+                  return;
+                }
                 const form = new FormData();
                 for (const [key, value] of Object.entries(values)) {
                   form.append(key, value);
@@ -93,34 +140,54 @@ const KYC_Form: React.FC = () => {
                       "Content-Type": "multipart/form-data",
                     },
                   });
-                } catch {}
+                  toast.success(t("thank_you_for_submitting_your_kyc"));
+                  navigate(-1);
+                } catch (error: any) {
+                  toast.error(
+                    error.response?.data?.message || t("system_error")
+                  );
+                }
               }}
             >
               {({
                 values,
-                errors,
                 handleChange,
                 handleBlur,
                 handleSubmit,
                 setFieldValue,
                 isSubmitting,
+                errors,
               }) => (
                 <>
                   <div className="flex-grow max-w-3xl mt-10 space-y-5 md:mt-0 md:pl-16 sm:space-y-6 md:sm:space-y-7">
                     {/* ---- */}
                     <div>
                       <Label htmlFor="gender">{t("Gender")}</Label>
-                      <Select
-                        id="gender"
+                      <div className="flex items-center gap-8 my-1">
+                        <Radio
+                          label={t("male")}
+                          id="gender"
+                          name="gender"
+                          disabled={isFormDisables()}
+                          className="my-3"
+                          defaultChecked={values.gender === "male"}
+                          onChange={() => setFieldValue("gender", "male")}
+                        />
+                        <Radio
+                          label={t("female")}
+                          id="gender"
+                          name="gender"
+                          disabled={isFormDisables()}
+                          className="my-3"
+                          defaultChecked={values.gender === "female"}
+                          onChange={() => setFieldValue("gender", "female")}
+                        />
+                      </div>
+                      <ErrorMessage
                         name="gender"
-                        value={values.gender}
-                        onChange={handleChange("gender")}
-                        onBlur={handleBlur("gender")}
-                      >
-                        <option disabled>{t("Select_your_gender")}</option>
-                        <option value={"male"}>{t("male")}</option>
-                        <option value={"female"}>{t("female")}</option>
-                      </Select>
+                        component="p"
+                        className="text-red-600"
+                      />
                     </div>
 
                     <div>
@@ -129,16 +196,24 @@ const KYC_Form: React.FC = () => {
                         id="country"
                         name="country"
                         value={values.country}
+                        disabled={isFormDisables()}
                         onChange={handleChange("country")}
                         onBlur={handleBlur("country")}
                       >
-                        <option disabled>{t("Select_your_country")}</option>
+                        <option value="" disabled>
+                          {t("Select_your_country")}
+                        </option>
                         {countries.map((country, index) => (
                           <option key={index} value={country.name}>
                             {country.name}
                           </option>
                         ))}
                       </Select>
+                      <ErrorMessage
+                        name="country"
+                        component="p"
+                        className="text-red-600"
+                      />
                     </div>
 
                     <div>
@@ -148,11 +223,16 @@ const KYC_Form: React.FC = () => {
                         type="text"
                         id="city"
                         name="city"
+                        disabled={isFormDisables()}
                         value={values.city}
                         onBlur={handleBlur("city")}
                         onChange={handleChange("city")}
                       />
-                      <ErrorMessage name="city" />
+                      <ErrorMessage
+                        name="city"
+                        component="p"
+                        className="text-red-600"
+                      />
                     </div>
 
                     <div>
@@ -162,11 +242,16 @@ const KYC_Form: React.FC = () => {
                         type="text"
                         id="address"
                         name="address"
+                        disabled={isFormDisables()}
                         value={values.address}
                         onBlur={handleBlur("address")}
                         onChange={handleChange("address")}
                       />
-                      <ErrorMessage name="address" />
+                      <ErrorMessage
+                        name="address"
+                        component="p"
+                        className="text-red-600"
+                      />
                     </div>
 
                     {values.country && (
@@ -186,6 +271,7 @@ const KYC_Form: React.FC = () => {
                             className="!rounded-l-none"
                             value={values.phone_number}
                             type="tel"
+                            disabled={isFormDisables()}
                             id="phone_number"
                             name="phone_number"
                             onChange={handleChange("phone_number")}
@@ -193,6 +279,11 @@ const KYC_Form: React.FC = () => {
                             placeholder="910000001"
                           />
                         </div>
+                        <ErrorMessage
+                          name="phone_number"
+                          component="p"
+                          className="text-red-600"
+                        />
                       </div>
                     )}
 
@@ -204,17 +295,26 @@ const KYC_Form: React.FC = () => {
                         label="Creator"
                         id="author_type"
                         name="author_type"
+                        disabled={isFormDisables()}
                         className="my-3"
+                        defaultChecked={values.author_type === "creator"}
                         onChange={() => setFieldValue("author_type", "creator")}
                       />
                       <Radio
                         label="Collector"
                         id="author_type"
                         name="author_type"
+                        disabled={isFormDisables()}
                         className="my-3"
+                        defaultChecked={values.author_type === "collector"}
                         onChange={() =>
                           setFieldValue("author_type", "collector")
                         }
+                      />
+                      <ErrorMessage
+                        name="author_type"
+                        component="p"
+                        className="text-red-600"
                       />
                     </div>
 
@@ -229,11 +329,17 @@ const KYC_Form: React.FC = () => {
                         rows={3}
                         className="mt-1.5"
                         value={values.author_art_type}
+                        disabled={isFormDisables()}
                         id="author_art_type"
                         name="author_art_type"
                         onChange={handleChange("author_art_type")}
                         onBlur={handleBlur("author_art_type")}
                         placeholder=""
+                      />
+                      <ErrorMessage
+                        name="author_art_type"
+                        component="p"
+                        className="text-red-600"
                       />
                     </div>
 
@@ -243,7 +349,9 @@ const KYC_Form: React.FC = () => {
                         onClick={() => {
                           passportIdInput?.current?.click();
                         }}
-                        className="flex flex-col items-center justify-center h-56 mt-2 rounded-lg cursor-pointer bg-neutral-100/70 dark:bg-black/20"
+                        className={`flex flex-col items-center justify-center h-56 mt-2 rounded-lg cursor-pointer bg-neutral-100/70 dark:bg-black/20 ${
+                          errors.passport_id && "border-2 border-red-600"
+                        }`}
                       >
                         <i
                           className={`text-4xl bx ${
@@ -268,6 +376,7 @@ const KYC_Form: React.FC = () => {
                         ref={passportIdInput}
                         className="sr-only"
                         accept="image/*,application/pdf"
+                        disabled={isFormDisables()}
                         onChange={async (e) => {
                           if (!e.target.files) return;
                           const file = e.target.files[0];
@@ -280,13 +389,22 @@ const KYC_Form: React.FC = () => {
                           setFieldValue("passport_id", file);
                         }}
                       />
+                      <ErrorMessage
+                        name="passport_id"
+                        component="p"
+                        className="text-red-600"
+                      />
                     </div>
 
                     {/* ---- */}
                     <div className="pt-2">
                       <ButtonPrimary
                         loading={isSubmitting}
-                        disabled={isSubmitting}
+                        disabled={
+                          userData.status === "suspended" ||
+                          isSubmitting ||
+                          isFormDisables()
+                        }
                         className="w-full"
                         onClick={handleSubmit}
                       >

@@ -148,15 +148,15 @@ interface Collection {
 
 interface KycData {
   id: number;
-  gender?: "male" | "female";
+  gender?: "male" | "female" | "";
   country?: string;
   city?: string;
   address?: string;
   phone_number?: string;
-  author_type?: "creator" | "collector";
+  author_type?: "creator" | "collector" | "";
   author_art_type?: string;
   passport_id?: string;
-  status: "pending" | "approved" | "rejected" | "on_review";
+  status?: "pending" | "approved" | "rejected" | "on_review";
 }
 
 interface UserData {

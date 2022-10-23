@@ -53,7 +53,7 @@
   "total": "total",
   "Latest_Price": "Latest Price",
   "Items": "Items",
-  "Internal_server_error": "Internal server error",
+  "Internal_server_error": "Internal server error, please try again",
   "We_are_currently_trying_to_fix_the_problem.": "We are currently trying to fix the problem.",
   "Clear": "Clear",
   "Apply": "Apply",
@@ -228,5 +228,11 @@
   "you_will_receive": "You will receive",
   "Instagram": "Instagram",
   "your_instagram_account_url": "your instagram account url",
-  "account_suspended": "Your Account is suspended because your irregular activities"
+  "account_suspended": "Your Account is suspended because your irregular activities, you can't do any actions on the platform, please contact with us to solve this problem",
+  "We_are_currently_trying_to_fix_the_problem": "We are currently trying to fix the problem",
+  "kyc_approved": "Your KYC is approved",
+  "kyc_rejected": "Your KYC is rejected",
+  "kyc_pending": "Your KYC is pending",
+  "kyc_on_review": "Your KYC is under review",
+  "thank_you_for_submitting_your_kyc": "Thank you for submitting your KYC"
 }

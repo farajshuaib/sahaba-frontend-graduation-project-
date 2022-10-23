@@ -18,3 +18,7 @@
   -webkit-backdrop-filter: blur(30px);
   backdrop-filter: blur(30px);
 }
+
+input:disabled, select:disabled, textarea:disabled, button:disabled {
+  cursor: not-allowed;
+}

@@ -4,14 +4,12 @@ import { useTranslation } from "react-i18next";
 const ServerError = () => {
   const { t } = useTranslation();
   return (
-    <section className="flex flex-col items-center justify-center h-screen">
+    <section className="relative flex flex-col items-center justify-center h-screen">
       <div className="p-8 m-auto text-center">
-        <img
-          className="object-cover w-56 mx-auto h-44"
-          alt="error"
-          loading="lazy"
-          src="https://i.imgur.com/qIufhof.png"
-        />
+        <iframe
+          className="object-cover w-56 h-64 mx-auto"
+          src="https://embed.lottiefiles.com/animation/92811"
+        ></iframe>
 
         <h1 className="mt-5 text-4xl text-center">
           <span className="text-6xl">500</span> <br />
@@ -21,6 +19,7 @@ const ServerError = () => {
           {t("We_are_currently_trying_to_fix_the_problem")}
         </p>
       </div>
+      <div className="absolute inset-0 z-10"></div>
     </section>
   );
 };
