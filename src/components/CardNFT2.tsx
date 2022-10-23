@@ -7,6 +7,7 @@ import Prices from "./Prices";
 import RemainingTimeNftCard from "./RemainingTimeNftCard";
 import useCountDownTime from "hooks/useCountDownTime";
 import { useTranslation } from "react-i18next";
+import BlurHiddenNft from "./BlurHiddenNft";
 
 export interface CardNFT2Props {
   className?: string;
@@ -21,12 +22,13 @@ const CardNFT2: FC<CardNFT2Props> = ({ className = "", nft }) => {
       data-nc-id="CardNFT2"
     >
       <div className="relative flex-shrink-0 ">
-        <div>
+        <div className="relative overflow-hidden">
           <NcImage
             containerClassName="flex aspect-w-11 aspect-h-12 w-full h-0 rounded-3xl overflow-hidden z-0"
             src={nft.file_path}
             className="object-cover w-full h-full group-hover:scale-[1.03] transition-transform duration-300 ease-in-out will-change-transform"
           />
+          {nft.status == "hidden" && <BlurHiddenNft />}
         </div>
 
         <ItemTypeImageIcon className="absolute bottom-2.5 right-2.5 w-7 h-7 md:w-9 md:h-9" />
@@ -63,7 +65,10 @@ const CardNFT2: FC<CardNFT2Props> = ({ className = "", nft }) => {
             />
           </svg>
 
-          <div dir="ltr" className={`absolute bottom-0 w-48 left-4 text-left  `}>
+          <div
+            dir="ltr"
+            className={`absolute bottom-0 w-48 left-4 text-left  `}
+          >
             <h2 className={`text-lg font-semibold `}>{nft.title}</h2>
 
             <div className="w-full mt-1.5 flex justify-between items-end ">

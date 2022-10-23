@@ -234,5 +234,6 @@
   "kyc_rejected": "Your KYC is rejected",
   "kyc_pending": "Your KYC is pending",
   "kyc_on_review": "Your KYC is under review",
-  "thank_you_for_submitting_your_kyc": "Thank you for submitting your KYC"
+  "thank_you_for_submitting_your_kyc": "Thank you for submitting your KYC",
+  "this_nft_has_been_hidden": "This NFT has been hidden"
 }

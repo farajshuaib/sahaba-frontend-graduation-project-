@@ -1,3 +1,4 @@
+import BlurHiddenNft from "components/BlurHiddenNft";
 import ItemTypeImageIcon from "components/ItemTypeImageIcon";
 import LikeButton from "components/LikeButton";
 import React from "react";
@@ -14,6 +15,8 @@ const NftItem: React.FC<NftItemProps> = ({ nft }) => {
         src={nft.file_path}
         containerClassName="aspect-w-11 aspect-h-12 rounded-3xl overflow-hidden"
       />
+
+      {nft.status == "hidden" && <BlurHiddenNft />}
 
       <ItemTypeImageIcon className="absolute w-8 h-8 left-3 top-3 md:w-10 md:h-10" />
 

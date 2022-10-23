@@ -9,6 +9,7 @@ import { ClockIcon } from "@heroicons/react/outline";
 import VerifyIcon from "./VerifyIcon";
 import useCountDownTime from "hooks/useCountDownTime";
 import { useTranslation } from "react-i18next";
+import BlurHiddenNft from "./BlurHiddenNft";
 
 export interface CardNFTProps {
   className?: string;
@@ -23,13 +24,14 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", nft }) => {
       className={`nc-CardNFT relative flex flex-col group !border-0 [ nc-box-has-hover nc-dark-box-bg-has-hover ] ${className}`}
       data-nc-id="CardNFT"
     >
-      <div className="relative flex-shrink-0 ">
-        <div>
+      <div className="relative flex-shrink-0 overflow-hidden">
+        <div className="relative overflow-hidden">
           <NcImage
             containerClassName="flex aspect-w-11 aspect-h-12 w-full h-0 rounded-3xl overflow-hidden z-0"
             src={nft.file_path}
             className="object-cover w-full h-full group-hover:scale-[1.03] transition-transform duration-300 ease-in-out will-change-transform"
           />
+          {nft.status == "hidden" && <BlurHiddenNft />}
         </div>
 
         <ItemTypeImageIcon className="absolute top-3 left-3 !w-9 !h-9" />
@@ -52,10 +54,15 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", nft }) => {
             <span className="font-normal">by</span>
             {` `}
             <span className="font-medium">
-              {nft?.creator?.username || nft?.creator.wallet_address.slice(0, 6) + "..." + nft?.creator.wallet_address.slice(-4)}
+              {nft?.creator?.username ||
+                nft?.creator.wallet_address.slice(0, 6) +
+                  "..." +
+                  nft?.creator.wallet_address.slice(-4)}
             </span>
           </div>
-          {nft?.creator?.kyc_form?.status == "approved" && <VerifyIcon iconClass="w-4 h-4" />}
+          {nft?.creator?.kyc_form?.status == "approved" && (
+            <VerifyIcon iconClass="w-4 h-4" />
+          )}
         </div>
         <h2 className={`text-lg font-medium`}>{nft.title}</h2>
 

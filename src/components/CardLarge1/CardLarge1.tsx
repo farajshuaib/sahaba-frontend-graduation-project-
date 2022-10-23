@@ -10,6 +10,7 @@ import VerifyIcon from "components/VerifyIcon";
 import { usdPrice } from "utils/functions";
 import ItemTypeImageIcon from "components/ItemTypeImageIcon";
 import { useTranslation } from "react-i18next";
+import BlurHiddenNft from "components/BlurHiddenNft";
 
 export interface CardLarge1Props {
   className?: string;
@@ -29,12 +30,16 @@ const CardLarge1: FC<CardLarge1Props> = ({
     <div
       className={`nc-CardLarge1 nc-CardLarge1--hasAnimation relative flex flex-col-reverse lg:flex-row justify-end ${className}`}
     >
-      <div className={`z-10 w-full -mt-2 lg:absolute ${i18n.language == 'ar'  ? "lg:right-0" : "lg:left-0"} lg:top-1/2 lg:transform lg:-translate-y-1/2 lg:mt-0 sm:px-5 lg:px-0 lg:max-w-lg `}>
+      <div
+        className={`z-10 w-full -mt-2 lg:absolute ${
+          i18n.language == "ar" ? "lg:right-0" : "lg:left-0"
+        } lg:top-1/2 lg:transform lg:-translate-y-1/2 lg:mt-0 sm:px-5 lg:px-0 lg:max-w-lg `}
+      >
         <div className="p-4 space-y-3 bg-white shadow-lg nc-CardLarge1__left sm:p-8 xl:py-14 md:px-10 dark:bg-neutral-900 rounded-3xl sm:space-y-8 ">
           {/* TITLE */}
           <h2 className="text-2xl font-semibold lg:text-3xl 2xl:text-5xl ">
             <Link to={`/nft-details/${nft}`} title="Walking On Air">
-              {nft.title}
+              {nft?.title}
             </Link>
           </h2>
 
@@ -43,7 +48,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
             <div className="flex items-center gap-3">
               <div className="flex-shrink-0 w-10 h-10">
                 <Avatar
-                  imgUrl={nft.creator.profile_photo}
+                  imgUrl={nft.creator?.profile_photo}
                   sizeClass="w-10 h-10"
                 />
               </div>
@@ -52,7 +57,12 @@ const CardLarge1: FC<CardLarge1Props> = ({
                   {t("Creator")}
                 </div>
                 <div className="flex items-center text-sm font-semibold">
-                  <span>{nft.creator.username || "anon"}</span>
+                  <span>
+                    {nft.creator?.username ||
+                      nft.creator.wallet_address.slice(0, 6) +
+                        "..." +
+                        nft.creator.wallet_address.slice(-5)}
+                  </span>
                   {nft.creator.kyc_form?.status == "approved" && <VerifyIcon />}
                 </div>
               </div>
@@ -112,7 +122,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
       </div>
 
       <div className="w-full lg:w-[40%] relative ">
-        <div className="nc-CardLarge1__right ">
+        <div className="relative nc-CardLarge1__right">
           <Link to={`/nft-details/${nft.id}`}>
             <NcImage
               containerClassName="aspect-w-1 aspect-h-1 relative"
@@ -121,6 +131,8 @@ const CardLarge1: FC<CardLarge1Props> = ({
               alt={nft.title}
             />
           </Link>
+
+          {nft.status == "hidden" && <BlurHiddenNft />}
 
           {/* META TYPE */}
           <ItemTypeImageIcon className="absolute w-8 h-8 md:w-10 md:h-10 left-3 bottom-3 sm:left-7 sm:bottom-7 " />
