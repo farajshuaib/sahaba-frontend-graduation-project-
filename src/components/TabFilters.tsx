@@ -25,7 +25,7 @@ const TabFilters: React.FC<Props> = ({
 
   const [isOpenMoreFilter, setisOpenMoreFilter] = useState(false);
   //
-  const [isVerifiedCreator, setIsVerifiedCreator] = useState(true);
+  const [isVerifiedCreator, setIsVerifiedCreator] = useState(false);
   const [rangePrices, setRangePrices] = useState([0.01, 5]);
 
   const [sortOrderStates, setSortOrderStates] = useState<string>("");
@@ -39,7 +39,7 @@ const TabFilters: React.FC<Props> = ({
   ];
 
   useEffect(() => {
-    if (isVerifiedCreator) setIsVerifiedUser(isVerifiedCreator);
+    setIsVerifiedUser(isVerifiedCreator);
   }, [isVerifiedCreator]);
 
   //
@@ -148,7 +148,11 @@ const TabFilters: React.FC<Props> = ({
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Popover.Panel className={`absolute ${i18n.language == 'ar'  ? "right-0" : "left-0" } z-40 w-screen max-w-sm px-4 mt-3 sm:px-0 lg:max-w-md`}>
+              <Popover.Panel
+                className={`absolute ${
+                  i18n.language == "ar" ? "right-0" : "left-0"
+                } z-40 w-screen max-w-sm px-4 mt-3 sm:px-0 lg:max-w-md`}
+              >
                 <div className="overflow-hidden bg-white border shadow-xl rounded-2xl dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700">
                   <div className="relative flex flex-col gap-4 px-5 py-6 space-y-5">
                     {sortOrderRadios.map((item) => (
@@ -249,7 +253,11 @@ const TabFilters: React.FC<Props> = ({
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Popover.Panel className={`absolute ${i18n.language == 'ar'  ? "right-0" : "left-0" } z-40 w-screen max-w-sm px-4 mt-3 sm:px-0 `}>
+              <Popover.Panel
+                className={`absolute ${
+                  i18n.language == "ar" ? "right-0" : "left-0"
+                } z-40 w-screen max-w-sm px-4 mt-3 sm:px-0 `}
+              >
                 <div className="overflow-hidden bg-white border shadow-xl rounded-2xl dark:bg-neutral-900 border-neutral-200 dark:border-neutral-700">
                   <div className="relative flex flex-col px-5 py-6 space-y-8">
                     <div className="space-y-5">
@@ -481,7 +489,7 @@ const TabFilters: React.FC<Props> = ({
                       as="h3"
                       className="text-lg font-medium leading-6 text-gray-900"
                     >
-                      NFTs {t("filters")}
+                       {`NFTs ${t("filters")}`}
                     </Dialog.Title>
                     <span className="absolute left-3 top-3">
                       <ButtonClose onClick={closeModalMoreFilter} />

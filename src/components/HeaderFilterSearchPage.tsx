@@ -27,11 +27,11 @@ const HeaderFilterSearchPage: FC<HeaderFilterSearchPageProps> = ({
   setSortBy: setParentSortBy,
   setIsVerifiedUser: setParentIsVerifiedUser,
 }) => {
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(true);
   const [sortBy, setSortBy] = useState("");
   const [priceRange, setPriceRange] = useState([0.01, 5.0]);
-  const [isVerifiedUser, setIsVerifiedUser] = useState<boolean>();
+  const [isVerifiedUser, setIsVerifiedUser] = useState<boolean>(false);
   const categories = useAppSelector((state) => state.general.categories);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const HeaderFilterSearchPage: FC<HeaderFilterSearchPageProps> = ({
   }, [sortBy]);
 
   useEffect(() => {
-    if (isVerifiedUser) setParentIsVerifiedUser(isVerifiedUser);
+    setParentIsVerifiedUser(isVerifiedUser);
   }, [isVerifiedUser]);
 
   return (

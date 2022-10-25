@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import Pagination from "shared/Pagination/Pagination";
@@ -43,16 +43,16 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
     isVerifiedUser,
   ]);
 
-  const submitSearch = () => {
+  const submitSearch = useCallback(() => {
     fetch({
       page,
       search,
       category: selectedCategory?.id || "",
-      price_range: priceRange,
+      // price_range: priceRange,
       sort_by: sortBy,
-      is_verified: isVerifiedUser,
+      is_verified: isVerifiedUser ,
     });
-  };
+  }, []);
 
   return (
     <div className={`nc-PageSearch  ${className}`} data-nc-id="PageSearch">

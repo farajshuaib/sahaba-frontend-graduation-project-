@@ -40,10 +40,7 @@ export function useCrud(url: string, options?: Options) {
 
     try {
       const { data } = await api.get(url, {
-        params: { ...params },
-        paramsSerializer: params => {
-          return qs.stringify(params)
-        }
+        params
       });
       setState((prevState) => ({
         ...prevState,

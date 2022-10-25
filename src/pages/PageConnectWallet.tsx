@@ -113,8 +113,6 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
                 <div
                   key={plan.name}
                   onClick={() => handleSignIn(plan)}
-                  typeof="button"
-                  tabIndex={0}
                   className="relative flex px-3 py-4 border cursor-pointer rounded-xl hover:shadow-lg hover:bg-neutral-50 border-neutral-200 dark:border-neutral-700 sm:px-5 focus:outline-none focus:shadow-outline-blue focus:border-blue-500 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-900 dark:hover:text-neutral-200"
                 >
                   <div className="flex items-center w-full gap-5">

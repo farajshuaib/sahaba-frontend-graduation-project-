@@ -25,7 +25,7 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection_id }) => {
   const [page, setPage] = useState<number>(1);
   const [priceRange, setPriceRange] = useState([0.01, 5.0]);
   const [sortBy, setSortBy] = useState<string>("");
-  const [isVerifiedUser, setIsVerifiedUser] = useState<boolean>();
+  const [isVerifiedUser, setIsVerifiedUser] = useState<boolean>(false);
   const { fetch, meta, loading, data } = useCrud("/nfts");
   const { t } = useTranslation();
 
@@ -33,11 +33,11 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection_id }) => {
     fetch({
       collection: collection_id,
       page,
-      // price_range: priceRange,
+      price_range: priceRange,
       sort_by: sortBy,
       is_verified: isVerifiedUser,
     });
-  }, [page, collection_id, priceRange, sortBy, isVerifiedUser]);
+  }, [page, collection_id, JSON.stringify(priceRange), sortBy, isVerifiedUser]);
 
   if (loading) {
     return <LoadingScreen />;
@@ -202,7 +202,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                 </span>
                 <div className="mt-4 ">
                   <SocialsList
-                    social_links={collection.social_links}
+                    social_links={collection?.social_links}
                     itemClass="block w-7 h-7"
                   />
                 </div>
@@ -214,7 +214,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                     {t("Floor_Price")}
                   </span>
                   <span className="mt-4 text-base font-medium sm:text-xl sm:mt-6">
-                    {collection.min_price || 0} ETH
+                    {collection?.min_price || 0} ETH
                   </span>
                   <span className="mt-1 text-xs text-green-500"> --</span>
                 </div>
@@ -225,7 +225,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                     {t("Volume")}
                   </span>
                   <span className="mt-4 text-base font-medium sm:text-xl sm:mt-6">
-                    {collection.volume || 0} ETH
+                    {collection?.volume || 0} ETH
                   </span>
                   <span className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
                     {t("total")}
@@ -237,7 +237,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                     {t("Latest_Price")}
                   </span>
                   <span className="mt-4 text-base font-medium sm:text-xl sm:mt-6">
-                    {collection.max_price || 0} ETH
+                    {collection?.max_price || 0} ETH
                   </span>
                   <span className="mt-1 text-xs text-green-500"> --</span>
                 </div>
@@ -262,14 +262,14 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
       {/* ====================== END HEADER ====================== */}
 
       <div className="container py-16 space-y-20 lg:pb-28 lg:pt-20 lg:space-y-28">
-        <CollectionNfts collection_id={collection.id} />
+        <CollectionNfts collection_id={collection?.id} />
         {/* === SECTION 5 === */}
 
         {/*  */}
-        {collection.collaborators.length > 0 && (
+        {collection.collaborators?.length > 0 && (
           <CollectionCollaborator
-            is_collection_owner={collection.created_by.id == userData.id}
-            collaborators={collection.collaborators}
+            is_collection_owner={collection.created_by?.id == userData?.id}
+            collaborators={collection?.collaborators}
           />
         )}
 

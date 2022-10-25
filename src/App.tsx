@@ -75,7 +75,7 @@ function App() {
           </span>
         </Alert>
       )}
-      {userData?.status == 'suspended' && (
+      {userData?.status == "suspended" && (
         <Alert color="warning">
           <span className="block w-screen font-medium text-center">
             {t("account_suspended")}
@@ -84,7 +84,9 @@ function App() {
       )}
       <div className="text-base bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
         {loading ? (
-          <LoadingScreen />
+          <div className="flex items-center justify-center h-screen">
+            <LoadingScreen />
+          </div>
         ) : (
           <>
             <HeaderLogged />

@@ -42,7 +42,7 @@ const ModalAddCollaboration: FC<ModalAddCollaborationProps> = ({
   }, [show]);
 
   const submit = async () => {
-    if (userData.status == "suspended") {
+    if (userData?.status == "suspended") {
       toast.error(t("account_suspended"));
       return;
     }
@@ -81,7 +81,7 @@ const ModalAddCollaboration: FC<ModalAddCollaborationProps> = ({
         </div>
         <div className="mt-4 space-x-3">
           <ButtonPrimary
-            disabled={userData.status == "suspended" || loading}
+            disabled={userData?.status == "suspended" || loading}
             onClick={submit}
             loading={loading}
             type="button"

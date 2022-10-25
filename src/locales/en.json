@@ -239,6 +239,15 @@
   "Are_you_sure_you_want_to_delete_this_collaborator": "Are you sure you want to delete this collaborator?",
   "This_collaborator_will_no_longer_be_able_to_edit_your_collection_or_add_any_new_NFTs": "This collaborator will no longer be able to edit your collection or add any new NFTs",
   "Collaborator_deleted_successfully": "Collaborator deleted successfully",
-  "Collection_Collaborators": "Collection Collaborators"
+  "Collection_Collaborators": "Collection Collaborators",
+  "Select_language": "Select language",
+  "Languages": "Languages",
+  "Getting_started": "Getting_started",
+  "Collections": "Collections",
+  "Website": "Website",
+  "INFORMATION": "INFORMATION",
+  "Term_of_services": "Term of services",
+  "Privacy_policy": "Privacy policy",
+  "Get_verified": "Get verified"
 
 }

@@ -43,7 +43,8 @@ const KYC_Form: React.FC = () => {
   const isFormDisables = () => {
     return (
       userData?.kyc_form?.status == "on_review" ||
-      userData?.kyc_form?.status == "approved"
+      userData?.kyc_form?.status == "approved" ||
+      userData.kyc_form?.status == "pending"
     );
   };
 
