@@ -35,8 +35,8 @@ const HeaderFilterSearchPage: FC<HeaderFilterSearchPageProps> = ({
   const categories = useAppSelector((state) => state.general.categories);
 
   useEffect(() => {
-    if (priceRange) setParentPriceRange(priceRange);
-  }, [priceRange]);
+    setParentPriceRange(priceRange);
+  }, [JSON.stringify(priceRange)]);
 
   useEffect(() => {
     if (sortBy) setParentSortBy(sortBy);

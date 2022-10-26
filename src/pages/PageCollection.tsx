@@ -31,11 +31,11 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection_id }) => {
 
   useEffect(() => {
     fetch({
-      collection: collection_id,
       page,
-      price_range: priceRange,
-      sort_by: sortBy,
-      is_verified: isVerifiedUser,
+      price_range: JSON.stringify(priceRange),
+      sort_by: sortBy || undefined,
+      is_verified: isVerifiedUser ? "approved" : undefined,
+      collection: collection_id || undefined,
     });
   }, [page, collection_id, JSON.stringify(priceRange), sortBy, isVerifiedUser]);
 

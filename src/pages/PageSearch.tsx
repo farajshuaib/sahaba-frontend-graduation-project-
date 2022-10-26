@@ -23,7 +23,7 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
   const [search, setSearch] = useState<string>("");
   const [priceRange, setPriceRange] = useState([0.1, 5.0]);
   const [sortBy, setSortBy] = useState<string>("");
-  const [isVerifiedUser, setIsVerifiedUser] = useState<boolean>();
+  const [isVerifiedUser, setIsVerifiedUser] = useState<boolean>(false);
   const { data, loading, fetch, meta, errors } = useCrud("/nfts");
   const [selectedCategory, setSelectedCategory] = useState<Category>({
     id: 0,
@@ -43,16 +43,16 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
     isVerifiedUser,
   ]);
 
-  const submitSearch = useCallback(() => {
+  const submitSearch = () => {
     fetch({
       page,
-      search,
-      category: selectedCategory?.id || "",
-      // price_range: priceRange,
-      sort_by: sortBy,
-      is_verified: isVerifiedUser ,
+      search: search || undefined,
+      category: selectedCategory?.id || undefined,
+      price_range: JSON.stringify(priceRange),
+      sort_by: sortBy || undefined,
+      is_verified: isVerifiedUser ? "approved" : undefined,
     });
-  }, []);
+  };
 
   return (
     <div className={`nc-PageSearch  ${className}`} data-nc-id="PageSearch">
@@ -135,6 +135,10 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
             <LoadingScreen />
           ) : errors ? (
             <ServerError />
+          ) : data.length == 0 ? (
+            <div className="flex items-end justify-center py-8">
+              <h1 className="text-3xl text-center">{t("No_result")}</h1>
+            </div>
           ) : (
             <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 lg:mt-10">
               {data.map((nft: Nft, index) => (
@@ -145,10 +149,10 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
 
           {/* PAGINATION */}
           <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-            {meta && (
+            {meta && meta?.last_page > 1 && (
               <Pagination meta={meta} setPage={(page) => setPage(page)} />
             )}
-            {meta && page < meta?.last_page && (
+            {meta && meta?.last_page > 1 && page < meta?.last_page && (
               <ButtonPrimary onClick={() => setPage(page + 1)}>
                 {t("Show_me_more")}
               </ButtonPrimary>

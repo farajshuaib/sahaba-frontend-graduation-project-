@@ -26,7 +26,7 @@ const SectionGridAuthorBox: FC<SectionGridAuthorBoxProps> = ({
 
   useEffect(() => {
     fetch({ page: 1, sort_by: tabActive });
-  }, []);
+  }, [tabActive]);
 
   if (loading) {
     return <LoadingScreen />;

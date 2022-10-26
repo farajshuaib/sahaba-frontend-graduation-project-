@@ -26,7 +26,7 @@ const TabFilters: React.FC<Props> = ({
   const [isOpenMoreFilter, setisOpenMoreFilter] = useState(false);
   //
   const [isVerifiedCreator, setIsVerifiedCreator] = useState(false);
-  const [rangePrices, setRangePrices] = useState([0.01, 5]);
+  const [rangePrices, setRangePrices] = useState([0.01, 5.0]);
 
   const [sortOrderStates, setSortOrderStates] = useState<string>("");
 
@@ -489,7 +489,7 @@ const TabFilters: React.FC<Props> = ({
                       as="h3"
                       className="text-lg font-medium leading-6 text-gray-900"
                     >
-                       {`NFTs ${t("filters")}`}
+                      {`NFTs ${t("filters")}`}
                     </Dialog.Title>
                     <span className="absolute left-3 top-3">
                       <ButtonClose onClick={closeModalMoreFilter} />
@@ -507,10 +507,10 @@ const TabFilters: React.FC<Props> = ({
                             <div className="space-y-5">
                               <Slider
                                 range
-                                className="text-red-400"
-                                min={0}
-                                max={2000}
-                                defaultValue={[0, 1000]}
+                                min={0.01}
+                                max={5}
+                                step={0.01}
+                                defaultValue={[rangePrices[0], rangePrices[1]]}
                                 allowCross={false}
                                 onChange={(_input: number | number[]) =>
                                   setRangePrices(_input as number[])
@@ -597,9 +597,10 @@ const TabFilters: React.FC<Props> = ({
                   <div className="flex items-center justify-between flex-shrink-0 p-6 bg-neutral-50 dark:bg-neutral-900 dark:border-t dark:border-neutral-800">
                     <ButtonThird
                       onClick={() => {
-                        setRangePrices([0.01, 10]);
-
+                        setRangePrices([0.01, 5.0]);
                         setSortOrderStates("");
+                        setPriceRange([0.01, 5.0]);
+                        setSortBy("");
                         closeModalMoreFilter();
                       }}
                       sizeClass="px-4 py-2 sm:px-5"
@@ -607,7 +608,11 @@ const TabFilters: React.FC<Props> = ({
                       {t("Clear")}
                     </ButtonThird>
                     <ButtonPrimary
-                      onClick={closeModalMoreFilter}
+                      onClick={() => {
+                        setPriceRange(rangePrices);
+                        setSortBy(sortOrderStates);
+                        closeModalMoreFilter();
+                      }}
                       sizeClass="px-4 py-2 sm:px-5"
                     >
                       {t("Apply")}

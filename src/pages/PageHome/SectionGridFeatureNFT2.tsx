@@ -23,16 +23,15 @@ const SectionGridFeatureNFT2: FC<SectionGridFeatureNFT2Props> = () => {
     nfts_count: 0,
     collections_count: 0,
   });
-  const {t}= useTranslation()
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetch({
       page: 1,
-      search: "",
-      category: selectedCategory?.id || "",
-      price_range: priceRange,
-      sort_by: sortBy,
-      is_verified: isVerifiedUser,
+      category: selectedCategory?.id || undefined,
+      price_range: JSON.stringify(priceRange),
+      sort_by: sortBy || undefined,
+      is_verified: isVerifiedUser ? "approved" : undefined,
     });
   }, [selectedCategory, JSON.stringify(priceRange), sortBy, isVerifiedUser]);
 
