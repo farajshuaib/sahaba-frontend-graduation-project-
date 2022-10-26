@@ -5,14 +5,18 @@ import abi from "../contracts/abi.json";
 export const currentNetwork: string = "5";
 export const IPFS_BASE_URL: string = "https://ipfs.io/ipfs/";
 
-export const CONTRACT_ADDRESS: string =
-  "0x8F8C30a79010eF0fD6eC361915f8c926FEC14867";
+export const CONTRACT_ADDRESS: string = import.meta.env.VITE_CONTRACT_ADDRESS;
+
+console.log("VITE_CONTRACT_ADDRESS",import.meta.env.VITE_CONTRACT_ADDRESS, CONTRACT_ADDRESS)
 
 export const TEST_CONTRACT_LINK = `https://goerli.etherscan.io/address/${CONTRACT_ADDRESS}`;
 export const CONTRACT_ABI = abi;
 
-export const FCM_vapidKey =
-  "BGgA_V7VWLw_wgYxTM8Hb1RL6u85Y9QlyqnZe0FQKJdqrcIs6WTXBoECljxptX119JivpHQg5gsvcCraDUOXk78";
+export const CAPATCHA_SITE_KEY: string = import.meta.env.VITE_CAPATCHA_SITE_KEY;
+export const CAPATCHA_SECRET_KEY: string = import.meta.env
+  .VITE_CAPATCHA_SECRET_KEY;
+
+export const FCM_vapidKey = import.meta.env.VITE_FCM_VAPID_KEY;
 
 export const locales: SupportedLocales[] = [
   { key: "ar", value: "عربي" },
@@ -47,7 +51,6 @@ export const avatarColors = [
   "#5E13BD",
   "#E208A7",
 ];
-
 
 export const COLORS = [
   "bg-pink-500",

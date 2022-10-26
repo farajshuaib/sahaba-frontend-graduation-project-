@@ -1,4 +1,5 @@
 /// <reference types="vite/client" />
+/// <reference types="@types/grecaptcha" />
 
 declare module "virtual:pwa-register/react" {
   // eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error
@@ -139,9 +140,9 @@ interface Collection {
   nfts: Nft[];
   created_by: UserData;
   nfts_count: number;
-  volume: number,
-  min_price: number,
-  max_price: number,
+  volume: number;
+  min_price: number;
+  max_price: number;
   collaborators: Collaboration[];
   social_links: SocialLinks;
 }

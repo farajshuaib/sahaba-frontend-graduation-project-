@@ -1,5 +1,5 @@
 import { useAppSelector } from "./../app/hooks";
-import { currentNetwork } from "./../constant";
+import { CAPATCHA_SITE_KEY, currentNetwork } from "./../constant";
 import { toast } from "react-toastify";
 import { ethers, Contract, utils, BigNumber } from "ethers";
 import { networkParams } from "services/networks";
@@ -86,5 +86,16 @@ export const usdPrice = (nft_price: number): string => {
 
 export function copyToClipboard(value: string) {
   navigator.clipboard.writeText(value);
-  toast.success(t("copied_success"));
+  toast.success(`${t("copied_success")}`);
 }
+
+export const checkCapatcha = async () => {
+  let token = null;
+  await window.grecaptcha.ready(async () => {
+    const res = await window.grecaptcha.execute(CAPATCHA_SITE_KEY, {
+      action: "submit",
+    });
+    token = res;
+  });
+  return token;
+};

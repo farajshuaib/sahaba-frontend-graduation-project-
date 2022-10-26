@@ -2928,6 +2928,11 @@
   resolved "https://registry.yarnpkg.com/@types/glidejs__glide/-/glidejs__glide-3.4.3.tgz#fff95a0c38ff808fff43b09fee165685a096bacf"
   integrity sha512-sJHLeDNBojkTvjvhuU9YtTbnb9jxLvtOsYNNUn0kkYzrON39h69QOyGmMd/AfOSw2oSz5tJpOW7UapG5tNYv0A==
 
+"@types/grecaptcha@^3.0.4":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@types/grecaptcha/-/grecaptcha-3.0.4.tgz#3de601f3b0cd0298faf052dd5bd62aff64c2be2e"
+  integrity sha512-7l1Y8DTGXkx/r4pwU1nMVAR+yD/QC+MCHKXAyEX/7JZhwcN1IED09aZ9vCjjkcGdhSQiu/eJqcXInpl6eEEEwg==
+
 "@types/hdkey@^0.7.0":
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@types/hdkey/-/hdkey-0.7.1.tgz#9bc63ebbe96b107b277b65ea7a95442a677d0d61"

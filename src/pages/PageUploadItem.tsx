@@ -13,15 +13,21 @@ import { useAppSelector } from "app/hooks";
 import { useWeb3React } from "@web3-react/core";
 import useIpfs from "hooks/useIpfs";
 import { useCrud } from "hooks/useCrud";
-import { CONTRACT_ABI, CONTRACT_ADDRESS, IPFS_BASE_URL } from "constant";
+import {
+  CAPATCHA_SITE_KEY,
+  CONTRACT_ABI,
+  CONTRACT_ADDRESS,
+  IPFS_BASE_URL,
+} from "constant";
 import { BigNumber, Contract, utils } from "ethers";
 import { createNftSchema, validateImage } from "services/validations";
 import { toast } from "react-toastify";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import { useNavigate } from "react-router-dom";
-import { usdPrice } from "utils/functions";
+import { checkCapatcha, usdPrice } from "utils/functions";
 import { Alert } from "shared/Alert/Alert";
 import { useTranslation } from "react-i18next";
+import { useRecaptcha } from "hooks/useRecaptcha";
 
 interface UploadFileProps {
   errors: FormikErrors<any>;
@@ -145,7 +151,9 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
   const [serviceFee, setServiceFee] = useState<number>(0);
   const [ownerReceived, setOwnerReceived] = useState<number>(0);
 
-  const userData:UserData = useAppSelector((state) => state.account.userData);
+  const recaptcha = useRecaptcha();
+
+  const userData: UserData = useAppSelector((state) => state.account.userData);
 
   const contract = new Contract(
     CONTRACT_ADDRESS,
@@ -204,10 +212,23 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
               collection_id: 0,
             }}
             validationSchema={createNftSchema}
-            onSubmit={async (values, { setFieldError }) => {
+            onSubmit={async (values, { setFieldError, setSubmitting }) => {
               if (userData.status === "suspended") {
                 return;
               }
+
+              if (!recaptcha) {
+                toast.error("Beep-bop, you're a robot!");
+                return;
+              }
+
+              const token = await checkCapatcha();
+
+              if (!token) {
+                toast.error(t("please_verify_you_are_not_a_robot"));
+                return;
+              }
+
               if (balance == "0") {
                 setError(t("not_enough_balance"));
                 return;
@@ -471,7 +492,8 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                 <div className="flex flex-col pt-2 space-x-0 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3 ">
                   <ButtonPrimary
                     loading={isSubmitting}
-                    disabled={userData?.status == 'suspended' || isSubmitting}
+                    type="submit"
+                    disabled={userData?.status == "suspended" || isSubmitting}
                     onClick={handleSubmit}
                     className="flex-1"
                   >

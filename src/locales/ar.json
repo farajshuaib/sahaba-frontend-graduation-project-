@@ -242,5 +242,6 @@
   "this_collection_doesnt_contain_any_nfts_yet": "هذه المجموعة لا تحتوي على أي NFTs حتى الآن",
   "this_nft_has_been_hidden": "تم إخفاء NFT هذا",
   "you_will_receive": "ستستلم",
-  "your_instagram_account_url": "عنوان url الخاص بحسابك على instagram"
+  "your_instagram_account_url": "عنوان url الخاص بحسابك على instagram",
+  "please_verify_you_are_not_a_robot": "يرجى التحقق من أنك لست روبوتًا"
 }
