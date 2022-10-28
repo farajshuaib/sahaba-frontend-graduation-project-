@@ -13,12 +13,7 @@ import { useAppSelector } from "app/hooks";
 import { useWeb3React } from "@web3-react/core";
 import useIpfs from "hooks/useIpfs";
 import { useCrud } from "hooks/useCrud";
-import {
-  CAPATCHA_SITE_KEY,
-  CONTRACT_ABI,
-  CONTRACT_ADDRESS,
-  IPFS_BASE_URL,
-} from "constant";
+import { CONTRACT_ABI, CONTRACT_ADDRESS, IPFS_BASE_URL } from "constant";
 import { BigNumber, Contract, utils } from "ethers";
 import { createNftSchema, validateImage } from "services/validations";
 import { toast } from "react-toastify";

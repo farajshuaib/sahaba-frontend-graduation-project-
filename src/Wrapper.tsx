@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { Children, useEffect, useLayoutEffect, useState } from "react";
 import i18n from "i18next";
 import { initReactI18next, useTranslation } from "react-i18next";
 import { ar, en } from "./locales";
@@ -6,13 +6,13 @@ import { Web3ReactProvider } from "@web3-react/core";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { ethers } from "ethers";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { persistor, store } from "app/store";
 import { Web3Provider } from "@ethersproject/providers";
 import { Buffer } from "buffer";
 import { useRegisterSW } from "virtual:pwa-register/react";
 import useDarkMode from "hooks/useDarkMode";
-
+import AuthStateWrapper from "components/AuthStateWrapper";
 globalThis.Buffer = Buffer;
 //
 import "react-toastify/dist/ReactToastify.css";
@@ -20,7 +20,8 @@ import "./assets/fonts/line-awesome-1.3.0/css/line-awesome.css";
 import "rc-slider/assets/index.css";
 import "./styles/index.scss";
 import "./styles/index.css";
-
+import { useRoutes } from "react-router-dom";
+import router from "router";
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -51,7 +52,13 @@ const intervalMS = 60 * 60 * 1000;
 interface Props {
   children: React.ReactNode;
 }
-const Wrapper: React.FC<Props> = ({ children }) => {
+
+const RenderRoutes = () => {
+  const routes = useRoutes(router());
+  return routes;
+};
+
+const Wrapper: React.FC = ({}) => {
   const { i18n } = useTranslation();
   const {} = useDarkMode();
 
@@ -74,11 +81,17 @@ const Wrapper: React.FC<Props> = ({ children }) => {
     }
   }, [i18n.language]);
 
+  useLayoutEffect(() => {
+    document.documentElement?.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          {children}
+          <AuthStateWrapper>
+            <RenderRoutes />
+          </AuthStateWrapper>
           <ToastContainer
             position="top-center"
             autoClose={5000}

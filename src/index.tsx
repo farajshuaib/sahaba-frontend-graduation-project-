@@ -1,9 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
 import Wrapper from "Wrapper";
-import { RouterProvider } from "react-router-dom";
-import router from "router";
+import { BrowserRouter } from "react-router-dom";
 
 //
 
@@ -12,9 +10,7 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
-    <Wrapper>
-      <RouterProvider router={router} />
-    </Wrapper>
-  </React.StrictMode>
+  <BrowserRouter>
+    <Wrapper></Wrapper>
+  </BrowserRouter>
 );

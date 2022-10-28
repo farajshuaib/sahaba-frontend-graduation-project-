@@ -25,6 +25,7 @@ export const connectToWallet = createAsyncThunk(
 
 export const logout = createAsyncThunk("users/logout", async (_, thunkAPI) => {
   const response = await api.post("/logout");
+  localStorage.clear();
   deleteToken();
   thunkAPI.dispatch(clearGeneralState());
   return response.data;

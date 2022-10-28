@@ -42,6 +42,7 @@ interface LocationStates {
   "/page404"?: {};
   "/kyc-form"?: {};
   "/collection/:id/edit"?: {};
+  "*"?: {};
 }
 
 interface Meta {

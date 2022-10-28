@@ -13,6 +13,7 @@ import { useWeb3React } from "@web3-react/core";
 import { switchNetwork } from "utils/functions";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useAppSelector } from "app/hooks";
 
 export interface PageConnectWalletProps {
   className?: string;
