@@ -341,7 +341,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                       </div>
 
                       {/* ---- */}
-                      <div className="grid grid-cols-1 sm:grid-cols-4 gap-5 sm:gap-2.5">
+                      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-8">
                         <div>
                           <Label>{t("Facebook")}</Label>
                           <div className="mt-1.5 flex">

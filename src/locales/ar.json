@@ -270,6 +270,8 @@
     "subject_is_required": "الموضوع مطلوب",
     "title_is_required": "العنوان مطلوب",
     "url_invalid": "عنوان Url غير صالح",
-    "username_is_required": "اسم المستخدم مطلوب"
-  }
+    "username_is_required": "اسم المستخدم مطلوب",
+    "Notifications": "الإشعارات"
+  },
+  "Load_more": "تحميل المزيد"
 }

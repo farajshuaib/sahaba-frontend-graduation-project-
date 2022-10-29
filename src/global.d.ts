@@ -197,3 +197,15 @@ interface NcDropDownItem {
   icon?: string;
   href?: string;
 }
+
+
+interface Notification {
+  id: number;
+  read_at: Date;
+}
+
+interface NotificationPayload {
+  meta: Meta | null,
+  data: Notification[],
+  links: any
+}

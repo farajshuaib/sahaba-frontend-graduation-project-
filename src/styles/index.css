@@ -32,3 +32,14 @@ input:disabled, select:disabled, textarea:disabled, button:disabled {
   -webkit-backdrop-filter: blur(30px);
   backdrop-filter: blur(30px);
 }
+
+.hidden-scrollbar::-webkit-scrollbar {
+  width: 0px !important;
+}
+/* Track */
+.hidden-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.hidden-scrollbar::-webkit-scrollbar-thumb {
+  background: transparent;
+}

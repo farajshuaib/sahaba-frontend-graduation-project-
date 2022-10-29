@@ -20,6 +20,15 @@ export const getCollections = createAsyncThunk(
   }
 );
 
+export const getNotifications = createAsyncThunk(
+  "general/getNotifications",
+  async (page: number) => {
+    const response = await api.get(`/notifications?page=${page}`);
+    return response.data;
+  }
+);
+
+
 export const getEthPriceInUSD = createAsyncThunk(
   "general/getEthPriceInUSD",
   async () => {

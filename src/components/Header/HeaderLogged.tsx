@@ -1,28 +1,34 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import Logo from "shared/Logo/Logo";
 import MenuBar from "shared/MenuBar/MenuBar";
 import NotifyDropdown from "./NotifyDropdown";
 import AvatarDropdown from "./AvatarDropdown";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Navigation from "shared/Navigation/Navigation";
-import { useAppSelector } from "app/hooks";
+import { useAppDispatch, useAppSelector } from "app/hooks";
 import LocalesDropDown from "./LocalesDropDown";
 import { useTranslation } from "react-i18next";
 import useDarkMode from "hooks/useDarkMode";
 import { toast } from "react-toastify";
+import { getNotifications } from "app/general/actions";
 
 export interface HeaderLoggedProps {}
 
 const HeaderLogged: FC<HeaderLoggedProps> = () => {
   const { t } = useTranslation();
-  const { isDarkMode } = useDarkMode();
   const userData = useAppSelector((state) => state.account.userData);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (userData) {
+      dispatch(getNotifications(1));
+    }
+  }, [userData]);
+
   return (
     <div className="relative z-40 w-full nc-HeaderLogged ">
       {/* NAV */}
-      <div
-        className={`nc-MainNav2Logged fixed w-full z-30 nav-blur-bg  `}
-      >
+      <div className={`nc-MainNav2Logged fixed w-full z-30 nav-blur-bg  `}>
         <div className="container relative flex items-center justify-between py-5 space-x-4 xl:space-x-8">
           <div className="flex items-center justify-start flex-grow space-x-3 sm:space-x-8 lg:space-x-10">
             <Logo />

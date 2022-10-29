@@ -5,22 +5,26 @@ import {
   getCategories,
   getCollections,
   getEthPriceInUSD,
+  getNotifications,
 } from "./actions";
+import _ from "lodash";
 
 export interface GeneralState {
   categories: Category[] | null;
   myCollections: Collection[] | null;
   ethPrice: number | null;
-  notifications: any[];
-  notificationsLength: number;
+  notifications: NotificationPayload;
 }
 
 const initialState: GeneralState = {
   categories: null,
   myCollections: null,
   ethPrice: null,
-  notifications: [],
-  notificationsLength: 0,
+  notifications: {
+    data: [],
+    meta: null,
+    links: null,
+  },
 };
 
 export const generalSlice = createSlice({
@@ -30,13 +34,10 @@ export const generalSlice = createSlice({
     setNotifications: (state, action) => {
       return {
         ...state,
-        notifications: action.payload,
-      };
-    },
-    setNotificationsLength: (state, action) => {
-      return {
-        ...state,
-        notificationsLength: action.payload,
+        notifications: {
+          ...state.notifications,
+          data: [...state.notifications?.data, action.payload],
+        },
       };
     },
   },
@@ -53,11 +54,17 @@ export const generalSlice = createSlice({
     builder.addCase(clearGeneralState.fulfilled, (state, action) => {
       state.myCollections = null;
     });
+    builder.addCase(getNotifications.fulfilled, (state, action) => {
+      state.notifications = {
+        meta: action.payload.meta,
+        data: _.uniq([...state.notifications?.data, ...action.payload.data]),
+        links: action.payload.links,
+      };
+    });
   },
 });
 
-export const { setNotifications, setNotificationsLength } =
-  generalSlice.actions;
+export const { setNotifications } = generalSlice.actions;
 
 export const generalData = (state: RootState) => state.general;
 

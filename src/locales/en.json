@@ -276,6 +276,8 @@
     "first_name_is_required": "first name is required",
     "last_name_is_required": "last name is required",
     "username_is_required": "username is required",
-    "The_file_must_be_an_image": "invalid file type, make sure you are uploading an image|jpeg,png,jpg,gif,svg,webp"
-  }
+    "The_file_must_be_an_image": "invalid file type, make sure you are uploading an image|jpeg,png,jpg,gif,svg,webp",
+    "Notifications": "Notifications"
+  },
+  "Load_more": "Load more"
 }

@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from "axios";
+import i18next from "i18next";
 import { getI18n } from "react-i18next";
 
 let api: AxiosInstance;
@@ -12,7 +13,7 @@ export function createApi() {
       Accept: "application/json",
     },
     params: {
-      locale: getI18n().language || "en",
+      locale: i18next.language || "en",
     },
   });
 

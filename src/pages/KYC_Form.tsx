@@ -205,7 +205,7 @@ const KYC_Form: React.FC = () => {
                           {t("Select_your_country")}
                         </option>
                         {countries.map((country, index) => (
-                          <option key={index} value={country.name}>
+                          <option key={index} value={country.code}>
                             {country.name}
                           </option>
                         ))}
