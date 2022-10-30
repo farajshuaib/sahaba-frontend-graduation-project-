@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Avatar from "shared/Avatar/Avatar";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Tab } from "@headlessui/react";
 import VerifyIcon from "components/VerifyIcon";
 import { useTranslation } from "react-i18next";
@@ -34,7 +34,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ nft_id, owner }) => {
 
   const renderTabOwner = () => {
     return (
-      <div className="flex items-center py-4">
+      <Link to={`/author/${owner?.id}`} className="flex items-center py-4">
         <Avatar sizeClass="h-11 w-11" radius="rounded-full" />
         <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
           <span className="text-sm">Owner</span>
@@ -47,7 +47,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ nft_id, owner }) => {
             )}
           </span>
         </span>
-      </div>
+      </Link>
     );
   };
 

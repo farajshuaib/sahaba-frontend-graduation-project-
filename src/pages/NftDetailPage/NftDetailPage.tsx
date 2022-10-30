@@ -11,7 +11,7 @@ import TimeCountDown from "./TimeCountDown";
 import TabDetail from "./TabDetail";
 import AccordionInfo from "./AccordionInfo";
 import { useCrud } from "hooks/useCrud";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import LoadingScreen from "components/LoadingScreen";
 import { useAppSelector } from "app/hooks";
 import { toast } from "react-toastify";
@@ -95,7 +95,6 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
   };
 
   const stopSale = async () => {
-
     if (!userData) {
       navigate("/connect-wallet");
       return;
@@ -187,7 +186,10 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
 
           {/* ---------- 4 ----------  */}
           <div className="flex flex-col gap-5 text-sm sm:flex-row sm:items-center sm:gap-8">
-            <div className="flex items-center gap-3">
+            <Link
+              to={`/author/${item.creator}`}
+              className="flex items-center gap-3"
+            >
               <Avatar
                 imgUrl={item?.creator?.profile_photo}
                 sizeClass="h-9 w-9"
@@ -205,9 +207,12 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
                   )}
                 </span>
               </span>
-            </div>
+            </Link>
             <div className="hidden h-6 border-l sm:block border-neutral-200 dark:border-neutral-700"></div>
-            <div className="flex items-center gap-3">
+            <Link
+              to={`/collection/${item?.collection?.id}`}
+              className="flex items-center gap-3"
+            >
               <Avatar
                 imgUrl={item?.collection?.logo_image}
                 sizeClass="h-9 w-9"
@@ -219,7 +224,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
                   <span>{item.collection?.name}</span>
                 </span>
               </span>
-            </div>
+            </Link>
           </div>
         </div>
 
@@ -252,7 +257,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
             <div className="flex flex-col mt-8 space-y-2 sm:flex-row sm:space-y-0 sm:space-x-3">
               <ButtonPrimary
                 loading={loadingButton}
-                disabled={userData.status == 'suspended' || loadingButton}
+                disabled={userData.status == "suspended" || loadingButton}
                 onClick={() => {
                   userData?.id != item?.owner?.id
                     ? buyNft()
