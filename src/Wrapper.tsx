@@ -13,6 +13,9 @@ import { Buffer } from "buffer";
 import { useRegisterSW } from "virtual:pwa-register/react";
 import useDarkMode from "hooks/useDarkMode";
 import AuthStateWrapper from "components/AuthStateWrapper";
+import { useRoutes } from "react-router-dom";
+import router from "router";
+
 globalThis.Buffer = Buffer;
 //
 import "react-toastify/dist/ReactToastify.css";
@@ -20,9 +23,6 @@ import "./assets/fonts/line-awesome-1.3.0/css/line-awesome.css";
 import "rc-slider/assets/index.css";
 import "./styles/index.scss";
 import "./styles/index.css";
-import { useRoutes } from "react-router-dom";
-import router from "router";
-
 i18n.use(initReactI18next).init({
   resources: {
     en: {
@@ -47,12 +47,6 @@ const getLibrary = (provider: any): Web3Provider => {
   return library;
 };
 
-const intervalMS = 60 * 60 * 1000;
-
-interface Props {
-  children: React.ReactNode;
-}
-
 const RenderRoutes = () => {
   const routes = useRoutes(router());
   return routes;
@@ -67,7 +61,7 @@ const Wrapper: React.FC = ({}) => {
       r &&
         setInterval(() => {
           r.update();
-        }, intervalMS);
+        }, 60 * 60 * 1000);
     },
   });
 

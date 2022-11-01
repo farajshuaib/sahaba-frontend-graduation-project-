@@ -12,10 +12,7 @@ import PageConnectWallet from "pages/PageConnectWallet";
 import PageCreateCollection from "pages/PageCreateCollection";
 import PageCollections from "pages/PageCollections";
 import KYC_Form from "pages/KYC_Form";
-import { Page } from "type";
 import App from "App";
-import ServerError from "components/ServerError";
-import { store } from "app/store";
 import { useAppSelector } from "app/hooks";
 
 const router = () => {

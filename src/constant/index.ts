@@ -7,8 +7,6 @@ export const IPFS_BASE_URL: string = "https://ipfs.io/ipfs/";
 
 export const CONTRACT_ADDRESS: string = import.meta.env.VITE_CONTRACT_ADDRESS;
 
-console.log("VITE_CONTRACT_ADDRESS",import.meta.env.VITE_CONTRACT_ADDRESS, CONTRACT_ADDRESS)
-
 export const TEST_CONTRACT_LINK = `https://goerli.etherscan.io/address/${CONTRACT_ADDRESS}`;
 export const CONTRACT_ABI = abi;
 

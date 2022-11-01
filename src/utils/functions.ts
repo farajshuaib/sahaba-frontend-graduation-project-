@@ -1,10 +1,15 @@
-import { useAppSelector } from "./../app/hooks";
-import { CAPATCHA_SITE_KEY, currentNetwork } from "./../constant";
+import {
+  CAPATCHA_SITE_KEY,
+  CONTRACT_ABI,
+  CONTRACT_ADDRESS,
+  currentNetwork,
+} from "./../constant";
 import { toast } from "react-toastify";
 import { ethers, Contract, utils, BigNumber } from "ethers";
 import { networkParams } from "services/networks";
 import { store } from "app/store";
 import { t } from "i18next";
+// import { Biconomy } from "@biconomy/mexa";
 
 export const getBalance = async (address: string) => {
   if (!window?.ethereum) {
@@ -99,3 +104,22 @@ export const checkCapatcha = async () => {
   });
   return token;
 };
+
+// export async function getContract() {
+//   const biconomy = new Biconomy(window.ethereum as ExternalProvider, {
+//     apiKey: "lCJ4DY8Ui.520c4126-91f6-4d0c-a3aa-278d5e523a0e",
+//     // debug: true,
+//     contractAddresses: [CONTRACT_ADDRESS], // list of contract address you want to enable gasless on
+//   });
+
+//   await biconomy.init();
+
+//   // To create contract instances you can do:
+//   const contractInstance = new Contract(
+//     CONTRACT_ADDRESS,
+//     CONTRACT_ABI,
+//     biconomy.ethersProvider
+//   );
+
+//   return contractInstance;
+// }
