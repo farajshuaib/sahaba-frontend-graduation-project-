@@ -14,7 +14,6 @@ const App: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const userData: UserData = useAppSelector((state) => state.account.userData);
-  const { chainId } = useWeb3React();
 
   useEffect(() => {
     dispatch(getEthPriceInUSD());
@@ -26,33 +25,6 @@ const App: React.FC = () => {
 
   return (
     <>
-      {!window.ethereum && (
-        <Alert color="warning">
-          <span className="block w-screen font-medium text-center">
-            <span>{t("no_provider")}</span>
-            <a href="https://metamask.io/download/" target="_blank">
-              {t("install_metamask")}
-            </a>
-          </span>
-        </Alert>
-      )}
-
-      {userData?.status == "suspended" && (
-        <Alert color="warning">
-          <span className="block w-screen font-medium text-center">
-            {t("account_suspended")}
-          </span>
-        </Alert>
-      )}
-
-      {chainId && chainId == 5 && (
-        <Alert color="info">
-          <span className="block w-screen font-medium text-center">
-            {t("you_are_on_goerli")}
-          </span>
-        </Alert>
-      )}
-
       {/* main layouts */}
       <div className="text-base bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
         <HeaderLogged />

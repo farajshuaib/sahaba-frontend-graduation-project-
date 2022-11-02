@@ -11,6 +11,43 @@ import { useTranslation } from "react-i18next";
 import useDarkMode from "hooks/useDarkMode";
 import { toast } from "react-toastify";
 import { getNotifications } from "app/general/actions";
+import { Alert } from "flowbite-react";
+import { useWeb3React } from "@web3-react/core";
+
+const Alerts: FC = () => {
+  const { t } = useTranslation();
+  const { chainId } = useWeb3React();
+  const userData: UserData = useAppSelector((state) => state.account.userData);
+  return (
+    <>
+      {chainId && chainId == 5 && (
+        <Alert color="info">
+          <span className="block w-screen font-medium text-center">
+            {t("you_are_on_goerli")}
+          </span>
+        </Alert>
+      )}
+      {!window.ethereum && (
+        <Alert color="warning">
+          <span className="block w-screen font-medium text-center">
+            <span>{t("no_provider")}</span>
+            <a href="https://metamask.io/download/" target="_blank">
+              {t("install_metamask")}
+            </a>
+          </span>
+        </Alert>
+      )}
+
+      {userData?.status == "suspended" && (
+        <Alert color="warning">
+          <span className="block w-screen font-medium text-center">
+            {t("account_suspended")}
+          </span>
+        </Alert>
+      )}
+    </>
+  );
+};
 
 export interface HeaderLoggedProps {}
 
@@ -29,6 +66,8 @@ const HeaderLogged: FC<HeaderLoggedProps> = () => {
     <div className="relative z-40 w-full nc-HeaderLogged ">
       {/* NAV */}
       <div className={`nc-MainNav2Logged fixed w-full z-30 nav-blur-bg  `}>
+        <Alerts />
+
         <div className="container relative flex items-center justify-between py-5 space-x-4 xl:space-x-8">
           <div className="flex items-center justify-start flex-grow space-x-3 sm:space-x-8 lg:space-x-10">
             <Logo />

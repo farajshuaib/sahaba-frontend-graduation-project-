@@ -23,6 +23,8 @@ import { toast } from "react-toastify";
 import { getCollections } from "app/general/actions";
 import { useTranslation } from "react-i18next";
 import { useApi } from "hooks/useApi";
+import { useRecaptcha } from "hooks/useRecaptcha";
+import { checkCapatcha } from "utils/functions";
 
 export interface PageCreateCollectionProps {
   className?: string;
@@ -31,6 +33,7 @@ export interface PageCreateCollectionProps {
 const PageCreateCollection: FC<PageCreateCollectionProps> = ({
   className = "",
 }) => {
+  const recaptcha = useRecaptcha();
   const params = useParams();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -108,6 +111,18 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
             }
             enableReinitialize
             onSubmit={async (values) => {
+              if (!recaptcha) {
+                toast.error("Beep-bop, you're a robot!");
+                return;
+              }
+
+              const token = await checkCapatcha();
+
+              if (!token) {
+                toast.error(t("please_verify_you_are_not_a_robot"));
+                return;
+              }
+
               if (userData.status === "suspended") {
                 return;
               }
@@ -419,7 +434,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                 </div>
 
                 {/* ---- */}
-                <div className="grid grid-cols-1 sm:grid-cols-4 gap-5 sm:gap-2.5">
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-8">
                   <div>
                     <Label>{t("Facebook")}</Label>
                     <div className="mt-1.5 flex">

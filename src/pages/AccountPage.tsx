@@ -14,7 +14,8 @@ import VerifyAccount from "components/VerifyAccount";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { copyToClipboard } from "utils/functions";
+import { checkCapatcha, copyToClipboard } from "utils/functions";
+import { useRecaptcha } from "hooks/useRecaptcha";
 
 export interface AccountPageProps {
   className?: string;
@@ -27,6 +28,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
   const userData: UserData = useAppSelector((state) => state.account.userData);
   const [profileImage, setProfileImage] = useState<string>("");
   const [bannerImage, setBannerImage] = useState<string>("");
+  const recaptcha = useRecaptcha();
 
   const [initFormState, setInitFormState] = useState({
     first_name: "",
@@ -96,6 +98,18 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
               initialValues={initFormState}
               validationSchema={updateAccountSchema}
               onSubmit={async (values) => {
+                if (!recaptcha) {
+                  toast.error("Beep-bop, you're a robot!");
+                  return;
+                }
+  
+                const token = await checkCapatcha();
+  
+                if (!token) {
+                  toast.error(t("please_verify_you_are_not_a_robot"));
+                  return;
+                }
+
                 const form = new FormData();
                 for (const [key, value] of Object.entries(values)) {
                   form.append(key, value);

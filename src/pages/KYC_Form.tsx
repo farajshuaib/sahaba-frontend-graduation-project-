@@ -15,6 +15,8 @@ import { kycSchema } from "services/validations";
 import { useTranslation } from "react-i18next";
 import { Alert } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
+import { checkCapatcha } from "utils/functions";
+import { useRecaptcha } from "hooks/useRecaptcha";
 
 const KYC_Form: React.FC = () => {
   const { t } = useTranslation();
@@ -33,6 +35,8 @@ const KYC_Form: React.FC = () => {
     passport_id: "",
   });
   const userData: UserData = useAppSelector((state) => state.account.userData);
+
+  const recaptcha = useRecaptcha();
 
   useEffect(() => {
     if (userData?.kyc_form) {
@@ -127,6 +131,17 @@ const KYC_Form: React.FC = () => {
               enableReinitialize
               validationSchema={kycSchema}
               onSubmit={async (values) => {
+                if (!recaptcha) {
+                  toast.error("Beep-bop, you're a robot!");
+                  return;
+                }
+
+                const token = await checkCapatcha();
+
+                if (!token) {
+                  toast.error(t("please_verify_you_are_not_a_robot"));
+                  return;
+                }
                 if (userData.status === "suspended") {
                   return;
                 }
