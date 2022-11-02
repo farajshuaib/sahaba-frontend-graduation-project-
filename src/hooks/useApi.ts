@@ -1,6 +1,5 @@
 import axios, { AxiosInstance } from "axios";
 import i18next from "i18next";
-import { getI18n } from "react-i18next";
 
 let api: AxiosInstance;
 

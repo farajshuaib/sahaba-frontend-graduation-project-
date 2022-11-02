@@ -14,13 +14,18 @@ import useDarkMode from "hooks/useDarkMode";
 import AuthStateWrapper from "components/AuthStateWrapper";
 import { useRoutes } from "react-router-dom";
 import router from "router";
+import { Buffer } from 'buffer';
 
+// @ts-ignore
+window.Buffer = Buffer;
 //
 import "react-toastify/dist/ReactToastify.css";
 import "./assets/fonts/line-awesome-1.3.0/css/line-awesome.css";
 import "rc-slider/assets/index.css";
 import "./styles/index.scss";
 import "./styles/index.css";
+
+
 i18n.use(initReactI18next).init({
   resources: {
     en: {
