@@ -6,7 +6,8 @@ export const currentNetwork: string =
   import.meta.env.VITE_DEV_MODE == "production" ? "1" : "5";
 export const IPFS_BASE_URL: string = "https://ipfs.io/ipfs/";
 
-export const CONTRACT_ADDRESS: string = import.meta.env.VITE_CONTRACT_ADDRESS;
+export const CONTRACT_ADDRESS: string =
+  "0xE5B77E50e1c81fb135EAb5b568dFbDA995aE9491";
 
 export const TEST_CONTRACT_LINK = `https://goerli.etherscan.io/address/${CONTRACT_ADDRESS}`;
 export const CONTRACT_ABI = abi;
