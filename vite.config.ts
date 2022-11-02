@@ -4,12 +4,11 @@ import viteTsconfigPaths from "vite-tsconfig-paths";
 import svgrPlugin from "vite-plugin-svgr";
 import GlobalsPolyfills from "@esbuild-plugins/node-globals-polyfill";
 import { VitePWA } from "vite-plugin-pwa";
-import dns from 'dns'
+import dns from "dns";
 
 const production = process.env.NODE_ENV === "production";
 
-
-dns.setDefaultResultOrder('verbatim')
+dns.setDefaultResultOrder("verbatim");
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -23,7 +22,7 @@ export default defineConfig({
     viteTsconfigPaths(),
     svgrPlugin(),
     VitePWA({
-      injectRegister: 'auto',
+      injectRegister: "auto",
       registerType: "autoUpdate",
       useCredentials: true,
       workbox: {
@@ -32,9 +31,10 @@ export default defineConfig({
       },
       includeAssets: ["favicon.ico", "apple-touch-icon.png"],
       manifest: {
-        name: "sahaba NFT marketplace",
+        name: "Sahaba NFT marketplace",
         short_name: "SHB",
-        description: "",
+        description:
+          "Create, Explore, & Collect Digital Art NFTs. Buy, sell, and showcase NFTs",
         theme_color: "#0084c7",
         background_color: "#fff",
         icons: [
@@ -70,19 +70,17 @@ export default defineConfig({
         scope: "/",
       },
       devOptions: {
-        enabled: !production
-      }
+        enabled: !production,
+      },
     }),
   ],
   server: {
-    host: "localhost",
     port: 3000,
   },
   build: {
     rollupOptions: {
       external: ["jss-plugin-globalThis"],
-      plugins: [
-      ],
+      plugins: [],
     },
     // ↓ Needed for build if using WalletConnect and other providers
     commonjsOptions: {
