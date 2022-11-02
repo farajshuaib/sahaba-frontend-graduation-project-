@@ -281,5 +281,5 @@
   },
   "Load_more": "Load more",
   "install_metamask": "Install metamask",
-  "you_are_on_goerli": "You are on goerli network, please switch to mainnet"
+  "you_are_on_goerli": "You are running the app on goerli network cuz we're still testing, later we will switch to mainnet"
 }
