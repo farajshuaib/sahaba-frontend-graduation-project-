@@ -2,7 +2,8 @@
 import abi from "../contracts/abi.json";
 //
 
-export const currentNetwork: string = "5";
+export const currentNetwork: string =
+  import.meta.env.VITE_DEV_MODE == "production" ? "1" : "5";
 export const IPFS_BASE_URL: string = "https://ipfs.io/ipfs/";
 
 export const CONTRACT_ADDRESS: string = import.meta.env.VITE_CONTRACT_ADDRESS;

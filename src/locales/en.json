@@ -279,5 +279,7 @@
     "The_file_must_be_an_image": "invalid file type, make sure you are uploading an image|jpeg,png,jpg,gif,svg,webp",
     "Notifications": "Notifications"
   },
-  "Load_more": "Load more"
+  "Load_more": "Load more",
+  "install_metamask": "Please install metamask extension on your browser",
+  "you_are_on_goerli": "You are on goerli network, please switch to mainnet"
 }
