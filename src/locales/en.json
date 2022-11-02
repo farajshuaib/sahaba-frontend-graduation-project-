@@ -280,6 +280,6 @@
     "Notifications": "Notifications"
   },
   "Load_more": "Load more",
-  "install_metamask": "Please install metamask extension on your browser",
+  "install_metamask": "Install metamask",
   "you_are_on_goerli": "You are on goerli network, please switch to mainnet"
 }

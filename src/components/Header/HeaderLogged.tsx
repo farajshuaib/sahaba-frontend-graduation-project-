@@ -31,7 +31,8 @@ const Alerts: FC = () => {
         <Alert color="warning">
           <span className="block w-screen font-medium text-center">
             <span>{t("no_provider")}</span>
-            <a href="https://metamask.io/download/" target="_blank">
+            {" "}
+            <a href="https://metamask.io/download/" className="font-bold underline" target="_blank">
               {t("install_metamask")}
             </a>
           </span>
