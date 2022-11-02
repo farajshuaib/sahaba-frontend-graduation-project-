@@ -143,7 +143,15 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
           <span>{t("header_mobile_desc")}</span>
 
           <div className="flex items-center justify-between mt-4">
-            <SocialsList itemClass="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-xl" />
+            <SocialsList
+              social_links={{
+                facebook_url: "",
+                twitter_url: "",
+                instagram_url: "",
+                telegram_url: "",
+              }}
+              itemClass="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-xl"
+            />
             <span className="block">
               <SwitchDarkMode className="bg-neutral-100 dark:bg-neutral-800" />
             </span>

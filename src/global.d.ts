@@ -104,12 +104,12 @@ interface Transactions {
 }
 
 interface SocialLinks {
-  id: number;
-  twitter_url: string;
-  facebook_url: string;
-  instagram_url: string;
-  website_url: string;
-  telegram_url: string;
+  id?: number;
+  twitter_url?: string;
+  facebook_url?: string;
+  instagram_url?: string;
+  website_url?: string;
+  telegram_url?: string;
 }
 
 interface Nft {

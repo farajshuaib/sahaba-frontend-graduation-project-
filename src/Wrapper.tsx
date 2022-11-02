@@ -9,14 +9,12 @@ import { ethers } from "ethers";
 import { toast, ToastContainer } from "react-toastify";
 import { persistor, store } from "app/store";
 import { Web3Provider } from "@ethersproject/providers";
-import { Buffer } from "buffer";
 import { useRegisterSW } from "virtual:pwa-register/react";
 import useDarkMode from "hooks/useDarkMode";
 import AuthStateWrapper from "components/AuthStateWrapper";
 import { useRoutes } from "react-router-dom";
 import router from "router";
 
-globalThis.Buffer = Buffer;
 //
 import "react-toastify/dist/ReactToastify.css";
 import "./assets/fonts/line-awesome-1.3.0/css/line-awesome.css";
