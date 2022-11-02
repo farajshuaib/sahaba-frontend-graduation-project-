@@ -4,8 +4,12 @@ import viteTsconfigPaths from "vite-tsconfig-paths";
 import svgrPlugin from "vite-plugin-svgr";
 import GlobalsPolyfills from "@esbuild-plugins/node-globals-polyfill";
 import { VitePWA } from "vite-plugin-pwa";
+import dns from 'dns'
 
 const production = process.env.NODE_ENV === "production";
+
+
+dns.setDefaultResultOrder('verbatim')
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -71,6 +75,7 @@ export default defineConfig({
     }),
   ],
   server: {
+    host: "localhost",
     port: 3000,
   },
   build: {

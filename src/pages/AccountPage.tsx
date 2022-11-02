@@ -261,7 +261,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                             onBlur={handleBlur("first_name")}
                             onChange={handleChange("first_name")}
                           />
-                          <ErrorMessage name="first_name" />
+                          <ErrorMessage name="first_name" component="p" className="text-sm text-red-600" />
                         </div>
                         <div className="flex-grow">
                           <Label htmlFor="last_name">{t("Last_name")}</Label>
@@ -274,7 +274,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                             onBlur={handleBlur("last_name")}
                             onChange={handleChange("last_name")}
                           />
-                          <ErrorMessage name="last_name" />
+                          <ErrorMessage name="last_name" component="p" className="text-sm text-red-600" />
                         </div>
                       </div>
                       <div>
@@ -293,7 +293,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                             )
                           }
                         />
-                        <ErrorMessage name="username" />
+                        <ErrorMessage name="username" component="p" className="text-sm text-red-600"  />
                       </div>
 
                       {/* ---- */}
@@ -314,7 +314,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                             onBlur={handleBlur("email")}
                           />
                         </div>
-                        <ErrorMessage name="email" />
+                        <ErrorMessage name="email" component="p" className="text-sm text-red-600"  />
                       </div>
 
                       {/* ---- */}
@@ -330,7 +330,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                           onBlur={handleBlur("bio")}
                           placeholder="Something about yourself in a few word."
                         />
-                        <ErrorMessage name="bio" />
+                        <ErrorMessage name="bio" component="p" className="text-sm text-red-600"  />
                       </div>
 
                       {/* ---- */}
@@ -351,7 +351,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                             placeholder="your website.com"
                           />
                         </div>
-                        <ErrorMessage name="website_url" />
+                        <ErrorMessage name="website_url"  component="p" className="text-sm text-red-600" />
                       </div>
 
                       {/* ---- */}
@@ -374,7 +374,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                               sizeClass="h-11 px-4 pl-2 pr-3"
                             />
                           </div>
-                          <ErrorMessage name="facebook_url" />
+                          <ErrorMessage name="facebook_url" component="p" className="text-sm text-red-600" />
                         </div>
                         <div>
                           <Label>{t("Twitter")}</Label>
@@ -394,7 +394,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                               sizeClass="h-11 px-4 pl-2 pr-3"
                             />
                           </div>
-                          <ErrorMessage name="twitter_url" />
+                          <ErrorMessage name="twitter_url" component="p" className="text-sm text-red-600"  />
                         </div>
                         <div>
                           <Label>{t("Telegram")}</Label>
@@ -414,7 +414,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                               sizeClass="h-11 px-4 pl-2 pr-3"
                             />
                           </div>
-                          <ErrorMessage name="telegram_url" />
+                          <ErrorMessage name="telegram_url" component="p" className="text-sm text-red-600"  />
                         </div>
                         <div>
                           <Label>{t("Instagram")}</Label>
@@ -434,7 +434,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                               sizeClass="h-11 px-4 pl-2 pr-3"
                             />
                           </div>
-                          <ErrorMessage name="instagram_url" />
+                          <ErrorMessage name="instagram_url" component="p" className="text-sm text-red-600"  />
                         </div>
                       </div>
 

@@ -310,7 +310,7 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                   />
                   <ErrorMessage
                     name="title"
-                    component={"span"}
+                    component={"p"}
                     className="text-sm text-red-600"
                   />
                 </FormItem>

@@ -95,14 +95,20 @@ export function copyToClipboard(value: string) {
 }
 
 export const checkCapatcha = async () => {
-  let token = null;
-  await window.grecaptcha.ready(async () => {
-    const res = await window.grecaptcha.execute(CAPATCHA_SITE_KEY, {
-      action: "submit",
-    });
-    token = res;
+  return new Promise(async (resolve, reject) => {
+    try {
+      await window.grecaptcha.ready(async () => {
+        const res = await window.grecaptcha.execute(CAPATCHA_SITE_KEY, {
+          action: "submit",
+        });
+        console.log("res", res);
+        resolve(res);
+      });
+    } catch (error) {
+      reject(error);
+      console.log(error);
+    }
   });
-  return token;
 };
 
 // export async function getContract() {
