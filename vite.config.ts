@@ -8,7 +8,7 @@ import dns from "dns";
 
 const production = process.env.NODE_ENV === "production";
 
-dns.setDefaultResultOrder("verbatim");
+!production && dns.setDefaultResultOrder("verbatim");
 
 // https://vitejs.dev/config/
 export default defineConfig({
