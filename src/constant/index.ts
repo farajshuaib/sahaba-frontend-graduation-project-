@@ -5,6 +5,7 @@ import abi from "../contracts/abi.json";
 export const currentNetwork: string =
   import.meta.env.VITE_DEV_MODE == "production" ? "1" : "5";
 export const IPFS_BASE_URL: string = "https://ipfs.io/ipfs/";
+export const WEBSITE_URL: string = "https://sahabanft.netlify.app";
 
 export const CONTRACT_ADDRESS: string =
   "0xE5B77E50e1c81fb135EAb5b568dFbDA995aE9491";

@@ -4,6 +4,7 @@ import { CustomLink } from "data/types";
 import React from "react";
 import LocalesDropDown from "components/Header/LocalesDropDown";
 import { useTranslation } from "react-i18next";
+import { WEBSITE_URL } from "constant";
 
 export interface WidgetFooterMenu {
   id: string;
@@ -22,7 +23,7 @@ const Footer: React.FC = () => {
       menus: [
         { href: "/nfts", label: "NFTs" },
         { href: "/collections", label: t("Collections") },
-        { href: "https://www.sahabanft.com", label: t("Website") },
+        { href: WEBSITE_URL, label: t("Website") },
       ],
     },
     {
@@ -30,11 +31,11 @@ const Footer: React.FC = () => {
       title: t("INFORMATION"),
       menus: [
         {
-          href: "https://www.sahabanft.com/term-of-services",
+          href: WEBSITE_URL + "/terms-of-service",
           label: t("Term_of_services"),
         },
         {
-          href: "https://www.sahabanft.com/privacy-policy",
+          href: WEBSITE_URL + "/privacy-policy",
           label: t("Privacy_policy"),
         },
         { href: "/kyc-form", label: t("Get_verified") },
