@@ -26,7 +26,7 @@ const Home: React.FC = () => {
 
       <div className="container relative my-24 space-y-24 lg:space-y-32 lg:my-32">
         {/* SECTION */}
-        <div className="relative py-20 lg:py-28">
+        <div className="relative py-32 lg:py-28">
           <BackgroundSection />
           <SectionSliderCollections />
         </div>

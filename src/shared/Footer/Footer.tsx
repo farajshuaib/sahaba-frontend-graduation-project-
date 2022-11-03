@@ -46,7 +46,7 @@ const Footer: React.FC = () => {
   const renderWidgetMenuItem = (menu: WidgetFooterMenu, index: number) => {
     return (
       <div key={index} className="text-sm">
-        <h2 className="font-semibold uppercase text-neutral-700 dark:text-neutral-200">
+        <h2 className="text-lg font-semibold uppercase text-neutral-700 dark:text-neutral-200">
           {menu.title}
         </h2>
         <ul className="mt-5 space-y-4">
@@ -69,12 +69,12 @@ const Footer: React.FC = () => {
 
   return (
     <div className="relative py-20 border-t nc-Footer lg:pt-32 lg:pb-28 border-neutral-200 dark:border-neutral-700">
-      <div className="container grid grid-cols-2 gap-y-10 gap-x-5 sm:gap-x-8 md:grid-cols-4 lg:grid-cols-4 lg:gap-x-10 ">
-        <div className="grid grid-cols-4 col-span-2 gap-5 md:col-span-4 lg:md:col-span-1 lg:flex lg:flex-col">
-          <div className="col-span-2 md:col-span-1">
+      <div className="container grid justify-center grid-cols-1 text-center md:justify-start md:text-justify gap-y-16 gap-x-5 sm:gap-x-8 md:grid-cols-4 lg:grid-cols-4 lg:gap-x-10 ">
+        <div className="lg:flex lg:flex-col">
+          <div className="">
             <Logo />
           </div>
-          <div className="flex items-center col-span-2 md:col-span-3">
+          <div className="flex items-center justify-center md:justify-start">
             <SocialsList1 className="flex items-center space-x-2 lg:space-x-0 lg:flex-col lg:space-y-3 lg:items-start" />
           </div>
         </div>
@@ -82,7 +82,7 @@ const Footer: React.FC = () => {
         {widgetMenus.map(renderWidgetMenuItem)}
 
         <div className="text-sm">
-          <h2 className="font-semibold uppercase text-neutral-700 dark:text-neutral-200">
+          <h2 className="text-lg font-semibold uppercase text-neutral-700 dark:text-neutral-200">
             {t("Languages")}
           </h2>
           <div className="mt-5 space-y-4">
