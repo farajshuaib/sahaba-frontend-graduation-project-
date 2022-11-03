@@ -57,7 +57,11 @@ const SectionSliderCategories: FC<SectionSliderCategoriesProps> = ({
     slider.mount();
     // @ts-ignore
     return () => slider.destroy();
-  }, [sliderRef, UNIQUE_CLASS]);
+  }, [sliderRef, UNIQUE_CLASS, categories]);
+
+  if (!categories) {
+    return <></>;
+  }
 
   return (
     <div className={`nc-SectionSliderCategories ${className}`}>
@@ -67,18 +71,17 @@ const SectionSliderCategories: FC<SectionSliderCategoriesProps> = ({
         </Heading>
         <div className="glide__track" data-glide-el="track">
           <ul className="glide__slides">
-            {categories &&
-              categories.map((item: Category, index: number) => (
-                <li key={index} className={`glide__slide ${itemClassName}`}>
-                  <CardCategory5
-                    index={index}
-                    category_id={item.id}
-                    featuredImage={item.icon}
-                    nft_count={item.nfts_count}
-                    name={item.name}
-                  />
-                </li>
-              ))}
+            {categories.map((item: Category, index: number) => (
+              <li key={index} className={`glide__slide ${itemClassName}`}>
+                <CardCategory5
+                  index={index}
+                  category_id={item.id}
+                  featuredImage={item.icon}
+                  nft_count={item.nfts_count}
+                  name={item.name}
+                />
+              </li>
+            ))}
           </ul>
         </div>
       </div>

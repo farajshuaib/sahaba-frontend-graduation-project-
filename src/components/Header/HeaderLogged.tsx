@@ -8,8 +8,6 @@ import Navigation from "shared/Navigation/Navigation";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import LocalesDropDown from "./LocalesDropDown";
 import { useTranslation } from "react-i18next";
-import useDarkMode from "hooks/useDarkMode";
-import { toast } from "react-toastify";
 import { getNotifications } from "app/general/actions";
 import { Alert } from "flowbite-react";
 import { useWeb3React } from "@web3-react/core";
