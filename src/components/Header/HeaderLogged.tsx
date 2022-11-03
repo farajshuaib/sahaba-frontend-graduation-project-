@@ -62,7 +62,7 @@ const HeaderLogged: FC<HeaderLoggedProps> = () => {
   }, [userData]);
 
   return (
-    <div className="relative z-40 w-full nc-HeaderLogged ">
+    <div className="relative z-40 w-full pb-28 nc-HeaderLogged">
       {/* NAV */}
       <div className={`nc-MainNav2Logged fixed w-full z-30 nav-blur-bg  `}>
         <Alerts />

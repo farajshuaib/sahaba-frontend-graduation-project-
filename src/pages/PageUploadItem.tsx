@@ -397,79 +397,90 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                   <div className="text-sm text-neutral-500 dark:text-neutral-400">
                     {t("Choose_collection_desc")}
                   </div>
-                  <RadioGroup
-                    value={
-                      myCollections &&
-                      myCollections?.find(
-                        (collection) => collection.id == values.collection_id
-                      )
-                    }
-                    onChange={(collection) => {
-                      if (!collection) return;
-                      setFieldValue("collection_id", collection.id);
-                    }}
-                  >
-                    <RadioGroup.Label className="sr-only">
-                      Server size
-                    </RadioGroup.Label>
-                    <div className="flex py-2 space-x-4 overflow-auto customScrollBar">
-                      {myCollections &&
-                        myCollections.map((collection: Collection, index) => (
-                          <RadioGroup.Option
-                            key={index}
-                            value={collection}
-                            className={({ active, checked }) =>
-                              `${
-                                active
-                                  ? "ring-2 ring-offset-2 ring-offset-sky-300 ring-white ring-opacity-60"
-                                  : ""
-                              }
+                  {myCollections && myCollections.length > 0 ? (
+                    <RadioGroup
+                      value={
+                        myCollections &&
+                        myCollections?.find(
+                          (collection) => collection.id == values.collection_id
+                        )
+                      }
+                      onChange={(collection) => {
+                        if (!collection) return;
+                        setFieldValue("collection_id", collection.id);
+                      }}
+                    >
+                      <RadioGroup.Label className="sr-only">
+                        Server size
+                      </RadioGroup.Label>
+                      <div className="flex py-2 space-x-4 overflow-auto customScrollBar">
+                        {myCollections &&
+                          myCollections.map((collection: Collection, index) => (
+                            <RadioGroup.Option
+                              key={index}
+                              value={collection}
+                              className={({ active, checked }) =>
+                                `${
+                                  active
+                                    ? "ring-2 ring-offset-2 ring-offset-sky-300 ring-white ring-opacity-60"
+                                    : ""
+                                }
                   ${
                     checked
                       ? "bg-teal-600 text-white"
                       : "hover:bg-neutral-100 dark:hover:bg-neutral-800"
                   }
                     relative flex-shrink-0 w-44 rounded-xl border border-neutral-200 dark:border-neutral-700 px-6 py-5 cursor-pointer flex focus:outline-none `
-                            }
-                          >
-                            {({ active, checked }) => (
-                              <>
-                                <div className="flex items-center justify-between w-full">
-                                  <div className="flex items-center">
-                                    <div className="text-sm">
-                                      <div className="flex items-center justify-between">
-                                        <RadioGroup.Description
-                                          as="div"
-                                          className={"rounded-full w-16"}
+                              }
+                            >
+                              {({ active, checked }) => (
+                                <>
+                                  <div className="flex items-center justify-between w-full">
+                                    <div className="flex items-center">
+                                      <div className="text-sm">
+                                        <div className="flex items-center justify-between">
+                                          <RadioGroup.Description
+                                            as="div"
+                                            className={"rounded-full w-16"}
+                                          >
+                                            <NcImage
+                                              containerClassName="aspect-w-1 aspect-h-1 rounded-full overflow-hidden"
+                                              src={collection.logo_image}
+                                            />
+                                          </RadioGroup.Description>
+                                          {checked && (
+                                            <div className="flex-shrink-0 text-white">
+                                              <CheckIcon className="w-6 h-6" />
+                                            </div>
+                                          )}
+                                        </div>
+                                        <RadioGroup.Label
+                                          as="p"
+                                          className={`font-semibold mt-3  ${
+                                            checked ? "text-white" : ""
+                                          }`}
                                         >
-                                          <NcImage
-                                            containerClassName="aspect-w-1 aspect-h-1 rounded-full overflow-hidden"
-                                            src={collection.logo_image}
-                                          />
-                                        </RadioGroup.Description>
-                                        {checked && (
-                                          <div className="flex-shrink-0 text-white">
-                                            <CheckIcon className="w-6 h-6" />
-                                          </div>
-                                        )}
+                                          {collection.name}
+                                        </RadioGroup.Label>
                                       </div>
-                                      <RadioGroup.Label
-                                        as="p"
-                                        className={`font-semibold mt-3  ${
-                                          checked ? "text-white" : ""
-                                        }`}
-                                      >
-                                        {collection.name}
-                                      </RadioGroup.Label>
                                     </div>
                                   </div>
-                                </div>
-                              </>
-                            )}
-                          </RadioGroup.Option>
-                        ))}
+                                </>
+                              )}
+                            </RadioGroup.Option>
+                          ))}
+                      </div>
+                    </RadioGroup>
+                  ) : (
+                    <div className="flex justify-center ">
+                      <ButtonPrimary
+                        href={"/create-collection"}
+                        className="relative z-10 block mx-auto my-12"
+                      >
+                        {t("Create_your_own_collection")}
+                      </ButtonPrimary>
                     </div>
-                  </RadioGroup>
+                  )}
                   <ErrorMessage
                     name="collection_id"
                     component={"span"}

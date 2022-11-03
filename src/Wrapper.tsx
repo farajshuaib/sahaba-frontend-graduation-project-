@@ -12,9 +12,9 @@ import { Web3Provider } from "@ethersproject/providers";
 import { useRegisterSW } from "virtual:pwa-register/react";
 import useDarkMode from "hooks/useDarkMode";
 import AuthStateWrapper from "components/AuthStateWrapper";
-import { useRoutes } from "react-router-dom";
+import { useLocation, useRoutes } from "react-router-dom";
 import router from "router";
-import { Buffer } from 'buffer';
+import { Buffer } from "buffer";
 
 // @ts-ignore
 window.Buffer = Buffer;
@@ -24,7 +24,6 @@ import "./assets/fonts/line-awesome-1.3.0/css/line-awesome.css";
 import "rc-slider/assets/index.css";
 import "./styles/index.scss";
 import "./styles/index.css";
-
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -57,9 +56,12 @@ const RenderRoutes = () => {
 
 const Wrapper: React.FC = ({}) => {
   const { i18n } = useTranslation();
+  const location = useLocation();
   const {} = useDarkMode();
 
   useRegisterSW({
+    onNeedRefresh() {},
+    onOfflineReady() {},
     onRegistered(r) {
       r &&
         setInterval(() => {
