@@ -282,5 +282,8 @@
   "Load_more": "Load more",
   "install_metamask": "Install metamask",
   "you_are_on_goerli": "You are running the app on goerli network cuz we're still testing, later we will switch to mainnet",
-  "notifications_empty": "You don't have any notifications yet"
+  "notifications_empty": "You don't have any notifications yet",
+  "Set_NFT_for_sale_description": "Are you sure you want to put that NFT for sale ?",
+  "cancel_NFT_sale": "Cancel NFT sale",
+  "cancel_NFT_sale_description": "Are you sure you want to cancel that NFT sale ? no one will be able to buy it anymore"
 }

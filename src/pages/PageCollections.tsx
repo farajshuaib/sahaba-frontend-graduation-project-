@@ -73,7 +73,6 @@ const PageCollections: FC<PageCollectionsProps> = ({ className = "" }) => {
       />
 
       <div className="container py-16 space-y-16 lg:pb-28 lg:pt-20 lg:space-y-28">
-        
         <main>
           {/* FILTER */}
           <Heading
@@ -83,14 +82,15 @@ const PageCollections: FC<PageCollectionsProps> = ({ className = "" }) => {
             {t("Collections")}
           </Heading>
           <div className="flex justify-end">
-            <ButtonPrimary href={"/create-collection"} className="relative z-10">
+            <ButtonPrimary
+              href={"/create-collection"}
+              className="relative z-10"
+            >
               {t("Create_your_own_collection")}
             </ButtonPrimary>
           </div>
 
           <BgGlassmorphism />
-
-          
 
           {loading ? (
             <LoadingScreen />
@@ -104,7 +104,7 @@ const PageCollections: FC<PageCollectionsProps> = ({ className = "" }) => {
 
           {/* PAGINATION */}
           <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-            {meta && (
+            {meta && meta.last_page > 1 && (
               <Pagination meta={meta} setPage={(page) => setPage(page)} />
             )}
             {meta && page < meta?.last_page && (

@@ -76,7 +76,7 @@ const Collections: React.FC<ProfileTabsProps> = ({ user_id }) => {
 
       {data && data.length > 0 && (
         <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-          {meta && <Pagination setPage={(page) => setPage(page)} meta={meta} />}
+          {meta && meta.last_page > 1 && <Pagination setPage={(page) => setPage(page)} meta={meta} />}
           {userData?.id == user_id && (
             <ButtonPrimary href={"/create-collection"}>
               {t("Create_collection")}
@@ -137,7 +137,7 @@ const Nfts: React.FC<NftsTabs> = ({
 
       {data && data.length > 0 && (
         <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-          {meta && <Pagination setPage={(page) => setPage(page)} meta={meta} />}
+          {meta && meta.last_page > 1 && <Pagination setPage={(page) => setPage(page)} meta={meta} />}
           {userData?.id == user_id && (
             <ButtonPrimary href={route_link}>{button_label}</ButtonPrimary>
           )}
@@ -189,7 +189,7 @@ const FollowTab: React.FC<FollowTabsProps> = ({
       </div>
       {data && data.length > 0 && (
         <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-          {meta && <Pagination setPage={(page) => setPage(page)} meta={meta} />}
+          {meta && meta.last_page > 1 && <Pagination setPage={(page) => setPage(page)} meta={meta} />}
         </div>
       )}
     </React.Fragment>

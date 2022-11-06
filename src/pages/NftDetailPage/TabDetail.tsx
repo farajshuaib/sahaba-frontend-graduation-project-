@@ -91,7 +91,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ nft_id, owner }) => {
             </div>
           </li>
         ))}
-        {meta && (
+        {meta && meta.last_page > 1 && (
           <div className="my-5">
             <Pagination setPage={(page) => setPage(page)} meta={meta} />
           </div>

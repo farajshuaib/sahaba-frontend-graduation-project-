@@ -8,7 +8,7 @@ export const IPFS_BASE_URL: string = "https://ipfs.io/ipfs/";
 export const WEBSITE_URL: string = "https://sahabanft.netlify.app";
 
 export const CONTRACT_ADDRESS: string =
-  "0x58F2D31dce49B586431c7BaFCA7E87151259B215";
+  "0x99821cE1D0f46486673b9fF3Af1873d851d4262A";
 
 export const TEST_CONTRACT_LINK = `https://goerli.etherscan.io/address/${CONTRACT_ADDRESS}`;
 export const CONTRACT_ABI = abi;

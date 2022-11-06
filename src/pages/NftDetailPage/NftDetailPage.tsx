@@ -49,8 +49,6 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
   const [loadingButton, setLoadingButton] = useState<boolean>(false);
   const [forSaleModal, setForSaleModal] = useState<boolean>(false);
 
-  const [saleEndAt, setSaleEndAt] = useState<string>();
-
   const contract = new Contract(
     CONTRACT_ADDRESS,
     CONTRACT_ABI,
@@ -66,7 +64,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     if (params.id && userData) increaseWatchTime();
   }, [params.id]);
 
-  const setForSell = async () => {
+  const toggleForSale = async () => {
     if (!userData) {
       navigate("/connect-wallet");
       return;
@@ -77,38 +75,16 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     }
     try {
       setLoadingButton(true);
-      await api.put(`/nfts/sale/${item.id}`, {
-        sale_end_at: moment(
-          moment(new Date())
-            .add(saleEndAt || 5, "days")
-            .toString()
-        ).format("YYYY-MM-DD HH:MM:SS"),
-      });
+      await contract.toggleForSale(item.id);
+      await api.put(`/nfts/toggle-sale/${item.id}`);
+      toast.success(
+        item.is_for_sale
+          ? t("Item_canceled_from_the_selling_successfully")
+          : t("NFT_set_for_sale_successfully")
+      );
+      await fetchById(params.id);
+      setLoadingButton(false);
       setForSaleModal(false);
-      toast.success(t("NFT_set_for_sale_successfully"));
-      await fetchById(params.id);
-      setLoadingButton(false);
-    } catch (err: any) {
-      toast.error(err?.response.data.message || t("system_error"));
-      setLoadingButton(false);
-    }
-  };
-
-  const stopSale = async () => {
-    if (!userData) {
-      navigate("/connect-wallet");
-      return;
-    }
-    if (userData.status == "suspended") {
-      toast.error(t("account_suspended"));
-      return;
-    }
-    try {
-      setLoadingButton(true);
-      await api.put(`/nfts/stop-sale/${item.id}`);
-      toast.success(t("Item_canceled_from_the_selling_successfully"));
-      await fetchById(params.id);
-      setLoadingButton(false);
     } catch (err: any) {
       toast.error(err?.response.data.message || t("system_error"));
       setLoadingButton(false);
@@ -261,8 +237,6 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
                 onClick={() => {
                   userData?.id != item?.owner?.id
                     ? buyNft()
-                    : item.is_for_sale
-                    ? stopSale()
                     : setForSaleModal(true);
                 }}
                 className="flex-1"
@@ -320,53 +294,18 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
 
   const renderSetForSaleModal = () => (
     <Modal show={forSaleModal} onClose={() => setForSaleModal(false)}>
-      <Modal.Header>{t("Set_NFT_for_sale")}</Modal.Header>
+      <Modal.Header>
+        {item.is_for_sale ? t("cancel_NFT_sale") : t("Set_NFT_for_sale")}
+      </Modal.Header>
       <Modal.Body>
-        <FormItem htmlFor="sale_end_at" label={t("Sale_end_in")}>
-          <Select
-            value={saleEndAt?.toString()}
-            onChange={(e) => {
-              if (!e.currentTarget.value) return;
-              setSaleEndAt(e.currentTarget.value);
-            }}
-          >
-            <option
-              disabled={true}
-              className="text-neutral-500 dark:text-white placeholder:text-white"
-            >
-              {t("select_a_date_will_sell_end_at")}
-            </option>
-            {[
-              {
-                label: "5 " + t("days"),
-                value: 5,
-              },
-              {
-                label: "7 " + t("days"),
-                value: 7,
-              },
-              {
-                label: "15 " + t("days"),
-                value: 15,
-              },
-              {
-                label: "30 " + t("days"),
-                value: 30,
-              },
-            ].map((item, index) => (
-              <option
-                key={index}
-                value={item.value}
-                className="text-neutral-500 dark:text-white placeholder:text-white"
-              >
-                {item.label}
-              </option>
-            ))}
-          </Select>
-        </FormItem>
+        <h6 className="text-xl text-gray-700 dark:text-gray-300">
+          {item.is_for_sale
+            ? t("cancel_NFT_sale_description")
+            : t("Set_NFT_for_sale_description")}
+        </h6>
       </Modal.Body>
       <Modal.Footer>
-        <ButtonPrimary loading={loadingButton} onClick={setForSell}>
+        <ButtonPrimary loading={loadingButton} onClick={toggleForSale}>
           {t("Confirm")}
         </ButtonPrimary>
         <ButtonSecondary onClick={() => setForSaleModal(false)}>

@@ -69,7 +69,7 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection_id }) => {
 
       {/* PAGINATION */}
       <div className="flex flex-col mt-12 space-y-5 lg:mt-16 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
-        {meta && data.length > 0 && (
+        {meta && meta.last_page > 1 && (
           <Pagination meta={meta} setPage={(page) => setPage(page)} />
         )}
       </div>

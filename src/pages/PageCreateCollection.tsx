@@ -25,6 +25,9 @@ import { useTranslation } from "react-i18next";
 import { useApi } from "hooks/useApi";
 import { useRecaptcha } from "hooks/useRecaptcha";
 import { checkCapatcha } from "utils/functions";
+import { BigNumber, Contract } from "ethers";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "constant";
+import { useWeb3React } from "@web3-react/core";
 
 export interface PageCreateCollectionProps {
   className?: string;
@@ -43,6 +46,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
   const { create, fetchById, item } = useCrud("/collections");
   const [bannerImage, setBannerImage] = useState<string>("");
   const [logoImage, setLogoImage] = useState<string>("");
+  const { library, account } = useWeb3React();
 
   const userData = useAppSelector((state) => state.account.userData);
 
@@ -124,9 +128,25 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
               }
 
               if (userData.status === "suspended") {
+                toast.error(t("your_account_is_suspended"));
                 return;
               }
+
               try {
+                const contract = new Contract(
+                  CONTRACT_ADDRESS,
+                  CONTRACT_ABI,
+                  library?.getSigner()
+                );
+                const isApprovedForAll = await contract.isApprovedForAll(
+                  account,
+                  CONTRACT_ADDRESS
+                );
+
+                if (!isApprovedForAll) {
+                  await contract.setApprovalForAll(CONTRACT_ADDRESS, true);
+                }
+
                 const form: any = new FormData();
                 for (const [key, value] of Object.entries(values)) {
                   form.append(key, value);
@@ -141,6 +161,23 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   });
                   toast.success(t("collection_updated_successfully"));
                 } else {
+                  const tx = await contract.createCollection(values.name, [
+                    account,
+                  ]);
+
+                  console.log("tx", tx);
+
+                  const res = await tx.wait();
+
+                  console.log("res", res);
+
+                  const collection_id = BigNumber.from(
+                    res.events[0].args.collectionId
+                  ).toString();
+
+                  console.log("collection_id", collection_id);
+                  form.append("collection_id", collection_id);
+
                   await create(form, {
                     "Content-Type": "multipart/form-data",
                   });

@@ -248,7 +248,8 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
 
                 const tx = await contract.createAndListToken(
                   values.file_path,
-                  parseEther(values.price.toString())
+                  parseEther(values.price.toString()),
+                  values.collection_id,
                 );
 
                 console.log("tx", tx);
