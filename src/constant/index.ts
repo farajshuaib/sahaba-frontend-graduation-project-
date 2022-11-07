@@ -1,4 +1,4 @@
-// https://goerli.etherscan.io/address/0x8F8C30a79010eF0fD6eC361915f8c926FEC14867
+// https://goerli.etherscan.io/address/0x4504Cf83eE3a08fc5956fC88E9065d85f09e1521
 import abi from "../contracts/abi.json";
 //
 
@@ -8,7 +8,7 @@ export const IPFS_BASE_URL: string = "https://ipfs.io/ipfs/";
 export const WEBSITE_URL: string = "https://sahabanft.netlify.app";
 
 export const CONTRACT_ADDRESS: string =
-  "0x99821cE1D0f46486673b9fF3Af1873d851d4262A";
+  "0x4504Cf83eE3a08fc5956fC88E9065d85f09e1521";
 
 export const TEST_CONTRACT_LINK = `https://goerli.etherscan.io/address/${CONTRACT_ADDRESS}`;
 export const CONTRACT_ABI = abi;

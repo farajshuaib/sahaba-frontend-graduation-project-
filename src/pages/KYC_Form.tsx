@@ -9,7 +9,7 @@ import { useApi } from "hooks/useApi";
 import { toast } from "react-toastify";
 import { useAppSelector } from "app/hooks";
 import Select from "shared/Select/Select";
-import countries from "data/countries";
+import countries from "assets/countries";
 import Radio from "shared/Radio/Radio";
 import { kycSchema } from "services/validations";
 import { useTranslation } from "react-i18next";

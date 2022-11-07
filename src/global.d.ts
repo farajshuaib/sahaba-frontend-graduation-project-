@@ -23,6 +23,22 @@ declare module "virtual:pwa-register/react" {
   };
 }
 
+type TwMainColor =
+  | "pink"
+  | "green"
+  | "yellow"
+  | "red"
+  | "indigo"
+  | "blue"
+  | "purple"
+  | "gray";
+
+interface CustomLink {
+  label: string;
+  href: string;
+  targetBlank?: boolean;
+}
+
 interface LocationStates {
   "/"?: {};
   "/#"?: {};
@@ -197,25 +213,29 @@ interface NcDropDownItem {
   href?: string;
 }
 
-
 interface Notification {
   id: number;
   read_at: Date;
 }
 
 interface NotificationPayload {
-  meta: Meta | null,
-  data: Notification[],
-  links: any
+  meta: Meta | null;
+  data: Notification[];
+  links: any;
 }
-
 
 type ExternalProvider = {
   isMetaMask?: boolean;
   isStatus?: boolean;
   host?: string;
   path?: string;
-  sendAsync?: (request: { method: string, params?: Array<any> }, callback: (error: any, response: any) => void) => void
-  send?: (request: { method: string, params?: Array<any> }, callback: (error: any, response: any) => void) => void
-  request?: (request: { method: string, params?: Array<any> }) => Promise<any>
-}
+  sendAsync?: (
+    request: { method: string; params?: Array<any> },
+    callback: (error: any, response: any) => void
+  ) => void;
+  send?: (
+    request: { method: string; params?: Array<any> },
+    callback: (error: any, response: any) => void
+  ) => void;
+  request?: (request: { method: string; params?: Array<any> }) => Promise<any>;
+};
