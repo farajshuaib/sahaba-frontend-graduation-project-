@@ -165,18 +165,15 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                     account,
                   ]);
 
-                  console.log("tx", tx);
 
                   const res = await tx.wait();
 
-                  console.log("res", res);
 
                   const collection_id = BigNumber.from(
                     res.events[0].args.collectionId
                   ).toString();
 
-                  console.log("collection_id", collection_id);
-                  form.append("collection_id", collection_id);
+                  form.append("id", collection_id);
 
                   await create(form, {
                     "Content-Type": "multipart/form-data",

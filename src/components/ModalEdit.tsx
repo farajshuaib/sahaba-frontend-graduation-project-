@@ -36,7 +36,7 @@ const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, nft }) => {
     try {
       setLoading(true);
       const transaction = await contract.changeTokenPrice(
-        nft.token_id,
+        nft.id,
         parseEther(price.toString())
       );
       await transaction.wait();

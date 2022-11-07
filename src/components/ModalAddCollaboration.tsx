@@ -1,4 +1,7 @@
+import { useWeb3React } from "@web3-react/core";
 import { useAppSelector } from "app/hooks";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "constant";
+import { Contract } from "ethers";
 import { useApi } from "hooks/useApi";
 import React, { FC, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -24,7 +27,14 @@ const ModalAddCollaboration: FC<ModalAddCollaborationProps> = ({
   const [loading, setLoading] = useState(false);
   const textareaRef = useRef(null);
   const api = useApi();
+  const { library } = useWeb3React(); //0x32a16Bf4E5FE0C0DE4Dc32B61878CaD5515346c4
   const userData: UserData = useAppSelector((state) => state.account.userData);
+
+  const contract = new Contract(
+    CONTRACT_ADDRESS,
+    CONTRACT_ABI,
+    library?.getSigner()
+  );
 
   useEffect(() => {
     if (show) {
@@ -48,6 +58,7 @@ const ModalAddCollaboration: FC<ModalAddCollaborationProps> = ({
     }
     setLoading(true);
     try {
+      await contract.addCollaborators(collection_id, address);
       await api.post(`collections-collaborators`, {
         collection_id,
         wallet_address: address,

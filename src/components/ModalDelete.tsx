@@ -58,7 +58,7 @@ const ModalDelete: FC<ModalDeleteProps> = ({
         if (!isApprovedForAll) {
           await contract.setApprovalForAll(CONTRACT_ADDRESS, true);
         }
-        await contract.burn(nft?.token_id);
+        await contract.burn(nft?.id);
 
         resolve(true);
       } catch (errors: any) {

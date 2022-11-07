@@ -48,7 +48,7 @@ export default function AccordionInfo({ nft }: { nft: Nft }) {
               <br />
               <span>Token ID</span>
               <span className="text-base text-neutral-900 dark:text-neutral-100">
-                {nft.token_id}
+                {nft.id}
               </span>
             </Disclosure.Panel>
           </>

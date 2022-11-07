@@ -124,7 +124,6 @@ interface Nft {
   price: number;
   like_count: number;
   is_for_sale: boolean;
-  token_id: string;
   is_liked?: boolean;
   status: "published" | "hidden";
   sale_end_at: Date;

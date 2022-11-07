@@ -111,7 +111,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
         await contract.setApprovalForAll(CONTRACT_ADDRESS, true);
       }
 
-      const transaction = await contract.buyToken(item.token_id, {
+      const transaction = await contract.buyToken(item.id, {
         value: utils.parseEther(parseFloat(item.price).toString()),
         gasLimit: 3 * 10 ** 6,
       });

@@ -101,7 +101,6 @@ export const checkCapatcha = async () => {
         const res = await window.grecaptcha.execute(CAPATCHA_SITE_KEY, {
           action: "submit",
         });
-        console.log("res", res);
         resolve(res);
       });
     } catch (error) {

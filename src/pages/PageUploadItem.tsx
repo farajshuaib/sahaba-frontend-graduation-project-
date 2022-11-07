@@ -249,24 +249,18 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                 const tx = await contract.createAndListToken(
                   values.file_path,
                   parseEther(values.price.toString()),
-                  values.collection_id,
+                  values.collection_id
                 );
 
-                console.log("tx", tx);
-
                 const res = await tx.wait();
-
-                console.log("res", res);
 
                 const token_id = BigNumber.from(
                   res.events[0].args.tokenId
                 ).toString();
 
-                console.log("token_id", token_id);
-
                 await create({
                   ...values,
-                  token_id,
+                  id: token_id,
                 });
 
                 toast.success(t("nft_created_successfully"));
