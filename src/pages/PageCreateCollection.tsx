@@ -165,9 +165,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                     account,
                   ]);
 
-
                   const res = await tx.wait();
-
 
                   const collection_id = BigNumber.from(
                     res.events[0].args.collectionId

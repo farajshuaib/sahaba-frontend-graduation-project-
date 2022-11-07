@@ -1,6 +1,5 @@
 import Logo from "shared/Logo/Logo";
 import SocialsList1 from "shared/SocialsList1/SocialsList1";
-import { CustomLink } from "data/types";
 import React from "react";
 import LocalesDropDown from "components/Header/LocalesDropDown";
 import { useTranslation } from "react-i18next";
@@ -11,7 +10,6 @@ export interface WidgetFooterMenu {
   title: string;
   menus: CustomLink[];
 }
-
 
 const Footer: React.FC = () => {
   const { t } = useTranslation();
@@ -42,7 +40,7 @@ const Footer: React.FC = () => {
       ],
     },
   ];
-  
+
   const renderWidgetMenuItem = (menu: WidgetFooterMenu, index: number) => {
     return (
       <div key={index} className="text-sm">

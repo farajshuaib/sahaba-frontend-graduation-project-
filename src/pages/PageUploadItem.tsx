@@ -252,11 +252,16 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                   values.collection_id
                 );
 
+                console.log(tx);
                 const res = await tx.wait();
 
+                console.log(res);
+
                 const token_id = BigNumber.from(
-                  res.events[0].args.tokenId
+                  res.events[0].args.nftId
                 ).toString();
+
+                console.log(token_id);
 
                 await create({
                   ...values,
