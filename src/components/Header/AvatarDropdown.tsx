@@ -73,7 +73,7 @@ export default function AvatarDropdown() {
                         <h4 className="font-semibold">
                           {userData?.username || "anon"}
                         </h4>
-                        <p
+                        <span
                           onClick={() => {
                             copyToClipboard(userData?.wallet_address);
                           }}
@@ -82,7 +82,7 @@ export default function AvatarDropdown() {
                           {userData.wallet_address?.slice(0, 10) +
                             "..." +
                             userData.wallet_address?.slice(10, 15)}
-                        </p>
+                        </span>
                       </div>
                     </div>
                     <div className="relative flex flex-col items-baseline flex-1 gap-1 p-2 mt-2 border-2 border-green-500 sm:flex-row rounded-xl">

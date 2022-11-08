@@ -110,6 +110,15 @@ export const checkCapatcha = async () => {
   });
 };
 
+export const getUserSlug = (userData: UserData) => {
+  return (
+    userData?.username ||
+    userData?.wallet_address.slice(0, 5) +
+      "..." +
+      userData?.wallet_address.slice(-5)
+  );
+};
+
 // export async function getContract() {
 //   const biconomy = new Biconomy(window.ethereum as ExternalProvider, {
 //     apiKey: "lCJ4DY8Ui.520c4126-91f6-4d0c-a3aa-278d5e523a0e",

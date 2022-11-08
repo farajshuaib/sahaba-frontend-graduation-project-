@@ -5,6 +5,7 @@ import NcImage from "shared/NcImage/NcImage";
 import VerifyIcon from "components/VerifyIcon";
 import FollowButton from "components/FollowButton";
 import banner_image from "assets/images/authorBanner.png";
+import { getUserSlug } from "utils/functions";
 export interface CardAuthorBox4Props {
   className?: string;
   user: UserData;
@@ -53,7 +54,7 @@ const CardAuthorBox4: FC<CardAuthorBox4Props> = ({ className = "", user }) => {
         <div className="mt-2.5 flex  items-center justify-between">
           <div>
             <h2 className={`text-base font-medium flex items-center`}>
-              <span className="">{user.username}</span>
+              <span className="">{getUserSlug(user)}</span>
               {user.kyc_form?.status == "approved" && <VerifyIcon />}
             </h2>
           </div>
