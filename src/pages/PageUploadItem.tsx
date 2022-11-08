@@ -1,5 +1,5 @@
 import Label from "components/Label/Label";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Input from "shared/Input/Input";
 import Textarea from "shared/Textarea/Textarea";
@@ -150,11 +150,9 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
 
   const userData: UserData = useAppSelector((state) => state.account.userData);
 
-  const contract = new Contract(
-    CONTRACT_ADDRESS,
-    CONTRACT_ABI,
-    library?.getSigner()
-  );
+  const contract = useMemo(() => {
+    return new Contract(CONTRACT_ADDRESS, CONTRACT_ABI, library?.getSigner());
+  }, []);
 
   const getAccountBalance = async () => {
     if (!account) return;

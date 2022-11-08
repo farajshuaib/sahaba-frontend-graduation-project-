@@ -268,8 +268,10 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
         {/*  */}
         {collection.collaborators?.length > 0 && (
           <CollectionCollaborator
+            collection_id={collection?.id}
             is_collection_owner={collection.created_by?.id == userData?.id}
             collaborators={collection?.collaborators}
+            getCollection={() => fetchById(params.id)}
           />
         )}
 

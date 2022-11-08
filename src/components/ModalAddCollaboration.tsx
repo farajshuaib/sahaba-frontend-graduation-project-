@@ -3,7 +3,7 @@ import { useAppSelector } from "app/hooks";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "constant";
 import { Contract } from "ethers";
 import { useApi } from "hooks/useApi";
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
@@ -30,11 +30,9 @@ const ModalAddCollaboration: FC<ModalAddCollaborationProps> = ({
   const { library } = useWeb3React(); //0x32a16Bf4E5FE0C0DE4Dc32B61878CaD5515346c4
   const userData: UserData = useAppSelector((state) => state.account.userData);
 
-  const contract = new Contract(
-    CONTRACT_ADDRESS,
-    CONTRACT_ABI,
-    library?.getSigner()
-  );
+  const contract = useMemo(() => {
+    return new Contract(CONTRACT_ADDRESS, CONTRACT_ABI, library?.getSigner());
+  }, []);
 
   useEffect(() => {
     if (show) {

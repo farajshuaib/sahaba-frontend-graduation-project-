@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import Avatar from "shared/Avatar/Avatar";
 import Badge from "shared/Badge/Badge";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
@@ -49,11 +49,9 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
   const [loadingButton, setLoadingButton] = useState<boolean>(false);
   const [forSaleModal, setForSaleModal] = useState<boolean>(false);
 
-  const contract = new Contract(
-    CONTRACT_ADDRESS,
-    CONTRACT_ABI,
-    library?.getSigner()
-  );
+  const contract = useMemo(() => {
+    return new Contract(CONTRACT_ADDRESS, CONTRACT_ABI, library?.getSigner());
+  }, []);
 
   async function increaseWatchTime() {
     api.post("/nfts/watch", { nft_id: params.id });
