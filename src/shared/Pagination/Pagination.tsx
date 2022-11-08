@@ -1,4 +1,3 @@
-import { CustomLink } from "data/types";
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import twFocusClass from "utils/twFocusClass";
