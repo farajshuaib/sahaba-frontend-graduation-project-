@@ -116,7 +116,7 @@ interface Transactions {
   to: UserData;
   price: number | string;
   created_at: Date;
-  type: "mint" | "set_for_sale" | "sale" | "update_price";
+  type: "mint" | "set_for_sale" | "sale" | "update_price" | "cancel_sale";
 }
 
 interface SocialLinks {

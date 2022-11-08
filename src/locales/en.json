@@ -145,7 +145,7 @@
   "explore": "Explore",
   "you_didnt_buy_any_NFT_yet": "You didn't buy any NFT yet.",
   "doesnt_own_any_nft": "This author doesn't own any NFT",
-  "You_didnt_like_any_NFT_yet": "You_didnt_like_any_NFT_yet.",
+  "You_didnt_like_any_NFT_yet": "You didn't like any NFT yet.",
   "This_author_doesnt_like_any_nft_yet": "This author doesn't like any nft yet",
   "you_didnt_follow_any_author_yet": "You did'nt follow any author yet",
   "this_author_doesnt_follow_anyone_yet": "This author doesn't follow anyone yet",
@@ -229,7 +229,6 @@
   "Instagram": "Instagram",
   "your_instagram_account_url": "your instagram account url",
   "account_suspended": "Your Account is suspended because your irregular activities, you can't do any actions on the platform, please contact with us to solve this problem",
-  "We_are_currently_trying_to_fix_the_problem": "We are currently trying to fix the problem",
   "kyc_approved": "Your KYC is approved",
   "kyc_rejected": "Your KYC is rejected",
   "kyc_pending": "Your KYC is pending",
@@ -285,5 +284,7 @@
   "notifications_empty": "You don't have any notifications yet",
   "Set_NFT_for_sale_description": "Are you sure you want to put that NFT for sale ?",
   "cancel_NFT_sale": "Cancel NFT sale",
-  "cancel_NFT_sale_description": "Are you sure you want to cancel that NFT sale ? no one will be able to buy it anymore"
+  "cancel_NFT_sale_description": "Are you sure you want to cancel that NFT sale ? no one will be able to buy it anymore",
+  "for": "for",
+  "Cancel_Sale_by": "Cancel Sale by"
 }

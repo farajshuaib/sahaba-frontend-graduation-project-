@@ -105,6 +105,8 @@ const UploadFile: React.FC<UploadFileProps> = ({
 
                       const added = await ipfs.add(file);
 
+                      setFieldValue("file_type", file.type);
+
                       setFieldValue("file_path", IPFS_BASE_URL + added.path);
 
                       toast.success(
@@ -264,6 +266,7 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                 await create({
                   ...values,
                   id: token_id,
+                  tx_hash: tx.hash,
                 });
 
                 toast.success(t("nft_created_successfully"));

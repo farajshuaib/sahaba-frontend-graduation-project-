@@ -38,7 +38,10 @@ const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, nft }) => {
         parseEther(price.toString())
       );
       await transaction.wait();
-      await update({ id: nft.id, payload: { price } });
+      await update({
+        id: nft.id,
+        payload: { price, tx_hash: transaction.hash },
+      });
       toast.success(t("NFT_price_updated_successfully"));
       setLoading(false);
       onCloseModalEdit();

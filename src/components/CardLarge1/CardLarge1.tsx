@@ -7,7 +7,7 @@ import ButtonSecondary from "shared/Button/ButtonSecondary";
 import LikeButton from "components/LikeButton";
 import TimeCountDown from "./TimeCountDown";
 import VerifyIcon from "components/VerifyIcon";
-import { usdPrice } from "utils/functions";
+import { getUserSlug, usdPrice } from "utils/functions";
 import ItemTypeImageIcon from "components/ItemTypeImageIcon";
 import { useTranslation } from "react-i18next";
 import BlurHiddenNft from "components/BlurHiddenNft";
@@ -57,12 +57,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
                   {t("Creator")}
                 </div>
                 <div className="flex items-center text-sm font-semibold">
-                  <span>
-                    {nft.creator?.username ||
-                      nft.creator.wallet_address.slice(0, 6) +
-                        "..." +
-                        nft.creator.wallet_address.slice(-5)}
-                  </span>
+                  <span>{getUserSlug(nft.creator)}</span>
                   {nft.creator.kyc_form?.status == "approved" && <VerifyIcon />}
                 </div>
               </div>

@@ -73,8 +73,8 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     }
     try {
       setLoadingButton(true);
-      await contract.toggleForSale(item.id);
-      await api.put(`/nfts/toggle-sale/${item.id}`);
+      const tx = await contract.toggleForSale(item.id);
+      await api.put(`/nfts/toggle-sale/${item.id}`, { tx_hash: tx.hash });
       toast.success(
         item.is_for_sale
           ? t("Item_canceled_from_the_selling_successfully")
@@ -120,7 +120,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
 
       console.log("response", response);
 
-      await submitBuyNft();
+      await submitBuyNft({ tx_hash: transaction.hash });
 
       toast.success(t("buy_success"));
 
@@ -161,7 +161,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
           {/* ---------- 4 ----------  */}
           <div className="flex flex-col gap-5 text-sm sm:flex-row sm:items-center sm:gap-8">
             <Link
-              to={`/author/${item.creator}`}
+              to={`/author/${item.creator.id}`}
               className="flex items-center gap-3"
             >
               <Avatar

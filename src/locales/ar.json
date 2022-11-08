@@ -137,7 +137,6 @@
   "Website": "الموقع الالكتروني",
   "What_art_do_you_plan_to_create_or_share_on_SahabaNFTs": "ما هو الفن الذي تخطط لإنشائه أو مشاركته على SahabaNFTs",
   "You_didnt_create_any_collection_yet": "لم تقم بإنشاء أي مجموعة حتى الآن",
-  "You_didnt_like_any_NFT_yet": "You_didnt_like_any_NFT_ حتى الآن.",
   "balance": "الرصيد",
   "buy": "شراء",
   "buy_success": "لقد اشتريت هذا NFT بنجاح",
@@ -228,7 +227,7 @@
   "Select_language": "اختار اللغة",
   "Term_of_services": "مدة الخدمات",
   "This_collaborator_will_no_longer_be_able_to_edit_your_collection_or_add_any_new_NFTs": "لن يتمكن هذا المتعاون بعد الآن من تعديل مجموعتك أو إضافة أي NFTs جديدة",
-  "We_are_currently_trying_to_fix_the_problem": "نحن نحاول حاليًا حل المشكلة",
+  "We_are_currently_trying_to_fix_the_problem": "",
   "account_suspended": "تم تعليق حسابك لأن أنشطتك غير المنتظمة ، لا يمكنك القيام بأي إجراءات على المنصة ، يرجى التواصل معنا لحل هذه المشكلة",
   "collection_created_successfully": "تم إنشاء المجموعة بنجاح",
   "collection_telegram_page": "جمع برقية الصفحة",
@@ -279,5 +278,8 @@
   "notifications_empty": "ليس لديك أي إخطارات حتى الآن",
   "Set_NFT_for_sale_description": "هل أنت متأكد أنك تريد أن تعرض هذا NFT للبيع",
   "cancel_NFT_sale": "إلغاء بيع NFT",
-  "cancel_NFT_sale_description": "هل أنت متأكد أنك تريد إلغاء بيع NFT؟ \nلن يتمكن أحد من شرائه بعد الآن"
+  "cancel_NFT_sale_description": "هل أنت متأكد أنك تريد إلغاء بيع NFT؟ \nلن يتمكن أحد من شرائه بعد الآن",
+  "You_didnt_like_any_NFT_yet": "لم يعجبك أي NFT حتى الآن.",
+  "for": "إلى عن على",
+  "Cancel_Sale_by": "إلغاء البيع بواسطة"
 }

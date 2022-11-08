@@ -9,6 +9,7 @@ import { useCrud } from "hooks/useCrud";
 import LoadingScreen from "components/LoadingScreen";
 import ServerError from "components/ServerError";
 import Pagination from "shared/Pagination/Pagination";
+import { getUserSlug } from "utils/functions";
 
 interface TabDetailProps {
   nft_id: number;
@@ -112,8 +113,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ nft_id, owner }) => {
               }}
               className="font-medium cursor-pointer text-neutral-900 dark:text-neutral-200"
             >
-              {transaction.from.username ||
-                transaction.from.wallet_address.slice(0, 8) + "..."}
+              {getUserSlug(transaction.from)}
             </span>
             <span className="">{t("to")}</span>
             <span
@@ -122,8 +122,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ nft_id, owner }) => {
               }}
               className="font-medium cursor-pointer text-neutral-900 dark:text-neutral-200"
             >
-              {transaction.to.username ||
-                transaction.to.wallet_address.slice(0, 8) + "..."}
+              {getUserSlug(transaction.to)}
             </span>
             <span className="">{t("return_of")} </span>
             <span className="font-medium cursor-pointer text-neutral-900 dark:text-neutral-200">
@@ -142,8 +141,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ nft_id, owner }) => {
               }}
               className="font-medium cursor-pointer text-neutral-900 dark:text-neutral-200"
             >
-              {transaction.to.username ||
-                transaction.to.wallet_address.slice(0, 8) + "..."}
+              {getUserSlug(transaction.to)}
             </span>
             <span className="">{t("return_of")}</span>
             <span className="font-medium cursor-pointer text-neutral-900 dark:text-neutral-200">
@@ -162,10 +160,28 @@ const TabDetail: React.FC<TabDetailProps> = ({ nft_id, owner }) => {
               }}
               className="font-medium cursor-pointer text-neutral-900 dark:text-neutral-200"
             >
-              {transaction.to.username ||
-                transaction.to.wallet_address.slice(0, 8) + "..."}
+              {getUserSlug(transaction.to)}
             </span>
             <span className="">{t("return_of")}</span>
+            <span className="font-medium cursor-pointer text-neutral-900 dark:text-neutral-200">
+              {transaction.price} ETH
+            </span>
+          </p>
+        );
+      }
+      case "cancel_sale": {
+        return (
+          <p className="flex items-center gap-1 text-sm">
+            <span className="">{t("Cancel_Sale_by")}</span>
+            <span
+              onClick={() => {
+                navigate(`/author/${transaction.to.id}`);
+              }}
+              className="font-medium cursor-pointer text-neutral-900 dark:text-neutral-200"
+            >
+              {getUserSlug(transaction.to)}
+            </span>
+            <span className="">{t("for")}</span>
             <span className="font-medium cursor-pointer text-neutral-900 dark:text-neutral-200">
               {transaction.price} ETH
             </span>
@@ -182,8 +198,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ nft_id, owner }) => {
               }}
               className="font-medium cursor-pointer text-neutral-900 dark:text-neutral-200"
             >
-              {transaction.to.username ||
-                transaction.to.wallet_address.slice(0, 8) + "..."}
+              {getUserSlug(transaction.to)}
             </span>
             <span className="">{t("to")}</span>
             <span className="font-medium cursor-pointer text-neutral-900 dark:text-neutral-200">
