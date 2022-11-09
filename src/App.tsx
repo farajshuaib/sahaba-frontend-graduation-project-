@@ -1,5 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import { getEthPriceInUSD } from "app/general/actions";
+import { getCategories, getEthPriceInUSD } from "app/general/actions";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import HeaderLogged from "components/Header/HeaderLogged";
 import { Alert } from "flowbite-react";
@@ -17,6 +17,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     dispatch(getEthPriceInUSD());
+    dispatch(getCategories());
     if (userData && (!userData?.username || !userData?.email)) {
       navigate("/account");
       toast.warning(t("please_complete_your_profile_data"));

@@ -18,7 +18,6 @@ export const connectToWallet = createAsyncThunk(
       setToken(response.data.token);
     }
     thunkAPI.dispatch(getCollections());
-    thunkAPI.dispatch(getCategories());
     return response.data;
   }
 );
