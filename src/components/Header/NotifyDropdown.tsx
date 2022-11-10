@@ -142,33 +142,42 @@ export default function NotifyDropdown() {
               <Popover.Panel className="absolute z-10 w-screen max-w-xs px-4 mt-3 overflow-hidden sm:max-w-sm -right-28 sm:right-0 sm:px-0">
                 <div className="overflow-y-scroll shadow-lg hidden-scrollbar max-h-72 rounded-2xl ring-1 ring-black ring-opacity-5">
                   <div className="relative grid gap-8 bg-white dark:bg-neutral-800 p-7">
-                    <p className="py-16 text-lg text-center text-gray-400 dark:text-gray-400">{t("notifications_empty")}</p>
-                    {/* <h3 className="text-xl font-semibold">
+                    <p className="py-16 text-lg text-center text-gray-400 dark:text-gray-400">
+                      {t("notifications_empty")}
+                    </p>
+                    <h3 className="text-xl font-semibold">
                       {t("Notifications")}
                     </h3>
-                    {notifications &&
-                      notifications.data.map((item: any, index) => (
-                        <section
-                          key={index}
-                          className="relative flex p-2 pr-8 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
-                        >
-                          <Avatar sizeClass="w-8 h-8 sm:w-12 sm:h-12" />
-                          <div className="mx-3 space-y-1 sm:ml-4">
-                            <p className="text-sm font-medium text-gray-900 dark:text-gray-200">
-                              {item.title}
-                            </p>
-                            <p className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                              {item.description}
-                            </p>
-                            <p className="text-xs text-gray-400 dark:text-gray-400">
-                              {item.created_at}
-                            </p>
-                          </div>
-                          {true && (
-                            <span className="absolute w-2 h-2 transform -translate-y-1/2 bg-blue-500 rounded-full right-1 top-1/2"></span>
-                          )}
-                        </section>
-                      ))}
+                    {notifications && notifications.data.length > 0 ? (
+                      notifications.data.map(
+                        ({ data, read_at }: any, index) => (
+                          <section
+                            key={index}
+                            className="relative flex p-2 pr-8 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                          >
+                            <Avatar sizeClass="w-8 h-8 sm:w-12 sm:h-12" />
+                            <div className="mx-3 space-y-1 sm:ml-4">
+                              <p className="text-sm font-medium text-gray-900 dark:text-gray-200">
+                                {data?.title}
+                              </p>
+                              <p className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
+                                {data?.description}
+                              </p>
+                              <p className="text-xs text-gray-400 dark:text-gray-400">
+                                {data?.created_at}
+                              </p>
+                            </div>
+                            {read_at && (
+                              <span className="absolute w-2 h-2 transform -translate-y-1/2 bg-blue-500 rounded-full right-1 top-1/2"></span>
+                            )}
+                          </section>
+                        )
+                      )
+                    ) : (
+                      <p className="py-16 text-lg text-center text-gray-400 dark:text-gray-400">
+                        {t("notifications_empty")}
+                      </p>
+                    )}
                     {notifications?.meta &&
                       notifications?.meta?.last_page < page && (
                         <button
@@ -181,7 +190,7 @@ export default function NotifyDropdown() {
                             <span>{t("Load_more")}</span>
                           )}
                         </button>
-                      )} */}
+                      )}
                   </div>
                 </div>
               </Popover.Panel>
