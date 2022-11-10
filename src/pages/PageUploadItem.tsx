@@ -41,92 +41,90 @@ const UploadFile: React.FC<UploadFileProps> = ({
   const [uploadLoading, setUploadLoading] = useState<boolean>(false);
   const ipfs = useIpfs();
 
+  const handleUpload = async (e: any) => {
+    if (!e.target.files) return;
+    const file = e.target.files[0];
+    if (!validateImage(file)) return;
+
+    try {
+      setUploadLoading(true);
+
+      const added = await ipfs.add(file);
+
+      setFieldValue("file_type", file.type);
+
+      setFieldValue("file_path", IPFS_BASE_URL + added.path);
+
+      toast.success(t("image_uploaded_to_the_IPFS_successfully"));
+    } catch (e) {
+      toast.error(t("something_went_wrong_while_uploading_the_image"));
+    }
+    setUploadLoading(false);
+  };
+
   return (
     <div>
       <h3 className="text-lg font-semibold sm:text-2xl">Image/*</h3>
       <span className="text-sm text-neutral-500 dark:text-neutral-400">
         {t("supported_files")}
       </span>
-      <div className="mt-5 ">
-        <div
-          className={`flex justify-center px-6 pt-5 pb-6 mt-1 border-2 border-dashed ${
-            touched.file_path && errors.file_path
-              ? "border-red-600"
-              : "border-neutral-300 dark:border-neutral-6000"
-          }  rounded-xl`}
-        >
-          <div className="space-y-1 text-center">
-            {uploadLoading ? (
-              <i className="text-4xl bx bx-loader-alt bx-spin "></i>
-            ) : (
-              <>
-                {values.file_path ? (
-                  <i className="text-5xl text-green-500 bx bx-check-circle"></i>
-                ) : (
-                  <svg
-                    className="w-12 h-12 mx-auto text-neutral-400"
-                    stroke="currentColor"
-                    fill="none"
-                    viewBox="0 0 48 48"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    ></path>
-                  </svg>
-                )}
-              </>
-            )}
+      <div
+        onDrop={handleUpload}
+        onClick={handleUpload}
+        className={`mt-5 relative flex justify-center px-6 pt-5 pb-6 mt-1 border-2 border-dashed ${
+          touched.file_path && errors.file_path
+            ? "border-red-600"
+            : "border-neutral-300 dark:border-neutral-6000"
+        }  rounded-xl`}
+      >
+        <div className="space-y-1 text-center">
+          {uploadLoading ? (
+            <i className="text-4xl bx bx-loader-alt bx-spin "></i>
+          ) : (
+            <>
+              {values.file_path ? (
+                <i className="text-5xl text-green-500 bx bx-check-circle"></i>
+              ) : (
+                <svg
+                  className="w-12 h-12 mx-auto text-neutral-400"
+                  stroke="currentColor"
+                  fill="none"
+                  viewBox="0 0 48 48"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  ></path>
+                </svg>
+              )}
+            </>
+          )}
 
-            <div className="flex text-sm text-neutral-6000 dark:text-neutral-300">
-              <label
-                htmlFor="file-upload"
-                className="relative font-medium rounded-md cursor-pointer text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
-              >
-                <span>
-                  {values.file_path ? t("replace_file") : t("Upload_image")}
-                </span>
-                <input
-                  id="file-upload"
-                  name="file-upload"
-                  type="file"
-                  className="sr-only"
-                  accept="image/*"
-                  onChange={async (e) => {
-                    if (!e.target.files) return;
-                    const file = e.target.files[0];
-                    if (!validateImage(file)) return;
-
-                    try {
-                      setUploadLoading(true);
-
-                      const added = await ipfs.add(file);
-
-                      setFieldValue("file_type", file.type);
-
-                      setFieldValue("file_path", IPFS_BASE_URL + added.path);
-
-                      toast.success(
-                        t("image_uploaded_to_the_IPFS_successfully")
-                      );
-                    } catch (e) {
-                      toast.error(
-                        t("something_went_wrong_while_uploading_the_image")
-                      );
-                    }
-                    setUploadLoading(false);
-                  }}
-                />
-              </label>
-              <p className="pl-1">{t("or_drag_and_drop")}</p>
-            </div>
-            <p className="text-xs text-neutral-500 dark:text-neutral-400">
-              PNG, JPG, GIF up to 10MB
-            </p>
+          <div className="flex text-sm text-neutral-6000 dark:text-neutral-300">
+            <label
+              htmlFor="file-upload"
+              className="relative font-medium rounded-md cursor-pointer text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
+            >
+              <span>
+                {values.file_path ? t("replace_file") : t("Upload_image")}
+              </span>
+              <input
+                id="file-upload"
+                name="file-upload"
+                type="file"
+                className="sr-only"
+                accept="image/*"
+                onChange={handleUpload}
+              />
+            </label>
+            <p className="pl-1">{t("or_drag_and_drop")}</p>
           </div>
+          <p className="text-xs text-neutral-500 dark:text-neutral-400">
+            PNG, JPG, GIF up to 10MB
+          </p>
         </div>
       </div>
     </div>
@@ -150,7 +148,9 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
 
   const recaptcha = useRecaptcha();
 
-  const userData: UserData = useAppSelector((state) => state.account.userData);
+  const userData = useAppSelector(
+    (state) => state.account.userData
+  ) as UserData;
 
   const contract = useMemo(() => {
     return new Contract(CONTRACT_ADDRESS, CONTRACT_ABI, library?.getSigner());

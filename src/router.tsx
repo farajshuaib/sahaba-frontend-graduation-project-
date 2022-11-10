@@ -16,7 +16,7 @@ import App from "App";
 import { useAppSelector } from "app/hooks";
 
 const router = () => {
-  const userData: UserData = useAppSelector((state) => state.account.userData);
+  const userData = useAppSelector((state) => state.account.userData);
   return [
     {
       path: "/",

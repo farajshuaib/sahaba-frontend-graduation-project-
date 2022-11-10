@@ -13,7 +13,8 @@ import { useWeb3React } from "@web3-react/core";
 import { switchNetwork } from "utils/functions";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useAppSelector } from "app/hooks";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { connectToWallet } from "app/account/actions";
 
 export interface PageConnectWalletProps {
   className?: string;
@@ -43,6 +44,7 @@ const plans = [
 ];
 const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const web3React = useWeb3React();
   const [showModal, setShowModal] = useState(false);
   const { t, i18n } = useTranslation();
@@ -53,7 +55,8 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
       if (!result) return;
       web3React.activate(wallet_item.connector);
       localStorage.setItem("provider", wallet_item.provider);
-      if (!web3React.error) {
+      if (!web3React.error && web3React.account) {
+        await dispatch(connectToWallet(web3React.account));
         navigate(-1);
         return;
       }

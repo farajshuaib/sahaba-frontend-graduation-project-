@@ -13,7 +13,7 @@ const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const userData: UserData = useAppSelector((state) => state.account.userData);
+  const userData = useAppSelector((state) => state.account.userData);
 
   useEffect(() => {
     dispatch(getEthPriceInUSD());

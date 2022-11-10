@@ -3,7 +3,7 @@ import { RootState } from "app/store";
 import { connectToWallet, logout } from "./actions";
 
 export interface AccountState {
-  userData?: any;
+  userData?: UserData | null;
 }
 
 const initialState: AccountState = {};

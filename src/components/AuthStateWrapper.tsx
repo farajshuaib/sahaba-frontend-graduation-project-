@@ -14,7 +14,7 @@ const AuthStateWrapper: React.FC<Props> = ({ children }) => {
   const { account, activate, active, error, chainId } = useWeb3React();
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
-  const userData: UserData = useAppSelector((state) => state.account.userData);
+  const userData = useAppSelector((state) => state.account.userData) as UserData;
 
   const handleAccountState = async () => {
     setLoading(true);
