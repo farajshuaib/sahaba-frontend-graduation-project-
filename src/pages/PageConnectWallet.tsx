@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { connectToWallet } from "app/account/actions";
+import LoadingScreen from "components/LoadingScreen";
 
 export interface PageConnectWalletProps {
   className?: string;
@@ -48,15 +49,18 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
   const web3React = useWeb3React();
   const [showModal, setShowModal] = useState(false);
   const { t, i18n } = useTranslation();
+  const [loading, setLoading] = useState(false);
 
   const handleSignIn = async (wallet_item: any) => {
     try {
+      setLoading(true);
       const result = await switchNetwork();
       if (!result) return;
       web3React.activate(wallet_item.connector);
       localStorage.setItem("provider", wallet_item.provider);
       if (!web3React.error && web3React.account) {
         await dispatch(connectToWallet(web3React.account));
+        setLoading(false);
         navigate(-1);
         return;
       }
@@ -64,7 +68,9 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
         web3React.error?.message ||
           "Connecting to wallet has been failed!, you're connecting to unsupported network! please switch to ethereum network"
       );
+      setLoading(false);
     } catch (e: any) {
+      setLoading(false);
       toast.error(e || "Connecting to wallet has been failed!");
     }
   };
@@ -112,29 +118,34 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
           </div>
           <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
           <div className="mt-10 space-y-5 md:mt-0 sm:space-y-6 md:sm:space-y-8">
-            <div className="space-y-3">
-              {plans.map((plan) => (
-                <div
-                  key={plan.name}
-                  onClick={() => handleSignIn(plan)}
-                  className="relative flex px-3 py-4 border cursor-pointer rounded-xl hover:shadow-lg hover:bg-neutral-50 border-neutral-200 dark:border-neutral-700 sm:px-5 focus:outline-none focus:shadow-outline-blue focus:border-blue-500 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-900 dark:hover:text-neutral-200"
-                >
-                  <div className="flex items-center w-full gap-5">
-                    <NcImage
-                      src={plan.img}
-                      containerClassName="flex-shrink-0 w-10 h-10 sm:w-14 sm:h-14 p-2 sm:p-3 bg-white rounded-full overflow-hidden shadow-lg"
-                    />
-                    <div className={` font-semibold text-xl sm:text-2xl `}>
-                      {plan.name}
+            {loading ? (
+              <LoadingScreen />
+            ) : (
+              <div className="space-y-3">
+                {plans.map((plan) => (
+                  <div
+                    key={plan.name}
+                    onClick={() => handleSignIn(plan)}
+                    className="relative flex px-3 py-4 border cursor-pointer rounded-xl hover:shadow-lg hover:bg-neutral-50 border-neutral-200 dark:border-neutral-700 sm:px-5 focus:outline-none focus:shadow-outline-blue focus:border-blue-500 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-900 dark:hover:text-neutral-200"
+                  >
+                    <div className="flex items-center w-full gap-5">
+                      <NcImage
+                        src={plan.img}
+                        containerClassName="flex-shrink-0 w-10 h-10 sm:w-14 sm:h-14 p-2 sm:p-3 bg-white rounded-full overflow-hidden shadow-lg"
+                      />
+                      <div className={` font-semibold text-xl sm:text-2xl `}>
+                        {plan.name}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
 
             {/* ---- */}
             <div className="pt-2 ">
               <ButtonPrimary
+                disabled={loading}
                 href={"/"}
                 className={`flex flex-1 gap-3 flex-row ${
                   i18n.language == "ar" && "flex-row-reverse"
