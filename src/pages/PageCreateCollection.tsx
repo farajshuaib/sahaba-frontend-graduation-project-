@@ -48,7 +48,9 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
   const [logoImage, setLogoImage] = useState<string>("");
   const { library, account } = useWeb3React();
 
-  const userData = useAppSelector((state) => state.account.userData) as UserData;
+  const userData = useAppSelector(
+    (state) => state.account.userData
+  ) as UserData;
 
   const [initFormState, setInitFormState] = useState({
     logo_image: null,
@@ -329,7 +331,11 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                     onChange={handleChange("name")}
                     onBlur={handleBlur("name")}
                   />
-                  <ErrorMessage name="name" className="text-sm text-red-600" />
+                  <ErrorMessage
+                    name="name"
+                    component="p"
+                    className="text-sm text-red-600"
+                  />
                 </FormItem>
 
                 {/* ---- */}
@@ -358,6 +364,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   />
                   <ErrorMessage
                     name="description"
+                    component="p"
                     className="text-sm text-red-600"
                   />
                 </FormItem>
@@ -441,6 +448,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   </RadioGroup>
                   <ErrorMessage
                     name="category_id"
+                    component="p"
                     className="text-sm text-red-600"
                   />
                 </div>
@@ -462,7 +470,11 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                       placeholder="your website.com"
                     />
                   </div>
-                  <ErrorMessage name="website_url" />
+                  <ErrorMessage
+                    name="website_url"
+                    component="p"
+                    className="text-sm text-red-600"
+                  />
                 </div>
 
                 {/* ---- */}
@@ -485,7 +497,11 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                         sizeClass="h-11 px-4 pl-2 pr-3"
                       />
                     </div>
-                    <ErrorMessage name="facebook_url" />
+                    <ErrorMessage
+                      name="facebook_url"
+                      component="p"
+                      className="text-sm text-red-600"
+                    />
                   </div>
                   <div>
                     <Label>{t("Twitter")}</Label>
@@ -505,7 +521,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                         sizeClass="h-11 px-4 pl-2 pr-3"
                       />
                     </div>
-                    <ErrorMessage name="twitter_url" />
+                    <ErrorMessage name="twitter_url" component="p" className="text-sm text-red-600"  />
                   </div>
                   <div>
                     <Label>{t("Telegram")}</Label>
@@ -525,7 +541,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                         sizeClass="h-11 px-4 pl-2 pr-3"
                       />
                     </div>
-                    <ErrorMessage name="telegram_url" />
+                    <ErrorMessage name="telegram_url" component="p" className="text-sm text-red-600" />
                   </div>
                   <div>
                     <Label>{t("Instagram")}</Label>
@@ -545,7 +561,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                         sizeClass="h-11 px-4 pl-2 pr-3"
                       />
                     </div>
-                    <ErrorMessage name="instagram_url" />
+                    <ErrorMessage name="instagram_url" component="p" className="text-sm text-red-600" />
                   </div>
                 </div>
 
