@@ -28,7 +28,7 @@ const ModalAddCollaboration: FC<ModalAddCollaborationProps> = ({
   const textareaRef = useRef(null);
   const api = useApi();
   const { library } = useWeb3React(); //0x32a16Bf4E5FE0C0DE4Dc32B61878CaD5515346c4
-  const userData: UserData = useAppSelector((state) => state.account.userData);
+  const userData = useAppSelector((state) => state.account.userData);
 
   const contract = useMemo(() => {
     return new Contract(CONTRACT_ADDRESS, CONTRACT_ABI, library?.getSigner());

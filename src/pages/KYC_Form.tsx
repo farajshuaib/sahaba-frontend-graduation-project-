@@ -34,7 +34,7 @@ const KYC_Form: React.FC = () => {
     author_art_type: "",
     passport_id: "",
   });
-  const userData: UserData = useAppSelector((state) => state.account.userData);
+  const userData = useAppSelector((state) => state.account.userData) as UserData;
 
   const recaptcha = useRecaptcha();
 
@@ -142,7 +142,7 @@ const KYC_Form: React.FC = () => {
                   toast.error(t("please_verify_you_are_not_a_robot"));
                   return;
                 }
-                if (userData.status === "suspended") {
+                if (userData?.status === "suspended") {
                   return;
                 }
                 const form = new FormData();
@@ -417,7 +417,7 @@ const KYC_Form: React.FC = () => {
                       <ButtonPrimary
                         loading={isSubmitting}
                         disabled={
-                          userData.status === "suspended" ||
+                          userData?.status === "suspended" ||
                           isSubmitting ||
                           isFormDisables()
                         }

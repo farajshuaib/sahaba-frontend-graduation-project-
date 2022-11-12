@@ -286,5 +286,6 @@
   "cancel_NFT_sale": "Cancel NFT sale",
   "cancel_NFT_sale_description": "Are you sure you want to cancel that NFT sale ? no one will be able to buy it anymore",
   "for": "for",
-  "Cancel_Sale_by": "Cancel Sale by"
+  "Cancel_Sale_by": "Cancel Sale by",
+  "Your_account_is_suspended": "Your account is suspended"
 }

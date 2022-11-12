@@ -24,7 +24,7 @@ export interface AuthorPageProps {
 
 const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
   const { t } = useTranslation();
-  const userData: UserData = useAppSelector((state) => state.account.userData);
+  const userData = useAppSelector((state) => state.account.userData);
   const params: any = useParams();
   const { fetchById, loading, item, errors } = useCrud("/users");
 

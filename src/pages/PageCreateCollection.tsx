@@ -48,7 +48,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
   const [logoImage, setLogoImage] = useState<string>("");
   const { library, account } = useWeb3React();
 
-  const userData = useAppSelector((state) => state.account.userData);
+  const userData = useAppSelector((state) => state.account.userData) as UserData;
 
   const [initFormState, setInitFormState] = useState({
     logo_image: null,
@@ -127,7 +127,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                 return;
               }
 
-              if (userData.status === "suspended") {
+              if (userData?.status === "suspended") {
                 toast.error(t("your_account_is_suspended"));
                 return;
               }
@@ -563,7 +563,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                 <div className="flex flex-col pt-2 space-x-0 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3 ">
                   <ButtonPrimary
                     loading={isSubmitting}
-                    disabled={userData.status == "suspended" || isSubmitting}
+                    disabled={userData?.status == "suspended" || isSubmitting}
                     onClick={handleSubmit}
                     className="flex-1"
                   >

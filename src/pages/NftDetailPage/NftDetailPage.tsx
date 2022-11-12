@@ -43,7 +43,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
   const navigate = useNavigate();
   const { library, account } = useWeb3React();
   const api = useApi();
-  const userData: UserData = useAppSelector((state) => state.account.userData);
+  const userData = useAppSelector((state) => state.account.userData);
   const { item, loading, fetchById, errors } = useCrud("/nfts");
   const { create: submitBuyNft } = useCrud(`/nfts/buy/${params.id}`);
   const [loadingButton, setLoadingButton] = useState<boolean>(false);
@@ -67,7 +67,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       navigate("/connect-wallet");
       return;
     }
-    if (userData.status == "suspended") {
+    if (userData?.status == "suspended") {
       toast.error(t("account_suspended"));
       return;
     }
@@ -94,7 +94,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       navigate("/connect-wallet");
       return;
     }
-    if (userData.status == "suspended") {
+    if (userData?.status == "suspended") {
       toast.error(t("account_suspended"));
       return;
     }
@@ -231,7 +231,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
             <div className="flex flex-col mt-8 space-y-2 sm:flex-row sm:space-y-0 sm:space-x-3">
               <ButtonPrimary
                 loading={loadingButton}
-                disabled={userData.status == "suspended" || loadingButton}
+                disabled={userData?.status == "suspended" || loadingButton}
                 onClick={() => {
                   userData?.id != item?.owner?.id
                     ? buyNft()

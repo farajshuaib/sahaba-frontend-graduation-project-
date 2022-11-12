@@ -15,7 +15,7 @@ import { useWeb3React } from "@web3-react/core";
 const Alerts: FC = () => {
   const { t } = useTranslation();
   const { chainId } = useWeb3React();
-  const userData: UserData = useAppSelector((state) => state.account.userData);
+  const userData = useAppSelector((state) => state.account.userData);
   return (
     <>
       {chainId && chainId == 5 && (
@@ -28,16 +28,19 @@ const Alerts: FC = () => {
       {!window.ethereum && (
         <Alert color="warning">
           <span className="block w-screen font-medium text-center">
-            <span>{t("no_provider")}</span>
-            {" "}
-            <a href="https://metamask.io/download/" className="font-bold underline" target="_blank">
+            <span>{t("no_provider")}</span>{" "}
+            <a
+              href="https://metamask.io/download/"
+              className="font-bold underline"
+              target="_blank"
+            >
               {t("install_metamask")}
             </a>
           </span>
         </Alert>
       )}
 
-      {userData?.status == "suspended" && (
+      {userData && userData?.status == "suspended" && (
         <Alert color="warning">
           <span className="block w-screen font-medium text-center">
             {t("account_suspended")}

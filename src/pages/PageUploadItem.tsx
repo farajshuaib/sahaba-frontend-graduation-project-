@@ -208,7 +208,8 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
             }}
             validationSchema={createNftSchema}
             onSubmit={async (values, { setFieldError, setSubmitting }) => {
-              if (userData.status === "suspended") {
+              if (userData && userData?.status === "suspended") {
+                setError(t("Your_account_is_suspended"));
                 return;
               }
 

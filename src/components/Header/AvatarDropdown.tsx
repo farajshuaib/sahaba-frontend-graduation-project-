@@ -13,7 +13,9 @@ import { copyToClipboard, usdPrice } from "utils/functions";
 export default function AvatarDropdown() {
   const { t, i18n } = useTranslation();
   const { deactivate, library, account } = useWeb3React();
-  const userData: UserData = useAppSelector((state) => state.account.userData);
+  const userData = useAppSelector(
+    (state) => state.account.userData
+  ) as UserData;
   const [balance, setBalance] = useState<string>("");
   const dispatch = useAppDispatch();
 
@@ -79,9 +81,9 @@ export default function AvatarDropdown() {
                           }}
                           className="text-xs mt-0.5 cursor-pointer"
                         >
-                          {userData.wallet_address?.slice(0, 10) +
+                          {userData?.wallet_address?.slice(0, 10) +
                             "..." +
-                            userData.wallet_address?.slice(10, 15)}
+                            userData?.wallet_address?.slice(10, 15)}
                         </span>
                       </div>
                     </div>

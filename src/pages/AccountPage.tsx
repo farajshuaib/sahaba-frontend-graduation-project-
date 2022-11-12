@@ -25,7 +25,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const userData: UserData = useAppSelector((state) => state.account.userData);
+  const userData = useAppSelector((state) => state.account.userData) as UserData;
   const [profileImage, setProfileImage] = useState<string>("");
   const [bannerImage, setBannerImage] = useState<string>("");
   const recaptcha = useRecaptcha();

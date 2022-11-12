@@ -281,5 +281,6 @@
   "cancel_NFT_sale_description": "هل أنت متأكد أنك تريد إلغاء بيع NFT؟ \nلن يتمكن أحد من شرائه بعد الآن",
   "You_didnt_like_any_NFT_yet": "لم يعجبك أي NFT حتى الآن.",
   "for": "إلى عن على",
-  "Cancel_Sale_by": "إلغاء البيع بواسطة"
+  "Cancel_Sale_by": "إلغاء البيع بواسطة",
+  "Your_account_is_suspended": "تم تعليق حسابك"
 }
