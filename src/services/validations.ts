@@ -8,14 +8,14 @@ export const createCollectionSchema = yup.object().shape({
   logo_image: yup
     .mixed()
     .test("fileSize", t("validations.The_file_is_too_large"), (value) => {
-      if (!value.length) return true; // attachment is optional
+      if (!value?.length) return true; // attachment is optional
       return value.size <= 100000024;
     })
     .required(),
   banner_image: yup
     .mixed()
     .test("fileSize", t("validations.The_file_is_too_large"), (value) => {
-      if (!value.length) return true; // attachment is optional
+      if (!value?.length) return true; // attachment is optional
       return value.size <= 100000024;
     })
     .required(),
@@ -83,7 +83,7 @@ export const kycSchema = yup.object().shape({
   passport_id: yup
     .mixed()
     .test("fileSize", t("validations.The_file_is_too_large"), (value) => {
-      if (!value.length) return true; // attachment is optional
+      if (!value?.length) return true; // attachment is optional
       return value.size <= 100000024;
     }),
 });

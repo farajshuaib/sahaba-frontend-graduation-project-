@@ -1,5 +1,5 @@
 import Label from "components/Label/Label";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Input from "shared/Input/Input";
 import Textarea from "shared/Textarea/Textarea";
@@ -47,6 +47,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
   const [bannerImage, setBannerImage] = useState<string>("");
   const [logoImage, setLogoImage] = useState<string>("");
   const { library, account } = useWeb3React();
+  const fileInput = useRef<HTMLInputElement>(null);
 
   const userData = useAppSelector(
     (state) => state.account.userData
@@ -211,6 +212,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   </span>
                   <div className="mt-5 ">
                     <div
+                      onClick={() => fileInput.current?.click()}
                       className={`flex relative overflow-hidden justify-center mt-1 border-2 border-dashed ${
                         touched.banner_image && errors.banner_image
                           ? "border-red-600"
@@ -248,6 +250,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                               type="file"
                               accept="image/*"
                               className="sr-only"
+                              ref={fileInput}
                               onChange={async (e) => {
                                 if (!e.target.files) return;
                                 const file = e.target.files[0];
@@ -521,7 +524,11 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                         sizeClass="h-11 px-4 pl-2 pr-3"
                       />
                     </div>
-                    <ErrorMessage name="twitter_url" component="p" className="text-sm text-red-600"  />
+                    <ErrorMessage
+                      name="twitter_url"
+                      component="p"
+                      className="text-sm text-red-600"
+                    />
                   </div>
                   <div>
                     <Label>{t("Telegram")}</Label>
@@ -541,7 +548,11 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                         sizeClass="h-11 px-4 pl-2 pr-3"
                       />
                     </div>
-                    <ErrorMessage name="telegram_url" component="p" className="text-sm text-red-600" />
+                    <ErrorMessage
+                      name="telegram_url"
+                      component="p"
+                      className="text-sm text-red-600"
+                    />
                   </div>
                   <div>
                     <Label>{t("Instagram")}</Label>
@@ -561,7 +572,11 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                         sizeClass="h-11 px-4 pl-2 pr-3"
                       />
                     </div>
-                    <ErrorMessage name="instagram_url" component="p" className="text-sm text-red-600" />
+                    <ErrorMessage
+                      name="instagram_url"
+                      component="p"
+                      className="text-sm text-red-600"
+                    />
                   </div>
                 </div>
 

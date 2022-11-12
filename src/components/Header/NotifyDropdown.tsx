@@ -9,6 +9,7 @@ import { setNotifications } from "app/general/reducers";
 import { useTranslation } from "react-i18next";
 import { getNotifications } from "app/general/actions";
 import { useApi } from "hooks/useApi";
+import moment from "moment";
 
 const solutions = [
   {
@@ -58,7 +59,17 @@ export default function NotifyDropdown() {
           });
       }
       // set notification data on the notification section of the store and update the notifications length
-      dispatch(setNotifications(payload.data));
+      dispatch(
+        setNotifications({
+          created_at: moment(),
+          read_at: null,
+          data: {
+            title: payload.notification.title,
+            message: payload.notification.body,
+            data: JSON.parse(payload.data.data),
+          },
+        })
+      );
     })
     .catch((err) => console.log("failed: ", err));
 
@@ -142,15 +153,12 @@ export default function NotifyDropdown() {
               <Popover.Panel className="absolute z-10 w-screen max-w-xs px-4 mt-3 overflow-hidden sm:max-w-sm -right-28 sm:right-0 sm:px-0">
                 <div className="overflow-y-scroll shadow-lg hidden-scrollbar max-h-72 rounded-2xl ring-1 ring-black ring-opacity-5">
                   <div className="relative grid gap-8 bg-white dark:bg-neutral-800 p-7">
-                    <p className="py-16 text-lg text-center text-gray-400 dark:text-gray-400">
-                      {t("notifications_empty")}
-                    </p>
                     <h3 className="text-xl font-semibold">
                       {t("Notifications")}
                     </h3>
-                    {notifications && notifications.data.length > 0 ? (
-                      notifications.data.map(
-                        ({ data, read_at }: any, index) => (
+                    {notifications && notifications?.data?.length > 0 ? (
+                      notifications?.data?.map(
+                        ({ data, read_at, created_at }: any, index) => (
                           <section
                             key={index}
                             className="relative flex p-2 pr-8 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
@@ -161,10 +169,10 @@ export default function NotifyDropdown() {
                                 {data?.title}
                               </p>
                               <p className="text-xs text-gray-500 sm:text-sm dark:text-gray-400">
-                                {data?.description}
+                                {data?.message}
                               </p>
                               <p className="text-xs text-gray-400 dark:text-gray-400">
-                                {data?.created_at}
+                                {moment(created_at).format("lll")}
                               </p>
                             </div>
                             {read_at && (
