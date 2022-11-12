@@ -58,22 +58,30 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
       if (!result) return;
       web3React.activate(wallet_item.connector);
       localStorage.setItem("provider", wallet_item.provider);
-      if (!web3React.error && web3React.account) {
-        await dispatch(connectToWallet(web3React.account));
-        setLoading(false);
-        navigate(-1);
-        return;
-      }
-      toast.error(
-        web3React.error?.message ||
-          "Connecting to wallet has been failed!, you're connecting to unsupported network! please switch to ethereum network"
-      );
-      setLoading(false);
     } catch (e: any) {
       setLoading(false);
       toast.error(e || "Connecting to wallet has been failed!");
     }
   };
+
+  useEffect(() => {
+    if (web3React.error) {
+      toast.error(
+        web3React.error?.message ||
+          "Connecting to wallet has been failed!, you're connecting to unsupported network! please switch to ethereum network"
+      );
+      setLoading(false);
+    }
+  }, [web3React.error]);
+
+  useEffect(() => {
+    if (web3React.account) {
+      dispatch(connectToWallet(web3React.account)).then(() => {
+        setLoading(false);
+        navigate(-1);
+      });
+    }
+  }, [web3React.account]);
 
   const renderContent = () => {
     return (
