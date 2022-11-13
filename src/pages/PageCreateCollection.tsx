@@ -26,8 +26,8 @@ import { useApi } from "hooks/useApi";
 import { useRecaptcha } from "hooks/useRecaptcha";
 import { checkCapatcha } from "utils/functions";
 import { BigNumber, Contract } from "ethers";
-import { CONTRACT_ABI, CONTRACT_ADDRESS } from "constant";
 import { useWeb3React } from "@web3-react/core";
+import useContract from "hooks/useContract";
 
 export interface PageCreateCollectionProps {
   className?: string;
@@ -46,8 +46,9 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
   const { create, fetchById, item } = useCrud("/collections");
   const [bannerImage, setBannerImage] = useState<string>("");
   const [logoImage, setLogoImage] = useState<string>("");
-  const { library, account } = useWeb3React();
+  const { account } = useWeb3React();
   const fileInput = useRef<HTMLInputElement>(null);
+  const { contract, isApprovedForAll, setApprovalForAll } = useContract();
 
   const userData = useAppSelector(
     (state) => state.account.userData
@@ -118,6 +119,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
             }
             enableReinitialize
             onSubmit={async (values) => {
+              if (!account) return;
               if (!recaptcha) {
                 toast.error("Beep-bop, you're a robot!");
                 return;
@@ -136,18 +138,8 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
               }
 
               try {
-                const contract = new Contract(
-                  CONTRACT_ADDRESS,
-                  CONTRACT_ABI,
-                  library?.getSigner()
-                );
-                const isApprovedForAll = await contract.isApprovedForAll(
-                  account,
-                  CONTRACT_ADDRESS
-                );
-
-                if (!isApprovedForAll) {
-                  await contract.setApprovalForAll(CONTRACT_ADDRESS, true);
+                if (!isApprovedForAll()) {
+                  await setApprovalForAll();
                 }
 
                 const form: any = new FormData();
@@ -170,8 +162,13 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
 
                   const res = await tx.wait();
 
+                  if (!res.events || res.events.length == 0) {
+                    toast.error(t("something_went_wrong"));
+                    return;
+                  }
+
                   const collection_id = BigNumber.from(
-                    res.events[0].args.collectionId
+                    res.events[0].args?.collectionId
                   ).toString();
 
                   form.append("id", collection_id);

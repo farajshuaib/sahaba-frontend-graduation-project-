@@ -15,19 +15,16 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import LoadingScreen from "components/LoadingScreen";
 import { useAppSelector } from "app/hooks";
 import { toast } from "react-toastify";
-import { BigNumber, Contract, ethers, utils } from "ethers";
+import { utils } from "ethers";
 import { useWeb3React } from "@web3-react/core";
-import { CONTRACT_ABI, CONTRACT_ADDRESS } from "constant";
 import { useApi } from "hooks/useApi";
 import ServerError from "components/ServerError";
 import { usdPrice } from "utils/functions";
 import { Modal } from "flowbite-react";
-import Select from "shared/Select/Select";
-import moment from "moment";
-import FormItem from "components/FormItem";
 import NftItem from "./NftItem";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
+import useContract from "hooks/useContract";
 
 export interface NftDetailPageProps {
   className?: string;
@@ -49,9 +46,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
   const [loadingButton, setLoadingButton] = useState<boolean>(false);
   const [forSaleModal, setForSaleModal] = useState<boolean>(false);
 
-  const contract = useMemo(() => {
-    return new Contract(CONTRACT_ADDRESS, CONTRACT_ABI, library?.getSigner());
-  }, []);
+  const { contract, isApprovedForAll, setApprovalForAll } = useContract();
 
   async function increaseWatchTime() {
     api.post("/nfts/watch", { nft_id: params.id });
@@ -100,13 +95,8 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     }
     setLoadingButton(true);
     try {
-      const isApprovedForAll = await contract.isApprovedForAll(
-        account,
-        CONTRACT_ADDRESS
-      );
-
-      if (!isApprovedForAll) {
-        await contract.setApprovalForAll(CONTRACT_ADDRESS, true);
+      if (!isApprovedForAll()) {
+        await setApprovalForAll();
       }
 
       const transaction = await contract.buyToken(item.id, {

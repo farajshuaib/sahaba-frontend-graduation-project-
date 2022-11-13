@@ -9,6 +9,8 @@ export const WEBSITE_URL: string = "https://sahabanft.netlify.app";
 
 export const CONTRACT_ADDRESS: string =
   "0x524F619312dcD8E82e0B43b56C74c8EdDFC2Ed64";
+export const TEST_CONTRACT_ADDRESS: string =
+  "0x524F619312dcD8E82e0B43b56C74c8EdDFC2Ed64";
 
 export const TEST_CONTRACT_LINK = `https://goerli.etherscan.io/address/${CONTRACT_ADDRESS}`;
 export const CONTRACT_ABI = abi;

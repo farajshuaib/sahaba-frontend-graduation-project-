@@ -1,8 +1,6 @@
-import { useWeb3React } from "@web3-react/core";
 import { useAppSelector } from "app/hooks";
-import { CONTRACT_ABI, CONTRACT_ADDRESS } from "constant";
-import { Contract } from "ethers";
 import { useApi } from "hooks/useApi";
+import useContract from "hooks/useContract";
 import React, { FC, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
@@ -27,12 +25,9 @@ const ModalAddCollaboration: FC<ModalAddCollaborationProps> = ({
   const [loading, setLoading] = useState(false);
   const textareaRef = useRef(null);
   const api = useApi();
-  const { library } = useWeb3React(); //0x32a16Bf4E5FE0C0DE4Dc32B61878CaD5515346c4
   const userData = useAppSelector((state) => state.account.userData);
 
-  const contract = useMemo(() => {
-    return new Contract(CONTRACT_ADDRESS, CONTRACT_ABI, library?.getSigner());
-  }, []);
+  const { contract } = useContract();
 
   useEffect(() => {
     if (show) {

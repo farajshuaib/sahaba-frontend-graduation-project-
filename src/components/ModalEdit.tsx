@@ -1,7 +1,5 @@
-import { useWeb3React } from "@web3-react/core";
-import { CONTRACT_ABI, CONTRACT_ADDRESS } from "constant";
-import { Contract } from "ethers";
 import { parseEther } from "ethers/lib/utils";
+import useContract from "hooks/useContract";
 import { useCrud } from "hooks/useCrud";
 import React, { FC, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -20,14 +18,11 @@ export interface ModalEditProps {
 const ModalEdit: FC<ModalEditProps> = ({ show, onCloseModalEdit, nft }) => {
   const { t } = useTranslation();
   const textareaRef = useRef(null);
-  const { library, account } = useWeb3React();
   const [price, setPrice] = useState<number>(nft?.price || 0);
   const [loading, setLoading] = useState<boolean>(false);
   const { update } = useCrud(`/nfts/update-price`);
 
-  const contract = useMemo(() => {
-    return new Contract(CONTRACT_ADDRESS, CONTRACT_ABI, library?.getSigner());
-  }, []);
+  const { contract } = useContract();
 
   const submit = async () => {
     if (!nft) return;

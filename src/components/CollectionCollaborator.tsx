@@ -11,8 +11,7 @@ import { Modal, Tooltip } from "flowbite-react";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 import { toast } from "react-toastify";
-import { Contract } from "ethers";
-import { useWeb3React } from "@web3-react/core";
+import useContract from "hooks/useContract";
 
 interface Props {
   collection_id: string;
@@ -34,12 +33,9 @@ const CollectionCollaborator: React.FC<Props> = ({
   const api = useApi();
   const [collaboration, setDeleteCollaboration] =
     React.useState<Collaboration | null>(null);
-  const { library } = useWeb3React();
   const [deleteLoading, setDeleteLoading] = React.useState(false);
 
-  const contract = useMemo(() => {
-    return new Contract(CONTRACT_ADDRESS, CONTRACT_ABI, library?.getSigner());
-  }, []);
+  const { contract } = useContract();
 
   useEffect(() => {
     if (!sliderRef.current) {

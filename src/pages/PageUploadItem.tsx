@@ -23,6 +23,7 @@ import { checkCapatcha, usdPrice } from "utils/functions";
 import { Alert } from "shared/Alert/Alert";
 import { useTranslation } from "react-i18next";
 import { useRecaptcha } from "hooks/useRecaptcha";
+import useContract from "hooks/useContract";
 
 interface UploadFileProps {
   errors: FormikErrors<any>;
@@ -152,9 +153,7 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
     (state) => state.account.userData
   ) as UserData;
 
-  const contract = useMemo(() => {
-    return new Contract(CONTRACT_ADDRESS, CONTRACT_ABI, library?.getSigner());
-  }, []);
+  const { contract, isApprovedForAll, setApprovalForAll } = useContract();
 
   const getAccountBalance = async () => {
     if (!account) return;
@@ -237,14 +236,10 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                 setFieldError("price", t("price_must_be_above_0"));
                 return;
               }
-              try {
-                const isApprovedForAll = await contract.isApprovedForAll(
-                  account,
-                  CONTRACT_ADDRESS
-                );
 
-                if (!isApprovedForAll) {
-                  await contract.setApprovalForAll(CONTRACT_ADDRESS, true);
+              try {
+                if (!isApprovedForAll()) {
+                  await setApprovalForAll();
                 }
 
                 const tx = await contract.createAndListToken(
@@ -253,13 +248,15 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                   values.collection_id
                 );
 
-                console.log(tx);
                 const res = await tx.wait();
 
-                console.log(res);
+                if (!res.events) {
+                  toast.error(t("something_went_wrong"));
+                  return;
+                }
 
                 const token_id = BigNumber.from(
-                  res.events[0].args.nftId
+                  res.events[0].args?.nftId
                 ).toString();
 
                 console.log(token_id);

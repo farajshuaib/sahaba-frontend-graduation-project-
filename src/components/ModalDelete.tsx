@@ -1,7 +1,5 @@
-import { useWeb3React } from "@web3-react/core";
-import { CONTRACT_ABI, CONTRACT_ADDRESS } from "constant";
-import { Contract } from "ethers";
 import { useApi } from "hooks/useApi";
+import useContract from "hooks/useContract";
 import React, { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +21,7 @@ const ModalDelete: FC<ModalDeleteProps> = ({
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const { t } = useTranslation();
-  const { library, account } = useWeb3React();
+  const { contract } = useContract();
   const api = useApi();
   const navigate = useNavigate();
 
@@ -42,13 +40,8 @@ const ModalDelete: FC<ModalDeleteProps> = ({
     }
   };
   const burnNft = async () => {
+    if (!nft) return;
     return new Promise(async (resolve, reject) => {
-      const contract = new Contract(
-        CONTRACT_ADDRESS,
-        CONTRACT_ABI,
-        library?.getSigner()
-      );
-
       try {
         const tx = await contract.burn(nft?.id);
         resolve(tx);
