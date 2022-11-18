@@ -3,12 +3,14 @@ import {
   CONTRACT_ABI,
   CONTRACT_ADDRESS,
   currentNetwork,
+  SAHABA_TEST_COIN_ADDRESS,
 } from "./../constant";
 import { toast } from "react-toastify";
 import { ethers, Contract, utils, BigNumber } from "ethers";
 import { networkParams } from "services/networks";
 import { store } from "app/store";
 import { t } from "i18next";
+import { parseEther } from "ethers/lib/utils";
 // import { Biconomy } from "@biconomy/mexa";
 
 export const getBalance = async (address: string) => {
@@ -118,6 +120,7 @@ export const getUserSlug = (userData: UserData) => {
       userData?.wallet_address.slice(-5)
   );
 };
+
 
 // export async function getContract() {
 //   const biconomy = new Biconomy(window.ethereum as ExternalProvider, {

@@ -15,7 +15,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import LoadingScreen from "components/LoadingScreen";
 import { useAppSelector } from "app/hooks";
 import { toast } from "react-toastify";
-import { utils } from "ethers";
+import { Contract, utils } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 import { useApi } from "hooks/useApi";
 import ServerError from "components/ServerError";
@@ -25,6 +25,8 @@ import NftItem from "./NftItem";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import useContract from "hooks/useContract";
+import { SAHABA_TEST_COIN_ABI, SAHABA_TEST_COIN_ADDRESS } from "constant";
+import { parseEther } from "ethers/lib/utils";
 
 export interface NftDetailPageProps {
   className?: string;
@@ -84,6 +86,26 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     }
   };
 
+  const approveBuyItem = async () => {
+    const tokenContract = new Contract(
+      SAHABA_TEST_COIN_ADDRESS,
+      SAHABA_TEST_COIN_ABI,
+      library.getSigner()
+    );
+
+    const allowance = await tokenContract.allowance(
+      account,
+      SAHABA_TEST_COIN_ADDRESS
+    );
+
+    if (!Number(allowance)) {
+      await tokenContract.approve(
+        SAHABA_TEST_COIN_ADDRESS,
+        parseEther("9999999999999999999999999999")
+      );
+    }
+  };
+
   const buyNft = async () => {
     if (!userData) {
       navigate("/connect-wallet");
@@ -98,6 +120,10 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       if (!isApprovedForAll()) {
         await setApprovalForAll();
       }
+
+      // if (buyWithSahabaCoin) {
+      //   await approveBuyItem();
+      // }
 
       const transaction = await contract.buyToken(item.id, {
         value: utils.parseEther(parseFloat(item.price).toString()),

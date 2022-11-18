@@ -1,5 +1,6 @@
-// https://goerli.etherscan.io/address/0x524F619312dcD8E82e0B43b56C74c8EdDFC2Ed64
+// https://goerli.etherscan.io/address/0x0e272ea5BFEAe96b645559eAE3915c70e96154E5
 import abi from "../contracts/abi.json";
+import coin_abi from "../contracts/coin_abi.json";
 //
 
 export const currentNetwork: string =
@@ -7,13 +8,17 @@ export const currentNetwork: string =
 export const IPFS_BASE_URL: string = "https://ipfs.io/ipfs/";
 export const WEBSITE_URL: string = "https://sahabanft.netlify.app";
 
+export const SAHABA_TEST_COIN_ADDRESS: string =
+  "0x54460CC6574442b1ac12dd71C509Ac421E3Ab031";
+
 export const CONTRACT_ADDRESS: string =
-  "0x524F619312dcD8E82e0B43b56C74c8EdDFC2Ed64";
+  "0x0e272ea5BFEAe96b645559eAE3915c70e96154E5";
 export const TEST_CONTRACT_ADDRESS: string =
-  "0x524F619312dcD8E82e0B43b56C74c8EdDFC2Ed64";
+  "0x0e272ea5BFEAe96b645559eAE3915c70e96154E5";
 
 export const TEST_CONTRACT_LINK = `https://goerli.etherscan.io/address/${CONTRACT_ADDRESS}`;
 export const CONTRACT_ABI = abi;
+export const SAHABA_TEST_COIN_ABI = coin_abi
 
 export const CAPATCHA_SITE_KEY: string = import.meta.env.VITE_CAPATCHA_SITE_KEY;
 export const CAPATCHA_SECRET_KEY: string = import.meta.env

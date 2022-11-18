@@ -54,7 +54,7 @@ const RenderRoutes = () => {
   return routes;
 };
 
-const Wrapper: React.FC = ({}) => {
+const Wrapper: React.FC = () => {
   const { i18n } = useTranslation();
   const location = useLocation();
   const {} = useDarkMode();
