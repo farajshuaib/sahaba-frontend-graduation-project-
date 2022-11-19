@@ -36,10 +36,10 @@ export function useApi() {
   if (!api) {
     createApi();
   }
-  // api.defaults.params.chainId = window.ethereum.networkVersion;
-  // api.defaults.baseURL =
-  //   window.ethereum.networkVersion == 5
-  //     ? "https://sahabanft.bluespace.ly/api" // testnet
-  //     : "https://sahabanft.bluespace.ly/api"; // mainnet
+  api.defaults.params.chainId = window.ethereum.networkVersion;
+  api.defaults.baseURL =
+    window.ethereum.networkVersion == 5
+      ? "https://sahabanft.bluespace.ly/api" // testnet
+      : "https://sahabanft.bluespace.ly/api"; // mainnet
   return api;
 }
