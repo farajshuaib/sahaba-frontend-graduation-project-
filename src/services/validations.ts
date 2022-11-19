@@ -114,8 +114,8 @@ export const updateAccountSchema = yup.object().shape({
 });
 
 export const validateImage = (file: any) => {
-  const fileType = file.type;
-  const fileSize = file.size;
+  const fileType = file?.type;
+  const fileSize = file?.size;
   const validImageTypes = [
     "image/jpg",
     "image/jpeg",

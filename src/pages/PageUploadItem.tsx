@@ -247,8 +247,11 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                   parseEther(values.price.toString()),
                   values.collection_id
                 );
+                console.log("tx => ",tx);
 
                 const res = await tx.wait();
+
+                console.log("res => ", res);
 
                 if (!res.events) {
                   toast.error(t("something_went_wrong"));
@@ -256,7 +259,7 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                 }
 
                 const token_id = BigNumber.from(
-                  res.events[0].args?.nftId
+                  res.events[0].args?.tokenId
                 ).toString();
 
                 console.log(token_id);

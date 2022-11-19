@@ -28,6 +28,7 @@ import { checkCapatcha } from "utils/functions";
 import { BigNumber, Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 import useContract from "hooks/useContract";
+import Select from "shared/Select/Select";
 
 export interface PageCreateCollectionProps {
   className?: string;
@@ -66,6 +67,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
     instagram_url: "",
     is_sensitive_content: false,
     category_id: null,
+    blockchain_id: 5,
   });
 
   useEffect(() => {
@@ -84,6 +86,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
         website_url: item.website_url || "",
         instagram_url: item.instagram_url || "",
         category_id: item.category.id,
+        blockchain_id: item?.blockchain?.id || 5,
       });
       setLogoImage(item?.logo_image);
       setBannerImage(item?.banner_image);
@@ -208,8 +211,8 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                     {t("supported_files")}
                   </span>
                   <div className="mt-5 ">
-                    <div
-                      onClick={() => fileInput.current?.click()}
+                    <label
+                      htmlFor="file-upload"
                       className={`flex relative overflow-hidden justify-center mt-1 border-2 border-dashed ${
                         touched.banner_image && errors.banner_image
                           ? "border-red-600"
@@ -236,10 +239,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                           ></path>
                         </svg>
                         <div className="flex text-sm text-neutral-6000 dark:text-neutral-300">
-                          <label
-                            htmlFor="file-upload"
-                            className="relative font-medium rounded-md cursor-pointer text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
-                          >
+                          <span className="relative font-medium rounded-md cursor-pointer text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500">
                             <span>{t("Upload_image")}</span>
                             <input
                               id="file-upload"
@@ -256,7 +256,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                                 setFieldValue("banner_image", file);
                               }}
                             />
-                          </label>
+                          </span>
                           <p className="pl-1">{t("or_drag_and_drop")}</p>
                         </div>
                         <p className="text-xs text-neutral-500 dark:text-neutral-400">
@@ -270,7 +270,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                           alt={"collection banner image"}
                         />
                       )}
-                    </div>
+                    </label>
                   </div>
                 </div>
 
@@ -368,6 +368,36 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                     className="text-sm text-red-600"
                   />
                 </FormItem>
+
+                <div className="">
+                  <Label htmlFor="blockchain_id">{t("Blockchain")}</Label>
+                  <div className="mt-1.5 flex">
+                    <span className="inline-flex items-center px-3 text-sm border border-r-0 rounded-l-2xl border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">
+                      <img
+                        src="/tokens/eth.svg"
+                        alt="eth"
+                        className="object-fill w-5 h-5"
+                      />
+                    </span>
+                    <Select
+                      className="!rounded-l-none"
+                      value={values.blockchain_id}
+                      disabled
+                      id="blockchain_id"
+                      name="blockchain_id"
+                      onChange={handleChange("blockchain_id")}
+                      onBlur={handleBlur("blockchain_id")}
+                      placeholder="select blockchain"
+                    >
+                      <option>Ethereum</option>
+                    </Select>
+                  </div>
+                  <ErrorMessage
+                    name="website_url"
+                    component="p"
+                    className="text-sm text-red-600"
+                  />
+                </div>
 
                 <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
 

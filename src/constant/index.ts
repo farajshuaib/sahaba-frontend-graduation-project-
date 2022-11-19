@@ -1,4 +1,4 @@
-// https://goerli.etherscan.io/address/0x0e272ea5BFEAe96b645559eAE3915c70e96154E5
+// https://goerli.etherscan.io/address/0xcF4FF48C84098A878899E52F3aCB02cfeD30D58D
 import abi from "../contracts/abi.json";
 import coin_abi from "../contracts/coin_abi.json";
 //
@@ -12,9 +12,9 @@ export const SAHABA_TEST_COIN_ADDRESS: string =
   "0x54460CC6574442b1ac12dd71C509Ac421E3Ab031";
 
 export const CONTRACT_ADDRESS: string =
-  "0x0e272ea5BFEAe96b645559eAE3915c70e96154E5";
+  "0xcF4FF48C84098A878899E52F3aCB02cfeD30D58D";
 export const TEST_CONTRACT_ADDRESS: string =
-  "0x0e272ea5BFEAe96b645559eAE3915c70e96154E5";
+  "0xcF4FF48C84098A878899E52F3aCB02cfeD30D58D";
 
 export const TEST_CONTRACT_LINK = `https://goerli.etherscan.io/address/${CONTRACT_ADDRESS}`;
 export const CONTRACT_ABI = abi;
