@@ -257,7 +257,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                               }}
                             />
                           </span>
-                          <p className="pl-1">{t("or_drag_and_drop")}</p>
+                          {/* <p className="pl-1">{t("or_drag_and_drop")}</p> */}
                         </div>
                         <p className="text-xs text-neutral-500 dark:text-neutral-400">
                           {t("extensions_sizes")}

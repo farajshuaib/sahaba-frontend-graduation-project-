@@ -168,7 +168,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
               name={`${item.watch_time}`}
               color="green"
             />
-            <LikeSaveBtns nft={item} />
+            <LikeSaveBtns nft={item} getNft={() => fetchById(params.id)} />
           </div>
           <h2 className="text-2xl font-semibold sm:text-3xl lg:text-4xl">
             {item?.title}

@@ -42,37 +42,15 @@ const UploadFile: React.FC<UploadFileProps> = ({
   const [uploadLoading, setUploadLoading] = useState<boolean>(false);
   const ipfs = useIpfs();
 
-  const handleUpload = async (e: any) => {
-    if (!e.target.files) return;
-    const file = e.target.files[0];
-    if (!validateImage(file)) return;
-
-    try {
-      setUploadLoading(true);
-
-      const added = await ipfs.add(file);
-
-      setFieldValue("file_type", file.type);
-
-      setFieldValue("file_path", IPFS_BASE_URL + added.path);
-
-      toast.success(t("image_uploaded_to_the_IPFS_successfully"));
-    } catch (e) {
-      toast.error(t("something_went_wrong_while_uploading_the_image"));
-    }
-    setUploadLoading(false);
-  };
-
   return (
     <div>
-      <h3 className="text-lg font-semibold sm:text-2xl">Image/*</h3>
+      <h3 className="text-lg font-semibold sm:text-2xl">Art Image</h3>
       <span className="text-sm text-neutral-500 dark:text-neutral-400">
         {t("supported_files")}
       </span>
-      <div
-        onDrop={handleUpload}
-        onClick={handleUpload}
-        className={`mt-5 relative flex justify-center px-6 pt-5 pb-6 mt-1 border-2 border-dashed ${
+      <label
+        htmlFor="file-upload"
+        className={`mt-5 relative flex justify-center px-6 pt-5 pb-6  border-2 border-dashed ${
           touched.file_path && errors.file_path
             ? "border-red-600"
             : "border-neutral-300 dark:border-neutral-6000"
@@ -105,10 +83,7 @@ const UploadFile: React.FC<UploadFileProps> = ({
           )}
 
           <div className="flex text-sm text-neutral-6000 dark:text-neutral-300">
-            <label
-              htmlFor="file-upload"
-              className="relative font-medium rounded-md cursor-pointer text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
-            >
+            <span className="relative font-medium rounded-md cursor-pointer text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500">
               <span>
                 {values.file_path ? t("replace_file") : t("Upload_image")}
               </span>
@@ -118,16 +93,37 @@ const UploadFile: React.FC<UploadFileProps> = ({
                 type="file"
                 className="sr-only"
                 accept="image/*"
-                onChange={handleUpload}
+                onChange={async (e) => {
+                  if (!e.target.files) return;
+                  const file = e.target.files[0];
+                  if (!validateImage(file)) return;
+
+                  try {
+                    setUploadLoading(true);
+
+                    const added = await ipfs.add(file);
+
+                    setFieldValue("file_type", file.type);
+
+                    setFieldValue("file_path", IPFS_BASE_URL + added.path);
+
+                    toast.success(t("image_uploaded_to_the_IPFS_successfully"));
+                  } catch (e) {
+                    toast.error(
+                      t("something_went_wrong_while_uploading_the_image")
+                    );
+                  }
+                  setUploadLoading(false);
+                }}
               />
-            </label>
-            <p className="pl-1">{t("or_drag_and_drop")}</p>
+            </span>
+            {/* <p className="pl-1">{t("or_drag_and_drop")}</p> */}
           </div>
           <p className="text-xs text-neutral-500 dark:text-neutral-400">
             PNG, JPG, GIF up to 10MB
           </p>
         </div>
-      </div>
+      </label>
     </div>
   );
 };
@@ -247,7 +243,7 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                   parseEther(values.price.toString()),
                   values.collection_id
                 );
-                console.log("tx => ",tx);
+                console.log("tx => ", tx);
 
                 const res = await tx.wait();
 

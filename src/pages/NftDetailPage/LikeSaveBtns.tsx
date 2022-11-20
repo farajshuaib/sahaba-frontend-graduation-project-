@@ -6,9 +6,10 @@ import { useTranslation } from "react-i18next";
 
 interface LikeSaveBtnProps {
   nft: Nft;
+  getNft: () => void;
 }
 
-const LikeSaveBtns: React.FC<LikeSaveBtnProps> = ({ nft }) => {
+const LikeSaveBtns: React.FC<LikeSaveBtnProps> = ({ nft, getNft }) => {
   const {t} = useTranslation()
   const userData = useAppSelector((state) => state.account.userData);
 
@@ -32,6 +33,7 @@ const LikeSaveBtns: React.FC<LikeSaveBtnProps> = ({ nft }) => {
         />
         <NftMoreDropdown
           nft={nft}
+          getNft={getNft}
           actions={
             userData?.id != nft?.owner?.id
               ? [

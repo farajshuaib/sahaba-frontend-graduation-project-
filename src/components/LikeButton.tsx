@@ -20,9 +20,12 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   const [isLiked, setIsLiked] = useState(liked);
   const [likeCount, setLikeCount] = useState<number>(like_count);
 
+  console.log("liked", liked);
+
   return (
     <button
       className={`bg-black/50 px-3.5 gap-2 h-10 flex items-center justify-center rounded-full text-white ${className}`}
+      type="button"
       onClick={() => {
         if (typeof liked == "undefined") {
           navigate("/connect-wallet");

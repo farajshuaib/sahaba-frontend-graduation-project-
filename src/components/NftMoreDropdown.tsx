@@ -14,6 +14,7 @@ export interface NftMoreDropdownProps {
   nft?: Nft;
   user?: UserData;
   collection?: Collection;
+  getNft?: () => void;
 }
 
 const actionsDefault: NftMoreDropdownProps["actions"] = [
@@ -31,6 +32,7 @@ const NftMoreDropdown: FC<NftMoreDropdownProps> = ({
   nft,
   collection,
   user,
+  getNft
 }) => {
   const navigate = useNavigate();
   const [isEditting, setIsEditting] = useState(false);
@@ -102,6 +104,7 @@ const NftMoreDropdown: FC<NftMoreDropdownProps> = ({
       <ModalEdit
         nft={nft}
         show={isEditting}
+        getNft={getNft}
         onCloseModalEdit={closeModalEdit}
       />
 

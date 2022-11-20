@@ -32,14 +32,19 @@ export function deleteToken() {
   delete api.defaults.headers.common.Authorization;
 }
 
-export function useApi() {
-  if (!api) {
-    createApi();
-  }
+function setChaidId() {
+  if (import.meta.env.VITE_ENV === "development") return;
   api.defaults.params.chainId = window.ethereum.networkVersion;
   api.defaults.baseURL =
     window.ethereum.networkVersion == 5
       ? "https://sahabanft.bluespace.ly/api" // testnet
       : "https://sahabanft.bluespace.ly/api"; // mainnet
+}
+
+export function useApi() {
+  if (!api) {
+    createApi();
+  }
+
   return api;
 }
