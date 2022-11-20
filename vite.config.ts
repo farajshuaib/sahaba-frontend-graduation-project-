@@ -71,8 +71,8 @@ export default defineConfig({
         ],
         display: "standalone",
         orientation: "portrait",
-        start_url: "/",
-        scope: "/",
+        start_url: ".",
+        scope: ".",
       },
       devOptions: {
         enabled: !production,
