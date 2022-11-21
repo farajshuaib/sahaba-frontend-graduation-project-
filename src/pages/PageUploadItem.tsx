@@ -82,8 +82,8 @@ const UploadFile: React.FC<UploadFileProps> = ({
             </>
           )}
 
-          <div className="flex text-sm text-neutral-6000 dark:text-neutral-300">
-            <span className="relative font-medium rounded-md cursor-pointer text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500">
+          <div className="flex text-sm text-center text-neutral-6000 dark:text-neutral-300">
+            <span className="relative mx-auto font-medium text-center rounded-md cursor-pointer text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500">
               <span>
                 {values.file_path ? t("replace_file") : t("Upload_image")}
               </span>
@@ -234,10 +234,16 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
               }
 
               try {
-                if (!isApprovedForAll()) {
+                let is_approved = await isApprovedForAll();
+                if (!is_approved) {
                   await setApprovalForAll();
                 }
 
+                // calc the platform fees
+                let feeAmount: number = 0;
+                if (serviceFee > 0) {
+                  feeAmount = values.price * serviceFee;
+                }
                 const tx = await contract.createAndListToken(
                   values.file_path,
                   parseEther(values.price.toString()),

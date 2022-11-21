@@ -116,8 +116,10 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       return;
     }
     setLoadingButton(true);
+
     try {
-      if (!isApprovedForAll()) {
+      let is_approved = await isApprovedForAll();
+      if (!is_approved) {
         await setApprovalForAll();
       }
 

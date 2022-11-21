@@ -141,7 +141,8 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
               }
 
               try {
-                if (!isApprovedForAll()) {
+                let is_approved = await isApprovedForAll();
+                if (!is_approved) {
                   await setApprovalForAll();
                 }
 

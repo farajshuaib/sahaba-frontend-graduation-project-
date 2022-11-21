@@ -943,7 +943,7 @@ export interface SahabaMarketplace extends BaseContract {
 
   createAndListToken(
     tokenURI: PromiseOrValue<string>,
-    price: PromiseOrValue<BigNumberish>,
+    feeAmount: PromiseOrValue<BigNumberish>,
     _collectionId: PromiseOrValue<BigNumberish>,
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
