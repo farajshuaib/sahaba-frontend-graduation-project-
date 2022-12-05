@@ -71,9 +71,10 @@ export default defineConfig({
         ],
         display: "standalone",
         orientation: "portrait",
-      },
-      devOptions: {
-        enabled: !production,
+        start_url: "/",
+        scope: "/",
+        lang: "en",
+        dir: "ltr",
       },
     }),
   ],

@@ -3,6 +3,7 @@ import {
   CONTRACT_ABI,
   CONTRACT_ADDRESS,
   currentNetwork,
+  SAHABA_TEST_COIN_ABI,
   SAHABA_TEST_COIN_ADDRESS,
 } from "./../constant";
 import { toast } from "react-toastify";
@@ -121,6 +122,26 @@ export const getUserSlug = (userData: UserData) => {
   );
 };
 
+
+const approveBuyItem = async (signer:any, account:string) => {
+  const tokenContract = new Contract(
+    SAHABA_TEST_COIN_ADDRESS,
+    SAHABA_TEST_COIN_ABI,
+    signer
+  );
+
+  const allowance = await tokenContract.allowance(
+    account,
+    SAHABA_TEST_COIN_ADDRESS
+  );
+
+  if (!Number(allowance)) {
+    await tokenContract.approve(
+      SAHABA_TEST_COIN_ADDRESS,
+      parseEther("9999999999999999999999999999")
+    );
+  }
+};
 
 // export async function getContract() {
 //   const biconomy = new Biconomy(window.ethereum as ExternalProvider, {
