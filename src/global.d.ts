@@ -1,27 +1,6 @@
 /// <reference types="vite/client" />
 /// <reference types="@types/grecaptcha" />
 
-declare module "virtual:pwa-register/react" {
-  // eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error
-  // @ts-ignore ignore when react is not installed
-  import type { Dispatch, SetStateAction } from "react";
-
-  export interface RegisterSWOptions {
-    immediate?: boolean;
-    onNeedRefresh?: () => void;
-    onOfflineReady?: () => void;
-    onRegistered?: (
-      registration: ServiceWorkerRegistration | undefined
-    ) => void;
-    onRegisterError?: (error: any) => void;
-  }
-
-  export function useRegisterSW(options?: RegisterSWOptions): {
-    needRefresh: [boolean, Dispatch<SetStateAction<boolean>>];
-    offlineReady: [boolean, Dispatch<SetStateAction<boolean>>];
-    updateServiceWorker: (reloadPage?: boolean) => Promise<void>;
-  };
-}
 
 type TwMainColor =
   | "pink"

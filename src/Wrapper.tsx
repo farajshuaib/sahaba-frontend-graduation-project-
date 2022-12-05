@@ -6,10 +6,9 @@ import { Web3ReactProvider } from "@web3-react/core";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { ethers } from "ethers";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { persistor, store } from "app/store";
 import { Web3Provider } from "@ethersproject/providers";
-// import { useRegisterSW } from "virtual:pwa-register/react";
 import useDarkMode from "hooks/useDarkMode";
 import AuthStateWrapper from "components/AuthStateWrapper";
 import { useLocation, useRoutes } from "react-router-dom";
@@ -58,17 +57,6 @@ const Wrapper: React.FC = () => {
   const { i18n } = useTranslation();
   const location = useLocation();
   const {} = useDarkMode();
-
-  // useRegisterSW({
-  //   onNeedRefresh() {},
-  //   onOfflineReady() {},
-  //   onRegistered(r) {
-  //     r &&
-  //       setInterval(() => {
-  //         r.update();
-  //       }, 60 * 60 * 1000);
-  //   },
-  // });
 
   useEffect(() => {
     document.body.dir = i18n.language == "en" ? "ltr" : "rtl";

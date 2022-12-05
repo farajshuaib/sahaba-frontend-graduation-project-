@@ -21,10 +21,6 @@
   ],
   "display": "standalone",
   "orientation": "portrait",
-  "start_url": "/",
-  "scope": "/",
-  "lang": "en",
-  "dir": "ltr",
   "theme_color": "#0084c7",
   "background_color": "#ffffff"
 }
