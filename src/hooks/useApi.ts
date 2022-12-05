@@ -34,9 +34,9 @@ export function deleteToken() {
 
 function setChaidId() {
   if (import.meta.env.MODE === "development") return;
-  api.defaults.params.chainId = window.ethereum.networkVersion;
+  api.defaults.params.chainId = window?.ethereum?.networkVersion || 1;
   api.defaults.baseURL =
-    window.ethereum.networkVersion == 5
+    window?.ethereum?.networkVersion == 5
       ? "https://sahabanft.bluespace.ly/api" // testnet
       : "https://sahabanft.bluespace.ly/api"; // mainnet
 }

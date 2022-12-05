@@ -25,6 +25,7 @@ export const getBalance = async (address: string) => {
 };
 
 export const addTokenAsset = async () => {
+  if (!window?.ethereum) return
   try {
     await window.ethereum.request({
       method: "wallet_watchAsset",
@@ -44,6 +45,7 @@ export const addTokenAsset = async () => {
 };
 
 export const switchNetwork = () => {
+  if (!window?.ethereum) return
   return new Promise(async (resolve, reject) => {
     try {
       await window.ethereum.request({

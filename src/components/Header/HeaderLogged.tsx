@@ -25,7 +25,7 @@ const Alerts: FC = () => {
           </span>
         </Alert>
       )}
-      {!window.ethereum && (
+      {!window?.ethereum && (
         <Alert color="warning">
           <span className="block w-screen font-medium text-center">
             <span>{t("no_provider")}</span>{" "}
