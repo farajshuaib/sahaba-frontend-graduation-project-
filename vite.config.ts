@@ -1,13 +1,9 @@
-/// <reference types="vite/client" />
-
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import viteTsconfigPaths from "vite-tsconfig-paths";
 import svgrPlugin from "vite-plugin-svgr";
 import GlobalsPolyfills from "@esbuild-plugins/node-globals-polyfill";
-import reactRefresh from "@vitejs/plugin-react-refresh";
 import nodePolyfills from "rollup-plugin-polyfill-node";
-import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 import dns from "dns";
 
 const production = process.env.NODE_ENV === "production";
@@ -25,7 +21,6 @@ export default defineConfig({
   plugins: [
     react(),
     viteTsconfigPaths(),
-    reactRefresh(),
     svgrPlugin(),
     !production &&
       nodePolyfills({
