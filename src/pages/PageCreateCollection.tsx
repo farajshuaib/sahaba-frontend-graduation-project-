@@ -50,6 +50,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
   const { account } = useWeb3React();
   const fileInput = useRef<HTMLInputElement>(null);
   const { contract, isApprovedForAll, setApprovalForAll } = useContract();
+  const { chainId } = useWeb3React();
 
   const userData = useAppSelector(
     (state) => state.account.userData
@@ -67,7 +68,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
     instagram_url: "",
     is_sensitive_content: false,
     category_id: null,
-    blockchain_id: 5,
+    blockchain_id: chainId,
   });
 
   useEffect(() => {
@@ -86,7 +87,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
         website_url: item.website_url || "",
         instagram_url: item.instagram_url || "",
         category_id: item.category.id,
-        blockchain_id: item?.blockchain?.id || 5,
+        blockchain_id: item?.blockchain?.id,
       });
       setLogoImage(item?.logo_image);
       setBannerImage(item?.banner_image);
@@ -390,7 +391,13 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                       onBlur={handleBlur("blockchain_id")}
                       placeholder="select blockchain"
                     >
-                      <option>Ethereum</option>
+                      <option value={chainId}>
+                        {chainId == 1
+                          ? "Ethereum"
+                          : chainId == 5
+                          ? "Goerli"
+                          : ""}
+                      </option>
                     </Select>
                   </div>
                   <ErrorMessage
