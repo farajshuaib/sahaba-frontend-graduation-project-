@@ -25,7 +25,9 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const userData = useAppSelector((state) => state.account.userData) as UserData;
+  const userData = useAppSelector(
+    (state) => state.account.userData
+  ) as UserData;
   const [profileImage, setProfileImage] = useState<string>("");
   const [bannerImage, setBannerImage] = useState<string>("");
   const recaptcha = useRecaptcha();
@@ -55,8 +57,8 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
         username: userData.username,
         email: userData.email,
         bio: userData.bio,
-        banner_photo: userData.banner_photo,
-        profile_photo: userData.profile_photo,
+        banner_photo: userData.banner_photo || "",
+        profile_photo: userData.profile_photo || "",
         facebook_url: userData.social_links?.facebook_url || "",
         twitter_url: userData.social_links?.twitter_url || "",
         telegram_url: userData.social_links?.telegram_url || "",
@@ -97,14 +99,15 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
             <Formik
               initialValues={initFormState}
               validationSchema={updateAccountSchema}
+              enableReinitialize
               onSubmit={async (values) => {
                 if (!recaptcha) {
                   toast.error("Beep-bop, you're a robot!");
                   return;
                 }
-  
+
                 const token = await checkCapatcha();
-  
+
                 if (!token) {
                   toast.error(t("please_verify_you_are_not_a_robot"));
                   return;
@@ -261,7 +264,11 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                             onBlur={handleBlur("first_name")}
                             onChange={handleChange("first_name")}
                           />
-                          <ErrorMessage name="first_name" component="p" className="text-sm text-red-600" />
+                          <ErrorMessage
+                            name="first_name"
+                            component="p"
+                            className="text-sm text-red-600"
+                          />
                         </div>
                         <div className="flex-grow">
                           <Label htmlFor="last_name">{t("Last_name")}</Label>
@@ -274,7 +281,11 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                             onBlur={handleBlur("last_name")}
                             onChange={handleChange("last_name")}
                           />
-                          <ErrorMessage name="last_name" component="p" className="text-sm text-red-600" />
+                          <ErrorMessage
+                            name="last_name"
+                            component="p"
+                            className="text-sm text-red-600"
+                          />
                         </div>
                       </div>
                       <div>
@@ -293,7 +304,11 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                             )
                           }
                         />
-                        <ErrorMessage name="username" component="p" className="text-sm text-red-600"  />
+                        <ErrorMessage
+                          name="username"
+                          component="p"
+                          className="text-sm text-red-600"
+                        />
                       </div>
 
                       {/* ---- */}
@@ -314,7 +329,11 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                             onBlur={handleBlur("email")}
                           />
                         </div>
-                        <ErrorMessage name="email" component="p" className="text-sm text-red-600"  />
+                        <ErrorMessage
+                          name="email"
+                          component="p"
+                          className="text-sm text-red-600"
+                        />
                       </div>
 
                       {/* ---- */}
@@ -330,7 +349,11 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                           onBlur={handleBlur("bio")}
                           placeholder="Something about yourself in a few word."
                         />
-                        <ErrorMessage name="bio" component="p" className="text-sm text-red-600"  />
+                        <ErrorMessage
+                          name="bio"
+                          component="p"
+                          className="text-sm text-red-600"
+                        />
                       </div>
 
                       {/* ---- */}
@@ -351,7 +374,11 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                             placeholder="your website.com"
                           />
                         </div>
-                        <ErrorMessage name="website_url"  component="p" className="text-sm text-red-600" />
+                        <ErrorMessage
+                          name="website_url"
+                          component="p"
+                          className="text-sm text-red-600"
+                        />
                       </div>
 
                       {/* ---- */}
@@ -374,7 +401,11 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                               sizeClass="h-11 px-4 pl-2 pr-3"
                             />
                           </div>
-                          <ErrorMessage name="facebook_url" component="p" className="text-sm text-red-600" />
+                          <ErrorMessage
+                            name="facebook_url"
+                            component="p"
+                            className="text-sm text-red-600"
+                          />
                         </div>
                         <div>
                           <Label>{t("Twitter")}</Label>
@@ -394,7 +425,11 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                               sizeClass="h-11 px-4 pl-2 pr-3"
                             />
                           </div>
-                          <ErrorMessage name="twitter_url" component="p" className="text-sm text-red-600"  />
+                          <ErrorMessage
+                            name="twitter_url"
+                            component="p"
+                            className="text-sm text-red-600"
+                          />
                         </div>
                         <div>
                           <Label>{t("Telegram")}</Label>
@@ -414,7 +449,11 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                               sizeClass="h-11 px-4 pl-2 pr-3"
                             />
                           </div>
-                          <ErrorMessage name="telegram_url" component="p" className="text-sm text-red-600"  />
+                          <ErrorMessage
+                            name="telegram_url"
+                            component="p"
+                            className="text-sm text-red-600"
+                          />
                         </div>
                         <div>
                           <Label>{t("Instagram")}</Label>
@@ -434,7 +473,11 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                               sizeClass="h-11 px-4 pl-2 pr-3"
                             />
                           </div>
-                          <ErrorMessage name="instagram_url" component="p" className="text-sm text-red-600"  />
+                          <ErrorMessage
+                            name="instagram_url"
+                            component="p"
+                            className="text-sm text-red-600"
+                          />
                         </div>
                       </div>
 
