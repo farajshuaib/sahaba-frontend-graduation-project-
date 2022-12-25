@@ -188,6 +188,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
 
                 navigate(-1);
               } catch (error) {
+                toast.error(t("something_went_wrong"));
                 console.log(error);
               }
             }}
@@ -215,7 +216,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   <div className="mt-5 ">
                     <label
                       htmlFor="file-upload"
-                      className={`flex relative overflow-hidden justify-center mt-1 border-2 border-dashed ${
+                      className={`flex cursor-pointer relative overflow-hidden justify-center mt-1 border-2 border-dashed ${
                         touched.banner_image && errors.banner_image
                           ? "border-red-600"
                           : "border-neutral-300 dark:border-neutral-6000"
@@ -242,7 +243,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                         </svg>
                         <div className="flex text-sm text-neutral-6000 dark:text-neutral-300">
                           <span className="relative font-medium rounded-md cursor-pointer text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500">
-                            <span>{t("Upload_image")}</span>
+                            <span>{t("Upload_collection_cover_image")}</span>
                             <input
                               id="file-upload"
                               name="file-upload"

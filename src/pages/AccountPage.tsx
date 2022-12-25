@@ -146,8 +146,9 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
               }) => (
                 <>
                   <div className="w-full mt-5">
-                    <div
-                      className={`flex relative overflow-hidden justify-center mt-1 border-2 border-dashed ${
+                    <label
+                      htmlFor="file-upload"
+                      className={`flex relative cursor-pointer overflow-hidden justify-center mt-1 border-2 border-dashed ${
                         touched.banner_photo && errors.banner_photo
                           ? "border-red-600"
                           : "border-neutral-300 dark:border-neutral-6000"
@@ -177,7 +178,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                             htmlFor="file-upload"
                             className="relative font-medium rounded-md cursor-pointer text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500"
                           >
-                            <span>{t("Upload_banner_image")}</span>
+                            <span>{t("Upload_profile_banner_image")}</span>
                             <input
                               id="file-upload"
                               name="file-upload"
@@ -205,7 +206,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                           alt={"collection banner image"}
                         />
                       )}
-                    </div>
+                    </label>
                   </div>
                   <div className="flex flex-col md:flex-row">
                     <div className="flex items-start flex-shrink-0">

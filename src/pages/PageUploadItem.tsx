@@ -13,8 +13,8 @@ import { useAppSelector } from "app/hooks";
 import { useWeb3React } from "@web3-react/core";
 import useIpfs from "hooks/useIpfs";
 import { useCrud } from "hooks/useCrud";
-import { CONTRACT_ABI, CONTRACT_ADDRESS, IPFS_BASE_URL } from "constant";
-import { BigNumber, Contract, utils } from "ethers";
+import { IPFS_BASE_URL } from "constant";
+import { BigNumber, utils } from "ethers";
 import { createNftSchema, validateImage } from "services/validations";
 import { toast } from "react-toastify";
 import { formatEther, parseEther } from "ethers/lib/utils";
@@ -44,13 +44,13 @@ const UploadFile: React.FC<UploadFileProps> = ({
 
   return (
     <div>
-      <h3 className="text-lg font-semibold sm:text-2xl">Art Image</h3>
+      <h3 className="text-lg font-semibold sm:text-2xl">Image</h3>
       <span className="text-sm text-neutral-500 dark:text-neutral-400">
         {t("supported_files")}
       </span>
       <label
         htmlFor="file-upload"
-        className={`mt-5 relative flex justify-center px-6 pt-5 pb-6  border-2 border-dashed ${
+        className={`mt-5 relative cursor-pointer flex justify-center px-6 pt-5 pb-6  border-2 border-dashed ${
           touched.file_path && errors.file_path
             ? "border-red-600"
             : "border-neutral-300 dark:border-neutral-6000"
@@ -62,7 +62,16 @@ const UploadFile: React.FC<UploadFileProps> = ({
           ) : (
             <>
               {values.file_path ? (
-                <i className="text-5xl text-green-500 bx bx-check-circle"></i>
+                <div className="mx-auto text-center">
+                  <i className="block mx-auto text-5xl text-green-500 bx bx-check-circle"></i>
+                  <a
+                    href={values.file_path}
+                    target="_blank"
+                    className="block mx-auto my-2 text-sm leading-relaxed tracking-wide text-center text-black hover:underline dark:text-white"
+                  >
+                    {t("preview")}
+                  </a>
+                </div>
               ) : (
                 <svg
                   className="w-12 h-12 mx-auto text-neutral-400"
@@ -85,7 +94,7 @@ const UploadFile: React.FC<UploadFileProps> = ({
           <div className="flex text-sm text-center text-neutral-6000 dark:text-neutral-300">
             <span className="relative mx-auto font-medium text-center rounded-md cursor-pointer text-primary-6000 hover:text-primary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500">
               <span>
-                {values.file_path ? t("replace_file") : t("Upload_image")}
+                {values.file_path ? t("replace_file") : t("Upload_your_art")}
               </span>
               <input
                 id="file-upload"
@@ -120,7 +129,7 @@ const UploadFile: React.FC<UploadFileProps> = ({
             {/* <p className="pl-1">{t("or_drag_and_drop")}</p> */}
           </div>
           <p className="text-xs text-neutral-500 dark:text-neutral-400">
-            PNG, JPG, GIF up to 10MB
+            PNG, JPEG, WEBP, JPG, GIF up to 10MB
           </p>
         </div>
       </label>
@@ -178,14 +187,14 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
       data-nc-id="PageUploadItem"
     >
       <Helmet>
-        <title>Create NFT</title>
+        <title>Mint an NFT</title>
       </Helmet>
       <div className="container">
         <div className="max-w-4xl mx-auto my-12 space-y-8 sm:lg:my-16 lg:my-24 sm:space-y-10">
           {/* HEADING */}
           <div className="max-w-2xl">
             <h2 className="text-3xl font-semibold sm:text-4xl">
-              {t("Create_New_NFT")}
+              {t("Mint an NFT")}
             </h2>
             <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
               {t("Create_NFT_desc")}
@@ -291,10 +300,106 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
               isSubmitting,
               handleReset,
             }) => (
-              <div
-                onDrop={(e) => console.log(e)}
-                className="mt-10 space-y-5 md:mt-0 sm:space-y-6 md:sm:space-y-8"
-              >
+              <div className="mt-10 space-y-5 md:mt-0 sm:space-y-6 md:sm:space-y-8">
+                {/* select collection */}
+                <div>
+                  <Label>{t("Choose_collection")}</Label>
+                  <div className="text-sm text-neutral-500 dark:text-neutral-400">
+                    {t("Choose_collection_desc")}
+                  </div>
+                  {myCollections && myCollections.length > 0 ? (
+                    <RadioGroup
+                      value={
+                        myCollections &&
+                        myCollections?.find(
+                          (collection) => collection.id == values.collection_id
+                        )
+                      }
+                      onChange={(collection) => {
+                        if (!collection) return;
+                        setFieldValue("collection_id", collection.id);
+                      }}
+                    >
+                      <RadioGroup.Label className="sr-only">
+                        Server size
+                      </RadioGroup.Label>
+                      <div className="flex py-2 space-x-4 overflow-auto customScrollBar">
+                        {myCollections &&
+                          myCollections.map((collection: Collection, index) => (
+                            <RadioGroup.Option
+                              key={index}
+                              value={collection}
+                              className={({ active, checked }) =>
+                                `${
+                                  active
+                                    ? "ring-2 ring-offset-2 ring-offset-sky-300 ring-white ring-opacity-60"
+                                    : ""
+                                }
+                  ${
+                    checked
+                      ? "bg-teal-600 text-white"
+                      : "hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                  }
+                    relative flex-shrink-0 w-44 rounded-xl border border-neutral-200 dark:border-neutral-700 px-6 py-5 cursor-pointer flex focus:outline-none `
+                              }
+                            >
+                              {({ active, checked }) => (
+                                <>
+                                  <div className="flex items-center justify-between w-full">
+                                    <div className="flex items-center">
+                                      <div className="text-sm">
+                                        <div className="flex items-center justify-between">
+                                          <RadioGroup.Description
+                                            as="div"
+                                            className={"rounded-full w-16"}
+                                          >
+                                            <NcImage
+                                              containerClassName="aspect-w-1 aspect-h-1 rounded-full overflow-hidden"
+                                              src={collection.logo_image}
+                                            />
+                                          </RadioGroup.Description>
+                                          {checked && (
+                                            <div className="flex-shrink-0 text-white">
+                                              <CheckIcon className="w-6 h-6" />
+                                            </div>
+                                          )}
+                                        </div>
+                                        <RadioGroup.Label
+                                          as="p"
+                                          className={`font-semibold mt-3  ${
+                                            checked ? "text-white" : ""
+                                          }`}
+                                        >
+                                          {collection.name}
+                                        </RadioGroup.Label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </>
+                              )}
+                            </RadioGroup.Option>
+                          ))}
+                      </div>
+                    </RadioGroup>
+                  ) : (
+                    <div className="flex justify-center ">
+                      <ButtonPrimary
+                        href={"/create-collection"}
+                        className="relative z-10 block mx-auto my-12"
+                      >
+                        {t("Create_your_own_collection")}
+                      </ButtonPrimary>
+                    </div>
+                  )}
+                  <ErrorMessage
+                    name="collection_id"
+                    component={"span"}
+                    className="text-sm text-red-600"
+                  />
+                </div>
+                {/* divider */}
+                <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
+                {/* upload image component */}
                 <UploadFile
                   setFieldValue={(key, value) => setFieldValue(key, value)}
                   values={values}
@@ -392,104 +497,6 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                     <span className="">{ownerReceived} ETH</span>
                     <span className="">≈ {usdPrice(ownerReceived)}</span>
                   </div>
-                </div>
-
-                <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
-
-                <div>
-                  <Label>{t("Choose_collection")}</Label>
-                  <div className="text-sm text-neutral-500 dark:text-neutral-400">
-                    {t("Choose_collection_desc")}
-                  </div>
-                  {myCollections && myCollections.length > 0 ? (
-                    <RadioGroup
-                      value={
-                        myCollections &&
-                        myCollections?.find(
-                          (collection) => collection.id == values.collection_id
-                        )
-                      }
-                      onChange={(collection) => {
-                        if (!collection) return;
-                        setFieldValue("collection_id", collection.id);
-                      }}
-                    >
-                      <RadioGroup.Label className="sr-only">
-                        Server size
-                      </RadioGroup.Label>
-                      <div className="flex py-2 space-x-4 overflow-auto customScrollBar">
-                        {myCollections &&
-                          myCollections.map((collection: Collection, index) => (
-                            <RadioGroup.Option
-                              key={index}
-                              value={collection}
-                              className={({ active, checked }) =>
-                                `${
-                                  active
-                                    ? "ring-2 ring-offset-2 ring-offset-sky-300 ring-white ring-opacity-60"
-                                    : ""
-                                }
-                  ${
-                    checked
-                      ? "bg-teal-600 text-white"
-                      : "hover:bg-neutral-100 dark:hover:bg-neutral-800"
-                  }
-                    relative flex-shrink-0 w-44 rounded-xl border border-neutral-200 dark:border-neutral-700 px-6 py-5 cursor-pointer flex focus:outline-none `
-                              }
-                            >
-                              {({ active, checked }) => (
-                                <>
-                                  <div className="flex items-center justify-between w-full">
-                                    <div className="flex items-center">
-                                      <div className="text-sm">
-                                        <div className="flex items-center justify-between">
-                                          <RadioGroup.Description
-                                            as="div"
-                                            className={"rounded-full w-16"}
-                                          >
-                                            <NcImage
-                                              containerClassName="aspect-w-1 aspect-h-1 rounded-full overflow-hidden"
-                                              src={collection.logo_image}
-                                            />
-                                          </RadioGroup.Description>
-                                          {checked && (
-                                            <div className="flex-shrink-0 text-white">
-                                              <CheckIcon className="w-6 h-6" />
-                                            </div>
-                                          )}
-                                        </div>
-                                        <RadioGroup.Label
-                                          as="p"
-                                          className={`font-semibold mt-3  ${
-                                            checked ? "text-white" : ""
-                                          }`}
-                                        >
-                                          {collection.name}
-                                        </RadioGroup.Label>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </>
-                              )}
-                            </RadioGroup.Option>
-                          ))}
-                      </div>
-                    </RadioGroup>
-                  ) : (
-                    <div className="flex justify-center ">
-                      <ButtonPrimary
-                        href={"/create-collection"}
-                        className="relative z-10 block mx-auto my-12"
-                      >
-                        {t("Create_your_own_collection")}
-                      </ButtonPrimary>
-                    </div>
-                  )}
-                  <ErrorMessage
-                    name="collection_id"
-                    component={"span"}
-                    className="text-sm text-red-600"
-                  />
                 </div>
 
                 {!!error && (

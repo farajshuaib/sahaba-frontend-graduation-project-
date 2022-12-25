@@ -49,7 +49,7 @@ const LocalesDropDown: React.FC<Props> = ({ labeled }) => {
                       className={`${
                         item.key == i18n.language &&
                         "bg-gray-100 dark:bg-gray-700"
-                      } relative flex  px-12 py-2 transition duration-150 ease-in-out rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50`}
+                      } relative flex text-center px-12 py-2 transition duration-150 ease-in-out rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50`}
                     >
                       {item.value}
                     </button>
