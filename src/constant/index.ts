@@ -6,7 +6,7 @@ import coin_abi from "../contracts/coin_abi.json";
 export const currentNetwork: string =
   import.meta.env.VITE_DEV_MODE == "production" ? "1" : "5";
 export const IPFS_BASE_URL: string = "https://ipfs.io/ipfs/";
-export const WEBSITE_URL: string = "https://sahabanft.netlify.app";
+export const WEBSITE_URL: string = "https://sahabanft.com.ly";
 
 export const SAHABA_TEST_COIN_ADDRESS: string =
   "0x54460CC6574442b1ac12dd71C509Ac421E3Ab031";

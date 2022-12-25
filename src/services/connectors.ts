@@ -7,14 +7,14 @@ export const injected = new InjectedConnector({
 });
 
 const walletconnect = new WalletConnectConnector({
-  rpc: `https://polygon-rpc.com/${import.meta.env.VITE_INFURA_KEY || ""}`,
+  rpc: `https://goerli.infura.io/v3/${import.meta.env.VITE_INFURA_KEY || ""}`,
   bridge: "https://bridge.walletconnect.org",
   qrcode: true,
 });
 
 const walletlink = new WalletLinkConnector({
-  url: `https://polygon-rpc.com/${import.meta.env.VITE_INFURA_KEY || ""}`,
-  appName: "Spectrum",
+  url: `https://goerli.infura.io/v3/${import.meta.env.VITE_INFURA_KEY || ""}`,
+  appName: "sahabanft",
 });
 
 export const connectors = {
