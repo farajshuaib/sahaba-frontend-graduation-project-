@@ -214,7 +214,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                     {t("Floor_Price")}
                   </span>
                   <span className="mt-4 text-base font-medium sm:text-xl sm:mt-6">
-                    {collection?.min_price || 0} ETH
+                    {parseFloat(collection?.min_price).toFixed(4) || 0} ETH
                   </span>
                   <span className="mt-1 text-xs text-green-500"> --</span>
                 </div>
@@ -225,7 +225,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                     {t("Volume")}
                   </span>
                   <span className="mt-4 text-base font-medium sm:text-xl sm:mt-6">
-                    {collection?.volume || 0} ETH
+                    {parseFloat(collection?.volume).toFixed(4) || 0} ETH
                   </span>
                   <span className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
                     {t("total")}
@@ -237,7 +237,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                     {t("Latest_Price")}
                   </span>
                   <span className="mt-4 text-base font-medium sm:text-xl sm:mt-6">
-                    {collection?.max_price || 0} ETH
+                    {parseFloat(collection?.max_price).toFixed(4) || 0} ETH
                   </span>
                   <span className="mt-1 text-xs text-green-500"> --</span>
                 </div>
