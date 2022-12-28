@@ -174,8 +174,8 @@ const FollowTab: React.FC<FollowTabsProps> = ({
     <React.Fragment>
       <div className="grid gap-8 mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:mt-10">
         {data && data.length > 0 ? (
-          data.map(({ user }, index) => (
-            <CardAuthorBox4 user={user} key={index} />
+          data.map((data, index) => (
+            <CardAuthorBox4 user={data?.user || data} key={index} />
           ))
         ) : (
           <div className="flex flex-col items-center justify-start col-span-4 mx-auto">

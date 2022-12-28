@@ -38,7 +38,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
         <div className="p-4 space-y-3 bg-white shadow-lg nc-CardLarge1__left sm:p-8 xl:py-14 md:px-10 dark:bg-neutral-900 rounded-3xl sm:space-y-8 ">
           {/* TITLE */}
           <h2 className="text-2xl font-semibold lg:text-3xl 2xl:text-5xl ">
-            <Link to={`/nft-details/${nft}`} title="Walking On Air">
+            <Link to={`/nft-details/${nft.id}`} title="Walking On Air">
               {nft?.title}
             </Link>
           </h2>

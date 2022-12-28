@@ -57,9 +57,9 @@
   "Floor_Price": "أدنى سعر",
   "Follow": "تابع",
   "Followers": "متابعون",
-  "Following": "متابع",
+  "Following": "المتابعين",
   "Followings": "المتابعون",
-  "Gender": "جنس",
+  "Gender": "الجنس",
   "Hours": "ساعات",
   "Install_app": "تثبيت التطبيق",
   "Internal_server_error": "خطأ في الخادم الداخلي",
@@ -286,6 +286,6 @@
   "Mint an NFT": "النعناع و NFT",
   "Upload_collection_cover_image": "تحميل صورة غلاف المجموعة",
   "Upload_profile_banner_image": "تحميل صورة لافتة الملف الشخصي",
-  "Upload_your_art": "قم بتحميل فنك",
+  "Upload_your_art": "قم بتحميل فنّْك",
   "preview": "معاينة"
 }
