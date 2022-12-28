@@ -32,8 +32,7 @@ export function deleteToken() {
 }
 
 function setChaidId() {
-  if (import.meta.env.MODE === "development") return;
-  api.defaults.params.chainId = window?.ethereum?.networkVersion || 1;
+  api.defaults.params.chainId = window?.ethereum?.networkVersion || 5;
 }
 
 export function useApi() {

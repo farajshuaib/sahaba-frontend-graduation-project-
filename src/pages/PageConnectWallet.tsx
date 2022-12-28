@@ -29,7 +29,7 @@ const plans = [
     provider: "injected",
   },
   {
-    name: "Walletconnect",
+    name: "WalletConnect",
     connector: connectors.walletConnect,
     provider: "walletConnect",
     img: walletconnectImg,

@@ -3,22 +3,30 @@ import { WalletConnectConnector } from "@web3-react/walletconnect-connector"; //
 import { WalletLinkConnector } from "@web3-react/walletlink-connector"; // Coinbase Wallet
 
 export const injected = new InjectedConnector({
-  supportedChainIds: [1,5],
+  supportedChainIds: [1, 5],
 });
 
-const walletconnect = new WalletConnectConnector({
-  rpc: `https://goerli.infura.io/v3/${import.meta.env.VITE_INFURA_KEY || ""}`,
+const CoinbaseWallet = new WalletLinkConnector({
+  url:
+    window?.ethereum?.networkVersion == 5
+      ? "https://goerli.infura.io/v3/" + import.meta.env.VITE_INFURA_KEY
+      : "https://mainnet.infura.io/v3/" + import.meta.env.VITE_INFURA_KEY,
+  appName: "SahabaNFT",
+  supportedChainIds: [1, 5],
+});
+
+const walletConnect = new WalletConnectConnector({
+  rpc: {
+    5: "https://goerli.infura.io/v3/" + import.meta.env.VITE_INFURA_KEY,
+    1: "https://mainnet.infura.io/v3/" + import.meta.env.VITE_INFURA_KEY,
+  },
   bridge: "https://bridge.walletconnect.org",
   qrcode: true,
-});
-
-const walletlink = new WalletLinkConnector({
-  url: `https://goerli.infura.io/v3/${import.meta.env.VITE_INFURA_KEY || ""}`,
-  appName: "sahabanft",
+  supportedChainIds: [1, 5],
 });
 
 export const connectors = {
-  injected: injected,
-  walletConnect: walletconnect,
-  coinbaseWallet: walletlink,
+  injected,
+  walletConnect,
+  coinbaseWallet: CoinbaseWallet,
 };
