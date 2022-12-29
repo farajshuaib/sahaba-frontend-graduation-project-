@@ -20,7 +20,7 @@ export const createCollectionSchema = yup.object().shape({
     })
     .required(),
   name: yup.string().required(t("validations.name_is_required")),
-  description: yup.string().required(t("validations.description_is_required")),
+  description: yup.string().required(t("validations.description_is_required")).max(1000),
   facebook_url: yup.string().url(t("validations.url_invalid")).nullable(),
   twitter_url: yup.string().url(t("validations.url_invalid")).nullable(),
   telegram_url: yup.string().url(t("validations.url_invalid")).nullable(),
@@ -30,7 +30,7 @@ export const createCollectionSchema = yup.object().shape({
 
 export const updateCollectionSchema = yup.object().shape({
   name: yup.string().required(t("validations.name_is_required")),
-  description: yup.string().required(t("validations.description_is_required")),
+  description: yup.string().required(t("validations.description_is_required")).max(1000),
   facebook_url: yup.string().url(t("validations.url_invalid")).nullable(),
   twitter_url: yup.string().url(t("validations.url_invalid")).nullable(),
   telegram_url: yup.string().url(t("validations.url_invalid")).nullable(),
@@ -40,7 +40,7 @@ export const updateCollectionSchema = yup.object().shape({
 
 export const createNftSchema = yup.object().shape({
   title: yup.string().required(t("validations.title_is_required")),
-  description: yup.string().required(t("validations.description_is_required")),
+  description: yup.string().required(t("validations.description_is_required")).max(1000),
   file_path: yup.string().required(t("validations.image_is_required")),
   collection_id: yup.number().required(t("validations.collection_is_required")),
   price: yup
