@@ -20,7 +20,6 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   const [isLiked, setIsLiked] = useState(liked);
   const [likeCount, setLikeCount] = useState<number>(like_count);
 
-  console.log("liked", liked);
 
   return (
     <button

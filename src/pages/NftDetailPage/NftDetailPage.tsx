@@ -84,8 +84,6 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     }
   };
 
- 
-
   const buyNft = async () => {
     if (!userData) {
       navigate("/connect-wallet");
@@ -112,11 +110,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
         gasLimit: 3 * 10 ** 6,
       });
 
-      console.log("transaction", transaction);
-
-      const response = await transaction.wait();
-
-      console.log("response", response);
+      await transaction.wait();
 
       await submitBuyNft({ tx_hash: transaction.hash });
 
@@ -125,7 +119,6 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       await fetchById(params.id);
       setLoadingButton(false);
     } catch (err: any) {
-      console.log(err?.error?.message ?? err);
       toast.error(err?.response?.data?.message || t("system_error"));
     }
     setLoadingButton(false);

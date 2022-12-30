@@ -83,7 +83,6 @@ const ModalEdit: FC<ModalEditProps> = ({
       setLoading(false);
       onCloseModalEdit();
     } catch (error) {
-      console.log(error);
       setLoading(false);
     }
   };

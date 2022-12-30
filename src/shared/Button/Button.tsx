@@ -32,13 +32,13 @@ const Button: FC<ButtonProps> = ({
   onClick = () => {},
 }) => {
   const CLASSES =
-    `nc-Button relative h-auto inline-flex items-center justify-center rounded-full transition-colors ${fontSize} ${sizeClass} ${translate} ${className} ` +
+    `nc-Button relative h-auto inline-flex gap-3 items-center justify-center rounded-full transition-colors ${fontSize} ${sizeClass} ${translate} ${className} ` +
     twFocusClass(true);
 
   const _renderLoading = () => {
     return (
       <svg
-        className="w-5 h-5 mr-3 -ml-1 animate-spin"
+        className="w-5 h-5 animate-spin"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
@@ -77,7 +77,7 @@ const Button: FC<ButtonProps> = ({
   return (
     <button
       disabled={disabled || loading}
-      className={`${CLASSES}`}
+      className={`${CLASSES} `}
       onClick={onClick}
       type={type}
     >

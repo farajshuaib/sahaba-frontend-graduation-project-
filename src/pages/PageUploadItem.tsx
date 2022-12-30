@@ -41,6 +41,7 @@ const UploadFile: React.FC<UploadFileProps> = ({
   const { t } = useTranslation();
   const [uploadLoading, setUploadLoading] = useState<boolean>(false);
   const ipfs = useIpfs();
+  const { i18n } = useTranslation();
 
   return (
     <div>
@@ -151,6 +152,7 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
   const [error, setError] = useState<string>("");
   const [serviceFee, setServiceFee] = useState<number>(0);
   const [ownerReceived, setOwnerReceived] = useState<number>(0);
+  const { i18n } = useTranslation();
 
   const recaptcha = useRecaptcha();
 
@@ -211,8 +213,9 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
               collection_id: 0,
             }}
             validationSchema={createNftSchema}
-            onSubmit={async (values, { setFieldError, setSubmitting }) => {
+            onSubmit={async (values, { setFieldError }) => {
               if (userData && userData?.status === "suspended") {
+                toast.error(t("Your_account_is_suspended"));
                 setError(t("Your_account_is_suspended"));
                 return;
               }
@@ -258,11 +261,8 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                   parseEther(values.price.toString()),
                   values.collection_id
                 );
-                console.log("tx => ", tx);
 
                 const res = await tx.wait();
-
-                console.log("res => ", res);
 
                 if (!res.events) {
                   toast.error(t("something_went_wrong"));
@@ -272,8 +272,6 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                 const token_id = BigNumber.from(
                   res.events[0].args?.tokenId
                 ).toString();
-
-                console.log(token_id);
 
                 await create({
                   ...values,
@@ -462,7 +460,13 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                     desc={`${+serviceFee * 100}% ${t("service_fees")}`}
                   >
                     <div className="relative flex">
-                      <span className="inline-flex items-center px-3 text-sm border border-r-0 rounded-l-2xl border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">
+                      <span
+                        className={`inline-flex items-center px-3 text-sm border ${
+                          i18n.language == "ar"
+                            ? "border-l-0 rounded-r-2xl"
+                            : "border-r-0 rounded-l-2xl"
+                        }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
+                      >
                         ETH
                       </span>
                       <Input
@@ -477,10 +481,16 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                         onBlur={handleBlur("price")}
                         min={0.001}
                         max={5.0}
-                        className="!rounded-l-none w-full"
+                        className={` rounded-none z-10 w-full `}
                         placeholder="0.01"
                       />
-                      <span className="absolute right-0 p-3 text-sm align-middle border border-l-0 rounded-r-2xl border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 whitespace-nowrap">
+                      <span
+                        className={`inline-flex items-center px-3 text-sm align-middle border  ${
+                          i18n.language == "ar"
+                            ? "border-r-0 rounded-l-2xl"
+                            : "border-l-0 rounded-r-2xl"
+                        }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 whitespace-nowrap`}
+                      >
                         {usdPrice(+values.price)}
                       </span>
                     </div>
@@ -506,7 +516,7 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                 )}
 
                 {/* ---- */}
-                <div className="flex flex-col pt-2 space-x-0 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3 ">
+                <div className="flex flex-col gap-2 pt-2 space-x-0 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3 ">
                   <ButtonPrimary
                     loading={isSubmitting}
                     type="submit"

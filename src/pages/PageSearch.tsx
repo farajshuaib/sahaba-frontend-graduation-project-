@@ -32,6 +32,7 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
     nfts_count: 0,
     collections_count: 0,
   });
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     submitSearch();
@@ -66,7 +67,7 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
       />
       <div className="container">
         <header className="flex flex-col max-w-2xl mx-auto -mt-10 lg:-mt-7">
-          <form className="relative w-full " method="post">
+          <div className="relative w-full ">
             <label
               htmlFor="search-input"
               className="text-neutral-500 dark:text-neutral-300"
@@ -79,7 +80,7 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
                 onChange={(e) => setSearch(e.currentTarget.value)}
                 autoComplete="search"
                 placeholder={t("Type_your_keywords")}
-                sizeClass="pl-14 py-5 pr-5 md:pl-16"
+                sizeClass={`${i18n.language == 'ar' ? "pr-14 md:pr-16" : "pl-14 md:pl-16"}  py-5 pr-5 `}
                 rounded="rounded-full"
               />
               <ButtonCircle
@@ -114,7 +115,7 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
                 </svg>
               </span>
             </label>
-          </form>
+          </div>
         </header>
       </div>
 

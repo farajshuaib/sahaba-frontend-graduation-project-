@@ -90,7 +90,7 @@ const AuthorPage: FC<AuthorPageProps> = ({ className = "" }) => {
                   {"@" + item.username}
                 </h2>
                 <div className="flex items-center text-sm font-medium space-x-2.5 mt-2.5 text-green-600 cursor-pointer">
-                  <span className="text-neutral-700 dark:text-neutral-300">
+                  <span className="truncate text-neutral-700 dark:text-neutral-300">
                     {item?.wallet_address}
                   </span>
                   <svg

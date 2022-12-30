@@ -51,6 +51,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
   const fileInput = useRef<HTMLInputElement>(null);
   const { contract, isApprovedForAll, setApprovalForAll } = useContract();
   const { chainId } = useWeb3React();
+  const { i18n } = useTranslation();
 
   const userData = useAppSelector(
     (state) => state.account.userData
@@ -189,7 +190,6 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                 navigate(-1);
               } catch (error) {
                 toast.error(t("something_went_wrong"));
-                console.log(error);
               }
             }}
           >
@@ -375,7 +375,12 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                 <div className="">
                   <Label htmlFor="blockchain_id">{t("Blockchain")}</Label>
                   <div className="mt-1.5 flex">
-                    <span className="inline-flex items-center px-3 text-sm border border-r-0 rounded-l-2xl border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">
+                    <span className={`inline-flex items-center px-3 text-sm border ${
+                                i18n.language == "ar"
+                                  ? "border-l-0 rounded-r-2xl"
+                                  : "border-r-0 rounded-l-2xl"
+                              }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
+                            >
                       <img
                         src="/tokens/eth.svg"
                         alt="eth"
@@ -383,7 +388,11 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                       />
                     </span>
                     <Select
-                      className="!rounded-l-none"
+                      className={` ${
+                        i18n.language == "ar"
+                          ? "!rounded-r-none"
+                          : "!rounded-l-none"
+                      }`}
                       value={values.blockchain_id}
                       disabled
                       id="blockchain_id"
@@ -495,11 +504,20 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                 <div className="">
                   <Label>{t("Website")}</Label>
                   <div className="mt-1.5 flex">
-                    <span className="inline-flex items-center px-3 text-sm border border-r-0 rounded-l-2xl border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">
+                    <span className={`inline-flex items-center px-3 text-sm border ${
+                                i18n.language == "ar"
+                                  ? "border-l-0 rounded-r-2xl"
+                                  : "border-r-0 rounded-l-2xl"
+                              }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
+                            >
                       https://
                     </span>
                     <Input
-                      className="!rounded-l-none"
+                      className={` ${
+                        i18n.language == "ar"
+                          ? "!rounded-r-none"
+                          : "!rounded-l-none"
+                      }`}
                       value={values.website_url}
                       type="url"
                       id="website_url"
@@ -521,11 +539,20 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   <div>
                     <Label>{t("Facebook")}</Label>
                     <div className="mt-1.5 flex">
-                      <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
+                      <span className={`inline-flex items-center px-3 text-sm border ${
+                                i18n.language == "ar"
+                                  ? "border-l-0 rounded-r-2xl"
+                                  : "border-r-0 rounded-l-2xl"
+                              }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
+                            >
                         <i className="text-2xl lab la-facebook-f"></i>
                       </span>
                       <Input
-                        className="!rounded-l-none"
+                        className={` ${
+                          i18n.language == "ar"
+                            ? "!rounded-r-none"
+                            : "!rounded-l-none"
+                        }`}
                         placeholder={t("your_facebook_account_url")}
                         value={values.facebook_url}
                         type="url"
@@ -545,11 +572,20 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   <div>
                     <Label>{t("Twitter")}</Label>
                     <div className="mt-1.5 flex">
-                      <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
+                      <span className={`inline-flex items-center px-3 text-sm border ${
+                                i18n.language == "ar"
+                                  ? "border-l-0 rounded-r-2xl"
+                                  : "border-r-0 rounded-l-2xl"
+                              }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
+                            >
                         <i className="text-2xl lab la-twitter"></i>
                       </span>
                       <Input
-                        className="!rounded-l-none"
+                        className={` ${
+                          i18n.language == "ar"
+                            ? "!rounded-r-none"
+                            : "!rounded-l-none"
+                        }`}
                         placeholder={t("your_twitter_account_url")}
                         value={values.twitter_url}
                         type="url"
@@ -569,11 +605,20 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   <div>
                     <Label>{t("Telegram")}</Label>
                     <div className="mt-1.5 flex">
-                      <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
+                      <span className={`inline-flex items-center px-3 text-sm border ${
+                                i18n.language == "ar"
+                                  ? "border-l-0 rounded-r-2xl"
+                                  : "border-r-0 rounded-l-2xl"
+                              }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
+                            >
                         <i className="text-2xl lab la-telegram"></i>
                       </span>
                       <Input
-                        className="!rounded-l-none"
+                        className={` ${
+                          i18n.language == "ar"
+                            ? "!rounded-r-none"
+                            : "!rounded-l-none"
+                        }`}
                         placeholder={t("your_telegram_account_url")}
                         value={values.telegram_url}
                         type="url"
@@ -593,11 +638,20 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   <div>
                     <Label>{t("Instagram")}</Label>
                     <div className="mt-1.5 flex">
-                      <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
+                      <span className={`inline-flex items-center px-3 text-sm border ${
+                                i18n.language == "ar"
+                                  ? "border-l-0 rounded-r-2xl"
+                                  : "border-r-0 rounded-l-2xl"
+                              }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
+                            >
                         <i className="text-2xl lab la-telegram-plane"></i>
                       </span>
                       <Input
-                        className="!rounded-l-none"
+                        className={` ${
+                          i18n.language == "ar"
+                            ? "!rounded-r-none"
+                            : "!rounded-l-none"
+                        }`}
                         placeholder={t("your_instagram_account_url")}
                         value={values.instagram_url}
                         type="url"
@@ -627,7 +681,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                 />
 
                 {/* ---- */}
-                <div className="flex flex-col pt-2 space-x-0 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3 ">
+                <div className="flex flex-col gap-3 pt-2 space-x-0 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-3">
                   <ButtonPrimary
                     loading={isSubmitting}
                     disabled={userData?.status == "suspended" || isSubmitting}

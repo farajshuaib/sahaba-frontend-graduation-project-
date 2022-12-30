@@ -79,7 +79,6 @@ const CollectionCollaborator: React.FC<Props> = ({
     if (!is_collection_owner || !collaboration) return;
     setDeleteLoading(true);
     try {
-      console.log(collection_id, collaboration);
       await contract.removeCollaborators(
         +collection_id,
         collaboration?.user.wallet_address
@@ -90,7 +89,6 @@ const CollectionCollaborator: React.FC<Props> = ({
       setDeleteCollaboration(null);
       toast.success(t("Collaborator_deleted_successfully"));
     } catch (error: any) {
-      console.log(error);
       setDeleteLoading(false);
       toast.error(error?.response?.data?.message || t("system_error"));
     }

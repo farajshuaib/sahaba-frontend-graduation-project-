@@ -25,6 +25,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { i18n } = useTranslation();
   const userData = useAppSelector(
     (state) => state.account.userData
   ) as UserData;
@@ -57,8 +58,8 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
         username: userData.username,
         email: userData.email,
         bio: userData.bio,
-        banner_photo: userData.banner_photo || "",
-        profile_photo: userData.profile_photo || "",
+        banner_photo: "",
+        profile_photo: "",
         facebook_url: userData.social_links?.facebook_url || "",
         twitter_url: userData.social_links?.twitter_url || "",
         telegram_url: userData.social_links?.telegram_url || "",
@@ -208,7 +209,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                       )}
                     </label>
                   </div>
-                  <div className="flex flex-col md:flex-row">
+                  <div className="flex flex-col gap-8 md:flex-row">
                     <div className="flex items-start flex-shrink-0">
                       <div className="relative flex overflow-hidden rounded-full">
                         <Avatar
@@ -251,7 +252,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                         />
                       </div>
                     </div>
-                    <div className="flex-grow max-w-3xl mt-10 space-y-5 md:mt-0 md:pl-16 sm:space-y-6 md:sm:space-y-7">
+                    <div className="flex-grow max-w-3xl mt-10 space-y-5 md:mt-0 md:px-5 sm:space-y-6 md:sm:space-y-7">
                       {/* ---- */}
                       <div className="flex items-center w-full gap-3">
                         <div className="flex-grow">
@@ -316,11 +317,21 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                       <div>
                         <Label>{t("Email")}</Label>
                         <div className="mt-1.5 flex">
-                          <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
+                          <span
+                            className={`inline-flex items-center px-3 text-sm border ${
+                              i18n.language == "ar"
+                                ? "border-l-0 rounded-r-2xl"
+                                : "border-r-0 rounded-l-2xl"
+                            }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
+                          >
                             <i className="text-2xl las la-envelope"></i>
                           </span>
                           <Input
-                            className="!rounded-l-none"
+                            className={` ${
+                              i18n.language == "ar"
+                                ? "!rounded-r-none"
+                                : "!rounded-l-none"
+                            }`}
                             placeholder="example@email.com"
                             type="email"
                             id="email"
@@ -360,12 +371,22 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                       {/* ---- */}
                       <div className="">
                         <Label>{t("Website")}</Label>
-                        <div className="mt-1.5 flex">
-                          <span className="inline-flex items-center px-3 text-sm border border-r-0 rounded-l-2xl border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">
+                        <div className={`mt-1.5 flex `}>
+                          <span
+                            className={`inline-flex items-center px-3 text-sm border ${
+                              i18n.language == "ar"
+                                ? "border-l-0 rounded-r-2xl"
+                                : "border-r-0 rounded-l-2xl"
+                            }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
+                          >
                             https://
                           </span>
                           <Input
-                            className="!rounded-l-none"
+                            className={` ${
+                              i18n.language == "ar"
+                                ? "!rounded-r-none"
+                                : "!rounded-l-none"
+                            }`}
                             value={values.website_url}
                             type="url"
                             id="website_url"
@@ -387,11 +408,21 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                         <div>
                           <Label>{t("Facebook")}</Label>
                           <div className="mt-1.5 flex">
-                            <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
+                            <span
+                              className={`inline-flex items-center px-3 text-sm border ${
+                                i18n.language == "ar"
+                                  ? "border-l-0 rounded-r-2xl"
+                                  : "border-r-0 rounded-l-2xl"
+                              }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
+                            >
                               <i className="text-2xl lab la-facebook-f"></i>
                             </span>
                             <Input
-                              className="!rounded-l-none"
+                              className={` ${
+                                i18n.language == "ar"
+                                  ? "!rounded-r-none"
+                                  : "!rounded-l-none"
+                              }`}
                               placeholder={t("your_facebook_account_url")}
                               value={values.facebook_url}
                               type="url"
@@ -411,11 +442,21 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                         <div>
                           <Label>{t("Twitter")}</Label>
                           <div className="mt-1.5 flex">
-                            <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
+                            <span
+                              className={`inline-flex items-center px-3 text-sm border ${
+                                i18n.language == "ar"
+                                  ? "border-l-0 rounded-r-2xl"
+                                  : "border-r-0 rounded-l-2xl"
+                              }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
+                            >
                               <i className="text-2xl lab la-twitter"></i>
                             </span>
                             <Input
-                              className="!rounded-l-none"
+                              className={` ${
+                                i18n.language == "ar"
+                                  ? "!rounded-r-none"
+                                  : "!rounded-l-none"
+                              }`}
                               placeholder={t("your_twitter_account_url")}
                               value={values.twitter_url}
                               type="url"
@@ -435,11 +476,21 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                         <div>
                           <Label>{t("Telegram")}</Label>
                           <div className="mt-1.5 flex">
-                            <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
+                            <span
+                              className={`inline-flex items-center px-3 text-sm border ${
+                                i18n.language == "ar"
+                                  ? "border-l-0 rounded-r-2xl"
+                                  : "border-r-0 rounded-l-2xl"
+                              }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
+                            >
                               <i className="text-2xl lab la-telegram"></i>
                             </span>
                             <Input
-                              className="!rounded-l-none"
+                              className={` ${
+                                i18n.language == "ar"
+                                  ? "!rounded-r-none"
+                                  : "!rounded-l-none"
+                              }`}
                               placeholder={t("your_telegram_account_url")}
                               value={values.telegram_url}
                               type="url"
@@ -459,11 +510,21 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                         <div>
                           <Label>{t("Instagram")}</Label>
                           <div className="mt-1.5 flex">
-                            <span className="inline-flex items-center px-2.5 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
+                            <span
+                              className={`inline-flex items-center px-3 text-sm border ${
+                                i18n.language == "ar"
+                                  ? "border-l-0 rounded-r-2xl"
+                                  : "border-r-0 rounded-l-2xl"
+                              }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
+                            >
                               <i className="text-2xl lab la-telegram-plane"></i>
                             </span>
                             <Input
-                              className="!rounded-l-none"
+                              className={` ${
+                                i18n.language == "ar"
+                                  ? "!rounded-r-none"
+                                  : "!rounded-l-none"
+                              }`}
                               placeholder={t("your_instagram_account_url")}
                               value={values.instagram_url}
                               type="url"

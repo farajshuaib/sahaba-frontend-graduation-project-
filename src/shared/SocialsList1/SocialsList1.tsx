@@ -21,7 +21,7 @@ const SocialsList1: FC<SocialsList1Props> = ({ className = "space-y-3" }) => {
     return (
       <a
         href={item.href}
-        className="flex items-center space-x-2 text-2xl leading-none text-neutral-700 hover:text-black dark:text-neutral-300 dark:hover:text-white group"
+        className="flex items-center gap-2 space-x-2 text-2xl leading-none text-neutral-700 hover:text-black dark:text-neutral-300 dark:hover:text-white group"
         key={index}
       >
         <div className="flex-shrink-0 w-5 ">

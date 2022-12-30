@@ -28,7 +28,7 @@ const ModalDelete: FC<ModalDeleteProps> = ({
   const handleClickSubmitForm = async () => {
     setLoading(true);
     try {
-      const tx = await burnNft();
+      await burnNft();
       await api.delete(`/nfts/burn/${nft?.id}`);
       toast.success(t("NFT_deleted_successfully"));
       onCloseModalDelete();
@@ -44,10 +44,9 @@ const ModalDelete: FC<ModalDeleteProps> = ({
     return new Promise(async (resolve, reject) => {
       try {
         const tx = await contract.burn(nft?.id);
+        await tx.wait();
         resolve(tx);
       } catch (errors: any) {
-        console.log("errors", errors);
-
         reject(errors);
       }
     });
@@ -59,8 +58,8 @@ const ModalDelete: FC<ModalDeleteProps> = ({
         <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
           {t("Delete_NFT")}
         </h3>
-        <span className="text-sm">{t("Delete_NFT_desc")}</span>
-        <div className="mt-4 space-x-3">
+        <p className="text-sm">{t("Delete_NFT_desc")}</p>
+        <div className="flex gap-4 mt-4 space-x-3">
           <ButtonPrimary
             loading={loading}
             onClick={handleClickSubmitForm}

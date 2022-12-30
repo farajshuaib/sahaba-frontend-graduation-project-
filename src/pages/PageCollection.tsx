@@ -91,6 +91,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
     errors,
   } = useCrud("/collections");
   const userData = useAppSelector((state) => state.account.userData);
+  const { i18n } = useTranslation();
 
   collection as Collection;
 
@@ -192,7 +193,11 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                 </div>
               </div>
             </div>
-            <div className="flex-grow mt-5 md:mt-0 md:ml-8 xl:ml-14">
+            <div
+              className={`flex-grow mt-5 md:mt-0  ${
+                i18n.language == "ar" ? "md:mr-8 xl:mr-14" : "md:ml-8 xl:ml-14"
+              }`}
+            >
               <div className="max-w-screen-sm ">
                 <h2 className="inline-block text-2xl font-semibold sm:text-3xl lg:text-4xl">
                   {collection?.name}
