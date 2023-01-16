@@ -7,6 +7,7 @@ import {
 } from "firebase/messaging";
 import { FCM_vapidKey } from "./constant";
 import { getAnalytics } from "firebase/analytics";
+import { isSupported } from "utils/functions";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBTvCFtIg0A_JTokDcMWtMxxGdt60ztP6s",
@@ -21,15 +22,16 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 
 let messaging: Messaging | null;
-messaging =
-  Notification?.permission && Notification?.permission === "granted"
-    ? getMessaging(firebaseApp)
-    : null;
+if (isSupported()) {
+  messaging =
+    Notification?.permission && Notification?.permission === "granted"
+      ? getMessaging(firebaseApp)
+      : null;
+}
 
 export const getFCMToken = async () => {
   try {
     if (!messaging) return;
-    if (!Notification?.permission) return;
     const token = await getToken(messaging, {
       vapidKey: FCM_vapidKey,
     });

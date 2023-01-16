@@ -162,3 +162,9 @@ const approveBuyItem = async (signer:any, account:string) => {
 
 //   return contractInstance;
 // }
+
+
+export const isSupported = () =>
+  "Notification" in window &&
+  "serviceWorker" in navigator &&
+  "PushManager" in window;

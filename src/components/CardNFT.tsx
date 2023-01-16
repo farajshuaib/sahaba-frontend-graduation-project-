@@ -50,7 +50,7 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", nft }) => {
             sizeClass="h-6 w-6"
             containerClassName="ring-2 ring-white"
           />
-          <div className="text-xs text-white ">
+          <div className="text-xs ">
             <span className="font-normal">by</span>
             {` `}
             <span className="font-medium">
