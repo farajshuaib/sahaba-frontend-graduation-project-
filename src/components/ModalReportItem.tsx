@@ -15,24 +15,21 @@ export interface ProblemPlan {
   label: string;
 }
 
+const problemPlans = [
+  { name: "violence", id: "Violence", label: t("Violence") },
+  { name: "trouble", id: "Trouble", label: t("Trouble") },
+  { name: "spam", id: "Spam", label: t("Spam") },
+  { name: "other", id: "Other", label: t("Other") },
+];
 export interface ModalReportItemProps {
   show: boolean;
-  problemPlans?: ProblemPlan[];
   onCloseModalReportItem: () => void;
   nft?: Nft;
   user?: UserData;
   collection?: Collection;
 }
 
-const problemPlansDemo = [
-  { name: "violence", id: "Violence", label: t("Violence") },
-  { name: "trouble", id: "Trouble", label: t("Trouble") },
-  { name: "spam", id: "Spam", label: t("Spam") },
-  { name: "other", id: "Other", label: t("Other") },
-];
-
 const ModalReportItem: FC<ModalReportItemProps> = ({
-  problemPlans = problemPlansDemo,
   show,
   onCloseModalReportItem,
   nft,
@@ -40,6 +37,8 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
   collection,
 }) => {
   const { t } = useTranslation();
+  
+
   const textareaRef = useRef(null);
   const api = useApi();
   const [problemSelected, setProblemSelected] = useState(problemPlans[0]);
@@ -97,7 +96,7 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
 
   const renderContent = () => {
     return (
-      <form action="#">
+      <div>
         {/* RADIO PROBLEM PLANS */}
         <RadioGroup value={problemSelected} onChange={setProblemSelected}>
           <RadioGroup.Label className="sr-only">
@@ -145,13 +144,13 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
         </RadioGroup>
 
         {/* TEXAREA MESSAGER */}
-        <div className="mt-4">
-          <h4 className="text-lg font-semibold text-neutral-700 dark:text-neutral-200">
+        <div className="w-full my-5">
+          <h4 className="text-lg font-semibold text-justify text-neutral-700 dark:text-neutral-200">
             {t("Message")}
           </h4>
-          <span className="text-sm text-neutral-6000 dark:text-neutral-400">
+          <p className="w-full text-sm text-justify text-neutral-6000 dark:text-neutral-400">
             {t("Report_Message_desc")}
-          </span>
+          </p>
           <Textarea
             placeholder="..."
             className="mt-3"
@@ -166,7 +165,7 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
             id="report-message"
           />
         </div>
-        <div className="mt-4 space-x-3">
+        <div className="flex gap-3 mt-4 space-x-3">
           <ButtonPrimary
             loading={loading}
             onClick={handleClickSubmitForm}
@@ -178,7 +177,7 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
             {t("Cancel")}
           </ButtonSecondary>
         </div>
-      </form>
+      </div>
     );
   };
 
