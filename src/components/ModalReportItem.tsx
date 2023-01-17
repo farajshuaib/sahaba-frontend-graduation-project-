@@ -7,7 +7,6 @@ import NcModal from "shared/NcModal/NcModal";
 import { useApi } from "hooks/useApi";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
-import { t } from "i18next";
 
 export interface ProblemPlan {
   name: string;
@@ -15,12 +14,6 @@ export interface ProblemPlan {
   label: string;
 }
 
-const problemPlans = [
-  { name: "violence", id: "Violence", label: t("Violence") },
-  { name: "trouble", id: "Trouble", label: t("Trouble") },
-  { name: "spam", id: "Spam", label: t("Spam") },
-  { name: "other", id: "Other", label: t("Other") },
-];
 export interface ModalReportItemProps {
   show: boolean;
   onCloseModalReportItem: () => void;
@@ -37,11 +30,21 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
   collection,
 }) => {
   const { t } = useTranslation();
-  
+
+  const problemPlans = [
+    { name: "violence", id: "Violence", label: t("Violence") },
+    { name: "trouble", id: "Trouble", label: t("Trouble") },
+    { name: "spam", id: "Spam", label: t("Spam") },
+    { name: "other", id: "Other", label: t("Other") },
+  ];
 
   const textareaRef = useRef(null);
   const api = useApi();
-  const [problemSelected, setProblemSelected] = useState(problemPlans[0]);
+  const [problemSelected, setProblemSelected] = useState({
+    name: "violence",
+    id: "Violence",
+    label: t("Violence"),
+  });
   const [message, setMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
