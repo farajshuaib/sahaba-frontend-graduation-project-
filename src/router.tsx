@@ -44,6 +44,7 @@ const router = () => {
           ),
         },
         { path: "/search", element: <PageSearch /> },
+        { path: "/nfts", element: <PageSearch /> },
         { path: "/nft-details/:id", element: <NftDetailPage /> },
         {
           path: "/create-nft",

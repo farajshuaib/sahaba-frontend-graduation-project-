@@ -22,7 +22,7 @@ const PageSearch: FC<PageSearchProps> = ({ className = "" }) => {
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
   const [priceRange, setPriceRange] = useState([0.1, 5.0]);
-  const [sortBy, setSortBy] = useState<string>("");
+  const [sortBy, setSortBy] = useState<string>("Recently-listed");
   const [isVerifiedUser, setIsVerifiedUser] = useState<boolean>(false);
   const { data, loading, fetch, meta, errors } = useCrud("/nfts");
   const [selectedCategory, setSelectedCategory] = useState<Category>({
