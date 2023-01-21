@@ -29,6 +29,7 @@ import { BigNumber, Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 import useContract from "hooks/useContract";
 import Select from "shared/Select/Select";
+import { formatEther } from "ethers/lib/utils";
 
 export interface PageCreateCollectionProps {
   className?: string;
@@ -49,8 +50,10 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
   const [logoImage, setLogoImage] = useState<string>("");
   const { account } = useWeb3React();
   const fileInput = useRef<HTMLInputElement>(null);
+  const [balance, setBalance] = useState<string>("");
+
   const { contract, isApprovedForAll, setApprovalForAll } = useContract();
-  const { chainId } = useWeb3React();
+  const { chainId, library } = useWeb3React();
   const { i18n } = useTranslation();
 
   const userData = useAppSelector(
@@ -71,6 +74,16 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
     category_id: null,
     blockchain_id: chainId,
   });
+
+  const getAccountBalance = async () => {
+    if (!account) return;
+    const balance = await library.getBalance(account);
+    setBalance(formatEther(balance));
+  };
+
+  useEffect(() => {
+    getAccountBalance();
+  }, [account]);
 
   useEffect(() => {
     if (params.id) fetchById(params.id);
@@ -139,6 +152,11 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
 
               if (userData?.status === "suspended") {
                 toast.error(t("your_account_is_suspended"));
+                return;
+              }
+
+              if (balance == "0") {
+                toast.error(t("not_enough_balance"));
                 return;
               }
 
@@ -375,12 +393,13 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                 <div className="">
                   <Label htmlFor="blockchain_id">{t("Blockchain")}</Label>
                   <div className="mt-1.5 flex">
-                    <span className={`inline-flex items-center px-3 text-sm border ${
-                                i18n.language == "ar"
-                                  ? "border-l-0 rounded-r-2xl"
-                                  : "border-r-0 rounded-l-2xl"
-                              }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
-                            >
+                    <span
+                      className={`inline-flex items-center px-3 text-sm border ${
+                        i18n.language == "ar"
+                          ? "border-l-0 rounded-r-2xl"
+                          : "border-r-0 rounded-l-2xl"
+                      }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
+                    >
                       <img
                         src="/tokens/eth.svg"
                         alt="eth"
@@ -504,12 +523,13 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                 <div className="">
                   <Label>{t("Website")}</Label>
                   <div className="mt-1.5 flex">
-                    <span className={`inline-flex items-center px-3 text-sm border ${
-                                i18n.language == "ar"
-                                  ? "border-l-0 rounded-r-2xl"
-                                  : "border-r-0 rounded-l-2xl"
-                              }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
-                            >
+                    <span
+                      className={`inline-flex items-center px-3 text-sm border ${
+                        i18n.language == "ar"
+                          ? "border-l-0 rounded-r-2xl"
+                          : "border-r-0 rounded-l-2xl"
+                      }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
+                    >
                       https://
                     </span>
                     <Input
@@ -539,12 +559,13 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   <div>
                     <Label>{t("Facebook")}</Label>
                     <div className="mt-1.5 flex">
-                      <span className={`inline-flex items-center px-3 text-sm border ${
-                                i18n.language == "ar"
-                                  ? "border-l-0 rounded-r-2xl"
-                                  : "border-r-0 rounded-l-2xl"
-                              }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
-                            >
+                      <span
+                        className={`inline-flex items-center px-3 text-sm border ${
+                          i18n.language == "ar"
+                            ? "border-l-0 rounded-r-2xl"
+                            : "border-r-0 rounded-l-2xl"
+                        }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
+                      >
                         <i className="text-2xl lab la-facebook-f"></i>
                       </span>
                       <Input
@@ -572,12 +593,13 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   <div>
                     <Label>{t("Twitter")}</Label>
                     <div className="mt-1.5 flex">
-                      <span className={`inline-flex items-center px-3 text-sm border ${
-                                i18n.language == "ar"
-                                  ? "border-l-0 rounded-r-2xl"
-                                  : "border-r-0 rounded-l-2xl"
-                              }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
-                            >
+                      <span
+                        className={`inline-flex items-center px-3 text-sm border ${
+                          i18n.language == "ar"
+                            ? "border-l-0 rounded-r-2xl"
+                            : "border-r-0 rounded-l-2xl"
+                        }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
+                      >
                         <i className="text-2xl lab la-twitter"></i>
                       </span>
                       <Input
@@ -605,12 +627,13 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   <div>
                     <Label>{t("Telegram")}</Label>
                     <div className="mt-1.5 flex">
-                      <span className={`inline-flex items-center px-3 text-sm border ${
-                                i18n.language == "ar"
-                                  ? "border-l-0 rounded-r-2xl"
-                                  : "border-r-0 rounded-l-2xl"
-                              }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
-                            >
+                      <span
+                        className={`inline-flex items-center px-3 text-sm border ${
+                          i18n.language == "ar"
+                            ? "border-l-0 rounded-r-2xl"
+                            : "border-r-0 rounded-l-2xl"
+                        }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
+                      >
                         <i className="text-2xl lab la-telegram"></i>
                       </span>
                       <Input
@@ -638,12 +661,13 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   <div>
                     <Label>{t("Instagram")}</Label>
                     <div className="mt-1.5 flex">
-                      <span className={`inline-flex items-center px-3 text-sm border ${
-                                i18n.language == "ar"
-                                  ? "border-l-0 rounded-r-2xl"
-                                  : "border-r-0 rounded-l-2xl"
-                              }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
-                            >
+                      <span
+                        className={`inline-flex items-center px-3 text-sm border ${
+                          i18n.language == "ar"
+                            ? "border-l-0 rounded-r-2xl"
+                            : "border-r-0 rounded-l-2xl"
+                        }  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}
+                      >
                         <i className="text-2xl lab la-telegram-plane"></i>
                       </span>
                       <Input
