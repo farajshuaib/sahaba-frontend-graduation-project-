@@ -1,0 +1,258 @@
+"filename", "language", "TypeScript React", "TypeScript", "JSON", "XML", "SCSS", "CSS", "comment", "blank", "total"
+"/Users/faraj_shuaib/projects/sahaba/front/src/App.tsx", "TypeScript React", 36, 0, 0, 0, 0, 0, 1, 5, 42
+"/Users/faraj_shuaib/projects/sahaba/front/src/Wrapper.tsx", "TypeScript React", 87, 0, 0, 0, 0, 0, 2, 11, 100
+"/Users/faraj_shuaib/projects/sahaba/front/src/__test__/App.test.tsx", "TypeScript React", 3, 0, 0, 0, 0, 0, 0, 3, 6
+"/Users/faraj_shuaib/projects/sahaba/front/src/app/account/actions.ts", "TypeScript", 0, 28, 0, 0, 0, 0, 0, 4, 32
+"/Users/faraj_shuaib/projects/sahaba/front/src/app/account/reducers.ts", "TypeScript", 0, 22, 0, 0, 0, 0, 0, 6, 28
+"/Users/faraj_shuaib/projects/sahaba/front/src/app/general/actions.ts", "TypeScript", 0, 37, 0, 0, 0, 0, 0, 8, 45
+"/Users/faraj_shuaib/projects/sahaba/front/src/app/general/reducers.ts", "TypeScript", 0, 65, 0, 0, 0, 0, 0, 7, 72
+"/Users/faraj_shuaib/projects/sahaba/front/src/app/hooks.ts", "TypeScript", 0, 4, 0, 0, 0, 0, 1, 2, 7
+"/Users/faraj_shuaib/projects/sahaba/front/src/app/rootReducers.ts", "TypeScript", 0, 7, 0, 0, 0, 0, 0, 3, 10
+"/Users/faraj_shuaib/projects/sahaba/front/src/app/store.ts", "TypeScript", 0, 36, 0, 0, 0, 0, 0, 7, 43
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/countries/countries_ar.json", "JSON", 0, 0, 1252, 0, 0, 0, 0, 1, 1253
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/countries/countries_en.json", "JSON", 0, 0, 1212, 0, 0, 0, 0, 0, 1212
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/countries/index.ts", "TypeScript", 0, 4, 0, 0, 0, 0, 0, 2, 6
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/fonts/line-awesome-1.3.0/css/line-awesome.css", "CSS", 0, 0, 0, 0, 0, 4533, 2, 2048, 6583
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/fonts/line-awesome-1.3.0/css/line-awesome.min.css", "CSS", 0, 0, 0, 0, 0, 1, 0, 1, 2
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/fonts/line-awesome-1.3.0/fonts/la-brands-400.svg", "XML", 0, 0, 0, 1313, 0, 0, 0, 1, 1314
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/fonts/line-awesome-1.3.0/fonts/la-regular-400.svg", "XML", 0, 0, 0, 467, 0, 0, 0, 1, 468
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/fonts/line-awesome-1.3.0/fonts/la-solid-900.svg", "XML", 0, 0, 0, 2894, 0, 0, 0, 1, 2895
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/Apple.svg", "XML", 0, 0, 0, 3, 0, 0, 0, 1, 4
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/Facebook.svg", "XML", 0, 0, 0, 3, 0, 0, 0, 1, 4
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/Google.svg", "XML", 0, 0, 0, 6, 0, 0, 0, 1, 7
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/Twitter.svg", "XML", 0, 0, 0, 3, 0, 0, 0, 1, 4
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/VectorHIW.svg", "XML", 0, 0, 0, 3, 0, 0, 0, 1, 4
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/appSvg1.svg", "XML", 0, 0, 0, 9, 0, 0, 0, 1, 10
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/appSvg2.svg", "XML", 0, 0, 0, 11, 0, 0, 0, 1, 12
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/logo-light.svg", "XML", 0, 0, 0, 17, 0, 0, 0, 1, 18
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/logo.svg", "XML", 0, 0, 0, 17, 0, 0, 0, 1, 18
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/logoOnly.svg", "XML", 0, 0, 0, 6, 0, 0, 0, 1, 7
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/logo_dark.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 0, 1
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/logo_light.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 0, 1
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/mastercard.svg", "XML", 0, 0, 0, 11, 0, 0, 0, 1, 12
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-10.svg", "XML", 0, 0, 0, 5, 0, 0, 0, 1, 6
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-11.svg", "XML", 0, 0, 0, 5, 0, 0, 0, 1, 6
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-12.svg", "XML", 0, 0, 0, 12, 0, 0, 0, 1, 13
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-13.svg", "XML", 0, 0, 0, 12, 0, 0, 0, 1, 13
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-14.svg", "XML", 0, 0, 0, 4, 0, 0, 0, 1, 5
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-15.svg", "XML", 0, 0, 0, 7, 0, 0, 0, 1, 8
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-16.svg", "XML", 0, 0, 0, 5, 0, 0, 0, 1, 6
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-17.svg", "XML", 0, 0, 0, 6, 0, 0, 0, 1, 7
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-18.svg", "XML", 0, 0, 0, 4, 0, 0, 0, 1, 5
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-19.svg", "XML", 0, 0, 0, 11, 0, 0, 0, 1, 12
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-2.svg", "XML", 0, 0, 0, 12, 0, 0, 0, 1, 13
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-20.svg", "XML", 0, 0, 0, 9, 0, 0, 0, 1, 10
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-21.svg", "XML", 0, 0, 0, 33, 0, 0, 0, 1, 34
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-22.svg", "XML", 0, 0, 0, 10, 0, 0, 0, 1, 11
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-23.svg", "XML", 0, 0, 0, 8, 0, 0, 0, 1, 9
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-24.svg", "XML", 0, 0, 0, 4, 0, 0, 0, 1, 5
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-25.svg", "XML", 0, 0, 0, 6, 0, 0, 0, 1, 7
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-3.svg", "XML", 0, 0, 0, 10, 0, 0, 0, 1, 11
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-4.svg", "XML", 0, 0, 0, 4, 0, 0, 0, 1, 5
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-5.svg", "XML", 0, 0, 0, 4, 0, 0, 0, 1, 5
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-6.svg", "XML", 0, 0, 0, 3, 0, 0, 0, 1, 4
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-7.svg", "XML", 0, 0, 0, 4, 0, 0, 0, 1, 5
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-8.svg", "XML", 0, 0, 0, 10, 0, 0, 0, 1, 11
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/_Group_-9.svg", "XML", 0, 0, 0, 6, 0, 0, 0, 1, 7
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/facebook.svg", "XML", 0, 0, 0, 4, 0, 0, 0, 1, 5
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/telegram.svg", "XML", 0, 0, 0, 12, 0, 0, 0, 1, 13
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/twitter.svg", "XML", 0, 0, 0, 4, 0, 0, 0, 1, 5
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/vimeo.svg", "XML", 0, 0, 0, 4, 0, 0, 0, 1, 5
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/website.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 0, 1
+"/Users/faraj_shuaib/projects/sahaba/front/src/assets/images/socials/youtube.svg", "XML", 0, 0, 0, 4, 0, 0, 0, 1, 5
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/AuthStateWrapper.tsx", "TypeScript React", 55, 0, 0, 0, 0, 0, 1, 10, 66
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/BackgroundSection/BackgroundSection.tsx", "TypeScript React", 15, 0, 0, 0, 0, 0, 0, 4, 19
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/BgGlassmorphism/BgGlassmorphism.tsx", "TypeScript React", 18, 0, 0, 0, 0, 0, 0, 4, 22
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/BlurHiddenNft.tsx", "TypeScript React", 16, 0, 0, 0, 0, 0, 0, 3, 19
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/BtnLikeIcon/BtnLikeIcon.tsx", "TypeScript React", 34, 0, 0, 0, 0, 0, 0, 4, 38
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/ButtonDropDownShare.tsx", "TypeScript React", 73, 0, 0, 0, 0, 0, 0, 6, 79
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/ButtonDropdown.tsx", "TypeScript React", 26, 0, 0, 0, 0, 0, 0, 4, 30
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/CardAuthorBox4/CardAuthorBox4.tsx", "TypeScript React", 69, 0, 0, 0, 0, 0, 0, 6, 75
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/CardCategory5/CardCategory5.tsx", "TypeScript React", 54, 0, 0, 0, 0, 0, 0, 6, 60
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/CardLarge1/CardLarge1.tsx", "TypeScript React", 129, 0, 0, 0, 0, 0, 7, 13, 149
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/CardLarge1/TimeCountDown.tsx", "TypeScript React", 80, 0, 0, 0, 0, 0, 0, 5, 85
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/CardNFT.tsx", "TypeScript React", 90, 0, 0, 0, 0, 0, 0, 9, 99
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/CardNFT2.tsx", "TypeScript React", 78, 0, 0, 0, 0, 0, 3, 11, 92
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/CollectionCard.tsx", "TypeScript React", 62, 0, 0, 0, 0, 0, 3, 5, 70
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/CollectionCard2.tsx", "TypeScript React", 69, 0, 0, 0, 0, 0, 2, 4, 75
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/CollectionCollaborator.tsx", "TypeScript React", 170, 0, 0, 0, 0, 0, 1, 11, 182
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/FollowButton.tsx", "TypeScript React", 57, 0, 0, 0, 0, 0, 0, 8, 65
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/FormItem.tsx", "TypeScript React", 30, 0, 0, 0, 0, 0, 0, 4, 34
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/Header/AvatarDropdown.tsx", "TypeScript React", 193, 0, 0, 0, 0, 0, 3, 13, 209
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/Header/HeaderLogged.tsx", "TypeScript React", 108, 0, 0, 0, 0, 0, 1, 9, 118
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/Header/LocalesDropDown.tsx", "TypeScript React", 62, 0, 0, 0, 0, 0, 0, 6, 68
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/Header/NotifyDropdown.tsx", "TypeScript React", 202, 0, 0, 0, 0, 0, 5, 8, 215
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/HeaderFilterSearchPage.tsx", "TypeScript React", 141, 0, 0, 0, 0, 0, 0, 10, 151
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/Heading/Heading.tsx", "TypeScript React", 136, 0, 0, 0, 0, 0, 0, 9, 145
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/Heading/Heading2.tsx", "TypeScript React", 29, 0, 0, 0, 0, 0, 0, 4, 33
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/ItemTypeImageIcon.tsx", "TypeScript React", 38, 0, 0, 0, 0, 0, 0, 4, 42
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/Label/Label.tsx", "TypeScript React", 18, 0, 0, 0, 0, 0, 0, 4, 22
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/LikeButton.tsx", "TypeScript React", 50, 0, 0, 0, 0, 0, 0, 6, 56
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/LoadingScreen.tsx", "TypeScript React", 27, 0, 0, 0, 0, 0, 0, 3, 30
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/ModalAddCollaboration.tsx", "TypeScript React", 110, 0, 0, 0, 0, 0, 0, 10, 120
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/ModalDelete.tsx", "TypeScript React", 87, 0, 0, 0, 0, 0, 0, 8, 95
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/ModalEdit.tsx", "TypeScript React", 179, 0, 0, 0, 0, 0, 0, 19, 198
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/ModalReportItem.tsx", "TypeScript React", 188, 0, 0, 0, 0, 0, 2, 14, 204
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/MySwitch.tsx", "TypeScript React", 50, 0, 0, 0, 0, 0, 0, 6, 56
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/NavItem2.tsx", "TypeScript React", 37, 0, 0, 0, 0, 0, 0, 4, 41
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/NcInputNumber/NcInputNumber.tsx", "TypeScript React", 77, 0, 0, 0, 0, 0, 0, 9, 86
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/NftMoreDropdown.tsx", "TypeScript React", 114, 0, 0, 0, 0, 0, 0, 14, 128
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/Prices.tsx", "TypeScript React", 31, 0, 0, 0, 0, 0, 0, 4, 35
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/Prices2.tsx", "TypeScript React", 23, 0, 0, 0, 0, 0, 0, 4, 27
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/ProfileTabs.tsx", "TypeScript React", 272, 0, 0, 0, 0, 0, 6, 25, 303
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/RemainingTimeNftCard.tsx", "TypeScript React", 44, 0, 0, 0, 0, 0, 0, 5, 49
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/RequireAuth.tsx", "TypeScript React", 24, 0, 0, 0, 0, 0, 0, 8, 32
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/SectionGridAuthorBox/SectionGridAuthorBox.tsx", "TypeScript React", 117, 0, 0, 0, 0, 0, 0, 10, 127
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/SectionGridAuthorBox/SortOrderFilter.tsx", "TypeScript React", 113, 0, 0, 0, 0, 0, 0, 5, 118
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/SectionSliderCategories/SectionSliderCategories.tsx", "TypeScript React", 83, 0, 0, 0, 0, 0, 1, 9, 93
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/SectionSliderCollections.tsx", "TypeScript React", 130, 0, 0, 0, 0, 0, 1, 13, 144
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/ServerError.tsx", "TypeScript React", 24, 0, 0, 0, 0, 0, 0, 4, 28
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/TabFilters.tsx", "TypeScript React", 608, 0, 0, 0, 0, 0, 15, 26, 649
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/VerifyAccount.tsx", "TypeScript React", 39, 0, 0, 0, 0, 0, 0, 4, 43
+"/Users/faraj_shuaib/projects/sahaba/front/src/components/VerifyIcon.tsx", "TypeScript React", 32, 0, 0, 0, 0, 0, 0, 4, 36
+"/Users/faraj_shuaib/projects/sahaba/front/src/constant/index.ts", "TypeScript", 0, 63, 0, 0, 0, 0, 2, 10, 75
+"/Users/faraj_shuaib/projects/sahaba/front/src/contracts/abi.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 0, 1
+"/Users/faraj_shuaib/projects/sahaba/front/src/contracts/coin_abi.json", "JSON", 0, 0, 1, 0, 0, 0, 0, 0, 1
+"/Users/faraj_shuaib/projects/sahaba/front/src/firebase.ts", "TypeScript", 0, 50, 0, 0, 0, 0, 0, 7, 57
+"/Users/faraj_shuaib/projects/sahaba/front/src/global.d.ts", "TypeScript", 0, 198, 0, 0, 0, 0, 2, 21, 221
+"/Users/faraj_shuaib/projects/sahaba/front/src/hooks/useApi.ts", "TypeScript", 0, 36, 0, 0, 0, 0, 0, 11, 47
+"/Users/faraj_shuaib/projects/sahaba/front/src/hooks/useContract.ts", "TypeScript", 0, 39, 0, 0, 0, 0, 0, 6, 45
+"/Users/faraj_shuaib/projects/sahaba/front/src/hooks/useCountDownTime.ts", "TypeScript", 0, 32, 0, 0, 0, 0, 0, 9, 41
+"/Users/faraj_shuaib/projects/sahaba/front/src/hooks/useCrud.ts", "TypeScript", 0, 187, 0, 0, 0, 0, 4, 17, 208
+"/Users/faraj_shuaib/projects/sahaba/front/src/hooks/useDarkMode.ts", "TypeScript", 0, 39, 0, 0, 0, 0, 0, 11, 50
+"/Users/faraj_shuaib/projects/sahaba/front/src/hooks/useIpfs.ts", "TypeScript", 0, 29, 0, 0, 0, 0, 0, 7, 36
+"/Users/faraj_shuaib/projects/sahaba/front/src/hooks/useRecaptcha.ts", "TypeScript", 0, 29, 0, 0, 0, 0, 1, 9, 39
+"/Users/faraj_shuaib/projects/sahaba/front/src/hooks/useWindowResize.ts", "TypeScript", 0, 20, 0, 0, 0, 0, 7, 3, 30
+"/Users/faraj_shuaib/projects/sahaba/front/src/index.tsx", "TypeScript React", 12, 0, 0, 0, 0, 0, 1, 4, 17
+"/Users/faraj_shuaib/projects/sahaba/front/src/locales/ar.json", "JSON", 0, 0, 291, 0, 0, 0, 0, 1, 292
+"/Users/faraj_shuaib/projects/sahaba/front/src/locales/en.json", "JSON", 0, 0, 296, 0, 0, 0, 0, 1, 297
+"/Users/faraj_shuaib/projects/sahaba/front/src/locales/index.ts", "TypeScript", 0, 3, 0, 0, 0, 0, 0, 1, 4
+"/Users/faraj_shuaib/projects/sahaba/front/src/pages/AccountPage.tsx", "TypeScript React", 516, 0, 0, 0, 0, 0, 75, 21, 612
+"/Users/faraj_shuaib/projects/sahaba/front/src/pages/AuthorPage.tsx", "TypeScript React", 180, 0, 0, 0, 0, 0, 2, 12, 194
+"/Users/faraj_shuaib/projects/sahaba/front/src/pages/KYC_Form.tsx", "TypeScript React", 401, 0, 0, 0, 0, 0, 23, 18, 442
+"/Users/faraj_shuaib/projects/sahaba/front/src/pages/NftDetailPage/AccordionInfo.tsx", "TypeScript React", 57, 0, 0, 0, 0, 0, 0, 3, 60
+"/Users/faraj_shuaib/projects/sahaba/front/src/pages/NftDetailPage/LikeSaveBtns.tsx", "TypeScript React", 61, 0, 0, 0, 0, 0, 0, 5, 66
+"/Users/faraj_shuaib/projects/sahaba/front/src/pages/NftDetailPage/NftDetailPage.tsx", "TypeScript React", 312, 0, 0, 0, 0, 0, 17, 32, 361
+"/Users/faraj_shuaib/projects/sahaba/front/src/pages/NftDetailPage/NftItem.tsx", "TypeScript React", 27, 0, 0, 0, 0, 0, 1, 7, 35
+"/Users/faraj_shuaib/projects/sahaba/front/src/pages/NftDetailPage/TabDetail.tsx", "TypeScript React", 236, 0, 0, 0, 0, 0, 0, 14, 250
+"/Users/faraj_shuaib/projects/sahaba/front/src/pages/NftDetailPage/TimeCountDown.tsx", "TypeScript React", 65, 0, 0, 0, 0, 0, 0, 5, 70
+"/Users/faraj_shuaib/projects/sahaba/front/src/pages/Page404.tsx", "TypeScript React", 28, 0, 0, 0, 0, 0, 1, 4, 33
+"/Users/faraj_shuaib/projects/sahaba/front/src/pages/PageCollection.tsx", "TypeScript React", 260, 0, 0, 0, 0, 0, 11, 22, 293
+"/Users/faraj_shuaib/projects/sahaba/front/src/pages/PageCollections.tsx", "TypeScript React", 107, 0, 0, 0, 0, 0, 2, 16, 125
+"/Users/faraj_shuaib/projects/sahaba/front/src/pages/PageConnectWallet.tsx", "TypeScript React", 177, 0, 0, 0, 0, 0, 10, 14, 201
+"/Users/faraj_shuaib/projects/sahaba/front/src/pages/PageCreateCollection.tsx", "TypeScript React", 687, 0, 0, 0, 0, 0, 31, 37, 755
+"/Users/faraj_shuaib/projects/sahaba/front/src/pages/PageHome/PageHome.tsx", "TypeScript React", 37, 0, 0, 0, 0, 0, 5, 8, 50
+"/Users/faraj_shuaib/projects/sahaba/front/src/pages/PageHome/SectionGridFeatureNFT2.tsx", "TypeScript React", 71, 0, 0, 0, 0, 0, 1, 7, 79
+"/Users/faraj_shuaib/projects/sahaba/front/src/pages/PageHome/SectionLargeSlider.tsx", "TypeScript React", 52, 0, 0, 0, 0, 0, 0, 9, 61
+"/Users/faraj_shuaib/projects/sahaba/front/src/pages/PageSearch.tsx", "TypeScript React", 158, 0, 0, 0, 0, 0, 4, 13, 175
+"/Users/faraj_shuaib/projects/sahaba/front/src/pages/PageUploadItem.tsx", "TypeScript React", 491, 0, 0, 0, 0, 0, 33, 34, 558
+"/Users/faraj_shuaib/projects/sahaba/front/src/router.tsx", "TypeScript React", 78, 0, 0, 0, 0, 0, 1, 3, 82
+"/Users/faraj_shuaib/projects/sahaba/front/src/services/connectors.ts", "TypeScript", 0, 28, 0, 0, 0, 0, 0, 5, 33
+"/Users/faraj_shuaib/projects/sahaba/front/src/services/networks.ts", "TypeScript", 0, 24, 0, 0, 0, 0, 0, 1, 25
+"/Users/faraj_shuaib/projects/sahaba/front/src/services/validations.ts", "TypeScript", 0, 129, 0, 0, 0, 0, 0, 9, 138
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Alert/Alert.tsx", "TypeScript React", 41, 0, 0, 0, 0, 0, 1, 4, 46
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Avatar/Avatar.tsx", "TypeScript React", 54, 0, 0, 0, 0, 0, 0, 5, 59
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Badge/Badge.tsx", "TypeScript React", 76, 0, 0, 0, 0, 0, 0, 5, 81
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Button/Button.tsx", "TypeScript React", 82, 0, 0, 0, 0, 0, 2, 7, 91
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Button/ButtonCircle.tsx", "TypeScript React", 22, 0, 0, 0, 0, 0, 0, 7, 29
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Button/ButtonPrimary.tsx", "TypeScript React", 15, 0, 0, 0, 0, 0, 0, 4, 19
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Button/ButtonSecondary.tsx", "TypeScript React", 15, 0, 0, 0, 0, 0, 0, 4, 19
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Button/ButtonThird.tsx", "TypeScript React", 10, 0, 0, 0, 0, 0, 0, 4, 14
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/ButtonClose/ButtonClose.tsx", "TypeScript React", 25, 0, 0, 0, 0, 0, 0, 4, 29
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Checkbox/Checkbox.tsx", "TypeScript React", 50, 0, 0, 0, 0, 0, 0, 4, 54
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Comment/Comment.tsx", "TypeScript React", 59, 0, 0, 0, 0, 0, 0, 4, 63
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Footer/Footer.tsx", "TypeScript React", 87, 0, 0, 0, 0, 0, 0, 9, 96
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Heading/Heading.tsx", "TypeScript React", 43, 0, 0, 0, 0, 0, 0, 4, 47
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Input/Input.tsx", "TypeScript React", 30, 0, 0, 0, 0, 0, 0, 4, 34
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Logo/Logo.tsx", "TypeScript React", 39, 0, 0, 0, 0, 0, 2, 4, 45
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Logo/LogoSvg.tsx", "TypeScript React", 24, 0, 0, 0, 0, 0, 0, 3, 27
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Logo/LogoSvgLight.tsx", "TypeScript React", 24, 0, 0, 0, 0, 0, 0, 3, 27
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/MenuBar/MenuBar.tsx", "TypeScript React", 73, 0, 0, 0, 0, 0, 0, 9, 82
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Nav/Nav.tsx", "TypeScript React", 18, 0, 0, 0, 0, 0, 0, 4, 22
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/NavItem/NavItem.tsx", "TypeScript React", 37, 0, 0, 0, 0, 0, 0, 4, 41
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Navigation/NavMobile.tsx", "TypeScript React", 175, 0, 0, 0, 0, 0, 0, 9, 184
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Navigation/Navigation.tsx", "TypeScript React", 33, 0, 0, 0, 0, 0, 0, 6, 39
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Navigation/NavigationItem.tsx", "TypeScript React", 53, 0, 0, 0, 0, 0, 2, 7, 62
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/NcDropDown/NcDropDown.tsx", "TypeScript React", 105, 0, 0, 0, 0, 0, 0, 5, 110
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/NcImage/NcImage.tsx", "TypeScript React", 81, 0, 0, 0, 0, 0, 1, 11, 93
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/NcImage/PlaceIcon.tsx", "TypeScript React", 29, 0, 0, 0, 0, 0, 0, 3, 32
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/NcImage/placecImageIcon.svg", "XML", 0, 0, 0, 6, 0, 0, 0, 1, 7
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/NcLink/NcLink.tsx", "TypeScript React", 23, 0, 0, 0, 0, 0, 0, 4, 27
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/NcModal/NcModal.tsx", "TypeScript React", 106, 0, 0, 0, 0, 0, 1, 10, 117
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/NcPlayIcon/NcPlayIcon.tsx", "TypeScript React", 37, 0, 0, 0, 0, 0, 0, 4, 41
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/NcPlayIcon2/NcPlayIcon2.tsx", "TypeScript React", 35, 0, 0, 0, 0, 0, 0, 4, 39
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/NextPrev/Next.tsx", "TypeScript React", 45, 0, 0, 0, 0, 0, 0, 4, 49
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/NextPrev/NextPrev.tsx", "TypeScript React", 100, 0, 0, 0, 0, 0, 0, 5, 105
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/NextPrev/Prev.tsx", "TypeScript React", 45, 0, 0, 0, 0, 0, 0, 4, 49
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Pagination/Pagination.tsx", "TypeScript React", 56, 0, 0, 0, 0, 0, 2, 8, 66
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Radio/Radio.tsx", "TypeScript React", 41, 0, 0, 0, 0, 0, 0, 4, 45
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Select/Select.tsx", "TypeScript React", 21, 0, 0, 0, 0, 0, 0, 4, 25
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/SocialsList/SocialsList.tsx", "TypeScript React", 61, 0, 0, 0, 0, 0, 0, 4, 65
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/SocialsList1/SocialsList1.tsx", "TypeScript React", 37, 0, 0, 0, 0, 0, 0, 6, 43
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/SocialsShare/SocialsShare.tsx", "TypeScript React", 39, 0, 0, 0, 0, 0, 0, 7, 46
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/SwitchDarkMode/SwitchDarkMode.tsx", "TypeScript React", 63, 0, 0, 0, 0, 0, 0, 4, 67
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Tag/Tag.tsx", "TypeScript React", 20, 0, 0, 0, 0, 0, 1, 4, 25
+"/Users/faraj_shuaib/projects/sahaba/front/src/shared/Textarea/Textarea.tsx", "TypeScript React", 18, 0, 0, 0, 0, 0, 0, 4, 22
+"/Users/faraj_shuaib/projects/sahaba/front/src/styles/__theme_colors.scss", "SCSS", 0, 0, 0, 0, 32, 0, 4, 3, 39
+"/Users/faraj_shuaib/projects/sahaba/front/src/styles/__theme_custom.scss", "SCSS", 0, 0, 0, 0, 159, 0, 18, 33, 210
+"/Users/faraj_shuaib/projects/sahaba/front/src/styles/__theme_font.scss", "SCSS", 0, 0, 0, 0, 36, 0, 8, 5, 49
+"/Users/faraj_shuaib/projects/sahaba/front/src/styles/_header.scss", "SCSS", 0, 0, 0, 0, 5, 0, 0, 1, 6
+"/Users/faraj_shuaib/projects/sahaba/front/src/styles/index.css", "CSS", 0, 0, 0, 0, 0, 30, 1, 6, 37
+"/Users/faraj_shuaib/projects/sahaba/front/src/styles/index.scss", "SCSS", 0, 0, 0, 0, 5, 0, 1, 2, 8
+"/Users/faraj_shuaib/projects/sahaba/front/src/type.d.ts", "TypeScript", 0, 6, 0, 0, 0, 0, 0, 3, 9
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/@openzeppelin/contracts/access/Ownable.ts", "TypeScript", 0, 145, 0, 0, 0, 0, 3, 29, 177
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/@openzeppelin/contracts/access/index.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 3, 1, 5
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/@openzeppelin/contracts/index.ts", "TypeScript", 0, 6, 0, 0, 0, 0, 3, 1, 10
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/@openzeppelin/contracts/token/ERC20/IERC20.ts", "TypeScript", 0, 293, 0, 0, 0, 0, 3, 47, 343
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/@openzeppelin/contracts/token/ERC20/index.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 3, 1, 5
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/@openzeppelin/contracts/token/ERC721/ERC721.ts", "TypeScript", 0, 532, 0, 0, 0, 0, 3, 85, 620
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/@openzeppelin/contracts/token/ERC721/IERC721.ts", "TypeScript", 0, 487, 0, 0, 0, 0, 3, 70, 560
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/@openzeppelin/contracts/token/ERC721/IERC721Receiver.ts", "TypeScript", 0, 108, 0, 0, 0, 0, 3, 16, 127
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.ts", "TypeScript", 0, 532, 0, 0, 0, 0, 3, 85, 620
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.ts", "TypeScript", 0, 532, 0, 0, 0, 0, 3, 85, 620
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/@openzeppelin/contracts/token/ERC721/extensions/index.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 3, 1, 6
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/@openzeppelin/contracts/token/ERC721/index.ts", "TypeScript", 0, 5, 0, 0, 0, 0, 3, 1, 9
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/@openzeppelin/contracts/token/index.ts", "TypeScript", 0, 4, 0, 0, 0, 0, 3, 1, 8
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/@openzeppelin/contracts/utils/index.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 3, 1, 6
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/@openzeppelin/contracts/utils/introspection/ERC165.ts", "TypeScript", 0, 85, 0, 0, 0, 0, 3, 16, 104
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/@openzeppelin/contracts/utils/introspection/IERC165.ts", "TypeScript", 0, 85, 0, 0, 0, 0, 3, 16, 104
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/@openzeppelin/contracts/utils/introspection/index.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 3, 1, 6
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/@openzeppelin/index.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 3, 1, 6
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/common.ts", "TypeScript", 0, 34, 0, 0, 0, 0, 3, 10, 47
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/contracts/MarketEvents.ts", "TypeScript", 0, 393, 0, 0, 0, 0, 3, 57, 453
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/contracts/SahabaMarketplace.ts", "TypeScript", 0, 1655, 0, 0, 0, 0, 3, 262, 1920
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/contracts/index.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 3, 1, 6
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/@openzeppelin/contracts/access/Ownable__factory.ts", "TypeScript", 0, 72, 0, 0, 0, 0, 3, 4, 79
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/@openzeppelin/contracts/access/index.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 3, 1, 5
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/@openzeppelin/contracts/index.ts", "TypeScript", 0, 3, 0, 0, 0, 0, 3, 1, 7
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/@openzeppelin/contracts/token/ERC20/IERC20__factory.ts", "TypeScript", 0, 200, 0, 0, 0, 0, 3, 4, 207
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/@openzeppelin/contracts/token/ERC20/index.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 3, 1, 5
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/@openzeppelin/contracts/token/ERC721/ERC721__factory.ts", "TypeScript", 0, 400, 0, 0, 0, 0, 3, 8, 411
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/@openzeppelin/contracts/token/ERC721/IERC721Receiver__factory.ts", "TypeScript", 0, 54, 0, 0, 0, 0, 3, 4, 61
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/@openzeppelin/contracts/token/ERC721/IERC721__factory.ts", "TypeScript", 0, 305, 0, 0, 0, 0, 3, 4, 312
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage__factory.ts", "TypeScript", 0, 350, 0, 0, 0, 0, 3, 4, 357
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata__factory.ts", "TypeScript", 0, 350, 0, 0, 0, 0, 3, 4, 357
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/@openzeppelin/contracts/token/ERC721/extensions/index.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 3, 1, 6
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/@openzeppelin/contracts/token/ERC721/index.ts", "TypeScript", 0, 4, 0, 0, 0, 0, 3, 1, 8
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/@openzeppelin/contracts/token/index.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 3, 1, 6
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/@openzeppelin/contracts/utils/index.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 3, 1, 5
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/@openzeppelin/contracts/utils/introspection/ERC165__factory.ts", "TypeScript", 0, 36, 0, 0, 0, 0, 3, 4, 43
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/@openzeppelin/contracts/utils/introspection/IERC165__factory.ts", "TypeScript", 0, 39, 0, 0, 0, 0, 3, 4, 46
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/@openzeppelin/contracts/utils/introspection/index.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 3, 1, 6
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/@openzeppelin/index.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 3, 1, 5
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/contracts/MarketEvents__factory.ts", "TypeScript", 0, 452, 0, 0, 0, 0, 3, 8, 463
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/contracts/SahabaMarketplace__factory.ts", "TypeScript", 0, 1332, 0, 0, 0, 0, 3, 8, 1343
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/contracts/index.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 3, 1, 6
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/factories/index.ts", "TypeScript", 0, 2, 0, 0, 0, 0, 3, 1, 6
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/hardhat.d.ts", "TypeScript", 0, 123, 0, 0, 0, 0, 4, 6, 133
+"/Users/faraj_shuaib/projects/sahaba/front/src/typechain-types/index.ts", "TypeScript", 0, 27, 0, 0, 0, 0, 3, 1, 31
+"/Users/faraj_shuaib/projects/sahaba/front/src/utils/convertNumbThousand.ts", "TypeScript", 0, 7, 0, 0, 0, 0, 0, 1, 8
+"/Users/faraj_shuaib/projects/sahaba/front/src/utils/functions.ts", "TypeScript", 0, 135, 0, 0, 0, 0, 17, 18, 170
+"/Users/faraj_shuaib/projects/sahaba/front/src/utils/getTwClassByNumber.ts", "TypeScript", 0, 202, 0, 0, 0, 0, 0, 8, 210
+"/Users/faraj_shuaib/projects/sahaba/front/src/utils/hexToRgb.ts", "TypeScript", 0, 16, 0, 0, 0, 0, 2, 4, 22
+"/Users/faraj_shuaib/projects/sahaba/front/src/utils/isInViewPortIntersectionObserver.ts", "TypeScript", 0, 36, 0, 0, 0, 0, 3, 5, 44
+"/Users/faraj_shuaib/projects/sahaba/front/src/utils/isSafariBrowser.ts", "TypeScript", 0, 7, 0, 0, 0, 0, 2, 2, 11
+"/Users/faraj_shuaib/projects/sahaba/front/src/utils/ncNanoId.ts", "TypeScript", 0, 5, 0, 0, 0, 0, 0, 1, 6
+"/Users/faraj_shuaib/projects/sahaba/front/src/utils/twFocusClass.ts", "TypeScript", 0, 6, 0, 0, 0, 0, 0, 1, 7
+"/Users/faraj_shuaib/projects/sahaba/front/src/vite-env.d.ts", "TypeScript", 0, 6, 0, 0, 0, 0, 1, 3, 10
+"Total", "-", 10697, 10204, 3053, 4994, 237, 4564, 499, 4142, 38390

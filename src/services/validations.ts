@@ -19,8 +19,11 @@ export const createCollectionSchema = yup.object().shape({
       return value.size <= 100000024;
     })
     .required(),
-  name: yup.string().required(t("validations.name_is_required")),
-  description: yup.string().required(t("validations.description_is_required")).max(1000),
+  name: yup.string().required(t("validations.name_is_required")).max(255),
+  description: yup
+    .string()
+    .required(t("validations.description_is_required"))
+    .max(255),
   facebook_url: yup.string().url(t("validations.url_invalid")).nullable(),
   twitter_url: yup.string().url(t("validations.url_invalid")).nullable(),
   telegram_url: yup.string().url(t("validations.url_invalid")).nullable(),
@@ -29,8 +32,11 @@ export const createCollectionSchema = yup.object().shape({
 });
 
 export const updateCollectionSchema = yup.object().shape({
-  name: yup.string().required(t("validations.name_is_required")),
-  description: yup.string().required(t("validations.description_is_required")).max(1000),
+  name: yup.string().required(t("validations.name_is_required")).max(255),
+  description: yup
+    .string()
+    .required(t("validations.description_is_required"))
+    .max(255),
   facebook_url: yup.string().url(t("validations.url_invalid")).nullable(),
   twitter_url: yup.string().url(t("validations.url_invalid")).nullable(),
   telegram_url: yup.string().url(t("validations.url_invalid")).nullable(),
@@ -39,8 +45,11 @@ export const updateCollectionSchema = yup.object().shape({
 });
 
 export const createNftSchema = yup.object().shape({
-  title: yup.string().required(t("validations.title_is_required")),
-  description: yup.string().required(t("validations.description_is_required")).max(1000),
+  title: yup.string().required(t("validations.title_is_required")).max(255),
+  description: yup
+    .string()
+    .required(t("validations.description_is_required"))
+    .max(255),
   file_path: yup.string().required(t("validations.image_is_required")),
   collection_id: yup.number().required(t("validations.collection_is_required")),
   price: yup
@@ -61,10 +70,10 @@ export const updatePriceSchema = yup.object().shape({
 });
 
 export const contactSchema = yup.object().shape({
-  name: yup.string().required(t("validations.name_is_required")),
+  name: yup.string().required(t("validations.name_is_required")).max(255),
   email: yup.string().email().required(t("validations.email_is_required")),
-  subject: yup.string().required(t("validations.subject_is_required")),
-  message: yup.string().required(t("validations.message_is_required")),
+  subject: yup.string().required(t("validations.subject_is_required")).max(255),
+  message: yup.string().required(t("validations.message_is_required")).max(255),
 });
 
 export const kycSchema = yup.object().shape({
@@ -89,16 +98,16 @@ export const kycSchema = yup.object().shape({
 });
 
 export const updateAccountSchema = yup.object().shape({
-  first_name: yup.string().required(t("validations.first_name_is_required")),
-  last_name: yup.string().required(t("validations.last_name_is_required")),
+  first_name: yup.string().required(t("validations.first_name_is_required")).max(255),
+  last_name: yup.string().required(t("validations.last_name_is_required")).max(255),
   username: yup.string().required(t("validations.username_is_required")).trim(),
-  email: yup.string().email().required("t(validations.email_is_required)"),
-  bio: yup.string().nullable(),
-  website_url: yup.string().url(t("validations.url_invalid")).nullable(),
-  facebook_url: yup.string().url(t("validations.url_invalid")).nullable(),
-  twitter_url: yup.string().url(t("validations.url_invalid")).nullable(),
-  telegram_url: yup.string().url(t("validations.url_invalid")).nullable(),
-  instagram_url: yup.string().url(t("validations.url_invalid")).nullable(),
+  email: yup.string().email().required("t(validations.email_is_required)").max(255),
+  bio: yup.string().nullable().max(255),
+  website_url: yup.string().url(t("validations.url_invalid")).nullable().max(255),
+  facebook_url: yup.string().url(t("validations.url_invalid")).nullable().max(255),
+  twitter_url: yup.string().url(t("validations.url_invalid")).nullable().max(255),
+  telegram_url: yup.string().url(t("validations.url_invalid")).nullable().max(255),
+  instagram_url: yup.string().url(t("validations.url_invalid")).nullable().max(255),
   banner_photo: yup
     .mixed()
     .test("fileSize", t("validations.The_file_is_too_large"), (value) => {
