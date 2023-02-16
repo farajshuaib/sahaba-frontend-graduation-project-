@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { connectToWallet } from "app/account/actions";
 import LoadingScreen from "components/LoadingScreen";
+import { ethers } from "ethers";
 
 export interface PageConnectWalletProps {
   className?: string;
@@ -52,6 +53,14 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
   const [loading, setLoading] = useState(false);
 
   const handleSignIn = async (wallet_item: any) => {
+
+    if(!wallet_item) return;
+    if(!wallet_item.connector) return;
+    if(!wallet_item.provider) return;
+    if(!window?.ethereum) {
+      toast.error("Please install Metamask extension!");
+      return;
+    }
     try {
       setLoading(true);
       const result = await switchNetwork();

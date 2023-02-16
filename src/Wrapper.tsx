@@ -34,8 +34,8 @@ i18n.use(initReactI18next).init({
     },
   },
   lng:
-    localStorage.getItem("locale") || navigator.language.split("-")[0] || "ar", // if you're using a language detector, do not define the lng option
-  fallbackLng: navigator.language.split("-")[0] || "ar",
+    localStorage.getItem("locale") || "ar", // if you're using a language detector, do not define the lng option
+  fallbackLng:  "ar",
 
   interpolation: {
     escapeValue: false, // react already safes from xss => https://www.i18next.com/translation-function/interpolation#unescape

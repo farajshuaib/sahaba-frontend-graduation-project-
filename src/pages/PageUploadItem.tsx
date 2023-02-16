@@ -24,6 +24,7 @@ import { Alert } from "shared/Alert/Alert";
 import { useTranslation } from "react-i18next";
 import { useRecaptcha } from "hooks/useRecaptcha";
 import useContract from "hooks/useContract";
+import { compressFile } from "services/compressFiles";
 
 interface UploadFileProps {
   errors: FormikErrors<any>;
@@ -105,11 +106,13 @@ const UploadFile: React.FC<UploadFileProps> = ({
                 accept="image/*"
                 onChange={async (e) => {
                   if (!e.target.files) return;
-                  const file = e.target.files[0];
+                  let file = e.target.files[0];
                   if (!validateImage(file)) return;
 
                   try {
                     setUploadLoading(true);
+
+                    file = (await compressFile(file)) as File;
 
                     const added = await ipfs.add(file);
 

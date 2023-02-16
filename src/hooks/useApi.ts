@@ -32,7 +32,7 @@ export function deleteToken() {
 }
 
 function setChaidId() {
-  api.defaults.params.chainId = window?.ethereum?.networkVersion || 5;
+  api.defaults.params.chainId = window?.ethereum ? window?.ethereum?.networkVersion || 5 : 5;
 }
 
 export function useApi() {

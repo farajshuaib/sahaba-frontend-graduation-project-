@@ -30,6 +30,7 @@ import { useWeb3React } from "@web3-react/core";
 import useContract from "hooks/useContract";
 import Select from "shared/Select/Select";
 import { formatEther } from "ethers/lib/utils";
+import { compressFile } from "services/compressFiles";
 
 export interface PageCreateCollectionProps {
   className?: string;
@@ -271,8 +272,9 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                               ref={fileInput}
                               onChange={async (e) => {
                                 if (!e.target.files) return;
-                                const file = e.target.files[0];
+                                let file = e.target.files[0];
                                 if (!validateImage(file)) return;
+                                file = (await compressFile(file)) as File;
                                 setBannerImage(URL.createObjectURL(file));
                                 setFieldValue("banner_image", file);
                               }}
@@ -333,8 +335,9 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                       className="absolute inset-0 opacity-0 cursor-pointer"
                       onChange={async (e) => {
                         if (!e.target.files) return;
-                        const file = e.target.files[0];
+                        let file = e.target.files[0];
                         if (!validateImage(file)) return;
+                        file = (await compressFile(file)) as File;
                         setLogoImage(URL.createObjectURL(file));
                         setFieldValue("logo_image", file);
                       }}
