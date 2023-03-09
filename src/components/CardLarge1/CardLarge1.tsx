@@ -47,15 +47,20 @@ const CardLarge1: FC<CardLarge1Props> = ({
           <div className="flex flex-col gap-5 space-y-3 sm:flex-row sm:space-y-0 sm:space-x-12">
             <div className="flex items-center gap-3">
               <div className="flex-shrink-0 w-10 h-10">
-                <Avatar
-                  imgUrl={nft.creator?.profile_photo}
-                  sizeClass="w-10 h-10"
-                />
+                <Link to={`/author/${nft.creator?.id}`}>
+                  <Avatar
+                    imgUrl={nft.creator?.profile_photo}
+                    sizeClass="w-10 h-10"
+                  />
+                </Link>
               </div>
               <div className="">
-                <div className="text-xs dark:text-neutral-400">
+                <Link
+                  to={`/author/${nft.creator.id}`}
+                  className="block text-xs dark:text-neutral-400"
+                >
                   {t("Creator")}
-                </div>
+                </Link>
                 <div className="flex items-center text-sm font-semibold">
                   <span>{getUserSlug(nft.creator)}</span>
                   {nft.creator.kyc_form?.status == "approved" && <VerifyIcon />}
@@ -63,12 +68,15 @@ const CardLarge1: FC<CardLarge1Props> = ({
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <div className="flex-shrink-0 w-10 h-10">
+              <Link
+                to={`/collection/${nft.collection.id}`}
+                className="flex-shrink-0 w-10 h-10"
+              >
                 <Avatar
                   imgUrl={nft.collection?.logo_image}
                   sizeClass="w-10 h-10"
                 />
-              </div>
+              </Link>
               <div className="">
                 <div className="text-xs dark:text-neutral-400">
                   {t("Collection")}

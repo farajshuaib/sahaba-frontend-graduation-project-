@@ -41,15 +41,23 @@ export default function AccordionInfo({ nft }: { nft: Nft }) {
             <Disclosure.Panel className="flex flex-col px-4 pt-4 pb-2 overflow-hidden text-xs text-neutral-500 dark:text-neutral-400">
               <br />
               <span>{t("Contract Address")}</span>
-              <span className="text-base text-neutral-900 dark:text-neutral-100 line-clamp-1">
+              <a
+                href={`https://goerli.etherscan.io/address/${CONTRACT_ADDRESS}#code`}
+                target="_blank"
+                className="text-base text-neutral-900 dark:text-neutral-100 line-clamp-1 hover:underline"
+              >
                 {CONTRACT_ADDRESS}
-              </span>
+              </a>
 
               <br />
               <span>Token ID</span>
-              <span className="text-base text-neutral-900 dark:text-neutral-100">
+              <a
+                href={`https://goerli.etherscan.io/nft/${CONTRACT_ADDRESS}/${nft.id}`}
+                target="_blank"
+                className="text-base text-neutral-900 dark:text-neutral-100 hover:underline"
+              >
                 {nft.id}
-              </span>
+              </a>
             </Disclosure.Panel>
           </>
         )}

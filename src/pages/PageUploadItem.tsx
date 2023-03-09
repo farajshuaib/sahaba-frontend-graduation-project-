@@ -160,7 +160,7 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
   const recaptcha = useRecaptcha();
 
   const userData = useAppSelector(
-    (state) => state.account.userData
+    (state) => state.account?.userData
   ) as UserData;
 
   const { contract, isApprovedForAll, setApprovalForAll } = useContract();
