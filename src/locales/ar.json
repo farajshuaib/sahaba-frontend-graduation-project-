@@ -287,5 +287,9 @@
   "Upload_collection_cover_image": "تحميل صورة غلاف المجموعة",
   "Upload_profile_banner_image": "تحميل صورة لافتة الملف الشخصي",
   "Upload_your_art": "قم بتحميل فنّْك",
-  "preview": "معاينة"
+  "preview": "معاينة",
+  "create-poem": "انشاء قصيدة",
+  "each-verse-must-be-written-on-a-new-line": "(يجب كتابة كل بيت على سطر جديد)",
+  "enter-the-text-here": "أدخل النص هنا",
+  "welcome-to-the-create-a-poem-helper-on-the-ethereum-network": "مرحبًا بك في مساعد انشاء معلقة على شبكة Ethereum"
 }

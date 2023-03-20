@@ -1,3 +1,4 @@
+import useIpfs from "hooks/useIpfs";
 import React, {
   FC,
   ImgHTMLAttributes,
@@ -7,9 +8,33 @@ import React, {
 } from "react";
 import checkInViewIntersectionObserver from "utils/isInViewPortIntersectionObserver";
 import PlaceIcon from "./PlaceIcon";
+import axios from "axios";
+
+const RenderPoem: FC<{ src: string }> = ({ src }) => {
+  const [content, setContent] = useState<string[]>([]);
+  useEffect(() => {
+    axios.get(src).then((res) => {
+      const { data } = res;
+      setContent(data.split("\n"));
+    });
+  }, []);
+
+  return (
+    <div className="h-fit">
+      <div className={` grid grid-cols-2 items-center poem-box rounded-3xl `}>
+        {content.map((item, index) => (
+          <p key={index} className="leading-relaxed prose prose-xl Montserrat">
+            {item}
+          </p>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export interface NcImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   containerClassName?: string;
+  contentType?: string;
 }
 
 const NcImage: FC<NcImageProps> = ({
@@ -17,6 +42,7 @@ const NcImage: FC<NcImageProps> = ({
   alt = "nc-imgs",
   src = "",
   className = "object-cover w-full h-full",
+  contentType,
   ...args
 }) => {
   const _containerRef = useRef(null);
@@ -59,6 +85,7 @@ const NcImage: FC<NcImageProps> = ({
 
   useEffect(() => {
     _checkInViewPort();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [src]);
 
@@ -74,19 +101,31 @@ const NcImage: FC<NcImageProps> = ({
     );
   };
 
-  return (
-    <div
-      className={`nc-NcImage ${containerClassName}`}
-      data-nc-id="NcImage"
-      ref={_containerRef}
-    >
-      {__src && imageLoaded ? (
-        <img src={__src} className={className} alt={alt} {...args} />
-      ) : (
-        renderLoadingPlaceholder()
-      )}
-    </div>
-  );
+  if (!contentType || contentType.includes("image")) {
+    return (
+      <div
+        className={` ${containerClassName}`}
+        data-nc-id="NcImage"
+        ref={_containerRef}
+      >
+        {__src && imageLoaded ? (
+          <img src={__src} className={className} alt={alt} {...args} />
+        ) : (
+          renderLoadingPlaceholder()
+        )}
+      </div>
+    );
+  }
+
+  if (contentType.includes("text")) {
+    return (
+      <div data-nc-id="NcImage">
+        <RenderPoem src={src} />
+      </div>
+    );
+  }
+
+  return <div data-nc-id="NcImage">{renderLoadingPlaceholder()}</div>;
 };
 
 export default NcImage;

@@ -60,6 +60,21 @@ export const createNftSchema = yup.object().shape({
     .max(5.0, t("validations.price_is_too_high")),
 });
 
+export const createPoemNftSchema = yup.object().shape({
+  title: yup.string().required(t("validations.title_is_required")).max(255),
+  description: yup
+    .string()
+    .required(t("validations.description_is_required"))
+    .max(255),
+  collection_id: yup.number().required(t("validations.collection_is_required")),
+  price: yup
+    .number()
+    .required(t("validations.price_is_required"))
+    .positive(t("validations.price_must_be_more_than_zero"))
+    .min(0.01, t("validations.price_is_to_low"))
+    .max(5.0, t("validations.price_is_too_high")),
+});
+
 export const updatePriceSchema = yup.object().shape({
   price: yup
     .number()
@@ -98,16 +113,46 @@ export const kycSchema = yup.object().shape({
 });
 
 export const updateAccountSchema = yup.object().shape({
-  first_name: yup.string().required(t("validations.first_name_is_required")).max(255),
-  last_name: yup.string().required(t("validations.last_name_is_required")).max(255),
+  first_name: yup
+    .string()
+    .required(t("validations.first_name_is_required"))
+    .max(255),
+  last_name: yup
+    .string()
+    .required(t("validations.last_name_is_required"))
+    .max(255),
   username: yup.string().required(t("validations.username_is_required")).trim(),
-  email: yup.string().email().required("t(validations.email_is_required)").max(255),
+  email: yup
+    .string()
+    .email()
+    .required("t(validations.email_is_required)")
+    .max(255),
   bio: yup.string().nullable().max(255),
-  website_url: yup.string().url(t("validations.url_invalid")).nullable().max(255),
-  facebook_url: yup.string().url(t("validations.url_invalid")).nullable().max(255),
-  twitter_url: yup.string().url(t("validations.url_invalid")).nullable().max(255),
-  telegram_url: yup.string().url(t("validations.url_invalid")).nullable().max(255),
-  instagram_url: yup.string().url(t("validations.url_invalid")).nullable().max(255),
+  website_url: yup
+    .string()
+    .url(t("validations.url_invalid"))
+    .nullable()
+    .max(255),
+  facebook_url: yup
+    .string()
+    .url(t("validations.url_invalid"))
+    .nullable()
+    .max(255),
+  twitter_url: yup
+    .string()
+    .url(t("validations.url_invalid"))
+    .nullable()
+    .max(255),
+  telegram_url: yup
+    .string()
+    .url(t("validations.url_invalid"))
+    .nullable()
+    .max(255),
+  instagram_url: yup
+    .string()
+    .url(t("validations.url_invalid"))
+    .nullable()
+    .max(255),
   banner_photo: yup
     .mixed()
     .test("fileSize", t("validations.The_file_is_too_large"), (value) => {

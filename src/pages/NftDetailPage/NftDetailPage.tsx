@@ -63,7 +63,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       return;
     }
     if (userData?.status == "suspended") {
-      toast.error(t("account_suspended"));
+      toast.error(t("account_suspended") as string);
       return;
     }
     try {
@@ -72,8 +72,8 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       await api.put(`/nfts/toggle-sale/${item.id}`, { tx_hash: tx.hash });
       toast.success(
         item.is_for_sale
-          ? t("Item_canceled_from_the_selling_successfully")
-          : t("NFT_set_for_sale_successfully")
+          ? t("Item_canceled_from_the_selling_successfully") as string
+          : t("NFT_set_for_sale_successfully") as string
       );
       await fetchById(params.id);
       setLoadingButton(false);
@@ -90,7 +90,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       return;
     }
     if (userData?.status == "suspended") {
-      toast.error(t("account_suspended"));
+      toast.error(t("account_suspended") as string);
       return;
     }
     setLoadingButton(true);
@@ -114,7 +114,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
 
       await submitBuyNft({ tx_hash: transaction.hash });
 
-      toast.success(t("buy_success"));
+      toast.success(t("buy_success") as string);
 
       await fetchById(params.id);
       setLoadingButton(false);

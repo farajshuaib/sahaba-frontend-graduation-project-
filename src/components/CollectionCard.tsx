@@ -12,12 +12,15 @@ export interface CollectionCardProps {
 }
 
 const CollectionCard: FC<CollectionCardProps> = ({ className, collection }) => {
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   return (
     <div
       className={`CollectionCard relative p-4 rounded-2xl overflow-hidden h-[410px] flex flex-col group ${className}`}
     >
-      <NcImage containerClassName="" src={collection?.banner_image} />
+      <NcImage
+        containerClassName=""
+        src={collection?.banner_image}
+      />
       <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 group-hover:h-full to-transparent "></div>
 
       <div className="relative mt-auto">
@@ -50,6 +53,7 @@ const CollectionCard: FC<CollectionCardProps> = ({ className, collection }) => {
               {collection.nfts.map((nft) => (
                 <NcImage
                   key={nft.id}
+                  contentType={nft.file_type}
                   containerClassName="w-full h-20 rounded-xl overflow-hidden"
                   src={nft.file_path}
                 />

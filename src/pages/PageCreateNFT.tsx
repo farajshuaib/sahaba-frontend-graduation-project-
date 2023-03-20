@@ -120,10 +120,14 @@ const UploadFile: React.FC<UploadFileProps> = ({
 
                     setFieldValue("file_path", IPFS_BASE_URL + added.path);
 
-                    toast.success(t("image_uploaded_to_the_IPFS_successfully"));
+                    toast.success(
+                      t("image_uploaded_to_the_IPFS_successfully") as string
+                    );
                   } catch (e) {
                     toast.error(
-                      t("something_went_wrong_while_uploading_the_image")
+                      t(
+                        "something_went_wrong_while_uploading_the_image"
+                      ) as string
                     );
                   }
                   setUploadLoading(false);
@@ -141,11 +145,7 @@ const UploadFile: React.FC<UploadFileProps> = ({
   );
 };
 
-export interface PageUploadItemProps {
-  className?: string;
-}
-
-const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
+const PageCreateNFTImage: FC = () => {
   const { t } = useTranslation();
   const { library, account } = useWeb3React();
   const navigate = useNavigate();
@@ -187,10 +187,7 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
   };
 
   return (
-    <div
-      className={`nc-PageUploadItem ${className}`}
-      data-nc-id="PageUploadItem"
-    >
+    <div className={`nc-PageUploadItem `} data-nc-id="PageUploadItem">
       <Helmet>
         <title>Mint an NFT</title>
       </Helmet>
@@ -218,8 +215,8 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
             validationSchema={createNftSchema}
             onSubmit={async (values, { setFieldError }) => {
               if (userData && userData?.status === "suspended") {
-                toast.error(t("Your_account_is_suspended"));
-                setError(t("Your_account_is_suspended"));
+                toast.error(t("Your_account_is_suspended") as string);
+                setError(t("Your_account_is_suspended") as string);
                 return;
               }
 
@@ -231,20 +228,23 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
               const token = await checkCapatcha();
 
               if (!token) {
-                toast.error(t("please_verify_you_are_not_a_robot"));
+                toast.error(t("please_verify_you_are_not_a_robot") as string);
                 return;
               }
 
               if (balance == "0") {
-                setError(t("not_enough_balance"));
+                setError(t("not_enough_balance") as string);
                 return;
               }
               if (values.collection_id == 0) {
-                setFieldError("collection_id", t("collection_is_required"));
+                setFieldError(
+                  "collection_id",
+                  t("collection_is_required") as string
+                );
                 return;
               }
               if (values.price == 0) {
-                setFieldError("price", t("price_must_be_above_0"));
+                setFieldError("price", t("price_must_be_above_0") as string);
                 return;
               }
 
@@ -268,7 +268,7 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                 const res = await tx.wait();
 
                 if (!res.events) {
-                  toast.error(t("something_went_wrong"));
+                  toast.error(t("something_went_wrong") as string);
                   return;
                 }
 
@@ -282,7 +282,7 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                   tx_hash: tx.hash,
                 });
 
-                toast.success(t("nft_created_successfully"));
+                toast.success(t("nft_created_successfully") as string);
 
                 navigate(-1);
               } catch (error) {
@@ -324,7 +324,7 @@ const PageUploadItem: FC<PageUploadItemProps> = ({ className = "" }) => {
                       <RadioGroup.Label className="sr-only">
                         Server size
                       </RadioGroup.Label>
-                      <div className="flex py-2 space-x-4 overflow-auto customScrollBar">
+                      <div className="flex py-2 space-x-4 gap-5 overflow-auto customScrollBar">
                         {myCollections &&
                           myCollections.map((collection: Collection, index) => (
                             <RadioGroup.Option
@@ -557,4 +557,4 @@ function CheckIcon(props: any) {
   );
 }
 
-export default PageUploadItem;
+export default PageCreateNFTImage;

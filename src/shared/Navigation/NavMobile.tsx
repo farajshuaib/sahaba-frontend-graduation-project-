@@ -166,9 +166,15 @@ const NavMobile: React.FC<NavMobileProps> = ({ onClickClose }) => {
       </ul>
       <div className="flex items-center justify-between px-5 py-6 space-x-2">
         {userData && (
-          <ButtonPrimary href={"/create-nft"} className="!px-10">
-            {t("Create")}
-          </ButtonPrimary>
+          <>
+            <ButtonPrimary href={"/create-nft"} className="!px-10">
+              {t("Create_NFT")}
+            </ButtonPrimary>
+            <ButtonSecondary href="/create-poem">
+              <span>{t("create-poem")}</span>
+              <span>📜</span>
+            </ButtonSecondary>
+          </>
         )}
         {!userData && (
           <ButtonSecondary href={"/connect-wallet"} className="flex-1">

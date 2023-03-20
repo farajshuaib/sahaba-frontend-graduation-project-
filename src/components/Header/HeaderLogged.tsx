@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { getNotifications } from "app/general/actions";
 import { Alert } from "flowbite-react";
 import { useWeb3React } from "@web3-react/core";
+import ButtonSecondary from "shared/Button/ButtonSecondary";
 
 const Alerts: FC = () => {
   const { t } = useTranslation();
@@ -83,13 +84,20 @@ const HeaderLogged: FC<HeaderLoggedProps> = () => {
                 <LocalesDropDown />
               </div>
               {userData && (
-                <ButtonPrimary
-                  href={"/create-nft"}
-                  sizeClass="px-4 py-2 sm:px-5"
-                >
-                  {t("Create")}
-                </ButtonPrimary>
+                <>
+                  <ButtonPrimary
+                    href={"/create-nft"}
+                    sizeClass="px-4 py-2 sm:px-5"
+                  >
+                    {t("Create")}
+                  </ButtonPrimary>
+                  <ButtonSecondary href="/create-poem">
+                    <span>{t('create-poem')}</span>
+                    <span>📜</span>
+                  </ButtonSecondary>
+                </>
               )}
+
               {!userData && (
                 <ButtonPrimary
                   href={"/connect-wallet"}

@@ -147,17 +147,17 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
               const token = await checkCapatcha();
 
               if (!token) {
-                toast.error(t("please_verify_you_are_not_a_robot"));
+                toast.error(t("please_verify_you_are_not_a_robot") as string);
                 return;
               }
 
               if (userData?.status === "suspended") {
-                toast.error(t("your_account_is_suspended"));
+                toast.error(t("your_account_is_suspended") as string);
                 return;
               }
 
               if (balance == "0") {
-                toast.error(t("not_enough_balance"));
+                toast.error(t("not_enough_balance") as string);
                 return;
               }
 
@@ -179,7 +179,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                       "Content-Type": "multipart/form-data",
                     },
                   });
-                  toast.success(t("collection_updated_successfully"));
+                  toast.success(t("collection_updated_successfully") as string);
                 } else {
                   const tx = await contract.createCollection(values.name, [
                     account,
@@ -188,7 +188,7 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   const res = await tx.wait();
 
                   if (!res.events || res.events.length == 0) {
-                    toast.error(t("something_went_wrong"));
+                    toast.error(t("something_went_wrong") as string);
                     return;
                   }
 
@@ -201,14 +201,14 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                   await create(form, {
                     "Content-Type": "multipart/form-data",
                   });
-                  toast.success(t("collection_created_successfully"));
+                  toast.success(t("collection_created_successfully") as string);
                 }
 
                 dispatch(getCollections());
 
                 navigate(-1);
               } catch (error) {
-                toast.error(t("something_went_wrong"));
+                toast.error(t("something_went_wrong") as string);
               }
             }}
           >

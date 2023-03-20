@@ -13,6 +13,7 @@ const NftItem: React.FC<NftItemProps> = ({ nft }) => {
     <div className="relative">
       <NcImage
         src={nft.file_path}
+        contentType={nft.file_type}
         containerClassName="aspect-w-11 aspect-h-12 rounded-3xl overflow-hidden"
       />
 

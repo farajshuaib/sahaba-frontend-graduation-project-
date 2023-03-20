@@ -20,7 +20,7 @@ const App: React.FC = () => {
     dispatch(getCategories());
     if (userData && (!userData?.username || !userData?.email)) {
       navigate("/account");
-      toast.warning(t("please_complete_your_profile_data"));
+      toast.warning(t("please_complete_your_profile_data").toString());
     }
   }, []);
 

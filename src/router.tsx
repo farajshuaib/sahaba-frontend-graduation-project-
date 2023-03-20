@@ -7,13 +7,14 @@ import AccountPage from "pages/AccountPage";
 import NftDetailPage from "pages/NftDetailPage/NftDetailPage";
 import PageCollection from "pages/PageCollection";
 import PageSearch from "pages/PageSearch";
-import PageUploadItem from "pages/PageUploadItem";
+import PageCreateNFT from "pages/PageCreateNFT";
 import PageConnectWallet from "pages/PageConnectWallet";
 import PageCreateCollection from "pages/PageCreateCollection";
 import PageCollections from "pages/PageCollections";
 import KYC_Form from "pages/KYC_Form";
 import App from "App";
 import { useAppSelector } from "app/hooks";
+import PageCreatePoemNFT from "pages/PageCreatePoemNFT";
 
 const router = () => {
   const userData = useAppSelector((state) => state.account.userData);
@@ -49,10 +50,14 @@ const router = () => {
         {
           path: "/create-nft",
           element: userData ? (
-            <PageUploadItem />
+            <PageCreateNFT />
           ) : (
             <Navigate to="/connect-wallet" />
           ),
+        },
+        {
+          path: "/create-poem",
+          element: userData ?  <PageCreatePoemNFT /> : <PageConnectWallet />,
         },
         { path: "/author/:id", element: <AuthorPage /> },
         {

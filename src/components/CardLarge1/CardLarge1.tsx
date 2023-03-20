@@ -132,6 +132,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
               className="absolute inset-0 object-cover rounded-3xl sm:rounded-[40px] border-4 sm:border-[14px] border-white dark:border-neutral-800"
               src={nft.file_path}
               alt={nft.title}
+              contentType={nft.file_type}
             />
           </Link>
 

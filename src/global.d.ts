@@ -113,6 +113,7 @@ interface Nft {
   creator_address: string;
   description: string;
   file_path: string;
+  file_type: string;
   collection: Collection;
   creator: UserData;
   owner: UserData;

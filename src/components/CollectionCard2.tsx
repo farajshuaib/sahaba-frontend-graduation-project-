@@ -27,6 +27,7 @@ const CollectionCard2: FC<CollectionCard2Props> = ({
           {collection?.nfts.slice(0, 3).map((nft: Nft, index: number) => (
             <NcImage
               key={index}
+              contentType={nft.file_type}
               containerClassName="w-full h-28"
               src={nft.file_path}
             />

@@ -18,7 +18,7 @@ export const TEST_CONTRACT_ADDRESS: string =
 
 export const TEST_CONTRACT_LINK = `https://goerli.etherscan.io/address/${CONTRACT_ADDRESS}`;
 export const CONTRACT_ABI = abi;
-export const SAHABA_TEST_COIN_ABI = coin_abi
+export const SAHABA_TEST_COIN_ABI = coin_abi;
 
 export const CAPATCHA_SITE_KEY: string = import.meta.env.VITE_CAPATCHA_SITE_KEY;
 export const CAPATCHA_SECRET_KEY: string = import.meta.env
@@ -72,3 +72,10 @@ export const COLORS = [
   "bg-teal-500",
   "bg-gray-500",
 ];
+
+export const pinata = {
+  API_Key: "fc71d941cec4991d7b63",
+  API_Secret:
+    "c3d5c18e8047dd88b9157238db6b715f24089cc632a31f373d0b7b657bc0f924",
+  JWT: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIxZjcwYTlmMS0yNDdhLTQ5YjAtYTFiYi02OTQ4OWQzYzQxN2EiLCJlbWFpbCI6ImZhcmFqLnNodWFpcDk3QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaW5fcG9saWN5Ijp7InJlZ2lvbnMiOlt7ImlkIjoiRlJBMSIsImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxfSx7ImlkIjoiTllDMSIsImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxfV0sInZlcnNpb24iOjF9LCJtZmFfZW5hYmxlZCI6ZmFsc2UsInN0YXR1cyI6IkFDVElWRSJ9LCJhdXRoZW50aWNhdGlvblR5cGUiOiJzY29wZWRLZXkiLCJzY29wZWRLZXlLZXkiOiJmYzcxZDk0MWNlYzQ5OTFkN2I2MyIsInNjb3BlZEtleVNlY3JldCI6ImMzZDVjMThlODA0N2RkODhiOTE1NzIzOGRiNmI3MTVmMjQwODljYzYzMmEzMWYzNzNkMGI3YjY1N2JjMGY5MjQiLCJpYXQiOjE2NzkzMjg5MDl9.l2WZrEHA2WtdiH_0yAfwFdwWKeUVRdfWNcLIkczi5Es",
+};
