@@ -139,7 +139,7 @@ const KYC_Form: React.FC = () => {
                 const token = await checkCapatcha();
 
                 if (!token) {
-                  toast.error(t("please_verify_you_are_not_a_robot"));
+                  toast.error(t("please_verify_you_are_not_a_robot") as string);
                   return;
                 }
                 if (userData?.status === "suspended") {
@@ -156,7 +156,7 @@ const KYC_Form: React.FC = () => {
                       "Content-Type": "multipart/form-data",
                     },
                   });
-                  toast.success(t("thank_you_for_submitting_your_kyc"));
+                  toast.success(t("thank_you_for_submitting_your_kyc") as string);
                   navigate(-1);
                 } catch (error: any) {
                   toast.error(

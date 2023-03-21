@@ -21,7 +21,7 @@ const RenderPoem: FC<{ src: string }> = ({ src }) => {
 
   return (
     <div className="h-fit">
-      <div className={` grid grid-cols-2 items-center poem-box rounded-3xl `}>
+      <div className={`grid grid-cols-2 items-center poem-box rounded-3xl max-h-52`}>
         {content.map((item, index) => (
           <p key={index} className="leading-relaxed prose prose-xl Montserrat">
             {item}

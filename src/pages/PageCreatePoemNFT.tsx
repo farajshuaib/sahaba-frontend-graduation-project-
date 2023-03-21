@@ -105,6 +105,11 @@ const PageCreatePoemNFT: React.FC = () => {
                 return;
               }
 
+              if (!values.poem) {
+                setError(t("please-add-the-poem-content") as string);
+                return;
+              }
+
               if (!recaptcha) {
                 toast.error("Beep-bop, you're a robot!");
                 return;
@@ -135,10 +140,8 @@ const PageCreatePoemNFT: React.FC = () => {
 
               try {
                 const added = await ipfs.add({
-                    content: values.poem,
+                  content: values.poem,
                 });
-
-            
 
                 console.log("added", added);
 
@@ -173,10 +176,10 @@ const PageCreatePoemNFT: React.FC = () => {
                 ).toString();
 
                 await create({
-                    title: values.title,
-                    description: values.description,
-                    price: values.price,
-                    collection_id: values.collection_id,
+                  title: values.title,
+                  description: values.description,
+                  price: values.price,
+                  collection_id: values.collection_id,
                   file_path,
                   file_type,
                   id: token_id,

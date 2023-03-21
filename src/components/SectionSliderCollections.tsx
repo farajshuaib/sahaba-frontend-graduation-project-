@@ -19,12 +19,14 @@ const CollectionsSlider: React.FC<CollectionsSliderProp> = ({
   const sliderRef = useRef(null);
   const id = useId();
   const UNIQUE_CLASS = "glidejs" + id.replace(/:/g, "_");
+
+  
   useEffect(() => {
     if (!sliderRef.current) {
-      return;
+      return () => {};
     }
 
-    const OPTIONS: Glide.Options = {
+    const OPTIONS: any = {
       perView: 3,
       gap: 32,
       bound: true,

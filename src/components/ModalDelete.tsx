@@ -30,7 +30,7 @@ const ModalDelete: FC<ModalDeleteProps> = ({
     try {
       await burnNft();
       await api.delete(`/nfts/burn/${nft?.id}`);
-      toast.success(t("NFT_deleted_successfully"));
+      toast.success(t("NFT_deleted_successfully") as string);
       onCloseModalDelete();
       setLoading(false);
       navigate(-1);

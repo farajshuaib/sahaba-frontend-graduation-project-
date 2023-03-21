@@ -73,7 +73,7 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
         message,
         type: problemSelected.name,
       });
-      toast.success(t("Thank_you_for_your_report"));
+      toast.success(t("Thank_you_for_your_report") as string);
       setLoading(false);
       onCloseModalReportItem();
     } catch (error: any) {

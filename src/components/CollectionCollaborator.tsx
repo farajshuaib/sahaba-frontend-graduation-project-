@@ -39,10 +39,10 @@ const CollectionCollaborator: React.FC<Props> = ({
 
   useEffect(() => {
     if (!sliderRef.current) {
-      return;
+      return () => {};
     }
 
-    const OPTIONS: Glide.Options = {
+    const OPTIONS: any = {
       perView: 5,
       gap: 32,
       bound: true,
@@ -87,10 +87,10 @@ const CollectionCollaborator: React.FC<Props> = ({
       getCollection();
       setDeleteLoading(false);
       setDeleteCollaboration(null);
-      toast.success(t("Collaborator_deleted_successfully"));
+      toast.success(t("Collaborator_deleted_successfully") as string);
     } catch (error: any) {
       setDeleteLoading(false);
-      toast.error(error?.response?.data?.message || t("system_error"));
+      toast.error(error?.response?.data?.message || t("system_error") as string);
     }
   };
 

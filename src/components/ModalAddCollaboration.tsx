@@ -46,7 +46,7 @@ const ModalAddCollaboration: FC<ModalAddCollaborationProps> = ({
 
   const submit = async () => {
     if (userData?.status == "suspended") {
-      toast.error(t("account_suspended"));
+      toast.error(t("account_suspended") as string);
       return;
     }
     setLoading(true);
@@ -57,10 +57,10 @@ const ModalAddCollaboration: FC<ModalAddCollaborationProps> = ({
         wallet_address: address,
       });
       setLoading(false);
-      toast.success(t("Author_added_as_collaboration_successfully"));
+      toast.success(t("Author_added_as_collaboration_successfully") as string);
       onCloseModalCollaboration();
     } catch (e: any) {
-      toast.error(e.response.data.message || t("system_error"));
+      toast.error(e.response.data.message || t("system_error") as string);
       setLoading(false);
     }
   };

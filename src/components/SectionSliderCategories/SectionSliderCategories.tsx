@@ -23,10 +23,10 @@ const SectionSliderCategories: FC<SectionSliderCategoriesProps> = ({
 
   useEffect(() => {
     if (!sliderRef.current) {
-      return;
+      return () => {};
     }
 
-    const OPTIONS: Glide.Options = {
+    const OPTIONS: any = {
       perView: 5,
       gap: 32,
       bound: true,

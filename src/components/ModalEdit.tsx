@@ -50,7 +50,7 @@ const ModalEdit: FC<ModalEditProps> = ({
   const submit = async () => {
     if (!nft) return;
     if (userData && userData?.status === "suspended") {
-      toast.error(t("Your_account_is_suspended"));
+      toast.error(t("Your_account_is_suspended") as string);
       return;
     }
 
@@ -62,7 +62,7 @@ const ModalEdit: FC<ModalEditProps> = ({
     const token = await checkCapatcha();
 
     if (!token) {
-      toast.error(t("please_verify_you_are_not_a_robot"));
+      toast.error(t("please_verify_you_are_not_a_robot") as string);
       return;
     }
 
@@ -78,7 +78,7 @@ const ModalEdit: FC<ModalEditProps> = ({
         id: nft.id,
         payload: { price, tx_hash: transaction.hash },
       });
-      toast.success(t("NFT_price_updated_successfully"));
+      toast.success(t("NFT_price_updated_successfully") as string) ;
       getNft && getNft();
       setLoading(false);
       onCloseModalEdit();

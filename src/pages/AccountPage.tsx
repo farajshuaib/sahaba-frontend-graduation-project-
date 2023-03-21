@@ -110,7 +110,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                 const token = await checkCapatcha();
 
                 if (!token) {
-                  toast.error(t("please_verify_you_are_not_a_robot"));
+                  toast.error(t("please_verify_you_are_not_a_robot") as string);
                   return;
                 }
 
@@ -126,7 +126,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                     "Content-Type": "multipart/form-data",
                   });
                   dispatch(connectToWallet(userData.wallet_address));
-                  toast.success(t("Account_successfully_updated"));
+                  toast.success(t("Account_successfully_updated") as string);
                   navigate("/");
                 } catch (e: any) {
                   toast.error(
