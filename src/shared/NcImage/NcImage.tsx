@@ -21,12 +21,21 @@ const RenderPoem: FC<{ src: string }> = ({ src }) => {
 
   return (
     <div className="h-fit">
-      <div className={`grid grid-cols-2 items-center poem-box rounded-3xl max-h-52`}>
-        {content.map((item, index) => (
-          <p key={index} className="leading-relaxed prose prose-xl Montserrat">
-            {item}
-          </p>
-        ))}
+      <div
+        className={`grid grid-cols-2 items-center gap-3 text-2xl leading-relaxed tracking-wide poem-box rounded-3xl max-h-96  group-hover:scale-[1.01] transition-transform duration-300 ease-in-out will-change-transform`}
+      >
+        {content && content.length > 0 ? (
+          content.map((item, index) => (
+            <p
+              key={index}
+              className="leading-relaxed !prose md:!prose-xl lg:!prose-2xl text-center"
+            >
+              {item}
+            </p>
+          ))
+        ) : (
+          <PlaceIcon />
+        )}
       </div>
     </div>
   );
@@ -45,50 +54,6 @@ const NcImage: FC<NcImageProps> = ({
   contentType,
   ...args
 }) => {
-  const _containerRef = useRef(null);
-  let _imageEl: HTMLImageElement | null = null;
-
-  const [__src, set__src] = useState("");
-  const [imageLoaded, setImageLoaded] = useState(false);
-
-  const _checkInViewPort = () => {
-    if (!_containerRef.current) return;
-    checkInViewIntersectionObserver({
-      target: _containerRef.current as any,
-      options: {
-        root: null,
-        rootMargin: "0%",
-        threshold: 0,
-      },
-      freezeOnceVisible: true,
-      callback: _imageOnViewPort,
-    });
-  };
-
-  const _imageOnViewPort = () => {
-    if (!src) {
-      _handleImageLoaded();
-      return true;
-    }
-    _imageEl = new Image();
-    if (_imageEl) {
-      _imageEl.src = src;
-      _imageEl.addEventListener("load", _handleImageLoaded);
-    }
-    return true;
-  };
-
-  const _handleImageLoaded = () => {
-    setImageLoaded(true);
-    set__src(src);
-  };
-
-  useEffect(() => {
-    _checkInViewPort();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [src]);
-
   const renderLoadingPlaceholder = () => {
     return (
       <div
@@ -103,13 +68,9 @@ const NcImage: FC<NcImageProps> = ({
 
   if (!contentType || contentType.includes("image")) {
     return (
-      <div
-        className={` ${containerClassName}`}
-        data-nc-id="NcImage"
-        ref={_containerRef}
-      >
-        {__src && imageLoaded ? (
-          <img src={__src} className={className} alt={alt} {...args} />
+      <div className={` ${containerClassName}`} data-nc-id="NcImage">
+        {src ? (
+          <img src={src} className={className} loading="lazy" alt={alt} {...args} />
         ) : (
           renderLoadingPlaceholder()
         )}

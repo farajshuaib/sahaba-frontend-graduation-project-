@@ -45,14 +45,14 @@ const CardNFT2: FC<CardNFT2Props> = ({ className = "", nft }) => {
         </div>
 
         {/* ----TIME--- */}
-        {nft.is_for_sale && (
+        {nft.is_for_sale && nft.sale_end_at && (
           <RemainingTimeNftCard
             sale_end_at={nft.sale_end_at}
             contentClassName="right-5 top-1/2 -translate-y-1/2 pb-1"
           />
         )}
 
-        <div className="absolute left-[-1px] bottom-[-0.4px] ">
+        <div className="absolute left-[-1px] bottom-[-0.4px] z-10">
           <svg
             className="text-white dark:text-neutral-900 w-64 md:w-[281px]"
             width="281"
@@ -68,7 +68,7 @@ const CardNFT2: FC<CardNFT2Props> = ({ className = "", nft }) => {
 
           <div
             dir="ltr"
-            className={`absolute bottom-0 w-48 left-4 text-left  `}
+            className={`absolute bottom-0 w-fit left-4 text-left z-10 `}
           >
             <h2 className={`text-lg font-semibold `}>{nft.title}</h2>
 

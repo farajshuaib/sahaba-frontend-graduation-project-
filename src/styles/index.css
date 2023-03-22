@@ -3,6 +3,27 @@
 @tailwind utilities;
 @tailwind variants;
 
+
+
+
+*::-webkit-scrollbar {
+  width: 0px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary-900 rounded-2xl;
+}
+
+::-webkit-scrollbar-track-piece {
+  @apply bg-gray-100;
+}
+
+
 .tajwal-font {
   font-family: "Tajawal", sans-serif !important;
 }
@@ -44,23 +65,19 @@ button:disabled {
 }
 
 .poem-box {
+  font-family: 'Aref Ruqaa', serif !important;
   text-rendering: optimizeLegibility;
   text-size-adjust: none;
   position: relative;
-  font-weight: 200;
-  line-height: 30px;
-  font-size: 1rem;
   width: 100%;
   margin: auto;
   text-align: center;
   min-height: fit-content;
   overflow-y: scroll;
-  padding-top: 11%;
-  padding-bottom: 11%;
-  grid-gap: .5rem;
-  gap: .5rem;
-  font-family: Harmattan;
+  padding-top: 12%;
+  padding-bottom: 12%;
   color: #211042;
   background: #fff3e7;
   box-shadow: inset 7px 0 73px 22px #e6d1bb;
 }
+

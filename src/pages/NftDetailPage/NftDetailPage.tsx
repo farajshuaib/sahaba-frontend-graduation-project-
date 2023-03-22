@@ -72,8 +72,8 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       await api.put(`/nfts/toggle-sale/${item.id}`, { tx_hash: tx.hash });
       toast.success(
         item.is_for_sale
-          ? t("Item_canceled_from_the_selling_successfully") as string
-          : t("NFT_set_for_sale_successfully") as string
+          ? (t("Item_canceled_from_the_selling_successfully") as string)
+          : (t("NFT_set_for_sale_successfully") as string)
       );
       await fetchById(params.id);
       setLoadingButton(false);
@@ -194,7 +194,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
         </div>
 
         {/* ---------- 6 ----------  */}
-        {item.is_for_sale && (
+        {item.is_for_sale && item.sale_end_at && (
           <div className="py-9">
             <TimeCountDown sale_end_at={item.sale_end_at} />
           </div>
