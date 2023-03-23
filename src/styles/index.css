@@ -65,7 +65,7 @@ button:disabled {
 }
 
 .poem-box {
-  font-family: 'Aref Ruqaa', serif !important;
+  font-family: 'Montserrat', sans-serif !important;
   text-rendering: optimizeLegibility;
   text-size-adjust: none;
   position: relative;

@@ -1,4 +1,3 @@
-import useIpfs from "hooks/useIpfs";
 import React, {
   FC,
   ImgHTMLAttributes,
@@ -6,7 +5,6 @@ import React, {
   useRef,
   useState,
 } from "react";
-import checkInViewIntersectionObserver from "utils/isInViewPortIntersectionObserver";
 import PlaceIcon from "./PlaceIcon";
 import axios from "axios";
 
