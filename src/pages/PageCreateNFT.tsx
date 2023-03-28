@@ -120,7 +120,7 @@ const UploadFile: React.FC<UploadFileProps> = ({
 
                     setFieldValue("file_path", IPFS_BASE_URL + added.path);
 
-                    toast.success(
+                    toast.success( 
                       t("image_uploaded_to_the_IPFS_successfully") as string
                     );
                   } catch (e) {
