@@ -61,7 +61,7 @@ const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection_id }) => {
       />
 
       {/* LOOP ITEMS */}
-      <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10 lg:mt-10">
+      <div className="grid mt-8 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10 lg:mt-10">
         {data.map((item: Nft, index) => (
           <CardNFT nft={item} key={index} />
         ))}
