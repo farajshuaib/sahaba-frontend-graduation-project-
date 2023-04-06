@@ -24,7 +24,7 @@ const CollectionCard2: FC<CollectionCard2Props> = ({
           src={collection?.logo_image}
         />
         <div className="grid grid-cols-3 gap-1.5 mt-1.5">
-          {collection?.nfts.slice(0, 3).map((nft: Nft, index: number) => (
+          {collection?.nfts.filter(nft => nft.file_type.includes('image')).slice(0, 3).map((nft: Nft, index: number) => (
             <NcImage
               key={index}
               contentType={nft.file_type}

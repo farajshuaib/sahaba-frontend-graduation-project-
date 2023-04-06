@@ -18,7 +18,7 @@ const Home: React.FC = () => {
       <BgGlassmorphism />
 
       {/* SECTION LAERGE SLIDER */}
-      <div className="py-14 lg:py-16">
+      <div className="py-14 lg:py-48">
         <div className="container">
           <SectionLargeSlider />
         </div>
