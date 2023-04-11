@@ -9,7 +9,6 @@ import { useAppDispatch, useAppSelector } from "app/hooks";
 import LocalesDropDown from "./LocalesDropDown";
 import { useTranslation } from "react-i18next";
 import { getNotifications } from "app/general/actions";
-import { Alert } from "flowbite-react";
 import { useWeb3React } from "@web3-react/core";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 
@@ -20,33 +19,27 @@ const Alerts: FC = () => {
   return (
     <>
       {chainId && chainId == 5 && (
-        <Alert color="info">
-          <span className="block w-full font-medium text-center">
-            {t("you_are_on_goerli")}
-          </span>
-        </Alert>
+        <div className="flex items-center justify-center w-full py-4 mx-auto font-medium text-center text-blue-800 bg-blue-100 rounded-b-lg shadow-sm">
+          {t("you_are_on_goerli")}
+        </div>
       )}
       {!window?.ethereum && (
-        <Alert color="warning">
-          <div className="block w-full font-medium text-center">
-            <span>{t("no_provider")}</span>{" "}
-            <a
-              href="https://metamask.io/download/"
-              className="font-bold underline"
-              target="_blank"
-            >
-              {t("install_metamask")}
-            </a>
-          </div>
-        </Alert>
+        <div className="flex items-center justify-center w-full py-4 mx-auto font-medium text-center bg-yellow-400 rounded-b-lg shadow-sm">
+          <span>{t("no_provider")}</span>{" "}
+          <a
+            href="https://metamask.io/download/"
+            className="font-bold underline"
+            target="_blank"
+          >
+            {t("install_metamask")}
+          </a>
+        </div>
       )}
 
       {userData && userData?.status == "suspended" && (
-        <Alert color="warning">
-          <span className="block w-full font-medium text-center">
-            {t("account_suspended")}
-          </span>
-        </Alert>
+        <div className="flex items-center justify-center w-full py-4 mx-auto font-medium text-center bg-red-600 rounded-b-lg shadow-sm">
+          {t("account_suspended")}
+        </div>
       )}
     </>
   );
@@ -76,7 +69,7 @@ const HeaderLogged: FC<HeaderLoggedProps> = () => {
             <Logo />
           </div>
           <div className="flex items-center justify-start flex-shrink-0 text-neutral-700 dark:text-neutral-100">
-            <div className="items-center hidden xl:flex">
+            <div className="items-center hidden gap-2 xl:flex">
               <Navigation />
               <div className="hidden h-6 border-l sm:block border-neutral-300 dark:border-neutral-6000"></div>
               <div className="flex">
@@ -92,7 +85,7 @@ const HeaderLogged: FC<HeaderLoggedProps> = () => {
                     {t("Create")}
                   </ButtonPrimary>
                   <ButtonSecondary href="/create-poem">
-                    <span>{t('create-poem')}</span>
+                    <span>{t("create-poem")}</span>
                     <span>📜</span>
                   </ButtonSecondary>
                 </>
@@ -106,7 +99,6 @@ const HeaderLogged: FC<HeaderLoggedProps> = () => {
                   {t("Connect_wallet")}
                 </ButtonPrimary>
               )}
-              <div></div>
               {userData && <AvatarDropdown />}
             </div>
             <div className="flex items-center space-x-3 xl:hidden">
