@@ -57,10 +57,7 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
     if(!wallet_item) return;
     if(!wallet_item.connector) return;
     if(!wallet_item.provider) return;
-    if(!window?.ethereum) {
-      toast.error("Please install Metamask extension!");
-      return;
-    }
+
     try {
       setLoading(true);
       const result = await switchNetwork();
