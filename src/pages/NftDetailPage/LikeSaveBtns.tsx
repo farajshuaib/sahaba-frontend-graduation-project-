@@ -20,7 +20,7 @@ const LikeSaveBtns: React.FC<LikeSaveBtnProps> = ({ nft, getNft }) => {
           panelMenusClass="!w-52"
           handleShareOnFacebook={() => {
             window.open(
-              `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`,
+              `https://www.facebook.com/sharer/sharer.php?url=${window.location.href}`,
               "_blank"
             );
           }}

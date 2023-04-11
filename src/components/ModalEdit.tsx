@@ -35,6 +35,7 @@ const ModalEdit: FC<ModalEditProps> = ({
   const [serviceFee, setServiceFee] = useState<number>(0);
   const { contract } = useContract();
   const [ownerReceived, setOwnerReceived] = useState<number>(0);
+  const { i18n } = useTranslation();
 
   const userData = useAppSelector(
     (state) => state.account.userData
@@ -78,7 +79,7 @@ const ModalEdit: FC<ModalEditProps> = ({
         id: nft.id,
         payload: { price, tx_hash: transaction.hash },
       });
-      toast.success(t("NFT_price_updated_successfully") as string) ;
+      toast.success(t("NFT_price_updated_successfully") as string);
       getNft && getNft();
       setLoading(false);
       onCloseModalEdit();
@@ -114,7 +115,7 @@ const ModalEdit: FC<ModalEditProps> = ({
 
   const renderContent = () => {
     return (
-      <form action="#">
+      <form className="text-justify ">
         <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
           {t("Change_price")}
         </h3>
@@ -126,7 +127,7 @@ const ModalEdit: FC<ModalEditProps> = ({
             className="mt-8"
           >
             <div className="relative flex">
-              <span className="inline-flex items-center px-3 text-sm border border-r-0 rounded-l-2xl border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400">
+              <span className={`${i18n.language == "ar" ? 'border-l-0 rounded-r-2xl' : 'border-r-0 rounded-l-2xl'} inline-flex items-center px-3 text-sm border  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400`}>
                 ETH
               </span>
               <Input
@@ -141,10 +142,14 @@ const ModalEdit: FC<ModalEditProps> = ({
                 }}
                 min={0.01}
                 max={5.0}
-                className="!rounded-l-none w-full"
+                className={
+                  i18n.language == "ar"
+                    ? "!rounded-r-none w-full"
+                    : "!rounded-l-none w-full"
+                }
                 placeholder="0.01"
               />
-              <span className="absolute right-0 p-3 text-sm align-middle border border-l-0 rounded-r-2xl border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 whitespace-nowrap">
+              <span className={`${i18n.language == "ar" ? 'left-0 border-r-0 rounded-l-2xl' : 'right-0 border-l-0 rounded-r-2xl'} absolute  p-3 text-sm align-middle border  border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 whitespace-nowrap`}>
                 {usdPrice(+price)}
               </span>
             </div>
@@ -157,7 +162,7 @@ const ModalEdit: FC<ModalEditProps> = ({
             <span className="">≈ {usdPrice(ownerReceived)}</span>
           </div>
         </div>
-        <div className="mt-4 space-x-3">
+        <div className="flex items-center gap-3 mt-5">
           <ButtonPrimary
             loading={loading}
             disabled={loading}

@@ -60,6 +60,10 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
   }, [show]);
 
   const handleClickSubmitForm = async () => {
+    if(!message){
+      toast.error(t("please-enter-your-message") as string);
+      return;
+    }
     setLoading(true);
     let api_route = user
       ? `/users/report/${user.id}`
@@ -69,9 +73,10 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
       ? `/collections/report/${collection.id}`
       : "";
     try {
+      console.log("problemSelected", problemSelected);
       await api.post(api_route, {
-        message,
-        type: problemSelected.name,
+        message ,
+        type: problemSelected,
       });
       toast.success(t("Thank_you_for_your_report") as string);
       setLoading(false);
@@ -99,9 +104,14 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
 
   const renderContent = () => {
     return (
-      <div>
+      <div className="text-justify ">
         {/* RADIO PROBLEM PLANS */}
-        <RadioGroup value={problemSelected} onChange={setProblemSelected}>
+        <RadioGroup
+          value={problemSelected}
+          onChange={(val) => {
+            setProblemSelected(val as ProblemPlan);
+          }}
+        >
           <RadioGroup.Label className="sr-only">
             {t("Problem_Plans")}
           </RadioGroup.Label>
@@ -109,13 +119,14 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
             {problemPlans.map((plan) => (
               <RadioGroup.Option
                 key={plan.name}
-                value={plan}
+                value={plan.name}
                 className={({ checked }) => {
+                  console.log(checked);
                   return `${
                     checked
-                      ? "bg-primary-6000 text-white dark:bg-primary-700"
+                      ? "!bg-primary-6000 dark:text-white dark:bg-primary-700 text-white"
                       : "bg-white dark:bg-black/20 border-t dark:border-0 border-neutral-50 "
-                  } relative shadow-lg rounded-lg px-3 py-3 cursor-pointer flex sm:px-5 sm:py-4 focus:outline-none `;
+                  } relative text-justify shadow-lg rounded-lg px-3 py-3 cursor-pointer flex sm:px-5 sm:py-4 focus:outline-none `;
                 }}
               >
                 {({ checked }) => (
@@ -126,7 +137,7 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
                           as="p"
                           className={`font-medium line-clamp-1 ${
                             checked
-                              ? "text-white"
+                              ? "dark:text-white"
                               : "text-neutral-900 dark:text-white"
                           }`}
                         >
@@ -168,7 +179,7 @@ const ModalReportItem: FC<ModalReportItemProps> = ({
             id="report-message"
           />
         </div>
-        <div className="flex gap-3 mt-4 space-x-3">
+        <div className="flex items-center gap-4">
           <ButtonPrimary
             loading={loading}
             onClick={handleClickSubmitForm}

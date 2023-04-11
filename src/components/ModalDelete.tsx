@@ -54,12 +54,12 @@ const ModalDelete: FC<ModalDeleteProps> = ({
 
   const renderContent = () => {
     return (
-      <div>
+      <div className="text-justify ">
         <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
           {t("Delete_NFT")}
         </h3>
         <p className="text-sm">{t("Delete_NFT_desc")}</p>
-        <div className="flex gap-4 mt-4 space-x-3">
+        <div className="flex gap-5 ">
           <ButtonPrimary
             loading={loading}
             onClick={handleClickSubmitForm}

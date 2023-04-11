@@ -28,12 +28,10 @@ import useContract from "hooks/useContract";
 
 export interface NftDetailPageProps {
   className?: string;
-  isPreviewMode?: boolean;
 }
 
 const NftDetailPage: FC<NftDetailPageProps> = ({
-  className = "",
-  isPreviewMode,
+  className = ""
 }) => {
   const { t } = useTranslation();
   const params: any = useParams();
@@ -341,18 +339,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
 
       {renderSetForSaleModal()}
 
-      {/* OTHER SECTION */}
-      {!isPreviewMode && (
-        <div className="container py-24 lg:py-32">
-          {/* SECTION 1 */}
-          <div className="relative py-24 lg:py-28">
-            <BackgroundSection />
-            <SectionSliderCategories />
-          </div>
-
-          {/* SECTION */}
-        </div>
-      )}
+ 
     </div>
   );
 };

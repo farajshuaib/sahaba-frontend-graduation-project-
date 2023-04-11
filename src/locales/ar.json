@@ -291,5 +291,7 @@
   "create-poem": "انشاء قصيدة",
   "each-verse-must-be-written-on-a-new-line": "(يجب كتابة كل بيت على سطر جديد)",
   "enter-the-text-here": "أدخل النص هنا",
-  "welcome-to-the-create-a-poem-helper-on-the-ethereum-network": "مرحبًا بك في مساعد انشاء معلقة على شبكة Ethereum"
+  "welcome-to-the-create-a-poem-helper-on-the-ethereum-network": "مرحبًا بك في مساعد انشاء معلقة على شبكة Ethereum",
+  "please-add-the-poem-content": "الرجاء إضافة محتوى القصيدة",
+  "please-enter-your-message": "أدرج رسالتك من فضلك"
 }
