@@ -43,7 +43,7 @@ i18n.use(initReactI18next).init({
 });
 
 const getLibrary = (provider: any): Web3Provider => {
-  const library = new ethers.providers.Web3Provider(provider);
+  const library = new Web3Provider(provider);
   library.pollingInterval = 8000; // frequency provider is polling
   return library;
 };

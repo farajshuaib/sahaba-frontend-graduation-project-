@@ -295,5 +295,7 @@
   "please-add-the-poem-content": "please add the poem content",
   "please-enter-your-message": "Please enter your message",
   "nft-price-must-be-less-than-10": "NFT price must be less than 10",
-  "nft_price_must_be_greater_than_0": "NFT_price_must_be_greater_than_0"
+  "nft_price_must_be_greater_than_0": "NFT_price_must_be_greater_than_0",
+  "connecting-to-wallet-has-been-failed": "Connecting to wallet has been failed!",
+  "connecting-to-wallet-has-been-failed-youre-connecting-to-unsupported-network-please-switch-to-ethereum-network": "Connecting to wallet has been failed!, you're connecting to unsupported network! please switch to ethereum network"
 }

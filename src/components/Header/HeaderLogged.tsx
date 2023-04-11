@@ -21,14 +21,14 @@ const Alerts: FC = () => {
     <>
       {chainId && chainId == 5 && (
         <Alert color="info">
-          <span className="block w-screen font-medium text-center">
+          <span className="block w-full font-medium text-center">
             {t("you_are_on_goerli")}
           </span>
         </Alert>
       )}
       {!window?.ethereum && (
         <Alert color="warning">
-          <span className="block w-screen font-medium text-center">
+          <div className="block w-full font-medium text-center">
             <span>{t("no_provider")}</span>{" "}
             <a
               href="https://metamask.io/download/"
@@ -37,13 +37,13 @@ const Alerts: FC = () => {
             >
               {t("install_metamask")}
             </a>
-          </span>
+          </div>
         </Alert>
       )}
 
       {userData && userData?.status == "suspended" && (
         <Alert color="warning">
-          <span className="block w-screen font-medium text-center">
+          <span className="block w-full font-medium text-center">
             {t("account_suspended")}
           </span>
         </Alert>
@@ -71,12 +71,12 @@ const HeaderLogged: FC<HeaderLoggedProps> = () => {
       <div className={`nc-MainNav2Logged fixed w-full z-30 nav-blur-bg  `}>
         <Alerts />
 
-        <div className="container relative flex items-center justify-between py-5 space-x-4 xl:space-x-8">
-          <div className="flex items-center justify-start flex-grow space-x-3 sm:space-x-8 lg:space-x-10">
+        <div className="container relative flex items-center justify-between py-5 ">
+          <div className="flex items-center justify-start flex-grow ">
             <Logo />
           </div>
-          <div className="flex items-center justify-end flex-shrink-0 space-x-1 text-neutral-700 dark:text-neutral-100">
-            <div className="items-center hidden space-x-2 xl:flex">
+          <div className="flex items-center justify-start flex-shrink-0 text-neutral-700 dark:text-neutral-100">
+            <div className="items-center hidden xl:flex">
               <Navigation />
               <div className="hidden h-6 border-l sm:block border-neutral-300 dark:border-neutral-6000"></div>
               <div className="flex">

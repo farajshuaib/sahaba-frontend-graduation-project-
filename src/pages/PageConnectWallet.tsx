@@ -25,9 +25,9 @@ export interface PageConnectWalletProps {
 const plans = [
   {
     name: "Metamask",
-    img: metamaskImg,
     connector: connectors.injected,
     provider: "injected",
+    img: metamaskImg,
   },
   {
     name: "WalletConnect",
@@ -61,12 +61,11 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
     try {
       setLoading(true);
       const result = await switchNetwork();
-      if (!result) return;
       web3React.activate(wallet_item.connector);
       localStorage.setItem("provider", wallet_item.provider);
     } catch (e: any) {
       setLoading(false);
-      toast.error(e || "Connecting to wallet has been failed!");
+      toast.error(e || t('connecting-to-wallet-has-been-failed'));
     }
   };
 
@@ -74,8 +73,7 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
     if (web3React.error) {
       toast.error(
         web3React.error?.message ||
-          "Connecting to wallet has been failed!, you're connecting to unsupported network! please switch to ethereum network"
-      );
+          `${t('connecting-to-wallet-has-been-failed-youre-connecting-to-unsupported-network-please-switch-to-ethereum-network')}`);
       setLoading(false);
     }
   }, [web3React.error]);

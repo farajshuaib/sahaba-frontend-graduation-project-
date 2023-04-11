@@ -2,7 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import { connectToWallet, logout } from "app/account/actions";
 import { useAppDispatch, useAppSelector } from "app/hooks";
 import { useEffect, useState } from "react";
-import { injected } from "services/connectors";
+import { connectors } from "services/connectors";
 import { switchNetwork } from "utils/functions";
 import LoadingScreen from "./LoadingScreen";
 
@@ -14,7 +14,9 @@ const AuthStateWrapper: React.FC<Props> = ({ children }) => {
   const { account, activate, active, error, chainId } = useWeb3React();
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
-  const userData = useAppSelector((state) => state.account.userData) as UserData;
+  const userData = useAppSelector(
+    (state) => state.account.userData
+  ) as UserData;
 
   const handleAccountState = async () => {
     setLoading(true);
@@ -30,15 +32,15 @@ const AuthStateWrapper: React.FC<Props> = ({ children }) => {
   };
 
   useEffect(() => {
-    injected.isAuthorized().then(async (isAuthorized) => {
+    connectors.injected.isAuthorized().then(async (isAuthorized) => {
       if (isAuthorized && !active && !error) {
-        activate(injected);
+        activate(connectors.injected);
       }
     });
   }, []);
 
   useEffect(() => {
-    injected.isAuthorized().then(async (isAuthorized) => {
+    connectors.injected.isAuthorized().then(async (isAuthorized) => {
       if (isAuthorized && !chainId) {
         switchNetwork();
       }
@@ -48,6 +50,7 @@ const AuthStateWrapper: React.FC<Props> = ({ children }) => {
   useEffect(() => {
     handleAccountState();
   }, [account, chainId, active]);
+  
 
   if (loading) {
     return (
