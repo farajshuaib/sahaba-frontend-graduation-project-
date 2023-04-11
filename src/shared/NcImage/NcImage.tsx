@@ -18,23 +18,23 @@ const RenderPoem: FC<{ src: string }> = ({ src }) => {
   }, []);
 
   return (
-    <div className="h-fit">
-      <div
-        className={`grid grid-cols-2 items-center gap-3 text-2xl leading-relaxed tracking-wide poem-box rounded-3xl max-h-96  group-hover:scale-[1.01] transition-transform duration-300 ease-in-out will-change-transform`}
-      >
-        {content && content.length > 0 ? (
-          content.map((item, index) => (
-            <p
-              key={index}
-              className="leading-relaxed !prose md:!prose-xl lg:!prose-2xl text-center"
-            >
-              {item}
-            </p>
-          ))
-        ) : (
+    <div
+      className={`grid  grid-cols-2 items-center gap-3 text-2xl leading-relaxed tracking-wide poem-box rounded-3xl h-[22rem] max-h-[30rem]  group-hover:scale-[1.01] transition-transform duration-300 ease-in-out will-change-transform`}
+    >
+      {content && content.length > 0 ? (
+        content.map((item, index) => (
+          <p
+            key={index}
+            className="leading-relaxed !prose md:!prose-xl lg:!prose-2xl text-center"
+          >
+            {item}
+          </p>
+        ))
+      ) : (
+        <div className="w-1/2 col-span-2 mx-auto h-1/2">
           <PlaceIcon />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -68,7 +68,13 @@ const NcImage: FC<NcImageProps> = ({
     return (
       <div className={` ${containerClassName}`} data-nc-id="NcImage">
         {src ? (
-          <img src={src} className={className} loading="lazy" alt={alt} {...args} />
+          <img
+            src={src}
+            className={className}
+            loading="lazy"
+            alt={alt}
+            {...args}
+          />
         ) : (
           renderLoadingPlaceholder()
         )}

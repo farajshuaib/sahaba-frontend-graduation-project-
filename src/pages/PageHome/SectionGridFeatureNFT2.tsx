@@ -51,7 +51,9 @@ const SectionGridFeatureNFT2: FC<SectionGridFeatureNFT2Props> = () => {
       />
       <div className={`grid gap-6 lg:gap-8 sm:grid-cols-2 xl:grid-cols-3`}>
         {loading ? (
-          <LoadingScreen />
+          <div className="col-span-3">
+            <LoadingScreen />
+          </div>
         ) : (
           <>
             {data.length == 0 ? (

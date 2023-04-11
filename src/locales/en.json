@@ -293,5 +293,7 @@
   "each-verse-must-be-written-on-a-new-line": "(Each verse must be written on a new line)",
   "create-poem": "Create Poem",
   "please-add-the-poem-content": "please add the poem content",
-  "please-enter-your-message": "Please enter your message"
+  "please-enter-your-message": "Please enter your message",
+  "nft-price-must-be-less-than-10": "NFT price must be less than 10",
+  "nft_price_must_be_greater_than_0": "NFT_price_must_be_greater_than_0"
 }

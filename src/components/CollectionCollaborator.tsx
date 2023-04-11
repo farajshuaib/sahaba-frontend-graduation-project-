@@ -95,18 +95,18 @@ const CollectionCollaborator: React.FC<Props> = ({
   };
 
   return (
-    <div className={``}>
+    <div className={`w-full `}>
       <div className={`${UNIQUE_CLASS} flow-root`} ref={sliderRef}>
         <Heading desc={t("")} hasNextPrev>
           {t("Collection_Collaborators")}
         </Heading>
-        <div className="glide__track" data-glide-el="track">
-          <ul className="glide__slides">
+        <div className=" glide__track" data-glide-el="track">
+          <ul className="w-full glide__slides">
             {collaborators &&
               collaborators.map(
                 ({ user, id }: Collaboration, index: number) => (
                   <li key={index} className={`glide__slide `}>
-                    <div className={`flex flex-col `}>
+                    <div className={`flex flex-col m-4`}>
                       <Link
                         to={`/author/${user.id}`}
                         className={`flex-shrink-0 relative w-full aspect-w-4 aspect-h-3 h-0 rounded-2xl overflow-hidden group`}

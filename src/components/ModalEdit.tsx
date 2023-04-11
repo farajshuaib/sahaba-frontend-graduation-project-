@@ -55,6 +55,17 @@ const ModalEdit: FC<ModalEditProps> = ({
       return;
     }
 
+    if (price <= 0) {
+      toast.error(t("nft_price_must_be_greater_than_0") as string);
+      return;
+    }
+
+    // price must be less than 10
+    if (price > 10) {
+      toast.error(t("nft-price-must-be-less-than-10") as string);
+      return;
+    }
+
     if (!recaptcha) {
       toast.error("Beep-bop, you're a robot!");
       return;
@@ -141,7 +152,7 @@ const ModalEdit: FC<ModalEditProps> = ({
                   calcOwnerReceived(+e.currentTarget.value);
                 }}
                 min={0.01}
-                max={5.0}
+                max={10.0}
                 className={
                   i18n.language == "ar"
                     ? "!rounded-r-none w-full"

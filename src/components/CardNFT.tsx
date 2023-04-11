@@ -75,7 +75,7 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", nft }) => {
             price={`${nft.price} ETH`}
             labelTextClassName="bg-white dark:bg-neutral-900 dark:group-hover:bg-neutral-800 group-hover:bg-neutral-50"
           />
-          {nft.is_for_sale && (
+          {nft.is_for_sale && nft.is_for_sale && (
             <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400">
               <ClockIcon className="w-4 h-4" />
               <span className="ml-1 mt-0.5">

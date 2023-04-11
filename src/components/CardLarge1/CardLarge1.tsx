@@ -81,9 +81,11 @@ const CardLarge1: FC<CardLarge1Props> = ({
                 <div className="text-xs dark:text-neutral-400">
                   {t("Collection")}
                 </div>
+                <Link to={`/collection/${nft.collection.id}`}>
                 <div className="text-sm font-semibold ">
                   {nft.collection.name}
                 </div>
+                </Link>
               </div>
             </div>
           </div>
@@ -104,7 +106,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
           </div>
 
           {/* AUTION TIME */}
-          {nft.is_for_sale && <TimeCountDown sale_end_at={nft.sale_end_at} />}
+          {nft.is_for_sale && nft.sale_end_at && <TimeCountDown sale_end_at={nft.sale_end_at} />}
 
           <div className="w h-[1px] bg-neutral-100 dark:bg-neutral-700"></div>
 

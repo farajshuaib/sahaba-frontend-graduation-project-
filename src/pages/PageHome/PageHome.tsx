@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet";
 import SectionLargeSlider from "./SectionLargeSlider";
 import SectionSliderCollections from "components/SectionSliderCollections";
 import SectionGridFeatureNFT2 from "./SectionGridFeatureNFT2";
+import { toast } from "react-toastify";
 
 const Home: React.FC = () => {
   return (
@@ -23,6 +24,8 @@ const Home: React.FC = () => {
           <SectionLargeSlider />
         </div>
       </div>
+
+     
 
       <div className="container relative my-24 space-y-24 lg:space-y-32 lg:my-32">
         {/* SECTION */}

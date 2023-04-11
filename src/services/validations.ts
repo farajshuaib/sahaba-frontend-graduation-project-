@@ -47,7 +47,7 @@ export const createNftSchema = yup.object().shape({
     .required(t('validations.price_is_required'))
     .positive(t('validations.price_must_be_more_than_zero'))
     .min(0.01, t('validations.price_is_to_low'))
-    .max(5.0, t('validations.price_is_too_high')),
+    .max(10.0, t('validations.price_is_too_high')),
 })
 
 export const createPoemNftSchema = yup.object().shape({

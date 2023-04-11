@@ -26,7 +26,7 @@ const TabFilters: React.FC<Props> = ({
   const [isOpenMoreFilter, setisOpenMoreFilter] = useState(false);
   //
   const [isVerifiedCreator, setIsVerifiedCreator] = useState(false);
-  const [rangePrices, setRangePrices] = useState([0.01, 5.0]);
+  const [rangePrices, setRangePrices] = useState([0.01, 10.0]);
 
   const [sortOrderStates, setSortOrderStates] = useState<string>("");
 
@@ -265,7 +265,7 @@ const TabFilters: React.FC<Props> = ({
                       <Slider
                         range
                         min={0.01}
-                        max={5}
+                        max={10.0}
                         step={0.01}
                         defaultValue={[rangePrices[0], rangePrices[1]]}
                         allowCross={false}

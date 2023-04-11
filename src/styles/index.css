@@ -81,3 +81,6 @@ button:disabled {
   box-shadow: inset 7px 0 73px 22px #e6d1bb;
 }
 
+.Toastify__toast-body {
+  font-family: 'Montserrat', sans-serif !important;
+}

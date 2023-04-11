@@ -52,7 +52,7 @@ const CardNFT2: FC<CardNFT2Props> = ({ className = "", nft }) => {
           />
         )}
 
-        <div className="absolute left-[-1px] bottom-[-0.4px] z-10">
+        <div className="absolute left-[-1px] bottom-[-0.4px] z-20">
           <svg
             className="text-white dark:text-neutral-900 w-64 md:w-[281px]"
             width="281"
@@ -68,9 +68,9 @@ const CardNFT2: FC<CardNFT2Props> = ({ className = "", nft }) => {
 
           <div
             dir="ltr"
-            className={`absolute bottom-0 w-fit left-4 text-left z-10 `}
+            className={`absolute bottom-0 w-fit left-4 text-left z-10 p-1 `}
           >
-            <h2 className={`text-lg font-semibold `}>{nft.title}</h2>
+            <h2 className={`text-base font-semibold whitespace-pre`}>{nft.title}</h2>
 
             <div className="w-full mt-1.5 flex justify-between items-end ">
               {/* <Prices2 /> */}

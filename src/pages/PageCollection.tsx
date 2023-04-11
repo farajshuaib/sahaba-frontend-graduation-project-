@@ -23,7 +23,7 @@ interface CollectionNftsProps {
 }
 const CollectionNfts: React.FC<CollectionNftsProps> = ({ collection_id }) => {
   const [page, setPage] = useState<number>(1);
-  const [priceRange, setPriceRange] = useState([0.01, 5.0]);
+  const [priceRange, setPriceRange] = useState([0.01, 10.0]);
   const [sortBy, setSortBy] = useState<string>("");
   const [isVerifiedUser, setIsVerifiedUser] = useState<boolean>(false);
   const { fetch, meta, loading, data } = useCrud("/nfts");
@@ -146,8 +146,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                   containerClassName="aspect-w-1 aspect-h-1 rounded-3xl overflow-hidden"
                 />
               </div>
-              <div className="flex items-center mt-4 space-x-3 sm:justify-center">
-                <div className="flex space-x-1.5">
+              <div className="flex items-center gap-4 mt-4 sm:justify-center">
                   <ButtonDropDownShare
                     handleShareOnFacebook={() => {
                       window.open(
@@ -190,7 +189,6 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
                     collection={collection}
                     containerClassName="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800 cursor-pointer"
                   />
-                </div>
               </div>
             </div>
             <div

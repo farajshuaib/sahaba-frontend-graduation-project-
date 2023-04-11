@@ -67,7 +67,7 @@ const ModalAddCollaboration: FC<ModalAddCollaborationProps> = ({
 
   const renderContent = () => {
     return (
-      <form action="#">
+      <form className="text-justify">
         <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-200">
           {t("Add_Collaboration")}
         </h3>
@@ -83,7 +83,7 @@ const ModalAddCollaboration: FC<ModalAddCollaborationProps> = ({
             type={"text"}
           />
         </div>
-        <div className="mt-4 space-x-3">
+        <div className="flex gap-4 mt-5">
           <ButtonPrimary
             disabled={userData?.status == "suspended" || loading}
             onClick={submit}
