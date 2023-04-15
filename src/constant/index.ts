@@ -26,6 +26,12 @@ export const CAPATCHA_SECRET_KEY: string = import.meta.env
 
 export const FCM_vapidKey = import.meta.env.VITE_FCM_VAPID_KEY;
 
+export const DLP_CLIENT_ID = import.meta.env.VITE_DLP_CLIENT_ID;
+
+export const CLOUD_VISION_CLINT_ID = import.meta.env.VITE_CLOUD_VISION_CLINT_ID;
+
+export const CLOUD_VISION_API_KEY = import.meta.env.VITE_CLOUD_VISION_API_KEY
+
 export const locales: SupportedLocales[] = [
   { key: "ar", value: "عربي" },
   { key: "en", value: "english" },

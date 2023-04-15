@@ -107,7 +107,8 @@ const UploadFile: React.FC<UploadFileProps> = ({
                 onChange={async (e) => {
                   if (!e.target.files) return;
                   let file = e.target.files[0];
-                  if (!validateImage(file)) return;
+                  const validImage = await validateImage(file);
+                  if (!validImage) return;
 
                   try {
                     setUploadLoading(true);
@@ -120,7 +121,7 @@ const UploadFile: React.FC<UploadFileProps> = ({
 
                     setFieldValue("file_path", IPFS_BASE_URL + added.path);
 
-                    toast.success( 
+                    toast.success(
                       t("image_uploaded_to_the_IPFS_successfully") as string
                     );
                   } catch (e) {
@@ -324,7 +325,7 @@ const PageCreateNFTImage: FC = () => {
                       <RadioGroup.Label className="sr-only">
                         Server size
                       </RadioGroup.Label>
-                      <div className="flex py-2 space-x-4 gap-5 overflow-auto customScrollBar">
+                      <div className="flex gap-5 py-2 space-x-4 overflow-auto customScrollBar">
                         {myCollections &&
                           myCollections.map((collection: Collection, index) => (
                             <RadioGroup.Option

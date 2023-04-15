@@ -5,98 +5,98 @@ import {
   currentNetwork,
   SAHABA_TEST_COIN_ABI,
   SAHABA_TEST_COIN_ADDRESS,
-} from "./../constant";
-import { toast } from "react-toastify";
-import { ethers, Contract, utils, BigNumber } from "ethers";
-import { networkParams } from "services/networks";
-import { store } from "app/store";
-import { t } from "i18next";
-import { parseEther } from "ethers/lib/utils";
+} from './../constant'
+import { toast } from 'react-toastify'
+import { ethers, Contract, utils, BigNumber } from 'ethers'
+import { networkParams } from 'services/networks'
+import { store } from 'app/store'
+import { t } from 'i18next'
+import { parseEther } from 'ethers/lib/utils'
 // import { Biconomy } from "@biconomy/mexa";
 
 export const getBalance = async (address: string) => {
   if (!window?.ethereum) {
-    toast.warning("you don't have metamask extension on your browser");
+    toast.warning("you don't have metamask extension on your browser")
   }
-  const provider = new ethers.providers.Web3Provider(window?.ethereum);
-  const balance = await provider.getBalance(address);
-  const balanceInEth = ethers.utils.formatEther(balance);
-  return balanceInEth;
-};
+  const provider = new ethers.providers.Web3Provider(window?.ethereum)
+  const balance = await provider.getBalance(address)
+  const balanceInEth = ethers.utils.formatEther(balance)
+  return balanceInEth
+}
 
 export const addTokenAsset = async () => {
   if (!window?.ethereum) return
   try {
     await window.ethereum.request({
-      method: "wallet_watchAsset",
+      method: 'wallet_watchAsset',
       params: {
-        type: "ERC20",
+        type: 'ERC20',
         options: {
-          address: "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
-          symbol: "ETH",
+          address: '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
+          symbol: 'ETH',
           decimals: 18,
         },
       },
-    });
-    toast.success("Token imported to metamask successfully");
+    })
+    toast.success('Token imported to metamask successfully')
   } catch (e) {
-    toast.error("Token import failed");
+    toast.error('Token import failed')
   }
-};
+}
 
 export const switchNetwork = () => {
   if (!window?.ethereum) return
   return new Promise(async (resolve, reject) => {
     try {
       await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
+        method: 'wallet_switchEthereumChain',
         params: [
           {
             chainId:
-              "0x" + (+networkParams[currentNetwork].chainId).toString(16),
+              '0x' + (+networkParams[currentNetwork].chainId).toString(16),
           },
         ],
-      });
-      await setTimeout(() => {}, 100);
-      resolve(true);
-    } catch (err: any) {
+      })
+      await setTimeout(() => {}, 100)
+      resolve(true)
+    } catch (err:any) {
       // This error code indicates that the chain has not been added to MetaMask
       if (err.code === 4902) {
         await window.ethereum.request({
-          method: "wallet_addEthereumChain",
+          method: 'wallet_addEthereumChain',
           params: [
             {
               chainName: networkParams[currentNetwork].networkName,
               chainId:
-                "0x" + (+networkParams[currentNetwork].chainId).toString(16),
+                '0x' + (+networkParams[currentNetwork].chainId).toString(16),
               nativeCurrency: networkParams[currentNetwork].nativeCurrency,
               rpcUrls: networkParams[currentNetwork].rpcUrls,
             },
           ],
-        });
-        await setTimeout(() => {}, 100);
-        resolve(true);
+        })
+        await setTimeout(() => {}, 100)
+        resolve(true)
       } else {
         toast.error(
-          "Please switch to " + networkParams[currentNetwork].networkName
-        );
-        reject(err);
+          'Please switch to ' + networkParams[currentNetwork].networkName,
+        )
+        reject(err)
       }
     }
-  });
-};
+  })
+}
 
 export const usdPrice = (nft_price: number): string => {
-  const state = store.getState();
-  const eth_price = state.general.ethPrice;
+  const state = store.getState()
+  const eth_price = state.general.ethPrice
 
-  if (!eth_price) return "";
-  return `${(nft_price * eth_price).toFixed(2)} USD`;
-};
+  if (!eth_price) return ''
+  return `${(nft_price * eth_price).toFixed(2)} USD`
+}
 
 export function copyToClipboard(value: string) {
-  navigator.clipboard.writeText(value);
-  toast.success(`${t("copied_success")}`);
+  navigator.clipboard.writeText(value)
+  toast.success(`${t('copied_success')}`)
 }
 
 export const checkCapatcha = async () => {
@@ -104,45 +104,44 @@ export const checkCapatcha = async () => {
     try {
       await window.grecaptcha.ready(async () => {
         const res = await window.grecaptcha.execute(CAPATCHA_SITE_KEY, {
-          action: "submit",
-        });
-        resolve(res);
-      });
+          action: 'submit',
+        })
+        resolve(res)
+      })
     } catch (error) {
-      reject(error);
+      reject(error)
     }
-  });
-};
+  })
+}
 
 export const getUserSlug = (userData: UserData) => {
   return (
     userData?.username ||
     userData?.wallet_address.slice(0, 5) +
-      "..." +
+      '...' +
       userData?.wallet_address.slice(-5)
-  );
-};
+  )
+}
 
-
-const approveBuyItem = async (signer:any, account:string) => {
+const approveBuyItem = async (signer: any, account: string) => {
   const tokenContract = new Contract(
     SAHABA_TEST_COIN_ADDRESS,
     SAHABA_TEST_COIN_ABI,
-    signer
-  );
+    signer,
+  )
 
   const allowance = await tokenContract.allowance(
     account,
-    SAHABA_TEST_COIN_ADDRESS
-  );
+    SAHABA_TEST_COIN_ADDRESS,
+  )
 
   if (!Number(allowance)) {
     await tokenContract.approve(
       SAHABA_TEST_COIN_ADDRESS,
-      parseEther("9999999999999999999999999999")
-    );
+      parseEther('9999999999999999999999999999'),
+    )
   }
-};
+}
 
 // export async function getContract() {
 //   const biconomy = new Biconomy(window.ethereum as ExternalProvider, {
@@ -163,8 +162,17 @@ const approveBuyItem = async (signer:any, account:string) => {
 //   return contractInstance;
 // }
 
-
 export const isSupported = () =>
-  "Notification" in window &&
-  "serviceWorker" in navigator &&
-  "PushManager" in window;
+  'Notification' in window &&
+  'serviceWorker' in navigator &&
+  'PushManager' in window
+
+
+export const fileToBase64 = (file: File) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = (error) => reject(error)
+  })
+}

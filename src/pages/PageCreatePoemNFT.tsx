@@ -15,11 +15,7 @@ import useIpfs from "hooks/useIpfs";
 import { useCrud } from "hooks/useCrud";
 import { IPFS_BASE_URL } from "constant";
 import { BigNumber, utils } from "ethers";
-import {
-  createNftSchema,
-  createPoemNftSchema,
-  validateImage,
-} from "services/validations";
+import { createPoemNftSchema } from "services/validations";
 import { toast } from "react-toastify";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import { useNavigate } from "react-router-dom";

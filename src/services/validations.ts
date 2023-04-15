@@ -1,6 +1,8 @@
+import { fileToBase64 } from './../utils/functions'
 import { t } from 'i18next'
 import { toast } from 'react-toastify'
 import * as yup from 'yup'
+import { safeSearchDetection } from './cloudVision'
 export const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
 export const createCollectionSchema = yup.object().shape({
@@ -124,7 +126,9 @@ export const updateAccountSchema = yup.object().shape({
     }),
 })
 
-export const validateImage = (file: any) => {
+export const validateImage = async (file: File) => {
+  const reader = new FileReader()
+
   const fileType = file?.type
   const fileSize = file?.size
   const validImageTypes = [
@@ -136,13 +140,30 @@ export const validateImage = (file: any) => {
     'image/webp',
     'image/svg+xml',
   ]
+
+  // validation file type
   if (!validImageTypes.includes(fileType)) {
     toast.error(`${t('validations.The_file_must_be_an_image')}`)
     return false
   }
+
+  // validation file size
   if (fileSize > 100000024) {
     toast.error(`${t('validations.The_file_is_too_large')}`)
     return false
   }
+
+  const b64string = await fileToBase64(file)
+
+  if (b64string) {
+    const isSafeImage = await safeSearchDetection(b64string as string)
+    if (!isSafeImage) {
+      toast.error(
+        `${t('the-image-is-not-safe-it-may-contain-nudity-or-violence')}`,
+      )
+      return false
+    }
+  }
+
   return true
 }

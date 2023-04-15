@@ -31,6 +31,7 @@ import useContract from "hooks/useContract";
 import Select from "shared/Select/Select";
 import { formatEther } from "ethers/lib/utils";
 import { compressFile } from "services/compressFiles";
+import { safeSearchDetection } from "services/cloudVision";
 
 export interface PageCreateCollectionProps {
   className?: string;
@@ -273,7 +274,8 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                               onChange={async (e) => {
                                 if (!e.target.files) return;
                                 let file = e.target.files[0];
-                                if (!validateImage(file)) return;
+                                const validImage = await validateImage(file);
+                                if (!validImage) return;
                                 file = (await compressFile(file)) as File;
                                 setBannerImage(URL.createObjectURL(file));
                                 setFieldValue("banner_image", file);
@@ -336,7 +338,8 @@ const PageCreateCollection: FC<PageCreateCollectionProps> = ({
                       onChange={async (e) => {
                         if (!e.target.files) return;
                         let file = e.target.files[0];
-                        if (!validateImage(file)) return;
+                        const validImage = await validateImage(file);
+                        if (!validImage) return;
                         file = (await compressFile(file)) as File;
                         setLogoImage(URL.createObjectURL(file));
                         setFieldValue("logo_image", file);

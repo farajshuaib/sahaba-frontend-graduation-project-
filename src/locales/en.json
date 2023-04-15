@@ -297,5 +297,9 @@
   "nft-price-must-be-less-than-10": "NFT price must be less than 10",
   "nft_price_must_be_greater_than_0": "NFT_price_must_be_greater_than_0",
   "connecting-to-wallet-has-been-failed": "Connecting to wallet has been failed!",
-  "connecting-to-wallet-has-been-failed-youre-connecting-to-unsupported-network-please-switch-to-ethereum-network": "Connecting to wallet has been failed!, you're connecting to unsupported network! please switch to ethereum network"
+  "connecting-to-wallet-has-been-failed-youre-connecting-to-unsupported-network-please-switch-to-ethereum-network": "Connecting to wallet has been failed!, you're connecting to unsupported network! please switch to ethereum network",
+  "the_image_is_not_safe-it-may-contain-nudity-or-violence": "The_image_is_not_safe it may contain nudity or violence",
+  "the-image-is-not-safe-it-may-contain-nudity-or-violence": "the image is not safe it may contain nudity or violence",
+  "checking-image-for-adult-content": "Checking image for adult content...",
+  "checking-image-content": "checking image content"
 }

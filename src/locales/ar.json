@@ -293,5 +293,13 @@
   "enter-the-text-here": "أدخل النص هنا",
   "welcome-to-the-create-a-poem-helper-on-the-ethereum-network": "مرحبًا بك في مساعد انشاء معلقة على شبكة Ethereum",
   "please-add-the-poem-content": "الرجاء إضافة محتوى القصيدة",
-  "please-enter-your-message": "أدرج رسالتك من فضلك"
+  "please-enter-your-message": "أدرج رسالتك من فضلك",
+  "connecting-to-wallet-has-been-failed": "فشل الاتصال بالمحفظة!",
+  "connecting-to-wallet-has-been-failed-youre-connecting-to-unsupported-network-please-switch-to-ethereum-network": "فشل الاتصال بالمحفظة! أنت تتصل بشبكة غير مدعومة! \nيرجى التبديل إلى شبكة ethereum",
+  "nft-price-must-be-less-than-10": "يجب أن يكون سعر NFT أقل من 10",
+  "nft_price_must_be_greater_than_0": "NFT_ السعر_يجب_بي_جديد_ثان_0",
+  "the_image_is_not_safe-it-may-contain-nudity-or-violence": "The_image_is_not_safe قد تحتوي على عُري أو عنف",
+  "the-image-is-not-safe-it-may-contain-nudity-or-violence": "الصورة ليست آمنة فقد تحتوي على عُري أو عنف",
+  "checking-image-content": "فحص محتوى الصورة",
+  "checking-image-for-adult-content": "التحقق من الصورة لمحتوى للبالغين ..."
 }

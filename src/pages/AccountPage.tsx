@@ -189,7 +189,8 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                               onChange={async (e) => {
                                 if (!e.target.files) return;
                                 const file = e.target.files[0];
-                                if (!validateImage(file)) return;
+                                const validImage = await validateImage(file);
+                                if (!validImage) return;
                                 setBannerImage(URL.createObjectURL(file));
                                 setFieldValue("banner_photo", file);
                               }}
@@ -245,7 +246,8 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                           onChange={async (e) => {
                             if (!e.target.files) return;
                             const file = e.target.files[0];
-                            if (!validateImage(file)) return;
+                            const validImage = await validateImage(file);
+                            if (!validImage) return;
                             setProfileImage(URL.createObjectURL(file));
                             setFieldValue("profile_photo", file);
                           }}
