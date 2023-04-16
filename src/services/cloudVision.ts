@@ -42,8 +42,9 @@ export const safeSearchDetection = async (image: string) => {
     }
 
     if (
-      Object.values(safeSearch).includes('POSSIBLE') ||
-      Object.values(safeSearch).includes('LIKELY')
+      safeSearchAnnotation.violence == 'POSSIBLE' ||
+      safeSearchAnnotation.racy == 'POSSIBLE' ||
+      safeSearchAnnotation.spoof == 'POSSIBLE'
     ) {
       return false
     }
