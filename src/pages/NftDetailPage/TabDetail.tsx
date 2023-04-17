@@ -106,7 +106,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ nft_id, owner }) => {
       case "sale": {
         return (
           <p className="flex items-center gap-1 text-sm">
-            <span className="">sold by</span>
+            <span className="">{t("sold-by")}</span>
             <span
               onClick={() => {
                 navigate(`/author/${transaction.from.id}`);
@@ -191,7 +191,7 @@ const TabDetail: React.FC<TabDetailProps> = ({ nft_id, owner }) => {
       case "update_price": {
         return (
           <p className="flex items-center gap-1 text-sm">
-            <span className="">price updated by</span>
+            <span className="">{t("price-updated-by")}</span>
             <span
               onClick={() => {
                 navigate(`/author/${transaction.to.id}`);
@@ -206,6 +206,9 @@ const TabDetail: React.FC<TabDetailProps> = ({ nft_id, owner }) => {
             </span>
           </p>
         );
+      }
+      default: {
+        return <p className="flex items-center gap-1 text-sm"></p>;
       }
     }
   };

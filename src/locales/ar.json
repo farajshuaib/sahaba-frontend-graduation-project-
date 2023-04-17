@@ -301,5 +301,7 @@
   "the_image_is_not_safe-it-may-contain-nudity-or-violence": "The_image_is_not_safe قد تحتوي على عُري أو عنف",
   "the-image-is-not-safe-it-may-contain-nudity-or-violence": "الصورة ليست آمنة فقد تحتوي على عُري أو عنف",
   "checking-image-content": "فحص محتوى الصورة",
-  "checking-image-for-adult-content": "التحقق من الصورة لمحتوى للبالغين ..."
+  "checking-image-for-adult-content": "التحقق من الصورة لمحتوى للبالغين ...",
+  "price-updated-by": "تم تحديث السعر بواسطة",
+  "sold-by": "تم بيعها من قبل"
 }
