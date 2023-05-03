@@ -128,8 +128,6 @@ export const updateAccountSchema = yup.object().shape({
 })
 
 export const validateImage = async (file: File) => {
-  const reader = new FileReader()
-
   const fileType = file?.type
   const fileSize = file?.size
   const validImageTypes = [
@@ -154,21 +152,20 @@ export const validateImage = async (file: File) => {
     return false
   }
 
-  const b64string = (await fileToBase64(file)) as string
+  // const reader = new FileReader()
+  // const b64string = (await fileToBase64(file)) as string
 
-  if (b64string) {
-    const isSafeImage = await safeSearchDetection(b64string as string)
-    if (!isSafeImage) {
-      toast.error(
-        `${t('the-image-is-not-safe-it-may-contain-nudity-or-violence')}`,
-      )
-      return false
-    }
-  }
+  // if (b64string) {
+  //   const isSafeImage = await safeSearchDetection(b64string as string)
+  //   if (!isSafeImage) {
+  //     toast.error(
+  //       `${t('the-image-is-not-safe-it-may-contain-nudity-or-violence')}`,
+  //     )
+  //     return false
+  //   }
+  // }
 
-  const isClearImage = await safeImageDetection(file);
-
-  console.log('isClearImage', isClearImage)
+  const isClearImage = await safeImageDetection(file)
 
   if (!isClearImage) {
     return false
