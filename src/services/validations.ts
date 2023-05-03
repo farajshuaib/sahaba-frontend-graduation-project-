@@ -3,6 +3,7 @@ import { t } from 'i18next'
 import { toast } from 'react-toastify'
 import * as yup from 'yup'
 import { safeSearchDetection } from './cloudVision'
+import { safeImageDetection } from './nsfwjs'
 export const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
 export const createCollectionSchema = yup.object().shape({
@@ -153,7 +154,7 @@ export const validateImage = async (file: File) => {
     return false
   }
 
-  const b64string = await fileToBase64(file)
+  const b64string = (await fileToBase64(file)) as string
 
   if (b64string) {
     const isSafeImage = await safeSearchDetection(b64string as string)
@@ -163,6 +164,14 @@ export const validateImage = async (file: File) => {
       )
       return false
     }
+  }
+
+  const isClearImage = await safeImageDetection(file);
+
+  console.log('isClearImage', isClearImage)
+
+  if (!isClearImage) {
+    return false
   }
 
   return true
