@@ -152,18 +152,18 @@ export const validateImage = async (file: File) => {
     return false
   }
 
-  // const reader = new FileReader()
-  // const b64string = (await fileToBase64(file)) as string
+  const reader = new FileReader()
+  const b64string = (await fileToBase64(file)) as string
 
-  // if (b64string) {
-  //   const isSafeImage = await safeSearchDetection(b64string as string)
-  //   if (!isSafeImage) {
-  //     toast.error(
-  //       `${t('the-image-is-not-safe-it-may-contain-nudity-or-violence')}`,
-  //     )
-  //     return false
-  //   }
-  // }
+  if (b64string) {
+    const isSafeImage = await safeSearchDetection(b64string as string)
+    if (!isSafeImage) {
+      toast.error(
+        `${t('the-image-is-not-safe-it-may-contain-nudity-or-violence')}`,
+      )
+      return false
+    }
+  }
 
   const isClearImage = await safeImageDetection(file)
 
