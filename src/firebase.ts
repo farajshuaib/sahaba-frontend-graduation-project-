@@ -10,13 +10,13 @@ import { getAnalytics } from "firebase/analytics";
 import { isSupported } from "utils/functions";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBTvCFtIg0A_JTokDcMWtMxxGdt60ztP6s",
-  authDomain: "sahaba-fc030.firebaseapp.com",
-  projectId: "sahaba-fc030",
-  storageBucket: "sahaba-fc030.appspot.com",
-  messagingSenderId: "177856090714",
-  appId: "1:177856090714:web:a302bc1e93032d7ec77e63",
-  measurementId: "G-PBJ1EWM5NN",
+  apiKey: "apiKey",
+  authDomain: "authDomain",
+  projectId: "projectId",
+  storageBucket: "storageBucket",
+  messagingSenderId: "messagingSenderId",
+  appId: "appId",
+  measurementId: "measurementId",
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
